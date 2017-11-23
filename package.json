@@ -1,0 +1,29 @@
+{
+  "name": "offline",
+  "description": "Sistema de facturacion electronica",
+  "version": "0.8.0",
+  "main": "main.js",
+  "authors": "",
+  "license": "GPL-3.0",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f -w sqlite3",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "keymaster": "^1.6.2",
+    "lodash": "^4.17.4",
+    "request": "^2.81.0",
+    "strip": "^3.0.0",
+    "knex": "^0.13.0",
+    "sqlite3": "^3.1.8"
+  },
+  "devDependencies": {
+    "electron": "^1.7.9",
+    "electron-builder": "^19.45.5",
+    "electron-rebuild": "^1.5.7"
+  }
+}
