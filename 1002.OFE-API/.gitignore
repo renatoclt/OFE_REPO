@@ -11,6 +11,7 @@ yarn.lock
 *.pydevproject
 .project
 .metadata
+bin/
 tmp/
 *.tmp
 *.bak

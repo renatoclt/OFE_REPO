@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require("electron");
-var wwww  = require('./1002.OFE-API/bin/www');
+var wwww  = require('./1002.OFE-API/configuracion/www');
 
 app.on("ready", () => {
   let mainWindow = new BrowserWindow({ height: 800, width: 800, show: false })
@@ -9,5 +9,3 @@ app.on("ready", () => {
 });
 
 app.on("window-all-closed", () => { app.quit() })
-
-//module.exports = knex;
