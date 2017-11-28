@@ -3,15 +3,46 @@
   "description": "Sistema de facturacion electronica",
   "version": "0.8.0",
   "main": "main.js",
-  "authors": "",
-  "license": "GPL-3.0",
+  "authors": "laSalle",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "start": "electron .",
     "rebuild": "electron-rebuild -f -w sqlite3",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "build --dir",
+    "dist": "build",
+    "postinstall" : "electron-builder install-app-deps"
   },
   "keywords": [],
+  "build": {
+    "buildDependenciesFromSource": true,
+    "appId": "sqlite-electron",
+    "asar": true,
+    "dmg":{
+      "contents": [
+        {
+          "x":110,
+          "y":150
+        },{
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win":{
+      "target": "NSIS",
+      "icon": "build/icon.ico"
+    }
+  },
   "dependencies": {
     "jquery": "^3.2.1",
     "keymaster": "^1.6.2",
