@@ -4,6 +4,7 @@ const express = require('express'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
   routes = require('./servidor/rutas/rutasModulos'),
+  hateoasLinker = require('express-hateoas-links');
   app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(hateoasLinker);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
