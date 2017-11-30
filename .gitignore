@@ -5,6 +5,8 @@ node.exe
 node.lib
 yarn.lock
 package-lock.json
+*.db
+*.sqlite
 
 #################
 ## Eclipse

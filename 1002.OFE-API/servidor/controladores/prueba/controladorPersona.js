@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-knex = require('./../../configuracion/conexion');
+knex = require('./../../configuracion/conexionPrueba');
 
 router.get('/', function(req, res, next) {
 
