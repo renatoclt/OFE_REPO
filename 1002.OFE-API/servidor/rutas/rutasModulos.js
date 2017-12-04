@@ -1,5 +1,5 @@
 router = require('express').Router();
-nav = require('./rutas')['nav'];
+nav = require('./rutas_const')['nav'];
 
 /**
  * modulos

@@ -1,4 +1,4 @@
-conf = require('./configuracion')['knex'];
+conf = require('./configuracion_const')['knex'];
 
 var knex = require("knex")({
     client: conf.cliente,

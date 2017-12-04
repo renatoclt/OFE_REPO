@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-conf = require('./configuracion')['desarrollo'];
+conf = require('./configuracion_const')['desarrollo'];
 
 var sequelize = new Sequelize(conf.basedatos, null, null, {
   dialect: conf.dialecto,
