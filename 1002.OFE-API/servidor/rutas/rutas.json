@@ -1,0 +1,17 @@
+{
+    "nav":{
+        "ruta": "/v1",
+        "hijos":{
+            "prueba":{
+                "ruta":"/prueba",
+                "hijos":{
+                    "usuario":      { "ruta": "/usuario",       "descripcion": ""},
+                    "saludo":       { "ruta": "/saludo",        "descripcion": ""},
+                    "persona":      { "ruta": "/persona",       "descripcion": ""},
+                    "hateoas":      { "ruta": "/hateoas",       "descripcion": ""},
+                    "user":         { "ruta": "/user",          "descripcion": ""}
+                }
+            }
+        }
+    }
+}

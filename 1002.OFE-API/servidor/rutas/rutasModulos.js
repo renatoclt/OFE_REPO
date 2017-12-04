@@ -1,10 +1,16 @@
-express = require('express');
-router = express.Router();
-//modulo
-prueba = require('./rutasControladoresPrueba');
+router = require('express').Router();
+nav = require(`${__dirname}/rutas.json`)['nav'];
+
+/**
+ * modulos
+ */
+ prueba = require('./rutasControladoresPrueba');
 //producto = require('./rutasControladoresProducto');
 
-router.use('/v1', prueba);
-//router.use('/v1', producto);
+/**
+ * rutas de los modulos
+ */
+router.use(nav.ruta, prueba);
+//router.use(nav.ruta, producto);
 
 module.exports = router;

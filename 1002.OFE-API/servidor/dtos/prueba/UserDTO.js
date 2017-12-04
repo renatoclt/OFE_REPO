@@ -1,14 +1,19 @@
 var User = require('../../modelos/prueba/User');
 
 User.buscarProducto = function (id) {
-    sequelize.sync()
+    var promise = new Promise(function(resolve,reject){
+        sequelize.sync()
         .then(function () {
             User.findById(id).then(function (user) {
-                console.log(user);
+                resolve(user.dataValues);
             });
         }, function (err) {
-            console.log('An error occurred while creating the table:', err);
+            console.log(err);
+            resolve({});
         });
+    });
+    
+    return promise;
 };
 
 module.exports = User;
