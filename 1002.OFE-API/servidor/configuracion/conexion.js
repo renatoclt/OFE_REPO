@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-conf = require(`${__dirname}/configuracion.json`)['desarrollo'];
+conf = require('./configuracion')['desarrollo'];
 
 var sequelize = new Sequelize(conf.basedatos, null, null, {
   dialect: conf.dialecto,

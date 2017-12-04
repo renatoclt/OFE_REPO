@@ -1,4 +1,4 @@
-{
+var configuracion = {
   "prueba":{
     "basededatos": "dbPrueba",
     "almacenamiento":"./1002.OFE-DATABASE/dbPrueba.sqlite",
@@ -18,4 +18,6 @@
     "cliente":"sqlite3",
     "almacenamiento":"./1002.OFE-DATABASE/dbFacturacion.sqlite"
   }
-}
+};
+
+module.exports = configuracion;

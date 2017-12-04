@@ -1,5 +1,5 @@
 router = require('express').Router();
-nav = require(`${__dirname}/rutas.json`)['nav'];
+nav = require('./rutas')['nav'];
 navC = nav.hijos['prueba'];
 
 /**

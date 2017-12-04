@@ -1,4 +1,4 @@
-{
+var rutas = {
     "nav":{
         "ruta": "/v1",
         "hijos":{
@@ -21,3 +21,5 @@
         }
     }
 }
+
+module.exports = rutas;
