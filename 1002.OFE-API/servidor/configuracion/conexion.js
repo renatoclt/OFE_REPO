@@ -1,11 +1,17 @@
-var knex = require("knex")({
-  client: "sqlite3",
-  connection: {
+var Sequelize = require('sequelize');
+conf = require(`${__dirname}/configuracion.json`)['desarrollo'];
 
-    filename: "./1002.OFE-DATABASE/dbFacturacion.sqlite"
-
-  },
-  useNullAsDefault: false
+var sequelize = new Sequelize(conf.basedatos, null, null, {
+  dialect: conf.dialecto,
+  storage: conf.almacenamiento
 });
 
-module.exports = knex;
+sequelize
+  .authenticate()
+  .then(function(err) {
+    console.log('Conexion establecida con la base de datos.');
+  }, function (err) {
+    console.log('Error de conexion de base de datos:', err);
+  });
+
+module.exports = sequelize;

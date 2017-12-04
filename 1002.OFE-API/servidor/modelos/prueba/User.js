@@ -1,4 +1,4 @@
-sequelize = require('./../../configuracion/conexionSequelize');
+sequelize = require('./../../configuracion/conexion');
 Sequelize = require("sequelize");
 
 var User = sequelize.define('User', { 

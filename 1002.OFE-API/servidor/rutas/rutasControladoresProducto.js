@@ -1,9 +1,15 @@
-express = require('express');
-router = express.Router();
+express = require('express').Router();
+nav = require(`${__dirname}/rutas.json`)['nav'];
+navC = nav.hijos['productos'];
 
-//controladores
+/**
+ * Controladores
+ */
 producto = require('../controladores/producto/controladorProducto');
 
-router.use('/productos', producto);
+/**
+ * Rutas
+ */
+router.use(navC.hijos['productos'].ruta, producto);
 
 module.exports = router;

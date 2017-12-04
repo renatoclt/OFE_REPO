@@ -1,18 +1,21 @@
 {
-  "development": {
-    "username": "waiyaki",
-    "password": null,
-    "database": "todos-dev",
-    "host": "127.0.0.1",
-    "port": 5432,
-    "dialect": "postgres"
+  "prueba":{
+    "basededatos": "dbPrueba",
+    "almacenamiento":"./1002.OFE-DATABASE/dbPrueba.sqlite",
+    "dialecto": "sqlite"
   },
-  "test": {
-    "username": "waiyaki",
-    "password": null,
-    "database": "todos-test",
-    "host": "127.0.0.1",
-    "port": 5432,
-    "dialect": "postgres"
+  "desarrollo":{
+    "basedatos":"dbFacturacion",
+    "almacenamiento":"./1002.OFE-DATABASE/dbFacturacion.sqlite",
+    "dialecto": "sqlite"
+  },
+  "produccion":{
+    "basedatos":"dbFacturacion",
+    "almacenamiento":"./1002.OFE-DATABASE/dbFacturacion.sqlite",
+    "dialecto": "sqlite"
+  },
+  "knex":{
+    "cliente":"sqlite3",
+    "almacenamiento":"./1002.OFE-DATABASE/dbFacturacion.sqlite"
   }
 }

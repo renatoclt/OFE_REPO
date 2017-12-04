@@ -1,9 +1,9 @@
+conf = require(`${__dirname}/configuracion.json`)['knex'];
+
 var knex = require("knex")({
-    client: "sqlite3",
+    client: conf.cliente,
     connection: {
-
-        filename: "./1002.OFE-DATABASE/dbFacturacion.sqlite"
-
+        filename: conf.almacenamiento
     },
     useNullAsDefault: false
 });

@@ -3,13 +3,19 @@
         "ruta": "/v1",
         "hijos":{
             "prueba":{
-                "ruta":"/prueba",
+                "ruta":"",
                 "hijos":{
                     "usuario":      { "ruta": "/usuario",       "descripcion": ""},
                     "saludo":       { "ruta": "/saludo",        "descripcion": ""},
                     "persona":      { "ruta": "/persona",       "descripcion": ""},
                     "hateoas":      { "ruta": "/hateoas",       "descripcion": ""},
                     "user":         { "ruta": "/user",          "descripcion": ""}
+                }
+            },
+            "productos":{
+                "ruta":"",
+                "hijos":{
+                    "productos":    { "ruta":"/productos",      "descripcion": ""}
                 }
             }
         }
