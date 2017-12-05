@@ -4,8 +4,8 @@ Producto.buscarProducto = function (id) {
     var promise = new Promise(function(resolve,reject){
         conexion.sync()
         .then(function () {
-            Producto.findById(id).then(function (user) {
-                resolve(user.dataValues);
+            Producto.findById(id).then(function (producto) {
+                resolve(producto.dataValues);
             });
         }, function (err) {
             console.log(err);
@@ -21,6 +21,9 @@ Producto.todos = function(){
         conexion.sync()
         .then(function () {
             Producto.findAll({ where: { estado: 1} }).then(function (productos) {
+                productos = productos.map(function(producto){ 
+                    return producto.dataValues 
+                });
                 resolve(productos);
             });
         }, function (err) {
