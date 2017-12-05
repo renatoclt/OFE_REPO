@@ -1,5 +1,3 @@
-express = require('express').Router();
-nav = require('./rutas_const')['nav'];
 navC = nav.hijos['productos'];
 
 /**

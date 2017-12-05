@@ -1,15 +1,12 @@
-sequelize = require('./../../configuracion/conexion');
-Sequelize = require("sequelize");
-
-var User = sequelize.define('User', { 
+var User = conexion.define('User', { 
     UserId: {
-      type: Sequelize.INTEGER,
+      type: sequelize.INTEGER,
       unique:true,
       primaryKey: true
     },
-    FirstName: Sequelize.TEXT,
-    LastName: Sequelize.INTEGER,
-    Age: Sequelize.INTEGER
+    FirstName: sequelize.TEXT,
+    LastName: sequelize.INTEGER,
+    Age: sequelize.INTEGER
   },{
   tableName: 'User',
   timestamps: false
