@@ -1,3 +1,4 @@
+router = require('express').Router();
 knex = require('./../../configuracion/conexionPrueba');
 
 router.get('/', function (req, res, next) {

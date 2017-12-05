@@ -1,3 +1,5 @@
+router = require('express').Router();
+
 router.get('/', function(req, res, next) {
     var personSchema = {
         "name": "Person",

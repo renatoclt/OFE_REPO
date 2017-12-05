@@ -1,4 +1,3 @@
-//var sequelize = require('sequelize');
 conf = require('./configuracion_const')['desarrollo'];
 
 var conexion = new sequelize(conf.basedatos, null, null, {

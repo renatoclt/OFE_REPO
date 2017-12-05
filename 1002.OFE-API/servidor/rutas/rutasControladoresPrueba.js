@@ -1,3 +1,4 @@
+router = require('express').Router();
 navC = nav.hijos['prueba'];
 
 /**

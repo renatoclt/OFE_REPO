@@ -4,8 +4,12 @@ nav = require('./rutas_const')['nav'];
 /**
  * modulos
  */
-prueba = require('./rutasControladoresPrueba');
 producto = require('./rutasControladoresProducto');
+
+/**
+ * modulo de prueba
+ */
+prueba = require('./rutasControladoresPrueba');
 
 /**
  * rutas de los modulos

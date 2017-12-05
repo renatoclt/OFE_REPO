@@ -1,3 +1,5 @@
+router = require('express').Router();
+
 var UserDTO = require("../../dtos/prueba/UserDTO");
 
 router.get('/', function(req, res, next) {

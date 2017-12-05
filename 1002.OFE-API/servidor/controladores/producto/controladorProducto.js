@@ -1,3 +1,4 @@
+router = require('express').Router();
 ProductoDTO = require("../../dtos/producto/productoDTO");
 
 router.get('/', function(req, res, next) {
