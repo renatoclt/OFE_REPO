@@ -1,11 +1,13 @@
-const express = require('express'),
-  path = require('path'),
-  logger = require('morgan'),
-  cookieParser = require('cookie-parser'),
-  bodyParser = require('body-parser'),
-  routes = require('./servidor/rutas/rutasModulos'),
-  hateoasLinker = require('express-hateoas-links');
-  app = express();
+sequelize = require("sequelize");
+conexion = require('./servidor/configuracion/conexion');
+express = require('express');
+path = require('path');
+logger = require('morgan');
+cookieParser = require('cookie-parser');
+bodyParser = require('body-parser');
+routes = require('./servidor/rutas/rutasModulos');
+hateoasLinker = require('express-hateoas-links');
+app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -20,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 app.use(function (req, res, next) {
-  const err = new Error('Not Found');
+  const err = new Error('No Encontrado');
   err.status = 404;
   next(err);
 });

@@ -2,7 +2,7 @@ var User = require('../../modelos/prueba/User');
 
 User.buscarProducto = function (id) {
     var promise = new Promise(function(resolve,reject){
-        sequelize.sync()
+        conexion.sync()
         .then(function () {
             User.findById(id).then(function (user) {
                 resolve(user.dataValues);
