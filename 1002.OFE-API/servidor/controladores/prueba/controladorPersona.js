@@ -1,17 +1,19 @@
-router = require('express').Router();
 knex = require('./../../configuracion/conexionPrueba');
 
-router.get('/', function (req, res, next) {
+var controladorPersona = function (ruta) {
 
-  let result = knex.select("FirstName").from("User");
+  router.get(ruta.concat('/'), function (req, res, next) {
 
-  result.then(function (rows) {
-    res.json(rows);
-  })
-    .catch(function (reason) {
-      res.json({ "mensaje": "error al conectar a la base de datos" });
-    });
+    let result = knex.select("FirstName").from("User");
 
-});
+    result.then(function (rows) {
+      res.json(rows);
+    })
+      .catch(function (reason) {
+        res.json({ "mensaje": "error al conectar a la base de datos" });
+      });
+  });
+  
+};
 
-module.exports = router;
+module.exports = controladorPersona;

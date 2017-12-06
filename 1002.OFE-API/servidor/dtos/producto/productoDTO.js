@@ -24,6 +24,7 @@ Producto.todos = function(){
                 productos = productos.map(function(producto){ 
                     return producto.dataValues 
                 });
+                
                 resolve(productos);
             });
         }, function (err) {

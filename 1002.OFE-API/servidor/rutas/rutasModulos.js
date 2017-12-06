@@ -4,17 +4,7 @@ nav = require('./rutas_const')['nav'];
 /**
  * modulos
  */
-producto = require('./rutasControladoresProducto');
-
-/**
- * modulo de prueba
- */
-prueba = require('./rutasControladoresPrueba');
-
-/**
- * rutas de los modulos
- */
-router.use(nav.ruta, prueba);
-router.use(nav.ruta, producto);
+producto = require('./rutasControladoresProducto')(nav.ruta);
+prueba = require('./rutasControladoresPrueba')(nav.ruta);
 
 module.exports = router;

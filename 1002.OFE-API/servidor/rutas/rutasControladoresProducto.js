@@ -1,14 +1,12 @@
-router = require('express').Router();
-navC = nav.hijos['productos'];
+var navC = nav.hijos['productos'];
 
-/**
- * Controladores
- */
-producto = require('../controladores/producto/controladorProducto');
+var controladoresProducto = function (ruta) {
 
-/**
- * Rutas
- */
-router.use(navC.hijos['productos'].ruta, producto);
+    /**
+     * Controladores
+     */
+    producto = require('../controladores/producto/controladorProducto')(ruta.concat(navC.hijos['productos'].ruta));
 
-module.exports = router;
+}
+
+module.exports = controladoresProducto;

@@ -1,7 +1,8 @@
-router = require('express').Router();
+var controladorSaludo = function(ruta){
 
-router.get('/', function(req, res, next) {
-    res.json({ mensaje: 'Bienvenido a nuestra api de Offline!' });    
-});
+    router.get(ruta.concat('/'), function(req, res, next) {
+        res.json({ mensaje: 'Bienvenido a nuestra api de Offline!' });    
+    });
+}
 
-module.exports = router;
+module.exports = controladorSaludo;

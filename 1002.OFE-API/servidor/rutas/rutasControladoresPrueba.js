@@ -1,22 +1,16 @@
-router = require('express').Router();
 navC = nav.hijos['prueba'];
 
-/**
- * Controladores
- */
-usuario = require('../controladores/prueba/controladorUsuario');
-//saludo = require('../controladores/prueba/controladorSaludo');
-//persona = require('../controladores/prueba/controladorPersona');
-//hateoas = require('../controladores/prueba/controladorPerson');
-user = require('../controladores/prueba/controladorUser');
+var controladoresPrueba = function (ruta) {
+    
+    /**
+     * Controladores
+     */
+    usuario = require('../controladores/prueba/controladorUsuario')(ruta.concat(navC.hijos['usuario'].ruta));
+    //saludo = require('../controladores/prueba/controladorSaludo')(ruta.concat(navC.hijos['saludo'].ruta));
+    //persona = require('../controladores/prueba/controladorPersona')(ruta.concat(navC.hijos['persona'].ruta));
+    //hateoas = require('../controladores/prueba/controladorPerson')(ruta.concat(navC.hijos['hateoas'].ruta));
+    user = require('../controladores/prueba/controladorUser')(ruta.concat(navC.hijos['user'].ruta));
 
-/**
- * Rutas
- */
-router.use(navC.hijos['usuario'].ruta, usuario);
-//router.use(navC.hijos['saludo'].ruta, saludo);
-//router.use(navC.hijos['persona'].ruta,persona);
-//router.use(navC.hijos['hateoas'].ruta,hateoas);
-router.use(navC.hijos['user'].ruta,user);
+}
 
-module.exports = router;
+module.exports = controladoresPrueba;
