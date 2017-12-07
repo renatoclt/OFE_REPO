@@ -71,10 +71,10 @@ function hateoas(Propiedades) {
         if(pagina>0){
             pageLinks = extend({},pageLinks,{
                 "prev" : {
-                    "href" : Propiedades.baseUrl+"/"+ruta+"?pagina="+(pagina-1)+"&limite="+regxpag
+                    "href" : Propiedades.baseUrl+ruta+"?pagina="+(pagina-1)+"&limite="+regxpag
                 },
                 "first" : {
-                    "href" : Propiedades.baseUrl+"/"+ruta+"?pagina=0&limite="+regxpag
+                    "href" : Propiedades.baseUrl+ruta+"?pagina=0&limite="+regxpag
                 }
             });
         }
@@ -82,10 +82,10 @@ function hateoas(Propiedades) {
         if((pagina+1)<totalPaginas && totalPaginas>1){
             pageLinks = extend({},pageLinks,{
                 "next" : {
-                    "href" : Propiedades.baseUrl+"/"+ruta+"?pagina="+(pagina+1)+"&limite="+regxpag
+                    "href" : Propiedades.baseUrl+ruta+"?pagina="+(pagina+1)+"&limite="+regxpag
                 },
                 "last": {
-                    "href" : Propiedades.baseUrl+"/"+ruta+"?pagina="+(totalPaginas-1)+"&limite="+regxpag
+                    "href" : Propiedades.baseUrl+ruta+"?pagina="+(totalPaginas-1)+"&limite="+regxpag
                 }
             });
         }
