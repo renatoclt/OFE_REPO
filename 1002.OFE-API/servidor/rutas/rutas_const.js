@@ -17,6 +17,13 @@ var rutas = {
                 "hijos":{
                     "productos":    { "ruta":"/productos",      "descripcion": ""}
                 }
+            },
+            "entidades":{
+                "ruta":"",
+                "hijos":{
+                    "natural": {"ruta":"/natural", "descripcion": "Implementacion de servicio rest para persona natural"},
+                    "juridico": {"ruta":"/juridico", "descripcion": "Implementacion de servicio rest para persona juridica"}
+                }
             }
         }
     }
