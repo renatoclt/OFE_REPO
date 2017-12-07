@@ -30,8 +30,7 @@ var controladorProducto = function (ruta, rutaEsp){
             regxpag = req.query.limite;
         }
     
-        ProductoDTO.todos().then(function (productos) {
-            console.log(productos);
+        ProductoDTO.todos(pagina, regxpag).then(function (productos) {
             res.json(hateoas.link(nombreHateo, productos, "productoes", rutaEsp, regxpag, totalreg, pagina));
         });
     });

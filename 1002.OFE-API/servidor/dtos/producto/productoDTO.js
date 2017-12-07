@@ -1,4 +1,4 @@
-Producto = require('../../modelos/producto/producto');
+Producto = require('../../modelos/organizaciones/producto');
 
 Producto.buscarProducto = function (id) {
     var promise = new Promise(function(resolve,reject){
@@ -16,13 +16,21 @@ Producto.buscarProducto = function (id) {
     return promise;
 };
 
-Producto.todos = function(){
+Producto.todos = function(pagina, regxpag){
+    
+    if(pagina==null){
+        throw Error("Falta de argementos requeridos 'pagina'");
+    }
+    if(regxpag==null){
+        throw Error("Falta de argementos requeridos 'regxpag'");
+    }
+   
     var promise = new Promise(function(resolve,reject){
         conexion.sync()
         .then(function () {
-            Producto.findAll({ where: { estado: 1} }).then(function (productos) {
+            Producto.findAll({ where: { estado: 1}, offset: (pagina*regxpag), limit: regxpag }).then(function (productos) {
                 productos = productos.map(function(producto){ 
-                    return producto.dataValues 
+                    return producto.dataValues;
                 });
                 
                 resolve(productos);
