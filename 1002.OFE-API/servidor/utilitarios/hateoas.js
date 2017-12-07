@@ -89,22 +89,22 @@ function hateoas(Propiedades) {
         var hrefNext = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina+1)+"&limite="+regxpag;
         var hrefLast = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(totalPaginas-1)+"&limite="+regxpag;
 
-        if(buscar && (rutaBuscar!=null || rutaBuscar!=undefined)){
-            $.each(rutaBuscar,function(key,value){
-                hrefPrev+="&"+key+"="+value;
-                hrefFirst+="&"+key+"="+value;
-                hrefNext+="&"+key+"="+value;
-                hrefLast+="&"+key+"="+value;
+        if(buscar && (rutaBuscar!=null || rutaBuscar!=undefined)){       
+            Object.keys(rutaBuscar).forEach(function(key){
+                hrefPrev+="&"+key+"="+rutaBuscar[key];
+                hrefFirst+="&"+key+"="+rutaBuscar[key];
+                hrefNext+="&"+key+"="+rutaBuscar[key];
+                hrefLast+="&"+key+"="+rutaBuscar[key];
             });
         }
 
         if(pagina>0){
             pageLinks = extend({},pageLinks,{
                 "prev" : {
-                    "href" : Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina-1)+"&limite="+regxpag
+                    "href" : hrefPrev
                 },
                 "first" : {
-                    "href" : Propiedades.baseUrl+ruta+rutaBus+"?pagina=0&limite="+regxpag
+                    "href" : hrefFirst
                 }
             });
         }
@@ -112,10 +112,10 @@ function hateoas(Propiedades) {
         if((pagina+1)<totalPaginas && totalPaginas>1){
             pageLinks = extend({},pageLinks,{
                 "next" : {
-                    "href" : Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina+1)+"&limite="+regxpag
+                    "href" : hrefNext
                 },
                 "last": {
-                    "href" : Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(totalPaginas-1)+"&limite="+regxpag
+                    "href" : hrefLast
                 }
             });
         }

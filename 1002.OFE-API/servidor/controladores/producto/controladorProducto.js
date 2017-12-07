@@ -30,7 +30,7 @@ var controladorProducto = function (ruta, rutaEsp){
         }
     
         ProductoDTO.todos(pagina, regxpag).then(function (resDTO) {
-            res.json(hateoas.link(nombreHateo, resDTO.productos, "productoes", rutaEsp, regxpag, resDTO.cantidadReg, pagina, false));
+            res.json(hateoas.link(nombreHateo, resDTO.productos, "productoes", rutaEsp, regxpag, resDTO.cantidadReg, pagina, true, {'nauti':2,'na':'sa'}));
         });
     });
     
