@@ -28,12 +28,14 @@ Producto.todos = function(pagina, regxpag){
     var promise = new Promise(function(resolve,reject){
         conexion.sync()
         .then(function () {
-            Producto.findAll({ where: { estado: 1}, offset: (pagina*regxpag), limit: regxpag }).then(function (productos) {
-                productos = productos.map(function(producto){ 
+            Producto.findAndCountAll({ where: { estado: 1}, offset: (pagina*regxpag), limit: regxpag }).then(function (productos) {
+                var cantidadReg = productos.count;
+
+                productos = productos.rows.map(function(producto){ 
                     return producto.dataValues;
                 });
                 
-                resolve(productos);
+                resolve({'productos': productos, 'cantidadReg': cantidadReg});
             });
         }, function (err) {
             console.log(err);

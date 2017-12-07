@@ -19,8 +19,7 @@ var controladorProducto = function (ruta, rutaEsp){
     });
 
     router.get(ruta.concat('/'), function (req, res, next) {
-        var regxpag = 10,
-            totalreg = 5,
+        var regxpag = 10
             pagina = 0;
     
         if (req.query.pagina) {
@@ -30,12 +29,18 @@ var controladorProducto = function (ruta, rutaEsp){
             regxpag = req.query.limite;
         }
     
-        ProductoDTO.todos(pagina, regxpag).then(function (productos) {
-            res.json(hateoas.link(nombreHateo, productos, "productoes", rutaEsp, regxpag, totalreg, pagina));
+        ProductoDTO.todos(pagina, regxpag).then(function (resDTO) {
+            res.json(hateoas.link(nombreHateo, resDTO.productos, "productoes", rutaEsp, regxpag, resDTO.cantidadReg, pagina, false));
         });
     });
     
     router.get(ruta.concat('/:id'), function (req, res, next) {
+        ProductoDTO.buscarProducto(req.params.id).then(function(producto){
+            res.json(hateoas.link(nombreHateo,producto));
+        });
+    });
+
+    router.get(ruta.concat('/search'), function (req, res, next) {
         ProductoDTO.buscarProducto(req.params.id).then(function(producto){
             res.json(hateoas.link(nombreHateo,producto));
         });

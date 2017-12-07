@@ -1,5 +1,8 @@
 var extend = require('extend');
-
+/**
+ * @author Roycer Cordova
+ * @description Generacion de Hatoas para servicios rest
+ */
 var defectoPropiedades = {
     propLinks: "_links",
     propEmbedded: "_embedded",
@@ -60,21 +63,48 @@ function hateoas(Propiedades) {
     var getLinks = getLinksGeneric.bind(null, linkHandlers);
     var getCollectionLinks = getLinksGeneric.bind(null, collectionLinkHandlers);
 
-    function linkCollection(type, collection, nombreColeccion, ruta, regxpag, totalreg, pagina) {
+    function linkCollection(type, collection, nombreColeccion, ruta, regxpag, totalreg, pagina, buscar, rutaBuscar) {
         var totalPaginas = Math.ceil(totalreg/regxpag);
-        var pageLinks = {
-            "search" : {
-                "href" : Propiedades.baseUrl+"/"+ruta+"/search"
-            }
+        var pageLinks = {};
+        var rutaBus = "";
+
+        if(rutaBuscar == null || rutaBuscar == undefined) rutaBuscar = "";
+
+        if(!buscar){
+            pageLinks = extend({},pageLinks,{
+                "search" : {
+                    "href" : Propiedades.baseUrl+"/"+ruta+"/search"
+                }
+            });
+        }
+        else{
+            rutaBus = "/buscar";
+        }
+
+        /**
+         * Paginacion
+         */
+        var hrefPrev = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina-1)+"&limite="+regxpag;
+        var hrefFirst = Propiedades.baseUrl+ruta+rutaBus+"?pagina=0&limite="+regxpag;
+        var hrefNext = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina+1)+"&limite="+regxpag;
+        var hrefLast = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(totalPaginas-1)+"&limite="+regxpag;
+
+        if(buscar && (rutaBuscar!=null || rutaBuscar!=undefined)){
+            $.each(rutaBuscar,function(key,value){
+                hrefPrev+="&"+key+"="+value;
+                hrefFirst+="&"+key+"="+value;
+                hrefNext+="&"+key+"="+value;
+                hrefLast+="&"+key+"="+value;
+            });
         }
 
         if(pagina>0){
             pageLinks = extend({},pageLinks,{
                 "prev" : {
-                    "href" : Propiedades.baseUrl+ruta+"?pagina="+(pagina-1)+"&limite="+regxpag
+                    "href" : Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina-1)+"&limite="+regxpag
                 },
                 "first" : {
-                    "href" : Propiedades.baseUrl+ruta+"?pagina=0&limite="+regxpag
+                    "href" : Propiedades.baseUrl+ruta+rutaBus+"?pagina=0&limite="+regxpag
                 }
             });
         }
@@ -82,14 +112,14 @@ function hateoas(Propiedades) {
         if((pagina+1)<totalPaginas && totalPaginas>1){
             pageLinks = extend({},pageLinks,{
                 "next" : {
-                    "href" : Propiedades.baseUrl+ruta+"?pagina="+(pagina+1)+"&limite="+regxpag
+                    "href" : Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina+1)+"&limite="+regxpag
                 },
                 "last": {
-                    "href" : Propiedades.baseUrl+ruta+"?pagina="+(totalPaginas-1)+"&limite="+regxpag
+                    "href" : Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(totalPaginas-1)+"&limite="+regxpag
                 }
             });
         }
-        
+
         var result = {
             [Propiedades.propEmbedded]: {  [nombreColeccion]: collection.map(link.bind(null, type))
             }
@@ -101,6 +131,7 @@ function hateoas(Propiedades) {
         else{
             result[Propiedades.propLinks] = getCollectionLinks(type, collection);
         }
+        
         result[Propiedades.propPage] = {
             'size' : regxpag,
             'totalElements' : totalreg,
@@ -110,13 +141,25 @@ function hateoas(Propiedades) {
         return result;
     }
 
-    function link(type, data, nombreColeccion, ruta, regxpag, totalreg, pagina) {
+    /**
+     * 
+     * @param {string} type string del nombre del hateo creado
+     * @param {json o array} data array o json de informacion solicitada
+     * @param {string} nombreColeccion parametro del json donde se encuentra la data
+     * @param {string} ruta ruta especifica del servicio
+     * @param {int} regxpag numero de registros a mostrar por la pagina
+     * @param {int} totalreg numero de registros que existen en la base de datos
+     * @param {int} pagina numero de pagina actual
+     * @param {boolean} buscar true si es un servicio de busqueda
+     * @param {json} rutaBuscar json de los parametros de busqueda
+     */
+    function link(type, data, nombreColeccion, ruta, regxpag, totalreg, pagina, buscar,rutaBuscar) {
         regxpag = regxpag | 0;
         totalreg = totalreg | 0;
         pagina = pagina | 0;
         
         if (Array.isArray(data)) {
-            return linkCollection(type, data, nombreColeccion,ruta,regxpag, totalreg, pagina);
+            return linkCollection(type, data, nombreColeccion,ruta,regxpag, totalreg, pagina, buscar,rutaBuscar);
         }
 
         if (linkHandlers[type]) {
