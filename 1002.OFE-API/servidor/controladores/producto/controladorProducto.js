@@ -30,19 +30,43 @@ var controladorProducto = function (ruta, rutaEsp){
         }
     
         ProductoDTO.todos(pagina, regxpag).then(function (resDTO) {
-            res.json(hateoas.link(nombreHateo, resDTO.productos, "productoes", rutaEsp, regxpag, resDTO.cantidadReg, pagina, true, {'nauti':2,'na':'sa'}));
+            res.json(hateoas.link(nombreHateo, resDTO.productos, "productoes", rutaEsp, regxpag, resDTO.cantidadReg, pagina, false));
         });
     });
     
     router.get(ruta.concat('/:id'), function (req, res, next) {
-        ProductoDTO.buscarProducto(req.params.id).then(function(producto){
+        ProductoDTO.buscarProductoId(req.params.id).then(function(producto){
             res.json(hateoas.link(nombreHateo,producto));
         });
     });
 
-    router.get(ruta.concat('/search'), function (req, res, next) {
-        ProductoDTO.buscarProducto(req.params.id).then(function(producto){
-            res.json(hateoas.link(nombreHateo,producto));
+    router.get(ruta.concat('/search/buscar'), function (req, res, next) {
+        
+        var codigo=0,
+            descripcion="",
+            pagina=0,
+            limite=0,
+            ordenar=0;
+
+        if (req.query.codigo && req.query.codigo>0){
+            codigo = req.query.codigo;
+        }
+        if (req.query.descripcion && req.query.descripcion!=""){
+            descripcion = req.query.descripcion;
+        }
+        if (req.query.pagina && req.query.pagina>0){
+            pagina = req.query.pagina;
+        }
+        if (req.query.limite && req.query.limite>0){
+            limite = req.query.limite;
+        }
+        if (req.query.ordenar && req.query.ordenar>0){
+            ordenar = req.query.ordenar;
+        }
+        
+        ProductoDTO.buscarProductoEspecifico(pagina,limite,codigo,descripcion,ordenar).then(function(resDTO){
+            res.json(hateoas.link(nombreHateo, resDTO.productos, "productoes", rutaEsp, limite, resDTO.cantidadReg, pagina, true, {codigo:codigo,descripcion:descripcion,ordenar:ordenar}));
+           
         });
     });
 };

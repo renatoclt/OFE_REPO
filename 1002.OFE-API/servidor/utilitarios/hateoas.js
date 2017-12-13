@@ -70,15 +70,8 @@ function hateoas(Propiedades) {
 
         if(rutaBuscar == null || rutaBuscar == undefined) rutaBuscar = "";
 
-        if(!buscar){
-            pageLinks = extend({},pageLinks,{
-                "search" : {
-                    "href" : Propiedades.baseUrl+"/"+ruta+"/search"
-                }
-            });
-        }
-        else{
-            rutaBus = "/buscar";
+        if(buscar){
+            rutaBus = "/search/buscar";
         }
 
         /**
