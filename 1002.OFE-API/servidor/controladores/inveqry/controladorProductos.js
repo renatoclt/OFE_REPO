@@ -1,8 +1,9 @@
 var ProductoDTO = require("../../dtos/organizaciones/productoDTO");
 
-var controladorProducto = function (ruta, rutaEsp){ 
-    var nombreHateo = "hProducto";
+var controladorProductos = function (ruta, rutaEsp){ 
+    var nombreHateo = "hProductos";
     var hateoas = require('./../../utilitarios/hateoas')({ baseUrl: "http://localhost:3000/v1" });
+    var hateoasObj = require('./../../utilitarios/hateoasObj');
 
     hateoas.registerLinkHandler(nombreHateo, function (objecto) {
         var links = {
@@ -30,13 +31,30 @@ var controladorProducto = function (ruta, rutaEsp){
         }
     
         ProductoDTO.todos(pagina, regxpag).then(function (resDTO) {
-            res.json(hateoas.link(nombreHateo, resDTO.productos, "productoes", rutaEsp, regxpag, resDTO.cantidadReg, pagina, false));
+
+            var hateoasObj_producto = Object.assign({},hateoasObj);
+            hateoasObj_producto.type = nombreHateo;
+            hateoasObj_producto.data = resDTO.productos;
+            hateoasObj_producto.nombreColeccion = "productoes";
+            hateoasObj_producto.ruta = rutaEsp;
+            hateoasObj_producto.paginacion.activo = true;
+            hateoasObj_producto.paginacion.totalreg = resDTO.cantidadReg;
+            hateoasObj_producto.paginacion.regxpag = regxpag;
+            hateoasObj_producto.paginacion.pagina = pagina;
+            hateoasObj_producto.busqueda.activo = false;
+
+            res.json(hateoas.link(hateoasObj_producto));
         });
     });
     
     router.get(ruta.concat('/:id'), function (req, res, next) {
         ProductoDTO.buscarProductoId(req.params.id).then(function(producto){
-            res.json(hateoas.link(nombreHateo,producto));
+            var hateoasObj_producto = Object.assign({},hateoasObj);
+            hateoasObj_producto.type = nombreHateo;
+            hateoasObj_producto.data = producto;
+            hateoasObj_producto.paginacion.activo = false;
+            hateoasObj_producto.busqueda.activo = false;
+            res.json(hateoas.link(hateoasObj_producto));
         });
     });
 
@@ -64,10 +82,21 @@ var controladorProducto = function (ruta, rutaEsp){
         }
         
         ProductoDTO.buscarProductoEspecifico(pagina,limite,codigo,descripcion,ordenar).then(function(resDTO){
-            res.json(hateoas.link(nombreHateo, resDTO.productos, "productoes", rutaEsp, limite, resDTO.cantidadReg, pagina, true, {codigo:codigo,descripcion:descripcion,ordenar:ordenar}));
-           
+            var hateoasObj_producto = Object.assign({},hateoasObj);
+            hateoasObj_producto.type = nombreHateo;
+            hateoasObj_producto.data = resDTO.productos;
+            hateoasObj_producto.nombreColeccion = "productoes";
+            hateoasObj_producto.ruta = rutaEsp;
+            hateoasObj_producto.paginacion.activo = true;
+            hateoasObj_producto.paginacion.totalreg = resDTO.cantidadReg;
+            hateoasObj_producto.paginacion.regxpag = limite;
+            hateoasObj_producto.paginacion.pagina = pagina;
+            hateoasObj_producto.busqueda.activo = true;
+            hateoasObj_producto.busqueda.parametros = {codigo:codigo,descripcion:descripcion,ordenar:ordenar};
+            hateoasObj_producto.busqueda.ruta = "/search/buscar";
+            res.json(hateoas.link(hateoasObj_producto));           
         });
     });
 };
 
-module.exports = controladorProducto;
+module.exports = controladorProductos;

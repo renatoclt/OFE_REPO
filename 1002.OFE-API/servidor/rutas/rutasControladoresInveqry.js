@@ -1,12 +1,12 @@
 var navC = nav.hijos['productos'];
 
-var controladoresProducto = function (ruta) {
+var controladoresInveqry = function (ruta) {
 
     /**
      * Controladores
      */
-    producto = require('../controladores/inveqry/controladorProductos')(ruta.concat(navC.hijos['productos'].ruta),navC.hijos['productos'].ruta);
+    productos = require('../controladores/inveqry/controladorProductos')(ruta.concat(navC.hijos['productos'].ruta),navC.hijos['productos'].ruta);
 
 }
 
-module.exports = controladoresProducto;
+module.exports = controladoresInveqry;

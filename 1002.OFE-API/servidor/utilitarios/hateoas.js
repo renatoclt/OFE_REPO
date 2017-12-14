@@ -63,97 +63,97 @@ function hateoas(Propiedades) {
     var getLinks = getLinksGeneric.bind(null, linkHandlers);
     var getCollectionLinks = getLinksGeneric.bind(null, collectionLinkHandlers);
 
-    function linkCollection(type, collection, nombreColeccion, ruta, regxpag, totalreg, pagina, buscar, rutaBuscar) {
-        var totalPaginas = Math.ceil(totalreg/regxpag);
-        var pageLinks = {};
-        var rutaBus = "";
+    function linkCollection(hateoasObj) {
 
-        if(rutaBuscar == null || rutaBuscar == undefined) rutaBuscar = "";
+        var result = {};
 
-        if(buscar){
-            rutaBus = "/search/buscar";
-        }
+        result[Propiedades.propEmbedded] = extend({},{[hateoasObj.nombreColeccion]: (hateoasObj.data).map(link_data.bind(null, hateoasObj.type))});        
+        result[Propiedades.propLinks] = getCollectionLinks(hateoasObj.type, hateoasObj.data);
+        
+        if(hateoasObj.paginacion.activo){
 
-        /**
-         * Paginacion
-         */
-        var hrefPrev = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina-1)+"&limite="+regxpag;
-        var hrefFirst = Propiedades.baseUrl+ruta+rutaBus+"?pagina=0&limite="+regxpag;
-        var hrefNext = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina+1)+"&limite="+regxpag;
-        var hrefLast = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(totalPaginas-1)+"&limite="+regxpag;
-
-        if(buscar && (rutaBuscar!=null || rutaBuscar!=undefined)){       
-            Object.keys(rutaBuscar).forEach(function(key){
-                hrefPrev+="&"+key+"="+rutaBuscar[key];
-                hrefFirst+="&"+key+"="+rutaBuscar[key];
-                hrefNext+="&"+key+"="+rutaBuscar[key];
-                hrefLast+="&"+key+"="+rutaBuscar[key];
-            });
-        }
-
-        if(pagina>0){
-            pageLinks = extend({},pageLinks,{
-                "prev" : {
-                    "href" : hrefPrev
-                },
-                "first" : {
-                    "href" : hrefFirst
-                }
-            });
-        }
-
-        if((pagina+1)<totalPaginas && totalPaginas>1){
-            pageLinks = extend({},pageLinks,{
-                "next" : {
-                    "href" : hrefNext
-                },
-                "last": {
-                    "href" : hrefLast
-                }
-            });
-        }
-
-        var result = {
-            [Propiedades.propEmbedded]: {  [nombreColeccion]: collection.map(link.bind(null, type))
+            var totalreg = hateoasObj.paginacion.totalreg | 0;
+            var regxpag = hateoasObj.paginacion.regxpag | 0;
+            var pagina = hateoasObj.paginacion.pagina | 0;
+            var ruta = hateoasObj.ruta;
+            var totalPaginas = Math.ceil(totalreg/regxpag);
+            var pageLinks = {};
+            var rutaBus = "";
+            
+            if(hateoasObj.busqueda.activo){
+                if(!(hateoasObj.busqueda.ruta == null || hateoasObj.busqueda.ruta == undefined)) 
+                    rutaBus = hateoasObj.busqueda.ruta;
             }
-        };
+            
+            /**
+             * Paginacion
+             */
+            var hrefPrev = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina-1)+"&limite="+regxpag;
+            var hrefFirst = Propiedades.baseUrl+ruta+rutaBus+"?pagina=0&limite="+regxpag;
+            var hrefNext = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(pagina+1)+"&limite="+regxpag;
+            var hrefLast = Propiedades.baseUrl+ruta+rutaBus+"?pagina="+(totalPaginas-1)+"&limite="+regxpag;
+
+            if(hateoasObj.busqueda.activo && hateoasObj.busqueda.parametros!=null){
+                Object.keys(hateoasObj.busqueda.parametros).forEach(function(key){
+                    hrefPrev+="&"+key+"="+hateoasObj.busqueda.parametros[key];
+                    hrefFirst+="&"+key+"="+hateoasObj.busqueda.parametros[key];
+                    hrefNext+="&"+key+"="+hateoasObj.busqueda.parametros[key];
+                    hrefLast+="&"+key+"="+hateoasObj.busqueda.parametros[key];
+                });
+            }
+
+            if(pagina>0){
+                pageLinks = extend({},pageLinks,{
+                    "prev" : {
+                        "href" : hrefPrev
+                    },
+                    "first" : {
+                        "href" : hrefFirst
+                    }
+                });
+            }
+    
+            if((pagina+1)<totalPaginas && totalPaginas>1){
+                pageLinks = extend({},pageLinks,{
+                    "next" : {
+                        "href" : hrefNext
+                    },
+                    "last": {
+                        "href" : hrefLast
+                    }
+                });
+            }
+
+            if(regxpag<totalreg){
+                result[Propiedades.propLinks] = extend({},result[Propiedades.propLinks],pageLinks);
+            }
+            
+            result[Propiedades.propPage] = {
+                'size' : regxpag,
+                'totalElements' : totalreg,
+                'totalPages' : totalPaginas,
+                'number' : pagina
+            }
+        }
         
-        if(regxpag<totalreg){
-            result[Propiedades.propLinks] = extend({},getCollectionLinks(type, collection),pageLinks);
-        }
-        else{
-            result[Propiedades.propLinks] = getCollectionLinks(type, collection);
-        }
-        
-        result[Propiedades.propPage] = {
-            'size' : regxpag,
-            'totalElements' : totalreg,
-            'totalPages' : totalPaginas,
-            'number' : pagina
-        }
         return result;
     }
 
     /**
      * 
-     * @param {string} type string del nombre del hateo creado
-     * @param {json o array} data array o json de informacion solicitada
-     * @param {string} nombreColeccion parametro del json donde se encuentra la data
-     * @param {string} ruta ruta especifica del servicio
-     * @param {int} regxpag numero de registros a mostrar por la pagina
-     * @param {int} totalreg numero de registros que existen en la base de datos
-     * @param {int} pagina numero de pagina actual
-     * @param {boolean} buscar true si es un servicio de busqueda
-     * @param {json} rutaBuscar json de los parametros de busqueda
+     * @param {json} hateoasObj objeto de hateoas
      */
-    function link(type, data, nombreColeccion, ruta, regxpag, totalreg, pagina, buscar,rutaBuscar) {
-        regxpag = regxpag | 0;
-        totalreg = totalreg | 0;
-        pagina = pagina | 0;
+    function link(hateoasObj) {
         
-        if (Array.isArray(data)) {
-            return linkCollection(type, data, nombreColeccion,ruta,regxpag, totalreg, pagina, buscar,rutaBuscar);
+        if (Array.isArray(hateoasObj.data)) {
+            return linkCollection(hateoasObj);
         }
+        else{
+            return link_data(hateoasObj.type,hateoasObj.data);
+        }
+    }
+
+    function link_data(type,data){
 
         if (linkHandlers[type]) {
             data[Propiedades.propLinks] = getLinks(type, data);
