@@ -1,31 +1,93 @@
+/**
+ * persistencia de la tabla t_comprobantepago en la variable ComprobantePago
+ * tabla creada de EBIZ
+ * Modificado --- creado --/--/----
+ * @author Renato creado 14/12/2017
+ * @argument 1 sobrenombre de la tabla
+ * @argument 2 campos de la tabla
+ * @argument 3 tabla sqlite
+ */
 var Maestra = conexion.define(
     'Maestra',{
-        id:{
-            type: sequelize.INTEGER,
-            field: "se_iproducto",
-            autoIncrement: true,
-            unique: true,
-            primaryKey: true
+        org:{
+            type: sequelize.TEXT(255),
+            field: "vc_org",
+            allowNull:false   
         },
-        usuarioCreacion: {
-          type: sequelize.TEXT,
-          field: "vc_usu_creacion",
+        idTabla: {
+          type: sequelize.TEXT(255),
+          field: "vc_idtabla",
+          allowNull:false  
         },
-        usuarioModificacion: {
-          type: sequelize.TEXT,
-          field: "vc_usu_modifica",
+        idRegistro: {
+          type: sequelize.TEXT(255),
+          field: "vc_idregistro",
+          allowNull:false  
+        },
+        descCorta: {
+          type: sequelize.TEXT(255),
+          field: "vc_desc_corta", 
+        },
+        descLargaEs: {
+          type: sequelize.TEXT(255),
+          field: "vc_desc_larga_es"  
+        },
+        descLargEn: {
+          type: sequelize.TEXT(255),
+          field: "vc_desc_larga_en",
+        },
+        tipo: {
+          type:  sequelize.TEXT(255),
+          field: "vc_tipo",
+        },
+        iso: {
+          type:  sequelize.TEXT(255),
+          field: "vc_iso",
+        },
+        equivalencia: {
+          type:  sequelize.TEXT(255),
+          field: "vc_equivalencia",
+        },
+        equivalenciaSalida: {
+          type:  sequelize.TEXT(255),
+          field: "vc_equivalenciasalida"
+        },
+        habilitado: {
+          type: sequelize.INTEGER(32),
+          field: "in_habilitado"
+        },
+        orden: {
+          type: sequelize.INTEGER(32),
+          field: "in_orden"
+        },
+        default: {
+          type:  sequelize.INTEGER(32),
+          field: "in_default"
+        },
+        idTablaPadre: {
+          type:  sequelize.TEXT(255),
+          field: "vc_idtabla_padre"
+        },
+        registroPadre: {
+          type:  sequelize.TEXT(255),
+          field: "vc_idregistro_padre"
         },
         fechaCreacion: {
-          type: sequelize.TEXT(6),
-          field: "ts_fec_creacion",
+          type:  sequelize.TEXT(255),
+          field: "ts_fecha_creacion",
+          allowNull: false
         },
         fechaModificacion: {
-          type: sequelize.TEXT(6),
-          field: "ts_fec_modifica",
+          type: sequelize.TEXT(255),
+          field: "ts_fecha_modificacion"
         },
-        estado: {
-          type: sequelize.INTEGER(32),
-          field: "in_estado"
+        portal: {
+          type: sequelize.TEXT(255),
+          field: "vc_portal"
+        },
+        perfil: {
+          type: sequelize.TEXT(255),
+          field: "vc_perfil"
         },
         fechaSincronizado: {
           type: sequelize.TEXT,

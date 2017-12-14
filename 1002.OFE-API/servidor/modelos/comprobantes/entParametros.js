@@ -1,3 +1,11 @@
+/**
+ * persistencia de la tabla t_comprobantepago en la variable ComprobantePago
+ * Modificado --- creado --/--/----
+ * @author Renato creado 14/12/2017
+ * @argument 1 sobrenombre de la tabla
+ * @argument 2 campos de la tabla
+ * @argument 3 tabla sqlite
+ */
 var EntParametro = conexion.define(
     'EntParametro',{
         id:{
@@ -5,8 +13,17 @@ var EntParametro = conexion.define(
             field: "se_iproducto",
             autoIncrement: true,
             unique: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull:false   
         },
+        iParamEnt: {
+          type: sequelize.INTEGER,
+          field: "se_iparam_ent",
+        },
+        json: {
+          type: sequelize.TEXT,
+          field: "vc_json",
+        },        
         usuarioCreacion: {
           type: sequelize.TEXT,
           field: "vc_usu_creacion",
