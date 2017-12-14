@@ -31,7 +31,7 @@ Producto.todos = function(pagina, regxpag){
         .then(function () {
             Producto.findAndCountAll({ where: { estado: 1}, offset: (pagina*regxpag), limit: regxpag }).then(function (productos) {
                 var cantidadReg = productos.count;
-
+                
                 productos = productos.rows.map(function(producto){ 
                     return producto.dataValues;
                 });

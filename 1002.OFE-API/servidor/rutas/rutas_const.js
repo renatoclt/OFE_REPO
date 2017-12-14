@@ -24,6 +24,12 @@ var rutas = {
                     "natural": {"ruta":"/natural", "descripcion": "Implementacion de servicio rest para persona natural"},
                     "juridico": {"ruta":"/juridico", "descripcion": "Implementacion de servicio rest para persona juridica"}
                 }
+            },
+            "parmqry":{
+                "ruta":"",
+                "hijos":{
+                    "tipoafectacionigv":{"ruta":"/tipoafectacionigv", "descripcion": "Implementacion de servicio rest para obtener el tipo de afectacion IGV"}
+                }
             }
         }
     }
