@@ -1,67 +1,64 @@
 /**
- * persistencia de la tabla t_usuario en la variable Usuario
+ * persistencia de la tabla t_tipo_prec_ven en la variable TipoPrecVenta
  * Modificado --- creado --/--/----
  * @author Renato creado 14/12/2017
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var Usuario = conexion.define('Usuario',
+var TipoPrecVenta = conexion.define('TipoPrecVenta',
   {
     id:{
       type: sequelize.INTEGER,
-      field: "se_iusuario",
+      field: "se_itipo_prec",
       autoIncrement: true,
       unique: true,
       primaryKey: true
     },
-    nomUsuario: {
-      type:  sequelize.TEXT,
-      field: "vc_nom_usuario",
+    iIdioma: {
+      type:sequelize.INTEGER(32),
+      field: "se_iidioma",
+      allowNull:false
     },
-    nombre: {
+    codigo: {
+      type:sequelize.INTEGER(32),
+      field: "in_codigo",
+      allowNull:false
+    },
+    desc: {
+      type:sequelize.TEXT,
+      field: "vc_desc",
+      allowNull:false
+    },
+    catalogo: {
       type: sequelize.TEXT,
-      field: "vc_nombre",
-    },
-    apellido: {
-      type: sequelize.TEXT,
-      field: "vc_apellido",
-    },
-    docIdentidad: {
-      type: sequelize.TEXT,
-      field: "vc_docidentidad",
-    },
-    numDocIdentidad: {
-      type: sequelize.TEXT,
-      field: "vc_num_docidentidad",
-    },
-    correo: {
-      type: sequelize.TEXT,
-      field: "vc_correo",
-    },
-    identidad: {
-      type: sequelize.INTEGER,
-      field: "se_identidad",
+      field: "vc_catalogo",
+      allowNull:false
     },
     usuarioCreacion: {
-      type: sequelize.INTEGER,
+      type: sequelize.TEXT,
       field: "vc_usu_creacion",
+      allowNull:false
     },
     usuarioModificacion: {
-      type: sequelize.INTEGER,
+      type: sequelize.TEXT,
       field: "vc_usu_modifica",
+      allowNull:false
     },
     fechaCreacion: {
       type: sequelize.TEXT(6),
       field: "ts_fec_creacion",
+      allowNull:false
     },
     fechaModificacion: {
       type: sequelize.TEXT(6),
       field: "ts_fec_modifica",
+      allowNull:false
     },
     estado: {
       type: sequelize.INTEGER(32),
-      field: "in_estado"
+      field: "in_estado",
+      allowNull:false
     },
     fechaSincronizado: {
       type: sequelize.TEXT,
@@ -73,7 +70,7 @@ var Usuario = conexion.define('Usuario',
     }        
   },
   {
-    tableName: 't_usuario',
+    tableName: 't_tipo_prec_ven',
     timestamps: false
   }
 );
