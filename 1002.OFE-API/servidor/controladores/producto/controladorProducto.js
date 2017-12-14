@@ -41,7 +41,6 @@ var controladorProducto = function (ruta, rutaEsp){
     });
 
     router.get(ruta.concat('/search/buscar'), function (req, res, next) {
-        
         var codigo=0,
             descripcion="",
             pagina=0,

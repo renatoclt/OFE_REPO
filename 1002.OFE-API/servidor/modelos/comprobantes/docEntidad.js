@@ -1,23 +1,11 @@
-var Archivo = conexion.define(
-    'Archivo',{
+var DocEntidad = conexion.define(
+    'DocEntidad',{
         id:{
             type: sequelize.INTEGER,
             field: "se_iproducto",
             autoIncrement: true,
             unique: true,
             primaryKey: true
-        },
-        idComprobantePago: {
-            type: sequelize.INTEGER(32),
-            field: "in_idComprobantePago",
-        },
-        ubicacion: {
-            type: sequelize.TEXT,
-            field: "vc_ubicacion",
-        },
-        tipo: {
-            type: sequelize.INTEGER(32),
-            field: "in_tipo",
         },
         usuarioCreacion: {
           type: sequelize.TEXT,
@@ -49,7 +37,7 @@ var Archivo = conexion.define(
         }        
     },
     {
-        tableName: 't_archivo',
+        tableName: 't_doc_entidad',
         timestamps: false
     }
 );
