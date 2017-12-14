@@ -5,7 +5,7 @@ var controladoresProducto = function (ruta) {
     /**
      * Controladores
      */
-    producto = require('../controladores/producto/controladorProducto')(ruta.concat(navC.hijos['productos'].ruta),navC.hijos['productos'].ruta);
+    producto = require('../controladores/inveqry/controladorProductos')(ruta.concat(navC.hijos['productos'].ruta),navC.hijos['productos'].ruta);
 
 }
 

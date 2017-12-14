@@ -1,4 +1,4 @@
-var ProductoDTO = require("../../dtos/producto/productoDTO");
+var ProductoDTO = require("../../dtos/organizaciones/productoDTO");
 
 var controladorProducto = function (ruta, rutaEsp){ 
     var nombreHateo = "hProducto";
