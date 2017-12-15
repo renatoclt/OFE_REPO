@@ -1,21 +1,20 @@
 /**
  * persistencia de la tabla t_tipo_prec_ven en la variable TipoPrecVenta
- * Modificado --- creado --/--/----
  * @author Renato creado 14/12/2017
+ * @author Roycer modificado 15/12/2017
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
 var TipoPrecVenta = conexion.define('TipoPrecVenta',
   {
-    id:{
+    idTipoPrecioVenta:{
       type: sequelize.INTEGER,
       field: "se_itipo_prec",
       autoIncrement: true,
-      unique: true,
       primaryKey: true
     },
-    iIdioma: {
+    idIdioma: {
       type:sequelize.INTEGER(32),
       field: "se_iidioma",
       allowNull:false
@@ -25,7 +24,7 @@ var TipoPrecVenta = conexion.define('TipoPrecVenta',
       field: "in_codigo",
       allowNull:false
     },
-    desc: {
+    descripcion: {
       type:sequelize.TEXT,
       field: "vc_desc",
       allowNull:false
@@ -74,3 +73,5 @@ var TipoPrecVenta = conexion.define('TipoPrecVenta',
     timestamps: false
   }
 );
+
+module.exports = TipoPrecVenta;

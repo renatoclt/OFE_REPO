@@ -1,14 +1,14 @@
-var TipoAfecIgvDTO = require("../../dtos/configuracion/tipoAfecIgvDTO");
+var TipoPrecVenDTO = require("../../dtos/configuracion/tipoPrecVenDTO");
 
-var contoladorTipoafectacionigv = function (ruta, rutaEsp){ 
-    var nombreHateo = "hTipoafectacionigv";
+var controladorTipoprecioventa = function(ruta, rutaEsp){
+    var nombreHateo = "hTipoprecioventa";
     var hateoas = require('./../../utilitarios/hateoas')({ baseUrl: "http://localhost:3000/v1" });
     var hateoasObj = require('./../../utilitarios/hateoasObj');
 
     hateoas.registerLinkHandler(nombreHateo, function (objecto) {
         var links = {
             "self": {
-                "href": "http://localhost:3000/v1"+rutaEsp.concat('/') + objecto.idTipoAfectacion
+                "href": "http://localhost:3000/v1"+rutaEsp.concat('/') + objecto.idTipoPrecioVenta
             }
         };
         return links;
@@ -22,14 +22,14 @@ var contoladorTipoafectacionigv = function (ruta, rutaEsp){
         };
         return links;
     });
-
+    
     router.get(ruta.concat('/'), function (req, res, next) {
     
-        TipoAfecIgvDTO.todos().then(function (resDTO) {
+        TipoPrecVenDTO.todos().then(function (resDTO) {
             var hateoasObj_n = Object.assign({},hateoasObj);
             hateoasObj_n.type = nombreHateo;
             hateoasObj_n.data = resDTO;
-            hateoasObj_n.nombreColeccion = "tipoAfectacionIgvRedises";
+            hateoasObj_n.nombreColeccion = "tipoPrecioVentaRedises";
             hateoasObj_n.ruta = rutaEsp;
             hateoasObj_n.paginacion.activo = false;
             hateoasObj_n.busqueda.activo = false;
@@ -39,7 +39,7 @@ var contoladorTipoafectacionigv = function (ruta, rutaEsp){
 
     router.get(ruta.concat('/:id'), function (req, res, next) {
         
-        TipoAfecIgvDTO.buscarId(req.params.id).then(function (resDTO) {
+        TipoPrecVenDTO.buscarId(req.params.id).then(function (resDTO) {
             var hateoasObj_n = Object.assign({},hateoasObj);
             hateoasObj_n.type = nombreHateo;
             hateoasObj_n.data = resDTO;
@@ -48,6 +48,6 @@ var contoladorTipoafectacionigv = function (ruta, rutaEsp){
             res.json(hateoas.link(hateoasObj_n));
         });
     });
-};
+}
 
-module.exports = contoladorTipoafectacionigv;
+module.exports = controladorTipoprecioventa;

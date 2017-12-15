@@ -21,4 +21,21 @@ TipoAfecIgv.todos = function(){
     return promise;
 }
 
+TipoAfecIgv.buscarId = function(id){
+    
+    var promise = new Promise(function(resolve,reject){
+        conexion.sync()
+        .then(function () {
+            TipoAfecIgv.findById(id).then(function (tipoAfecIgv) {
+                resolve(tipoAfecIgv.dataValues);
+            });
+        }, function (err) {
+            console.log(err);
+            resolve({});
+        });
+    });
+     
+    return promise;
+ }
+
 module.exports = TipoAfecIgv;

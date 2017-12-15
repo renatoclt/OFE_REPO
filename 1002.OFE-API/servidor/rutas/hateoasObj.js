@@ -1,3 +1,8 @@
+/**
+ * @author Roycer Cordova
+ * @description Estandar de un objeto para realizar el hateo
+ */
+
 var hateoasObj = {
     type: null,                     //{string} nombre del hateo creado
     data: null,                     //{json o array} informacion solicitada
