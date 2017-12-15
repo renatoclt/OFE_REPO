@@ -21,7 +21,7 @@ TipoAfecIgv.todos = function(){
     return promise;
 }
 
-TipoAfecIgv.buscarProductoId = function(id){
+TipoAfecIgv.buscarId = function(id){
     
     var promise = new Promise(function(resolve,reject){
         conexion.sync()

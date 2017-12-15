@@ -141,7 +141,7 @@ function hateoas(Propiedades) {
 
     /**
      * 
-     * @param {json} hateoasObj objeto de hateoas
+     * @param {json} hateoasObj objeto estandar de hateo
      */
     function link(hateoasObj) {
         

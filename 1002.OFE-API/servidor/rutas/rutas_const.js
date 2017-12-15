@@ -1,3 +1,7 @@
+/**
+ * @author Roycer Cordova
+ * @description Objecto de tipo json que contiene las constantes de las rutas de los servicios
+ */
 var rutas = {
     "nav":{
         "ruta": "/v1",
@@ -28,7 +32,8 @@ var rutas = {
             "parmqry":{
                 "ruta":"",
                 "hijos":{
-                    "tipoafectacionigv":{"ruta":"/tipoafectacionigv", "descripcion": "Implementacion de servicio rest para obtener el tipo de afectacion IGV"}
+                    "tipoafectacionigv":{"ruta":"/tipoafectacionigv", "descripcion": "Implementacion de servicio rest para obtener el tipo de afectacion IGV"},
+                    "tipoprecioventa":  {"ruta":"/tipoprecioventa", "descripcion":"Implementacion de servicio rest para listar los tipos de precio de venta"}
                 }
             }
         }
