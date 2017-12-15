@@ -33,11 +33,8 @@ var rutas = {
                 "ruta":"",
                 "hijos":{
                     "tipoafectacionigv":{"ruta":"/tipoafectacionigv", "descripcion": "Implementacion de servicio rest para obtener el tipo de afectacion IGV"},
-<<<<<<< HEAD
-                    "maestra":{"ruta":"/maestra", "descripcion": "Implementacion de servicio rest para la tabla maestra"}
-=======
+                    "maestra":{"ruta":"/maestra", "descripcion": "Implementacion de servicio rest para la tabla maestra"},
                     "tipoprecioventa":  {"ruta":"/tipoprecioventa", "descripcion":"Implementacion de servicio rest para listar los tipos de precio de venta"}
->>>>>>> 04689aca3718717801ad7147c659ed7856db33db
                 }
             }
         }

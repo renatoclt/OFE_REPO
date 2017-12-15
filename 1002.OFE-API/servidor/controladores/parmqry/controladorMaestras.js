@@ -1,13 +1,13 @@
-var dtoControladorMaestra = require('../../modelos/comprobantes/maestra')
+var Maestra = require('../../dtos/configuracion/maestrasDTO')
 
 var contoladorMaestras = function (ruta, rutaEsp){ 
     router.get(ruta.concat('/'), function (req, res, next) {
         res.send({embebed:'prueba'});
     });
-
+    
     router.get(ruta.concat('/search/filtros'), function (req, res, next) {
         var tabla=0;
-        dtoControladorMaestra.
+        Maestra.filtro();
         if (req.query.tabla && req.query.tabla>0){
             console.log('ingrese');
             codigo = req.query.codigo;

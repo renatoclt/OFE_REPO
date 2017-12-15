@@ -1,6 +1,6 @@
 var Maestra = require('../../modelos/comprobantes/maestra')
 
-Maestra.filtro = function(req){
+Maestra.filtro = function(){
     sequelize.authenticate().then(function(){
         console.log('ingrese');
     });
