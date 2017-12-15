@@ -7,7 +7,9 @@ var contoladorTipoafectacionigv = function (ruta, rutaEsp){
 
     hateoas.registerLinkHandler(nombreHateo, function (objecto) {
         var links = {
-            "self": rutaEsp.concat('/') + objecto.idTipoAfectacion
+            "self": {
+                "href": "http://localhost:3000/v1"+rutaEsp.concat('/') + objecto.idTipoAfectacion
+            }
         };
         return links;
     });
@@ -36,6 +38,18 @@ var contoladorTipoafectacionigv = function (ruta, rutaEsp){
             hateoasObj_producto.data = resDTO;
             hateoasObj_producto.nombreColeccion = "tipoAfectacionIgvRedises";
             hateoasObj_producto.ruta = rutaEsp;
+            hateoasObj_producto.paginacion.activo = false;
+            hateoasObj_producto.busqueda.activo = false;
+            res.json(hateoas.link(hateoasObj_producto));
+        });
+    });
+
+    router.get(ruta.concat('/:id'), function (req, res, next) {
+        
+        TipoAfecIgvDTO.buscarProductoId(req.params.id).then(function (resDTO) {
+            var hateoasObj_producto = Object.assign({},hateoasObj);
+            hateoasObj_producto.type = nombreHateo;
+            hateoasObj_producto.data = resDTO;
             hateoasObj_producto.paginacion.activo = false;
             hateoasObj_producto.busqueda.activo = false;
             res.json(hateoas.link(hateoasObj_producto));
