@@ -53,3 +53,5 @@ var ParametroEnt = conexion.define('ParametroEnt',
     timestamps: false
   }
 );
+
+module.exports = ParametroEnt;

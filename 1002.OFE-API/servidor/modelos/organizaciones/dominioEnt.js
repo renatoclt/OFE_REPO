@@ -74,3 +74,5 @@ var DominioEnt = conexion.define('DominioEnt',
     timestamps: false
   }
 );
+
+module.exports = DominioEnt;

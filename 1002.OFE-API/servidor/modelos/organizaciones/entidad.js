@@ -81,3 +81,5 @@ var Entidad = conexion.define('Entidad',
         tableName: 't_entidad',
         timestamps: false
 });
+
+module.exports = Entidad;
