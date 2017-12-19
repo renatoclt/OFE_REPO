@@ -10,8 +10,7 @@ var EntParametro = conexion.define('EntParametro',
   {
     id:{
       type: sequelize.INTEGER,
-      field: "se_iproducto",
-      autoIncrement: true,
+      field: "se_ientidad",
       unique: true,
       primaryKey: true,
       allowNull:false   
@@ -54,7 +53,9 @@ var EntParametro = conexion.define('EntParametro',
     }        
   },
   {
-    tableName: 't_ent_parametro',
+    tableName: 't_ent_parametros',
     timestamps: false
   }
 );
+
+module.exports = EntParametro;
