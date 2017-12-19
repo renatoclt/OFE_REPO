@@ -9,30 +9,31 @@
  */
 var Maestra = conexion.define('Maestra',
   {
-    org:{
+    id:{
+      primaryKey: true,
       type: sequelize.TEXT(255),
       field: "vc_org",
       allowNull:false   
     },
-    idTabla: {
+    tabla: {
       type: sequelize.TEXT(255),
       field: "vc_idtabla",
       allowNull:false  
     },
-    idRegistro: {
+    codigo: {
       type: sequelize.TEXT(255),
       field: "vc_idregistro",
       allowNull:false  
     },
-    descCorta: {
+    descripcionCorta: {
       type: sequelize.TEXT(255),
       field: "vc_desc_corta", 
     },
-    descLargaEs: {
+    descripcionLarga: {
       type: sequelize.TEXT(255),
       field: "vc_desc_larga_es"  
     },
-    descLargEn: {
+    descripcionLargaIngles: {
       type: sequelize.TEXT(255),
       field: "vc_desc_larga_en",
     },
@@ -103,3 +104,5 @@ var Maestra = conexion.define('Maestra',
     timestamps: false
   }
 );
+
+module.exports = Maestra;

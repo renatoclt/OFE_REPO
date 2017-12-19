@@ -1,4 +1,4 @@
-var Maestra = require('../../dtos/configuracion/maestrasDTO');
+var comprobante = require('../../dtos/comprobante/comprobantePago');
 var sequelize = require('sequelize');
 
 /**

@@ -9,5 +9,4 @@ var controladoresParmqry = function (ruta) {
     maestra = require('../controladores/parmqry/controladorMaestras')(ruta.concat(navC.hijos['maestra'].ruta),navC.hijos['maestra'].ruta);
     tipoprecioventa = require('../controladores/parmqry/controladorTipoprecioventa')(ruta.concat(navC.hijos['tipoprecioventa'].ruta),navC.hijos['tipoprecioventa'].ruta);
 }
-
 module.exports = controladoresParmqry;
