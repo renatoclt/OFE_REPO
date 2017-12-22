@@ -11,7 +11,6 @@ var ComprobantePago = conexion.define('ComprobantePago',
     id:{
         type: sequelize.TEXT,
         field: "in_idcomprobantepago",
-        autoIncrement: true,
         unique: true,
         primaryKey: true,
         allowNull:false
@@ -28,7 +27,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
     },
     idOrganizacionCompradora: {
       type: sequelize.INTEGER(32),
-      field: "in_idorganizacionproveedora",
+      field: "in_idorganizacioncompradora",
       allowNull:false
     },
     idOrganizacionProveedora: {
@@ -442,3 +441,5 @@ var ComprobantePago = conexion.define('ComprobantePago',
     timestamps: false
   }
 );
+
+module.exports = ComprobantePago;

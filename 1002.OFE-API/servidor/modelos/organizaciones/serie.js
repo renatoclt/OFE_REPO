@@ -1,3 +1,4 @@
+var DominioEnt = require('../organizaciones/dominioEnt')
 /**
  * persistencia de la tabla t_serie en la variable Serie
  * Modificado --- creado --/--/----
@@ -15,19 +16,24 @@ var Serie = conexion.define('Serie',
       unique: true,
       primaryKey: true
     },
-    iEntidad: {
+    idEntidad: {
       type: sequelize.INTEGER(32),
       field: "se_ientidad",
       allowNull:false
     },
-    iDominioEnt: {
+    DominioEntId: {
       type: sequelize.INTEGER(32),
       field: "se_idominio_ent",
       allowNull:false
     },
-    TipoSerie: {
+    idTipoSerie: {
       type: sequelize.INTEGER(32),
       field: "in_tipo_serie",
+      allowNull:false
+    },
+    idTipoComprobante: {
+      type: sequelize.INTEGER(32),
+      field: "vc_idtipodocumento",
       allowNull:false
     },
     direccion: {
@@ -81,6 +87,8 @@ var Serie = conexion.define('Serie',
   },
   {
     tableName: 't_serie',
-    timestamps: false
+    timestamps: false,
   }
 );
+Serie.belongsTo(DominioEnt);
+module.exports = Serie;

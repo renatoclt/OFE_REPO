@@ -1,3 +1,4 @@
+var Serie = require('../organizaciones/serie');
 /**
  * persistencia de la tabla t_dominio_ent en la variable DominioEnt
  * Modificado --- creado --/--/----
@@ -74,5 +75,4 @@ var DominioEnt = conexion.define('DominioEnt',
     timestamps: false
   }
 );
-
 module.exports = DominioEnt;

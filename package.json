@@ -12,19 +12,20 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "build --dir",
     "dist": "build",
-    "postinstall" : "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [],
   "build": {
     "buildDependenciesFromSource": true,
     "appId": "sqlite-electron",
     "asar": true,
-    "dmg":{
+    "dmg": {
       "contents": [
         {
-          "x":110,
-          "y":150
-        },{
+          "x": 110,
+          "y": 150
+        },
+        {
           "x": 240,
           "y": 150,
           "type": "link",
@@ -38,7 +39,7 @@
         "deb"
       ]
     },
-    "win":{
+    "win": {
       "target": "NSIS",
       "icon": "build/icon.ico"
     }
@@ -48,6 +49,7 @@
     "keymaster": "^1.6.2",
     "lodash": "^4.17.4",
     "request": "^2.81.0",
+    "sqlite3": "^3.1.13",
     "strip": "^3.0.0"
   },
   "devDependencies": {

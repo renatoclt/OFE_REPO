@@ -20,7 +20,8 @@ Maestra.filtro = function maestraFiltro(codigoTabla){
 
 //atributos utilizados por function maestraFiltro
 var filtroAtributos = {
-    attributes: [['vc_org','organizacion'], 
+    attributes: [
+                ['vc_org','organizacion'], 
                 'tabla',
                 'codigo',
                 'descripcionCorta',
