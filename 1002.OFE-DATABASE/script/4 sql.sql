@@ -1032,6 +1032,15 @@ nu_monto_isc, nu_precio_unit, current_timestamp, 1  from temporal_producto ;
 
 drop table organizaciones_t_producto
 
+INSERT INTO t_est_comprobante(
+	se_iestado, se_iidioma, vc_desc, vc_abrev)
+    VALUES
+    (1, 1, 'Pendiente de Envio', 'Pendiente',current_timestamp,1),
+    (2, 1, 'Bloqueado', 'Bloqueado',current_timestamp,1),
+    (3, 1, 'Autorizado', 'Autorizado',current_timestamp,1),    
+	(4, 1, 'Autorizado con Observaciones', 'Autorizado con Obs.',current_timestamp,1),
+    (5, 1, 'Rechazado', 'Rechazado',current_timestamp,1),
+    (6, 1, 'Dado de Baja', 'Baja',current_timestamp,1);
 
 
 
