@@ -8,12 +8,28 @@
  */
 var Concepto = conexion.define('Concepto',
   {
-    id:{
+    id: {
       type: sequelize.INTEGER,
-      field: "se_iproducto",
+      field: "se_iconcepto",
       autoIncrement: true,
       unique: true,
       primaryKey: true
+    },
+    idioma: {
+      type: sequelize.INTEGER,
+      field: "se_iidioma",
+    },
+    codigo: {
+      type: sequelize.INTEGER,
+      field: "in_codigo",
+    },
+    descripcion: {
+      type: sequelize.TEXT,
+      field: "vc_desc",
+    },
+    catalogo: {
+      type: sequelize.TEXT,
+      field: "vc_catalogo",
     },
     usuarioCreacion: {
       type: sequelize.TEXT,
@@ -42,10 +58,12 @@ var Concepto = conexion.define('Concepto',
     estadoSincronizado: {
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
-    }        
+    }
   },
   {
     tableName: 't_concepto',
     timestamps: false
   }
 );
+
+module.exports = Concepto;
