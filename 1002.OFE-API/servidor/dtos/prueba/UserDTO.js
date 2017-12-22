@@ -12,7 +12,6 @@ User.buscarProducto = function (id) {
             resolve({});
         });
     });
-    
     return promise;
 };
 

@@ -1,6 +1,6 @@
 /**
- * persistencia de la tabla t_doc_referenci en la variable DocReferencia
- * Modificado --- creado --/--/----
+ * @description persistencia de la tabla t_doc_referenci en la variable DocReferencia
+ * author --- Modificado --/--/----
  * @author Renato creado 14/12/2017
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
@@ -16,56 +16,91 @@ var DocReferencia = conexion.define('DocReferencia',
       primaryKey: true,
       allowNull:false   
     },
-    iDocOrigen: {
+    idDocumentoOrigen: {
       type: sequelize.INTEGER(32),
       field: "in_idoc_origen",
       allowNull:false 
     },
-    iDocDestino: {
+    idDocumentoDestino: {
       type: sequelize.INTEGER(32),
       field: "se_idoc_destino",
       allowNull:false 
     },
-    tipoDocOri: {
+    tipoDocumentoOrigen: {
       type: sequelize.TEXT(3),
       field: "ch_tipo_doc_ori",
       allowNull:false 
     },
-    tipoDocDe: {
+    tipoDocumentoDestino: {
       type: sequelize.TEXT(3),
       field: "ch_tipo_doc_des",
       allowNull:false 
     },
-    serieDest: {
+    serieDocumentoDestino: {
       type: sequelize.TEXT(4),
       field: "ch_serie_dest",
       allowNull:false 
     },
-    corrDest: {
+    correlativoDocumentoDestino: {
       type: sequelize.TEXT(8),
       field: "ch_corr_dest",
       allowNull:false 
     },
-    fecEmiDest: {
+    fechaEmisionDestino: {
       type: sequelize.TEXT,
       field: "da_fec_emi_dest",
       allowNull:false 
     },
-    totImpDest: {
+    totalImporteDestino: {
       type: sequelize.REAL(12,2),
       field: "nu_tot_imp_dest",
       allowNull:false 
     },
-    totImpAux: {
+    totalImporteAuxiliarDestino: {
       type: sequelize.REAL(12,2) ,
       field: "nu_tot_imp_aux",
       allowNull:false 
     },
-    totPorAux: {
+    totalPorcentajeAuxiliarDestino: {
       type: sequelize.REAL(12,2) ,
       field: "nu_tot_por_aux",
       allowNull:false 
     },
+    tipoDocumentoOrigenDescripcion: {
+      type: sequelize.TEXT,
+      field: "vc_tdocori_desc",
+      allowNull:false 
+    }, 
+    tipoDocumentoDestinoDescripcion: {
+      type: sequelize.TEXT ,
+      field: "vc_tdocdes_desc",
+      allowNull:false 
+    }, 
+    monedaDestino: {
+      type: sequelize.TEXT (3) ,
+      field: "vc_mone_des",
+      allowNull:false 
+    }, 
+    totalMonedaDestino: {
+      type: sequelize.REAL(12,2) ,
+      field: "nu_tot_por_aux",
+      allowNull:false 
+    }, 
+    auxiliar1: {
+      type: sequelize.TEXT ,
+      field: "vc_aux_1",
+      allowNull:false 
+    }, 
+    polizaFactura: {
+      type: sequelize.TEXT,
+      field: "vc_poliza_factura",
+      allowNull:false 
+    }, 
+    anticipo: {
+      type: sequelize.REAL(12,2) ,
+      field: "de_anticipo",
+      allowNull:false 
+    }, 
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",
@@ -105,3 +140,6 @@ var DocReferencia = conexion.define('DocReferencia',
     timestamps: false
   }
 );
+
+module.exports = DocReferencia;
+

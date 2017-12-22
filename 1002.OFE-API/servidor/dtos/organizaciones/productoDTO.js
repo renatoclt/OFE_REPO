@@ -18,7 +18,6 @@ Producto.buscarProductoId = function (id) {
 };
 
 Producto.todos = function(pagina, regxpag){
-    
     if(pagina==null){
         throw Error("Falta de argementos requeridos 'pagina'");
     }
@@ -43,7 +42,6 @@ Producto.todos = function(pagina, regxpag){
             resolve({});
         });
     });
-    
     return promise;
 }
 

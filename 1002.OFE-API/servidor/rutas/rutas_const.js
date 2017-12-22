@@ -1,4 +1,4 @@
-/**
+/** 
  * @author Roycer Cordova
  * @description Objecto de tipo json que contiene las constantes de las rutas de los servicios
  */
@@ -29,13 +29,20 @@ var rutas = {
                     "juridico": {"ruta":"/juridico", "descripcion": "Implementacion de servicio rest para persona juridica"}
                 }
             },
+            "docucmd":{
+                "ruta":"",
+                "hijos":{
+                    "documento":{"ruta":"/documentos", "descripcion": "Implementacion de servicio rest para guardar documentos en la base de datos"},
+                }
+            },
             "parmqry":{
                 "ruta":"",
                 "hijos":{
                     "tipoafectacionigv":{"ruta":"/tipoafectacionigv", "descripcion": "Implementacion de servicio rest para obtener el tipo de afectacion IGV"},
                     "maestra":{"ruta":"/maestra", "descripcion": "Implementacion de servicio rest para la tabla maestra"},
                     "tipoprecioventa":  {"ruta":"/tipoprecioventa", "descripcion":"Implementacion de servicio rest para listar los tipos de precio de venta"},
-                    "concepto": {"ruta":"/concepto", "descripcion": "Imprementacion de servicios conceptos"} 
+                    "concepto": {"ruta":"/concepto", "descripcion": "Imprementacion de servicios conceptos"},
+                    "series":  {"ruta":"/seriess", "descripcion":"Implementacion de servicio rest para listar las series de offline"},
                 }
             }
         }
