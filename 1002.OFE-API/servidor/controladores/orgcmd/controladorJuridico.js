@@ -34,7 +34,7 @@ var controladorJuridico = function (ruta, rutaEsp) {
         EntidadDTO.buscarEntidades(pagina, regxpag).then(function (resDTO) {
             var hateoasObj_entidad = Object.assign({}, hateoasObj);
             hateoasObj_entidad.type = nombreHateo;
-            hateoasObj_entidad.data = resDTO;
+            hateoasObj_entidad.data = resDTO.entidades;
             hateoasObj_entidad.nombreColeccion = "entidades";
             hateoasObj_entidad.ruta = rutaEsp;
             hateoasObj_entidad.paginacion.activo = true;
