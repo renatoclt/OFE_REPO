@@ -1,0 +1,24 @@
+/**
+ * @author --- Modificado **-**-****
+ * @author renato creado 18-12-2017 
+ */
+var DocEntidad = require('../../modelos/comprobantes/docEntidad')
+
+/**
+ * Funcion que guarda docReferencia
+ */
+DocEntidad.guardar = function docReferenciaGuardar(data){
+    console.log(constantes.estadoInactivo);
+    return DocEntidad.create({
+        idTipoEntidad: data.idTipoEntidad,
+        identidad:data.idEntidad,
+        idcomprobantepago: data.idComprobantePago,
+        usuarioCreacion: data.usuarioCreacion,
+        usuarioModificacion: data.usuarioModificacion,
+        fechaCreacion: data.fechaCreacion,
+        fechaModificacion: data.fechaModificacion,
+        estado: constantes.estadoInactivo,
+        estadoSincronizacion: data.estado,
+    });
+}
+module.exports = DocEntidad;

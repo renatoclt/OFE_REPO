@@ -1,7 +1,7 @@
 var ComprobantePago = require('../../dtos/comprobante/comprobantePago');
 var DocReferencia = require('../../dtos/comprobante/docReferenciaDto')
+var DocEntidad = require('../../dtos/comprobante/docEntidadDTO')
 var sequelize = require('sequelize');
-
 /**
  * Controlador del
  * 
@@ -39,12 +39,22 @@ var contoladorComprobante =  function (ruta, rutaEsp){
 
 
     /**
-     * Enviamos la ruta 
+     * Guardaremos documentos 
+     * Actualmente solo guarda retenciones 
      * y declaramos una funcion asincrona q espera los datos de la tabla
      */
     router.post(ruta.concat('/'), async function(req, res){
-        console.log(req.body.rucProveedor);
-        //data = await DocReferencia.guardar();
+        
+        for (let documentoEntidad of req.body.documentoEntidad){
+            documentoEntidad.idComprobantePago = 'prueba'
+            data = await DocEntidad.guardar(documentoEntidad);
+        }        
+        for(let documentoReferencia of req.body.documentoReferencia ){
+            data = await DocReferencia.guardar(documentoReferencia);
+            //console.log(documentoReferencia);
+        }
+
+            
         //data = await ComprobantePago.guardar();
         //res.status(200).send(data);
         res.send('ok');

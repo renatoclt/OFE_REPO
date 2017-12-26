@@ -43,6 +43,7 @@ var rutas = {
                     "tipoprecioventa":  {"ruta":"/tipoprecioventa", "descripcion":"Implementacion de servicio rest para listar los tipos de precio de venta"},
                     "concepto": {"ruta":"/concepto", "descripcion": "Imprementacion de servicios conceptos"},
                     "series":  {"ruta":"/seriess", "descripcion":"Implementacion de servicio rest para listar las series de offline"},
+                    "estadoComprobante": {"ruta":"/estadoscomprobante", "descripcion":"Implementacion de servicio rest para listar los estados comprobantes"},
                 }
             }
         }

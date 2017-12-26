@@ -7,7 +7,7 @@ cookieParser = require('cookie-parser');
 bodyParser = require('body-parser');
 routes = require('./servidor/rutas/rutasModulos');
 hateoasLinker = require('express-hateoas-links');
-estadoActivo = require('./servidor/utilitarios/constantes');
+constantes = require('./servidor/utilitarios/constantes');
 app = express();
 
 app.set('views', path.join(__dirname, 'views'));

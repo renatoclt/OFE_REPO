@@ -15,12 +15,12 @@ var DocEntidad = conexion.define('DocEntidad',
       unique: true,
       primaryKey: true
     },
-    iTipoEnt: {
+    idTipoEntidad: {
       type: sequelize.INTEGER,
       field: "se_itipo_ent",
       allowNull:false
     },
-    ientidad: {
+    identidad: {
       type:sequelize.INTEGER ,
       field: "se_ientidad",
       allowNull:false
@@ -60,7 +60,7 @@ var DocEntidad = conexion.define('DocEntidad',
       field: "ts_fec_sincronizado"
     },
     estadoSincronizado: {
-      type: sequelize.INTEGER,
+      type: sequelize.TEXT,
       field: "in_estado_sincronizado"
     }        
   },
@@ -69,3 +69,4 @@ var DocEntidad = conexion.define('DocEntidad',
     timestamps: false
   }
 );
+module.exports = DocEntidad;
