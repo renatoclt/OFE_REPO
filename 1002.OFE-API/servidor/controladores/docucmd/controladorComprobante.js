@@ -2,6 +2,7 @@ var ComprobantePago = require('../../dtos/comprobante/comprobantePago');
 var DocReferencia = require('../../dtos/comprobante/docReferenciaDto')
 var DocEntidad = require('../../dtos/comprobante/docEntidadDTO')
 var sequelize = require('sequelize');
+var uuid = require('../../utilitarios/uuid')
 /**
  * Controlador del
  * 
@@ -41,23 +42,37 @@ var contoladorComprobante =  function (ruta, rutaEsp){
     /**
      * Guardaremos documentos 
      * Actualmente solo guarda retenciones 
+     * 
+     * 
+     * 1 await guarda en la tabla comprobante pago
+     * 2 await guarda en la tabla docEntidad
+     * 3 await guarda en la tabla docReferencia
      * y declaramos una funcion asincrona q espera los datos de la tabla
      */
     router.post(ruta.concat('/'), async function(req, res){
-        
-        for (let documentoEntidad of req.body.documentoEntidad){
-            documentoEntidad.idComprobantePago = 'prueba'
-            data = await DocEntidad.guardar(documentoEntidad);
-        }        
-        for(let documentoReferencia of req.body.documentoReferencia ){
-            data = await DocReferencia.guardar(documentoReferencia);
-            //console.log(documentoReferencia);
+        let transaccion;
+        data = req.body;
+        data.id = uuid();
+        try{
+            await ComprobantePago.guardar(data);
+            for (let documentoEntidad of req.body.documentoEntidad){
+                documentoEntidad.idComprobantePago = 'prueba'
+                await DocEntidad.guardar(documentoEntidad);
+            }        
+            for(let documentoReferencia of req.body.documentoReferencia ){
+                documentoReferencia.usuarioCreacion = data.usuarioCreacion;
+                documentoReferencia.usuarioModificacion = data.usuarioModificacion;
+                documentoReferencia.fechaCreacion = data.fechaCreacion;
+                documentoReferencia.fechaModificacion = data.fechaCreacion;
+                documentoReferencia.idDocumentoOrigen = 'prueba';
+                await DocReferencia.guardar(documentoReferencia);
+            }
         }
-
-            
-        //data = await ComprobantePago.guardar();
+        catch(err){
+            console.log(err);
+        }
         //res.status(200).send(data);
-        res.send('ok');
+        res.json(data);
     })
 };
 

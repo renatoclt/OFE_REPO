@@ -5,9 +5,9 @@
 var DocEntidad = require('../../modelos/comprobantes/docEntidad')
 
 /**
- * Funcion que guarda docReferencia
+ * Funcion que guarda en la tabla t_doc_referncia
  */
-DocEntidad.guardar = function docReferenciaGuardar(data){
+DocEntidad.guardar = function docEntidadGuardar(data){
     console.log(constantes.estadoInactivo);
     return DocEntidad.create({
         idTipoEntidad: data.idTipoEntidad,
@@ -18,7 +18,7 @@ DocEntidad.guardar = function docReferenciaGuardar(data){
         fechaCreacion: data.fechaCreacion,
         fechaModificacion: data.fechaModificacion,
         estado: constantes.estadoInactivo,
-        estadoSincronizacion: data.estado,
+        estadoSincronizado: data.estado,
     });
 }
 module.exports = DocEntidad;

@@ -22,7 +22,7 @@ Serie.filtro = function serieFiltro(id_entidad,id_tipo_comprobante,id_tipo_serie
             idEntidad: id_entidad,
             idTipoComprobante:id_tipo_comprobante,
             idTipoSerie:id_tipo_serie,
-            estado: estadoActivo
+            estado: constantes.estadoActivo
         }
       });
 }
