@@ -15,65 +15,53 @@ var ComprobantePago = conexion.define('ComprobantePago',
         primaryKey: true,
         allowNull:false
     },
-    numeroComprobantePago: {
+    numeroComprobante: {
       type: sequelize.TEXT(30),
       field: "ch_numerocomprobantepago",
-      allowNull:false
     },
-    idUsuarioProveedor: {
+    idProveedor: {
       type: sequelize.INTEGER(32),
       field: "in_idusuarioproveedor",
-      allowNull:false
     },
     idOrganizacionCompradora: {
       type: sequelize.INTEGER(32),
       field: "in_idorganizacioncompradora",
-      allowNull:false
     },
     idOrganizacionProveedora: {
       type: sequelize.INTEGER(32),
       field: "in_idorganizacionproveedora",
-      allowNull:false
     },
     rucProveedor: {
       type: sequelize.TEXT(30),
       field: "ch_rucproveedor",
-      allowNull:false
     },
     rucComprador: {
       type: sequelize.TEXT(30),
       field: "ch_ruccomprador",
-      allowNull:false
     },
-    estadoComprobantePago: {
+    estadoComprobante: {
       type: sequelize.TEXT(30),
       field: "ch_estadocomprobantepago",
-      allowNull:false
     },
     flagPlazoPago: {
       type: sequelize.TEXT(1),
       field: "ch_flagplazopago",
-      allowNull:false
     },
     flagRegistroEliminado: {
       type: sequelize.TEXT(1),
       field: "ch_flagregistroeliminado",
-      allowNull:false
     },
-    flagOrigenComprobantePago: {
+    flagOrigenComprobante: {
       type: sequelize.TEXT(1),
       field: "ch_flagorigencomprobantepago",
-      allowNull:false
     },
-    flagorIGencreacion: {
+    flagOrigenCreacion: {
       type: sequelize.TEXT(1),
-      field: "ch_flagorigencreacion",
-      allowNull:false
+      field: "ch_flagorigencreacion",      
     },
     idGuia: {
       type: sequelize.INTEGER(32),
       field: "in_idguia",
-      allowNull:false
     },
     iDoc: {
       type: sequelize.INTEGER(32),
@@ -82,22 +70,18 @@ var ComprobantePago = conexion.define('ComprobantePago',
     idUsuarioCreacion: {
       type: sequelize.INTEGER(32),
       field: "in_idusuariocreacion",
-      allowNull:false
     },
     idUsuarioModificacion: {
       type: sequelize.INTEGER(32),
       field: "in_idusuariomodificacion",
-      allowNull:false
     },
     idOrganizacionCreacion: {
       type: sequelize.INTEGER(32),
       field: "in_idorganizacioncreacion",
-      allowNull:false
     },
     idOrganizacionModificacion: {
       type: sequelize.INTEGER(32),
       field: "in_idorganizacionmodificacion",
-      allowNull:false
     },
     razonSocialProveedora: {
       type: sequelize.TEXT(100),
@@ -107,7 +91,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(100),
       field: "vc_razonsocialcompradora",
     },
-    monedaComprobantePago: {
+    moneda: {
       type: sequelize.TEXT(30),
       field: "ch_monedacomprobantepago_",
     },
@@ -147,7 +131,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT,
       field: "ts_fechacambioestado",
     },
-    obsComprobantePago: {
+    observacionComprobante: {
       type: sequelize.TEXT,
       field: "vc_obscomprobantepago",
     },
@@ -179,7 +163,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(100),
       field: "vc_tipocomprobante",
     },
-    estadoComprobantePagoComp: {
+    estado: {
       type: sequelize.TEXT(30),
       field: "ch_estadocomprobantepagocomp",
     },
@@ -195,11 +179,11 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(20),
       field: "vc_numoc",
     },
-    numGuia: {
+    numeroGuia: {
       type: sequelize.TEXT(20),
       field: "vc_numguia",
     },
-    montoComprobantePago: {
+    montoComprobante: {
       type: sequelize.TEXT(250),
       field: "vc_montocomprobantepago",
     },
@@ -227,19 +211,19 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(200),
       field: "vc_pagobanco",
     },
-    dctoTipoDocumento: {
+    tipoDocumentoDescuento: {
       type: sequelize.TEXT(200),
       field: "vc_dctotipodocumento",
     },
-    dctoNroDocumento: {
+    numeroDocumentoDescuento: {
       type: sequelize.TEXT(200),
       field: "vc_dctonrodocumento",
     },
-    dctMmoneda: {
+    monedaDescuento: {
       type: sequelize.TEXT(200),
       field: "vc_dctomoneda",
     },
-    nroCheque: {
+    numeroCheque: {
       type: sequelize.TEXT(50),
       field: "vc_nrocheque",
     },
@@ -267,15 +251,15 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(4),
       field: "vc_codigosociedad",
     },
-    impuesto1: {
+    igv: {
       type: sequelize.REAL(15,4),
       field: "de_impuesto1",
     },
-    impuesto2: {
+    isc: {
       type: sequelize.REAL(15,4),
       field: "de_impuesto2",
     },
-    impuesto3: {
+    otrosTributos: {
       type: sequelize.REAL(15,4),
       field: "de_impuesto3",
     },
@@ -287,11 +271,11 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.REAL(15,4),
       field: "de_importereferencial",
     },
-    subTotalComprobantepago: {
+    subtotalComprobante: {
       type: sequelize.REAL(15,4),
       field: "de_subtotalcomprobantepago",
     },
-    totalComprobantePago: {
+    totalComprobante: {
       type: sequelize.REAL(15,4),
       field: "de_totalcomprobantepago",
     },
@@ -307,11 +291,11 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.INTEGER(32),
       field: "in_idindicadorimpuesto",
     },
-    indicadorImpuesto: {
+    descripcionIndicadorImpuesto: {
       type: sequelize.TEXT(5),
       field: "vc_indicadorimpuesto",
     },
-    opRegFac: {
+    tipoItem: {
       type: sequelize.TEXT(5),
       field: "ch_opregfac",
     },
@@ -323,7 +307,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(255),
       field: "vc_coderror",
     },
-    fechaDocumentoRet: {
+    fechaDocumentoRetencion: {
       type: sequelize.TEXT,
       field: "ts_fechadocumentoret",
     },
@@ -375,11 +359,11 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(8),
       field: "vc_idtablaestado",
     },
-    idRegistroEstadoProv: {
+    idRegistroEstadoProveedor: {
       type: sequelize.TEXT(8),
       field: "vc_idregistroestadoprov",
     },
-    idRegistroEstadoComp: {
+    idRegistroEstadoComprador: {
       type: sequelize.TEXT(8),
       field: "vc_idregistroestadocomp",
     },
@@ -407,11 +391,11 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.REAL(15,4),
       field: "de_impuestogvr",
     },
-    pagoMontoPagado: {
+    montoPagado: {
       type: sequelize.REAL(15,4),
       field: "de_pagomontopagado",
     },
-    dctoMonto: {
+    montoDescuento: {
       type: sequelize.REAL(15,4),
       field: "de_dctomonto",
     },

@@ -14,7 +14,7 @@ DocReferencia.guardar = function docReferenciaGuardar(data){
         usuarioModificacion: data.usuarioModificacion,
         fechaCreacion:data.fechaCreacion,
         fechaModificacion:data.fechaModificacion,
-        estado: data.estado,
+        estado: constantes.estadoActivo,
         id: data.id,
         idDocumentoOrigen: data.idDocumentoOrigen,
         idDocumentoDestino: data.idDocumentoDestino,
