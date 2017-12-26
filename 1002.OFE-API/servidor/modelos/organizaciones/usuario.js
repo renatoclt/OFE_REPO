@@ -19,6 +19,11 @@ var Usuario = conexion.define('Usuario',
       type:  sequelize.TEXT,
       field: "vc_nom_usuario",
     },
+    password:{
+      type:  sequelize.TEXT,
+      field: "vc_password",
+    }
+    ,
     nombre: {
       type: sequelize.TEXT,
       field: "vc_nombre",
@@ -77,3 +82,5 @@ var Usuario = conexion.define('Usuario',
     timestamps: false
   }
 );
+
+module.exports = Usuario;
