@@ -38,4 +38,42 @@ Usuario.buscarUsuarios = function (pagina, regxpag) {
     return promise;
 }
 
+Usuario.registrarUsuario =function(usuario){
+
+    var promise= new Promise(function (resolve, reject) {
+     
+        conexion.sync().then(function () {
+            
+            Usuario.create({
+                nomUsuario:             usuario.nomUsuario,
+                password:               usuario.password,
+                nombre:                 usuario.nombre,
+                apellido:               usuario.apellido,
+                docIdentidad:           usuario.docIdentidad,
+                numDocIdentidad:        usuario.numDocIdentidad,
+                correo:                 usuario.correo,
+                identidad:              usuario.identidad,           
+                usuarioCreacion:        usuario.usuarioCreacion,
+                usuarioModificacion:    null,
+                fechaCreacion:          new Date().toLocaleString(),
+                fechaModificacion:      null,
+                estado:                 1,
+                fechaSincronizado:      null,
+                estadoSincronizado:     0
+
+            }).then(function(data){
+                resolve(data.dataValues);
+            }).catch(function(error){
+                console.log(error);
+            });
+        
+        }, function (err) {
+            console.log(err);
+            resolve({});
+        });
+
+    });
+    
+    return promise;
+}
 module.exports = Usuario;

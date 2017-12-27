@@ -62,6 +62,13 @@ var controladorUsuario = function (ruta, rutaEsp) {
             res.json(hateoas.link(nombreHateo,usuario));
         });
     });
+    router.post(ruta.concat('/'),function(req,res){
+        UsuarioDTO.registrarUsuario(req.body)
+        .then(function(entidad){
+            res.json(entidad);
+        });
+
+    });
 
 };
 
