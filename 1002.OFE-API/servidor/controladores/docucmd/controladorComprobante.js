@@ -2,7 +2,7 @@ var ComprobantePago = require('../../dtos/comprobante/comprobantePago');
 var DocReferencia = require('../../dtos/comprobante/docReferenciaDto')
 var DocEntidad = require('../../dtos/comprobante/docEntidadDTO')
 var sequelize = require('sequelize');
-var uuid = require('../../utilitarios/uuid')
+var uuid = require('../../utilitarios/uuid');
 /**
  * Controlador del
  * 
@@ -38,7 +38,15 @@ var contoladorComprobante =  function (ruta, rutaEsp){
         return links;
     });
 
+    /**
+     * Buscaremos los documentos 
+     * 
+     */
+    router.get(ruta.concat('/query'), async function(req, res){
+        
+    });
 
+    
     /**
      * Guardaremos documentos 
      * Actualmente solo guarda retenciones 
@@ -56,10 +64,11 @@ var contoladorComprobante =  function (ruta, rutaEsp){
         try{
             await ComprobantePago.guardar(data);
             for (let documentoEntidad of req.body.documentoEntidad){
-                documentoEntidad.idComprobantePago = 'prueba'
+                documentoEntidad.idComprobantePago = data.id;
                 await DocEntidad.guardar(documentoEntidad);
             }        
             for(let documentoReferencia of req.body.documentoReferencia ){
+                documentoReferencia.idDocumentoOrigen = data.id;
                 documentoReferencia.usuarioCreacion = data.usuarioCreacion;
                 documentoReferencia.usuarioModificacion = data.usuarioModificacion;
                 documentoReferencia.fechaCreacion = data.fechaCreacion;
@@ -67,12 +76,18 @@ var contoladorComprobante =  function (ruta, rutaEsp){
                 documentoReferencia.idDocumentoOrigen = 'prueba';
                 await DocReferencia.guardar(documentoReferencia);
             }
+            await listarDocumento;
         }
         catch(err){
-            console.log(err);
+            console.log('error al ingresar');
         }
         //res.status(200).send(data);
         res.json(data);
+    })
+
+    router.get(ruta.concat('/sincronizarRetenciones'), async function(req, res){
+
+        res.json('Enviando Info');
     })
 };
 

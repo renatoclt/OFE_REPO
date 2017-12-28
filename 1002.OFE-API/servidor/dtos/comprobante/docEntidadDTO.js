@@ -8,7 +8,6 @@ var DocEntidad = require('../../modelos/comprobantes/docEntidad')
  * Funcion que guarda en la tabla t_doc_referncia
  */
 DocEntidad.guardar = function docEntidadGuardar(data){
-    console.log(constantes.estadoInactivo);
     return DocEntidad.create({
         idTipoEntidad: data.idTipoEntidad,
         identidad:data.idEntidad,
