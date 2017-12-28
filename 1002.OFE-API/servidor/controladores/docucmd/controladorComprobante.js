@@ -86,7 +86,6 @@ var contoladorComprobante =  function (ruta, rutaEsp){
     })
 
     router.get(ruta.concat('/sincronizarRetenciones'), async function(req, res){
-
         res.json('Enviando Info');
     })
 };
