@@ -45,7 +45,13 @@ var rutas = {
                     "series":  {"ruta":"/seriess", "descripcion":"Implementacion de servicio rest para listar las series de offline"},
                     "estadoComprobante": {"ruta":"/estadoscomprobante", "descripcion":"Implementacion de servicio rest para listar los estados comprobantes"},
                 }
-            }
+            },
+            "usuarios":{
+                "ruta":"",
+                "hijos":{
+                    "usuario": {"ruta":"/usuario", "descripcion": "Implementacion de servicio rest para usuarios del offline"}
+                }
+            },            
         }
     }
 }
