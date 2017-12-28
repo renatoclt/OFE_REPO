@@ -1,3 +1,4 @@
+var ComprobantePago = require('./comprobantePago')
 /**
  * persistencia de la tabla t_doc_entidad en la variable DocEntidad
  * Modificado --- creado --/--/----
@@ -69,4 +70,6 @@ var DocEntidad = conexion.define('DocEntidad',
     timestamps: false
   }
 );
+
+
 module.exports = DocEntidad;

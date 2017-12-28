@@ -2,8 +2,8 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var ComprobantePago = require('../../modelos/comprobantes/comprobantePago')
-
+var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
+var DocEntidad = require('../../modelos/comprobantes/docEntidad')
  /**
  * Funcion que guarda los comprobantes de pago
  * 
@@ -27,8 +27,8 @@ ComprobantePago.guardar = function maestraGuardar(data){
         idGuia: data.idGuia,
         idUsuarioCreacion:data.idUsuarioCreacion,
         idUsuarioModificacion:data.idUsuarioModificacion,
-        razonSocialProveedora: data.razonSocialProveedor,
-        razonSocialCompradora: data.razonSocialComprador,
+        razonSocialProveedor: data.razonSocialProveedor,
+        razonSocialComprador: data.razonSocialComprador,
         moneda: data.moneda,
         fechaCreacion: data.fechaCreacion,
         fechaRegistro: data.fechaRegistro,
@@ -72,8 +72,55 @@ ComprobantePago.guardar = function maestraGuardar(data){
         idRegistroEstadoComprador:data.idRegistroEstadoComprador,
         idTablaMoneda:data.idTablaMoneda,
         idRegistroMoneda:data.idRegistroMoneda,
-        estadoComprobante: constantes.estadoActivo
+        estadoComprobante: constantes.estadoActivo,
+        estadoSincronizado: constantes.estadoInactivo
     });
+}
+
+ComprobantePago.filtro = function comprobantePagoFiltro(){
+    return ComprobantePago.findAll({ attributes: filtroComprobantePago.attributes ,
+        include:[ 
+            {
+                model: DocEntidad,
+                as: 'documentoEntidad' 
+            }
+        ],
+        where: {
+            estadoSincronizado: constantes.estadoInactivo
+        }
+      });
+}
+
+var filtroComprobantePago = {
+    attributes: [
+                'id', 
+                'idTipoComprobante',
+                'numeroComprobante',
+                //'idSerie',
+                'idProveedor',
+                'idOrganizacionCompradora',
+                'rucProveedor',
+                'rucComprador',
+                'estadoComprobante',
+                //'usuarioCreacion',
+                //'usuarioModificacion',
+                'razonSocialComprador',
+                'razonSocialProveedor',
+                'moneda',
+                'fechaCreacion',
+                'fechaRegistro',
+                'fechaEmision',
+                'idTablaTipoComprobante',
+                'observacionComprobante',
+                'idRegistroTipoComprobante',
+                'tipoComprobante',
+                'version',
+                'montoComprobante',
+                'montoPagado',
+                'montoDescuento',
+                'fechaDocumentoRetencion',
+                'totalComprobante',
+            ],
 }
 
 module.exports = ComprobantePago;
