@@ -86,7 +86,9 @@ var contoladorComprobante =  function (ruta, rutaEsp){
     })
 
     router.get(ruta.concat('/sincronizarRetenciones'), async function(req, res){
-        res.json('Enviando Info');
+        documentos = {};
+        documentos.listaDocumento = await ComprobantePago.filtro();
+        res.json(documentos);
     })
 };
 
