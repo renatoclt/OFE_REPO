@@ -78,7 +78,7 @@ ComprobantePago.guardar = function maestraGuardar(data){
 }
 
 ComprobantePago.filtro = function comprobantePagoFiltro(){
-    return ComprobantePago.findAll({ attributes: filtroComprobantePago.attributes ,
+    return ComprobantePago.findAll({ attributes: atributosComprobantePago.attributes ,
         include:[ 
             {
                 model: DocEntidad,
@@ -91,7 +91,7 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
       });
 }
 
-var filtroComprobantePago = {
+var atributosComprobantePago = {
     attributes: [
                 'id', 
                 'idTipoComprobante',
@@ -122,5 +122,54 @@ var filtroComprobantePago = {
                 'totalComprobante',
             ],
 }
+
+var atributosDocumentoReferencia = {
+    attributes: [
+                'idDocumentoOrigen', 
+                'idDocumentoDestino',
+                'tipoDocumentoOrigen',
+                'tipoDocumentoDestino',
+                'serieDocumentoDestino',
+                'correlativoDocumentoDestino',
+                'totalImporteDestino',
+                'totalImporteAuxiliarDestino',
+                'totalPorcentajeAuxiliarDestino',
+                'tipoDocumentoOrigenDescripcion',
+                'tipoDocumentoDestinoDescripcion',
+                'monedaDestino',
+                'totalMonedaDestino',
+                'auxiliar1',
+                'polizaFactura',
+                'anticipo',
+                'fechaEmisionDestino',
+                'observaciones',
+                'idMoneda'
+            ],
+}
+
+var atributosDocumentoEntidad = {
+    attributes: [
+                'usuarioCreacion', 
+                'usuarioModificacion',
+                'fechaCreacion',
+                'fechaModificacion',
+                'estado',
+                'id',
+                'idTipoEntidad',
+                'descripcionTipoEntidad',
+                'idEntidad',
+                'tipoDocumento',
+                'ubigeo',
+                'departamento',
+                'provincia',
+                'distrito',
+                'documento',
+                'denominacion',
+                'direccionFiscal',
+                'correo',
+                'idComprobante'
+            ],
+}
+var documentoEntidad
 
 module.exports = ComprobantePago;
