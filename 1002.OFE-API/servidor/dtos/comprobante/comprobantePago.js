@@ -3,7 +3,8 @@
  * @author renato creado 18-12-2017 
  */
 var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
-var DocEntidad = require('../../modelos/comprobantes/docEntidad')
+var DocEntidad = require('../../modelos/comprobantes/docEntidad');
+var Entidad = require('../../modelos/organizaciones/entidad')
  /**
  * Funcion que guarda los comprobantes de pago
  * 
@@ -82,7 +83,14 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
         include:[ 
             {
                 model: DocEntidad,
-                as: 'documentoEntidad' 
+                as: 'documentoEntidad',
+                attributes: atributosDocumentoEntidad.attributes,
+                include:{
+                    model: Entidad,
+                    include:{
+                        model: t_parametro_entidad
+                    }
+                }
             }
         ],
         where: {
@@ -156,20 +164,27 @@ var atributosDocumentoEntidad = {
                 'estado',
                 'id',
                 'idTipoEntidad',
-                'descripcionTipoEntidad',
-                'idEntidad',
-                'tipoDocumento',
-                'ubigeo',
-                'departamento',
-                'provincia',
-                'distrito',
-                'documento',
-                'denominacion',
-                'direccionFiscal',
-                'correo',
-                'idComprobante'
+                //'tipoDocumento',
+                //'ubigeo',
+                //'departamento',
+                //'provincia',
+                //'distrito',
+                //'direccionFiscal',
+                //'correo',
+                //'idComprobante'
             ],
 }
-var documentoEntidad
+var atributosEntidad = {
+    attributes: [
+        'id',//idEntidad
+        'documento',
+        'denominacion'
+    ]
+}
+var atributosTipoEntidad = {
+    attributes: [
+        'descripcionTipoEntidad'
+    ]
+}
 
 module.exports = ComprobantePago;

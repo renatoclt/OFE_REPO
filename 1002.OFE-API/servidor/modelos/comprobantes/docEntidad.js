@@ -1,4 +1,5 @@
-var ComprobantePago = require('./comprobantePago')
+var ComprobantePago = require('./comprobantePago');
+var Entidad = require('../organizaciones/entidad');
 /**
  * persistencia de la tabla t_doc_entidad en la variable DocEntidad
  * Modificado --- creado --/--/----
@@ -21,7 +22,7 @@ var DocEntidad = conexion.define('DocEntidad',
       field: "se_itipo_ent",
       allowNull:false
     },
-    identidad: {
+    idEntidad: {
       type:sequelize.INTEGER ,
       field: "se_ientidad",
       allowNull:false
@@ -70,6 +71,6 @@ var DocEntidad = conexion.define('DocEntidad',
     timestamps: false
   }
 );
-
+DocEntidad.belongsTo(Entidad, {foreignKey: 'idEntidad'});
 
 module.exports = DocEntidad;

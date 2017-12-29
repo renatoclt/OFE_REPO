@@ -19,8 +19,9 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
     router.get(ruta.concat('/filtros'), async function (req, res) {
         if (req.query.idioma){
             let idioma = req.query.idioma;
-            var data = await Sincronizacion.filtro(idioma);              
-            res.json(data);
+            let series = {};
+            series._embedded = await Sincronizacion.filtro(idioma);              
+            res.json(series);
         }
         else{
             res.send('error');
