@@ -100,7 +100,7 @@ Usuario.buscarProductoEspecifico = function(pagina, regxpag, usuario, password, 
     var promise = new Promise(function(resolve, reject){
         conexion.sync()
         .then(function () {
-            Usuario.findAll(
+            Usuario.findOne(
                 { 
                     where: { 
                         estado: 1,
@@ -114,13 +114,8 @@ Usuario.buscarProductoEspecifico = function(pagina, regxpag, usuario, password, 
                     limit: regxpag*/
                 })
                 .then(function (usuarios) {
-                    var cantidadReg = usuarios.length;
-
-                    usuarios = usuarios.map(function(usuario){ 
-                        return usuario.dataValues;
-                    });
-                
-                    resolve({'usuarios': usuarios, 'cantidadReg': cantidadReg});
+                   var cantidadReg = 1;                  
+                    resolve({'usuarios': usuarios.dataValues, 'cantidadReg': cantidadReg});
                 });
         }, function (err) {
             console.log(err);
