@@ -114,8 +114,14 @@ Usuario.buscarProductoEspecifico = function(pagina, regxpag, usuario, password, 
                     limit: regxpag*/
                 })
                 .then(function (usuarios) {
-                   var cantidadReg = 1;                  
-                    resolve({'usuarios': usuarios.dataValues, 'cantidadReg': cantidadReg});
+                  /* var usuario_={};
+                   usuarios= usuarios.dataValues;*/
+                   let salida=null;
+                   var cantidadReg = 1;   
+                   if(usuarios!=null){
+                    salida=usuarios.dataValues;
+                   }               
+                    resolve({'usuarios': salida, 'cantidadReg': cantidadReg});
                 });
         }, function (err) {
             console.log(err);
