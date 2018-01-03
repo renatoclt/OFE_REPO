@@ -70,6 +70,40 @@ var controladorUsuario = function (ruta, rutaEsp) {
 
     });
 
+    router.get(ruta.concat('/search/buscar'), function (req, res, next) {
+        var nombreUsuario=null,
+        password=null,
+            pagina=0,
+            limite=0,
+            ordenar=0;
+
+        if (req.query.nombreusuario){
+            nombreUsuario = req.query.nombreusuario;
+        }
+        if (req.query.password && req.query.password!=""){
+            password = req.query.password;
+        }
+        if (req.query.pagina && req.query.pagina>0){
+            pagina = req.query.pagina;
+        }
+        if (req.query.limite && req.query.limite>0){
+            limite = req.query.limite;
+        }
+        if (req.query.ordenar && req.query.ordenar>0){
+            ordenar = req.query.ordenar;
+        }
+/*       
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype'); // If needed
+        res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+*/
+        UsuarioDTO.buscarProductoEspecifico(pagina,limite,nombreUsuario,password,ordenar).then(function(resDTO){
+           var usuarios = resDTO.usuarios;
+            res.json(usuarios);           
+        });
+    });
+
 };
 
 module.exports = controladorUsuario;

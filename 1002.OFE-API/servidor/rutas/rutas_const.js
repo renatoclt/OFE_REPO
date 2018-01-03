@@ -50,7 +50,7 @@ var rutas = {
             "usuarios":{
                 "ruta":"",
                 "hijos":{
-                    "usuario": {"ruta":"/usuario", "descripcion": "Implementacion de servicio rest para usuarios del offline"}
+                    "usuario": {"ruta":"/usuarios", "descripcion": "Implementacion de servicio rest para usuarios del offline"}
                 }
             },            
         }
