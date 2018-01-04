@@ -9,13 +9,13 @@
 var Usuario = conexion.define('Usuario',
   {
     id:{
-      type: sequelize.INTEGER,
+      type: sequelize.TEXT,
       field: "se_iusuario",
       autoIncrement: true,
       unique: true,
       primaryKey: true
     },
-    nomUsuario: {
+    nombreusuario: {
       type:  sequelize.TEXT,
       field: "vc_nom_usuario",
     },
@@ -75,7 +75,36 @@ var Usuario = conexion.define('Usuario',
     estadoSincronizado: {
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
-    }        
+    },
+    //nuevos parametros
+    nombrecompleto: {
+      type: sequelize.TEXT,
+      field: "vc_nombrecompleto"
+    },
+    url_image: {
+      type: sequelize.TEXT,
+      field: "vc_url_image"
+    },
+    org_id: {
+      type: sequelize.TEXT,
+      field: "vc_org_id"
+    },
+    tipo_empresa: {
+      type: sequelize.TEXT,
+      field: "vc_tipo_empresa"
+    },
+    token: {
+      type: sequelize.TEXT,
+      field: "vc_token"
+    },
+    perfil: {
+      type: sequelize.TEXT,
+      field: "vc_perfil"
+    },
+    organizaciones: {
+      type: sequelize.TEXT,
+      field: "vc_organizaciones"
+    }          
   },
   {
     tableName: 't_usuario',
