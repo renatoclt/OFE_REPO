@@ -47,20 +47,26 @@ var contoladorSeries =  function (ruta, rutaEsp){
     router.get(ruta.concat('/search/filtros'), async function (req, res) {
         if (req.query.id_entidad && req.query.id_entidad>0 && req.query.id_tipo_comprobante && req.query.id_tipo_comprobante > 0 && req.query.id_tipo_serie){
             let tabla = req.query.tabla;
-            var data = await Serie.filtro(req.query.id_entidad, req.query.id_tipo_comprobante,req.query.id_tipo_serie);  
-            var hateoasObj_n = Object.assign({},hateoasObj);
-            hateoasObj_n.type = nombreHateo;
-            hateoasObj_n.data =  data.map(function (series) {
-                return series.dataValues;
-            });
-            hateoasObj_n.nombreColeccion = "serieRedises";
-            hateoasObj_n.ruta = rutaEsp;
-            hateoasObj_n.paginacion.activo = false;
-            hateoasObj_n.busqueda.activo = false;
-            res.json(hateoas.link(hateoasObj_n));
+            try{
+                var data = await Serie.filtro(req.query.id_entidad, req.query.id_tipo_comprobante,req.query.id_tipo_serie);  
+                var hateoasObj_n = Object.assign({},hateoasObj);
+                hateoasObj_n.type = nombreHateo;
+                hateoasObj_n.data =  data.map(function (series) {
+                    return series.dataValues;
+                });
+                hateoasObj_n.nombreColeccion = "serieRedises";
+                hateoasObj_n.ruta = rutaEsp;
+                hateoasObj_n.paginacion.activo = false;
+                hateoasObj_n.busqueda.activo = false;
+                res.json(hateoas.link(hateoasObj_n));
+            }
+            catch(e){
+                console.log(e);
+                res.status(400).send('error');
+            }
         }
         else{
-            res.send('error');
+            res.status(400).send('error');
         }
     });
 };

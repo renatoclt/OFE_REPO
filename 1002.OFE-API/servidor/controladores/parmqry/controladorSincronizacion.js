@@ -20,7 +20,10 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         if (req.query.idioma){
             let idioma = req.query.idioma;
             let series = {};
-            series._embedded = await Sincronizacion.filtro(idioma);              
+            series._embedded = await Sincronizacion.filtro(idioma);  
+            series._embedded.forEach(element => {
+                element.fechaSincronizacion = '29/12/2017';
+            });            
             res.json(series);
         }
         else{

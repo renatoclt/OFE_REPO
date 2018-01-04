@@ -1,0 +1,57 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 2,
+    "passes": 1,
+    "pending": 0,
+    "failures": 1,
+    "start": "2018-01-04T21:58:43.275Z",
+    "end": "2018-01-04T21:58:43.334Z",
+    "duration": 59
+  },
+  "tests": [
+    {
+      "title": "",
+      "fullTitle": "{\"titulo\": \"El servicio retorna estado 200 \", \"backlog\": \"OFE-0247-0103\",  \"AsignarA\": \" renato \"} ",
+      "duration": 45,
+      "currentRetry": 0,
+      "err": {}
+    },
+    {
+      "title": "",
+      "fullTitle": "{\"titulo\": \"El servicio retorna informacion\", \"backlog\": \"OFE-0247-0103\",  \"AsignarA\": \" renato\"} ",
+      "currentRetry": 0,
+      "err": {
+        "message": "expected {} to have deep property '_embedded'",
+        "showDiff": false,
+        "actual": {},
+        "stack": "AssertionError: expected {} to have deep property '_embedded'\n    at test\\parmqry-test\\controladorSerieTest.js:32:35\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:631:3)\n    at IncomingMessage.<anonymous> (node_modules\\superagent\\lib\\node\\index.js:795:18)\n    at endReadableNT (_stream_readable.js:1062:12)\n    at process._tickCallback (internal/process/next_tick.js:152:19)",
+        "uncaught": true
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "",
+      "fullTitle": "{\"titulo\": \"El servicio retorna informacion\", \"backlog\": \"OFE-0247-0103\",  \"AsignarA\": \" renato\"} ",
+      "currentRetry": 0,
+      "err": {
+        "message": "expected {} to have deep property '_embedded'",
+        "showDiff": false,
+        "actual": {},
+        "stack": "AssertionError: expected {} to have deep property '_embedded'\n    at test\\parmqry-test\\controladorSerieTest.js:32:35\n    at Test.Request.callback (node_modules\\superagent\\lib\\node\\index.js:631:3)\n    at IncomingMessage.<anonymous> (node_modules\\superagent\\lib\\node\\index.js:795:18)\n    at endReadableNT (_stream_readable.js:1062:12)\n    at process._tickCallback (internal/process/next_tick.js:152:19)",
+        "uncaught": true
+      }
+    }
+  ],
+  "passes": [
+    {
+      "title": "",
+      "fullTitle": "{\"titulo\": \"El servicio retorna estado 200 \", \"backlog\": \"OFE-0247-0103\",  \"AsignarA\": \" renato \"} ",
+      "duration": 45,
+      "currentRetry": 0,
+      "err": {}
+    }
+  ]
+}

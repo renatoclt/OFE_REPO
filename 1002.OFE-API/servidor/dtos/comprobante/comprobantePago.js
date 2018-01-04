@@ -4,7 +4,8 @@
  */
 var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
 var DocEntidad = require('../../modelos/comprobantes/docEntidad');
-var Entidad = require('../../modelos/organizaciones/entidad')
+var Entidad = require('../../modelos/organizaciones/entidad');
+var EntidadParametro = require('../../modelos/organizaciones/entidadParametro')
  /**
  * Funcion que guarda los comprobantes de pago
  * 
@@ -88,7 +89,7 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
                 include:{
                     model: Entidad,
                     include:{
-                        model: t_parametro_entidad
+                        model: EntidadParametro
                     }
                 }
             }
@@ -186,5 +187,12 @@ var atributosTipoEntidad = {
         'descripcionTipoEntidad'
     ]
 }
+
+var atributosEntidadParametro = {
+    attributes: [
+        'vc_json'
+    ]
+}
+
 
 module.exports = ComprobantePago;

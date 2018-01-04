@@ -18,6 +18,7 @@ Sincronizacion.filtro = function sincronizacionFiltro(idioma){
 var filtroAtributos = {
     attributes: [
                 'id',
-                'descripcion'],
+                'descripcion'
+            ],
 }
 module.exports = Sincronizacion;
