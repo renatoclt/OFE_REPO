@@ -33,6 +33,7 @@ var rutas = {
                 "ruta":"",
                 "hijos":{
                     "documento":{"ruta":"/documentos", "descripcion": "Implementacion de servicio rest para guardar documentos en la base de datos"},
+                    "sincronizar":{"ruta":"/comprobantes", "descripcion": "Implementacion de servicio rest obtener retenciones de la base de datos"}
                 }
             },
             "parmqry":{

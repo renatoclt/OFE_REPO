@@ -9,6 +9,7 @@ var constantes = {
     tiposDocumentoIdentidad: '2',//valor en t_parametro_ent
     ubigeo: '3',//valor en t_parametro_ent
     logo: '4',//valor en t_parametro_ent
-    notificarCorreo: '5'//valor en t_parametro_ent
+    notificarCorreo: '5',//valor en t_parametro_ent
+    idTipocomprobanteRetencion:'RT' // valor del id del conprobante tipo de retencion
 } 
 module.exports = constantes;
