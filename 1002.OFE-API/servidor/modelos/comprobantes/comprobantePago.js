@@ -105,7 +105,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
       field: "ts_fechapagocomprobantepago",
     },
     fechaCreacion: {
-      type: sequelize.TEXT(6),
+      type: sequelize.TEXT,
       field: "ts_fechacreacion",
     },
     fechaRegistro: {
