@@ -427,6 +427,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
   }
 );
 ComprobantePago.hasMany(DocEntidad,
-    { as: 'documentoEntidad',foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
+    { 
+      as: 'documentoEntidad',foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
     );
 module.exports = ComprobantePago;

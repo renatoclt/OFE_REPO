@@ -1,3 +1,4 @@
+var Entidad = require('./entidad');
 /**
  * persistencia de la tabla t_entidad en la variable Entidad
  * Modificado --- creado --/--/----
@@ -58,7 +59,7 @@ var EntidadParametro = conexion.define('EntidadParametro',
         }
     }, 
     {
-        tableName: 't_ent_parametro',
+        tableName: 't_ent_parametros',
         timestamps: false
 });
 

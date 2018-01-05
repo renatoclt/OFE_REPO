@@ -1,3 +1,4 @@
+var EntidadParametro = require('./entidadParametro');
 /**
  * persistencia de la tabla t_entidad en la variable Entidad
  * Modificado --- creado --/--/----
@@ -82,4 +83,8 @@ var Entidad = conexion.define('Entidad',
         timestamps: false
 });
 
+Entidad.hasMany(EntidadParametro,
+    { 
+      foreignKey: 'entidad', sourceKey: 'id'}
+    );
 module.exports = Entidad;

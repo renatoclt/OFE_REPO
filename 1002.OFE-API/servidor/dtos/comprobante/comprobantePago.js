@@ -5,7 +5,8 @@
 var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
 var DocEntidad = require('../../modelos/comprobantes/docEntidad');
 var Entidad = require('../../modelos/organizaciones/entidad');
-var EntidadParametro = require('../../modelos/organizaciones/entidadParametro')
+var EntidadParametro = require('../../modelos/organizaciones/entidadParametro');
+const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
  * 
@@ -88,9 +89,11 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
                 attributes: atributosDocumentoEntidad.attributes,
                 include:{
                     model: Entidad,
+                    attributes: atributosEntidad.attributes,
                     include:{
-                        model: EntidadParametro
-                    }
+                        model: EntidadParametro,
+                        attributes: atributosEntidadParametro.attributes,
+                    },
                 }
             }
         ],
@@ -165,13 +168,12 @@ var atributosDocumentoEntidad = {
                 'estado',
                 'id',
                 'idTipoEntidad',
-                //'tipoDocumento',
-                //'ubigeo',
+                //'tipoDocumento', //json
+                //'ubigeo', //json
                 //'departamento',
                 //'provincia',
                 //'distrito',
                 //'direccionFiscal',
-                //'correo',
                 //'idComprobante'
             ],
 }
@@ -179,7 +181,8 @@ var atributosEntidad = {
     attributes: [
         'id',//idEntidad
         'documento',
-        'denominacion'
+        'denominacion',
+        'correo'
     ]
 }
 var atributosTipoEntidad = {
@@ -190,9 +193,10 @@ var atributosTipoEntidad = {
 
 var atributosEntidadParametro = {
     attributes: [
-        'vc_json'
+        ['vc_json', 'json']
     ]
 }
+
 
 
 module.exports = ComprobantePago;

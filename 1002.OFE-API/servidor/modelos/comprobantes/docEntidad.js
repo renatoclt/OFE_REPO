@@ -71,6 +71,7 @@ var DocEntidad = conexion.define('DocEntidad',
     timestamps: false
   }
 );
+
 DocEntidad.belongsTo(Entidad, {foreignKey: 'idEntidad'});
 
 module.exports = DocEntidad;
