@@ -421,8 +421,8 @@ var ComprobantePago = conexion.define('ComprobantePago',
       field: "vc_ticketretencion",
     },
     generado: {
-      type: sequelize.TEXT,
-      field: "vc_generado",
+      type: sequelize.INTEGER,
+      field: "in_generado",
     }
   }, 
   {
