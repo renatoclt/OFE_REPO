@@ -197,6 +197,4 @@ var atributosEntidadParametro = {
     ]
 }
 
-
-
 module.exports = ComprobantePago;
