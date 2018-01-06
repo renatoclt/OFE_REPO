@@ -5,8 +5,8 @@
   "license": "ISC",
   "scripts": {
     "start": "node ./configuracion/www",
-    "test": "./node_modules/.bin/mocha test/parmqry-test/",
-    "testdocucmd": "./node_modules/.bin/mocha test/docucmd-test/ -R json > report",
+    "test": "./node_modules/.bin/mocha",
+    "testreport": "./node_modules/.bin/mocha -R json > report",
     "testparmqry": "./node_modules/.bin/mocha test/parmqry-test/ -R json > report"
   },
   "dependencies": {

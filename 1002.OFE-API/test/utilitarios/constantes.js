@@ -4,6 +4,7 @@ var constantes = {
     series: '/seriess/search',
     maestra: '/maestra/search',
     estadoComprobante: '/estadoscomprobante',
+    usuarios: '/usuarios/search',
 
     renato: 'renato', //valores para asignar incidencias testing
     miguel: 'miguel', //valores para asignar incidencias testing
