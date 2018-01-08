@@ -49,7 +49,7 @@ Factura.buscarComprobantes = function (pagina, regxpag) {
 };
 
 Factura.buscarFacturaEspecifico=function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_){
-
+// filtros para busqueda  de facturas
 
     if (pagina==null){
         throw Error("Falta de argumentos requeridos 'pagina'");
