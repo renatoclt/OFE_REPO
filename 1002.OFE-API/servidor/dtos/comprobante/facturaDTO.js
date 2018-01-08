@@ -1,8 +1,8 @@
 Comprobante = require('../../modelos/comprobantes/comprobantePago');
 contantes = require("../../utilitarios/constantes");
 sequelize = require("sequelize");
-var Retencion=function(){};
-Retencion.buscarComprobante = function (id) {
+var Factura=function(){};
+Factura.buscarComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findById(id,{
@@ -18,18 +18,18 @@ Retencion.buscarComprobante = function (id) {
     return promise;
 };
 
-Retencion.buscarComprobantes = function (pagina, regxpag) {
+Factura.buscarComprobantes = function (pagina, regxpag) {
     if (pagina == null) {
-        throw Error("Falta de argementos requeridos 'pagina'");
+        throw Error("Falta de argumentos requeridos 'pagina'");
     }
     if (regxpag == null) {
-        throw Error("Falta de argementos requeridos 'regxpag'");
+        throw Error("Falta de argumentos requeridos 'regxpag'");
     }
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findAndCountAll({  
                 attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado'],
-                where: { idTipoComprobante: contantes.idTipocomprobanteRetencion}, 
+                where: { idTipoComprobante: contantes.idTipocomprobanteFactura}, 
                 offset: (pagina * regxpag), 
                 limit: regxpag 
                 }).then(function (comprobantes) {
@@ -48,8 +48,8 @@ Retencion.buscarComprobantes = function (pagina, regxpag) {
     return promise;
 };
 
-Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_){
-
+Factura.buscarFacturaEspecifico=function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_){
+// filtros para busqueda  de facturas
 
     if (pagina==null){
         throw Error("Falta de argumentos requeridos 'pagina'");
@@ -82,7 +82,6 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
         .then(function () {
             Comprobante.findAndCountAll(
                 { 
-//pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
                     
                     attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado'],
                     where: { 
@@ -90,10 +89,9 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
                             generado:generado_,                         // 0: offline , 1: online
                             estado:estado_,                             // Bloqueado, Inactivo,..
                             estadoSincronizado:estadoSincronizado_,     // 0: no sincronizado, 1: sincronizado
-                            idTipoComprobante: contantes.idTipocomprobanteRetencion,
+                            idTipoComprobante: contantes.idTipocomprobanteFactura,
                             fechaCreacion: { 
                                 [Op.between]: [fechaInicio,fechaFin+'23:59:59.999999999'] 
-                               // [Op.between]: ['2018-01-02','2018-01-04'+'23:59:59.999999999'] 
                             }    
 
                             },                       
@@ -121,4 +119,4 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
 
 
 };
-module.exports = Retencion;
+module.exports = Factura;

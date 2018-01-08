@@ -1,6 +1,6 @@
-var RetencionDTO = require("../../dtos/comprobante/retencionDTO");
+var PercepcionDTO = require("../../dtos/comprobante/PercepcionDTO");
 
-var controladorRetenciones = function (ruta, rutaEsp) {
+var controladorPercepciones = function (ruta, rutaEsp) {
     var nombreHateo = "hComprobante";
     var hateoas = require('./../../utilitarios/hateoas')({ baseUrl: "http://localhost:3000/v1" });
     var hateoasObj = require('./../../utilitarios/hateoasObj');
@@ -29,12 +29,12 @@ var controladorRetenciones = function (ruta, rutaEsp) {
         if (req.query.limite) {
             regxpag = req.query.limite;
         }
-        RetencionDTO.buscarComprobantes(pagina, regxpag).then(function (resDTO) {
+        PercepcionDTO.buscarComprobantes(pagina, regxpag).then(function (resDTO) {
 
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;
-            hateoasObj_comprobante.nombreColeccion = "retenciones";
+            hateoasObj_comprobante.nombreColeccion = "percepciones";
             hateoasObj_comprobante.ruta = rutaEsp;
             hateoasObj_comprobante.paginacion.activo = true;
             hateoasObj_comprobante.paginacion.totalreg = resDTO.cantidadReg;
@@ -46,7 +46,7 @@ var controladorRetenciones = function (ruta, rutaEsp) {
     });
 
     router.get(ruta.concat('/:id'), function (req, res, next) {
-        RetencionDTO.buscarComprobante(req.params.id).then(function (resDTO) {
+        PercepcionDTO.buscarComprobante(req.params.id).then(function (resDTO) {
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO;
@@ -94,13 +94,13 @@ var controladorRetenciones = function (ruta, rutaEsp) {
         }
  
         //function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
-        RetencionDTO.buscarRetencionEspecifico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
+        PercepcionDTO.buscarRetencionEspecifico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
         .then(function (resDTO) {
 
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;
-            hateoasObj_comprobante.nombreColeccion = "retenciones";
+            hateoasObj_comprobante.nombreColeccion = "percepciones";
             hateoasObj_comprobante.ruta = rutaEsp;
             hateoasObj_comprobante.paginacion.activo = true;
             hateoasObj_comprobante.paginacion.totalreg = resDTO.cantidadReg;
@@ -115,4 +115,4 @@ var controladorRetenciones = function (ruta, rutaEsp) {
 
 };
 
-module.exports = controladorRetenciones;
+module.exports = controladorPercepciones;
