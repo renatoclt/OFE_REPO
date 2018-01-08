@@ -49,8 +49,8 @@ Percepcion.buscarComprobantes = function (pagina, regxpag) {
 };
 
 Percepcion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_){
-
-
+// listar percepciones con filtros
+    
     if (pagina==null){
         throw Error("Falta de argumentos requeridos 'pagina'");
     }
