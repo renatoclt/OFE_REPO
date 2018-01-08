@@ -50,6 +50,8 @@ Boleta.buscarComprobantes = function (pagina, regxpag) {
 
 Boleta.buscarComprobanteEspecifico=function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_){
 
+    // filtros para busqueda  de boletas
+
 
     if (pagina==null){
         throw Error("Falta de argumentos requeridos 'pagina'");
