@@ -88,6 +88,13 @@ var contoladorComprobante =  function (ruta, rutaEsp){
     router.get(ruta.concat('/sincronizarRetenciones'), async function(req, res){
         documentos = {};
         documentos.listaDocumento = await ComprobantePago.filtro();
+        documentos.listaDocumento.forEach(element => {
+            element.dataValues.idSerie = "....... falta";
+            element.dataValues.usuarioCreacion = "....... falta";
+            element.dataValues.usuarioModificacion = "....... falta";
+            
+            
+        })
         res.json(documentos);
     })
 };
