@@ -51,7 +51,6 @@ var contoladorComprobante =  function (ruta, rutaEsp){
      * Guardaremos documentos 
      * Actualmente solo guarda retenciones 
      * 
-     * 
      * 1 await guarda en la tabla comprobante pago
      * 2 await guarda en la tabla docEntidad
      * 3 await guarda en la tabla docReferencia
@@ -73,7 +72,6 @@ var contoladorComprobante =  function (ruta, rutaEsp){
                 documentoReferencia.usuarioModificacion = data.usuarioModificacion;
                 documentoReferencia.fechaCreacion = data.fechaCreacion;
                 documentoReferencia.fechaModificacion = data.fechaCreacion;
-                documentoReferencia.idDocumentoOrigen = 'prueba';
                 await DocReferencia.guardar(documentoReferencia);
             }
             await listarDocumento;
@@ -88,13 +86,31 @@ var contoladorComprobante =  function (ruta, rutaEsp){
     router.get(ruta.concat('/sincronizarRetenciones'), async function(req, res){
         documentos = {};
         documentos.listaDocumento = await ComprobantePago.filtro();
-        documentos.listaDocumento.forEach(element => {
-            element.dataValues.idSerie = "....... falta";
-            element.dataValues.usuarioCreacion = "....... falta";
-            element.dataValues.usuarioModificacion = "....... falta";
-            
-            
-        })
+        documentos.listaDocumento.forEach(documento => {
+            documento.dataValues.documentoEntidad.forEach(documentoEntidad =>{
+                documento.dataValues.usuarioCreacion = documentoEntidad.usuarioCreacion
+                documento.dataValues.usuarioModificacion = documentoEntidad.usuarioModificacion;
+                documentoEntidad.dataValues.descripcionTipoEntidad = documentoEntidad.dataValues.TipoEnt.descripcionTipoEntidad;
+                documentoEntidad.dataValues.idEntidad = documentoEntidad.dataValues.Entidad.id;
+                documentoEntidad.dataValues.tipoDocumento = "....... falta";
+                documentoEntidad.dataValues.documento =  documentoEntidad.dataValues.Entidad.documento;
+                documentoEntidad.dataValues.denominacion = documentoEntidad.dataValues.Entidad.denominacion;
+                documentoEntidad.dataValues.correo = documentoEntidad.dataValues.Entidad.correo;
+                documentoEntidad.dataValues.ubigeo = "....... falta";
+                documentoEntidad.dataValues.departamento = "....... falta";
+                documentoEntidad.dataValues.provincia = "....... falta";
+                documentoEntidad.dataValues.distrito = "....... falta";
+                documentoEntidad.dataValues.direccionFiscal = "....... falta";
+                documentoEntidad.dataValues.idComprobante = documento.dataValues.id;
+                delete documentoEntidad.dataValues.Entidad;
+                delete documentoEntidad.dataValues.TipoEnt;
+            });  
+            documento.dataValues.documentoReferencia.forEach(documentoReferencia =>{
+                documentoReferencia.dataValues.moneda = "....... falta";
+                documentoReferencia.dataValues.observaciones = "....... falta";
+                
+            });             
+        });
         res.json(documentos);
     })
 };

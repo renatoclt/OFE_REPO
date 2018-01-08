@@ -1,3 +1,4 @@
+var DocEntidad = require('../comprobantes/docEntidad')
 /**
  * persistencia de la tabla t_tipo_ent en la variable TipoEnt
  * Modificado --- creado --/--/----
@@ -10,13 +11,13 @@ var TipoEnt = conexion.define('TipoEnt',
   {
     id:{
       type: sequelize.INTEGER,
-      field: "se_iproducto",
+      field: "se_itipo_ent",
       autoIncrement: true,
       unique: true,
       primaryKey: true,
       allowNull:false
     },
-    desc: {
+    descripcionTipoEntidad: {
       type: sequelize.TEXT,
       field: "vc_desc",
       allowNull:false
@@ -60,3 +61,5 @@ var TipoEnt = conexion.define('TipoEnt',
     timestamps: false
   }
 );
+
+module.exports = TipoEnt;

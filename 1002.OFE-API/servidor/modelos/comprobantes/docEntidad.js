@@ -1,5 +1,6 @@
 var ComprobantePago = require('./comprobantePago');
 var Entidad = require('../organizaciones/entidad');
+var TipoEnt = require('../configuracion/tipoEnt');
 /**
  * persistencia de la tabla t_doc_entidad en la variable DocEntidad
  * Modificado --- creado --/--/----
@@ -73,5 +74,7 @@ var DocEntidad = conexion.define('DocEntidad',
 );
 
 DocEntidad.belongsTo(Entidad, {foreignKey: 'idEntidad'});
+DocEntidad.belongsTo(TipoEnt, {foreignKey: 'idTipoEntidad'});
+
 
 module.exports = DocEntidad;

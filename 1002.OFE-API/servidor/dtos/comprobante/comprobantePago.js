@@ -6,6 +6,8 @@ var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
 var DocEntidad = require('../../modelos/comprobantes/docEntidad');
 var Entidad = require('../../modelos/organizaciones/entidad');
 var EntidadParametro = require('../../modelos/organizaciones/entidadParametro');
+var TipoEnt = require('../../modelos/configuracion/tipoEnt')
+var DocReferencia = require('../../modelos/comprobantes/docReferencia')
 const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
@@ -14,7 +16,7 @@ const Op = conexion.Op;
 ComprobantePago.guardar = function maestraGuardar(data){
     return ComprobantePago.create({
         id: data.id,
-        numeroComprobante: data.numeroComprobante,
+        correlativo: data.numeroComprobante,
         idOrganizacionCompradora: data.idOrganizacionCompradora,
         idOrganizacionProveedora:data.idOrganizacionProveedora,
         rucProveedor:data.rucProveedor,
@@ -85,16 +87,27 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
         include:[ 
             {
                 model: DocEntidad,
-                as: 'documentoEntidad',
+                as: 'documentoEntidad', 
                 attributes: atributosDocumentoEntidad.attributes,
-                include:{
-                    model: Entidad,
-                    attributes: atributosEntidad.attributes,
-                    include:{
-                        model: EntidadParametro,
-                        attributes: atributosEntidadParametro.attributes,
-                    },
-                }
+                include:[
+                    {
+                        model: Entidad,
+                        attributes: atributosEntidad.attributes,
+                        include:{
+                            model: EntidadParametro,
+                            attributes: atributosEntidadParametro.attributes,
+                        },
+                    },{
+                        model: TipoEnt,
+                        attributes: atributosTipoEntidad.attributes,
+                    }
+
+                ],
+            },
+            {
+                model: DocReferencia,
+                as: 'documentoReferencia',
+                attributes: atributosDocumentoReferencia.attributes
             }
         ],
         where: {
@@ -107,8 +120,8 @@ var atributosComprobantePago = {
     attributes: [
                 'id', 
                 'idTipoComprobante',
-                'numeroComprobante',
-                //'idSerie',
+                'correlativo',
+                'idSerie',
                 'idProveedor',
                 'idOrganizacionCompradora',
                 'rucProveedor',
@@ -154,8 +167,8 @@ var atributosDocumentoReferencia = {
                 'polizaFactura',
                 'anticipo',
                 'fechaEmisionDestino',
-                'observaciones',
-                'idMoneda'
+                //'observaciones',
+                //'idMoneda'
             ],
 }
 
@@ -170,10 +183,10 @@ var atributosDocumentoEntidad = {
                 'idTipoEntidad',
                 //'tipoDocumento', //json
                 //'ubigeo', //json
-                //'departamento',
-                //'provincia',
-                //'distrito',
-                //'direccionFiscal',
+                //'departamento',//json
+                //'provincia',//json
+                //'distrito',//json
+                //'direccionFiscal',//json
                 //'idComprobante'
             ],
 }
@@ -187,12 +200,14 @@ var atributosEntidad = {
 }
 var atributosTipoEntidad = {
     attributes: [
+        'id',
         'descripcionTipoEntidad'
     ]
 }
 
 var atributosEntidadParametro = {
     attributes: [
+        'parametroEntidad',
         ['vc_json', 'json']
     ]
 }
