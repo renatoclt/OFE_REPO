@@ -33,7 +33,11 @@ var rutas = {
                 "ruta":"",
                 "hijos":{
                     "documento":{"ruta":"/documentos", "descripcion": "Implementacion de servicio rest para guardar documentos en la base de datos"},
-                    "sincronizar":{"ruta":"/comprobantes", "descripcion": "Implementacion de servicio rest obtener retenciones de la base de datos"}
+                    "retenciones":{"ruta":"/retenciones", "descripcion": "Implementacion de servicio rest obtener retenciones de la base de datos"},
+                    "facturas":{"ruta":"/facturas", "descripcion": "Implementacion de servicio rest obtener facturas de la base de datos"},
+                    "boletas":{"ruta":"/boletas", "descripcion": "Implementacion de servicio rest obtener boletas de la base de datos"},
+                    //"guiasremision":{"ruta":"/guiasremision", "descripcion": "Implementacion de servicio rest obtener guias de remision de la base de datos"}
+                    "percepciones":{"ruta":"/percepciones", "descripcion": "Implementacion de servicio rest obtener percepciones de la base de datos"}
                 }
             },
             "parmqry":{

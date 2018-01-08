@@ -1,7 +1,8 @@
 Comprobante = require('../../modelos/comprobantes/comprobantePago');
 contantes = require("../../utilitarios/constantes");
 sequelize = require("sequelize");
-Comprobante.buscarComprobante = function (id) {
+var Retencion=function(){};
+Retencion.buscarComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findById(id,{
@@ -17,7 +18,7 @@ Comprobante.buscarComprobante = function (id) {
     return promise;
 };
 
-Comprobante.buscarComprobantes = function (pagina, regxpag) {
+Retencion.buscarComprobantes = function (pagina, regxpag) {
     if (pagina == null) {
         throw Error("Falta de argementos requeridos 'pagina'");
     }
@@ -47,7 +48,7 @@ Comprobante.buscarComprobantes = function (pagina, regxpag) {
     return promise;
 };
 
-Comprobante.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_){
+Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_){
 
 
     if (pagina==null){
@@ -89,17 +90,13 @@ Comprobante.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobant
                             generado:generado_,                         // 0: offline , 1: online
                             estado:estado_,                             // Bloqueado, Inactivo,..
                             estadoSincronizado:estadoSincronizado_,     // 0: no sincronizado, 1: sincronizado
-            
+                            idTipoComprobante: contantes.idTipocomprobanteRetencion,
                             fechaCreacion: { 
-                                //[Op.between]: [new Date('2018-01-01'),new Date('2018-01-05')] 
-                                [Op.between]: ['2018-01-01','2018-01-05'] 
+                                [Op.between]: [fechaInicio,fechaFin+'23:59:59.999999999'] 
+                               // [Op.between]: ['2018-01-02','2018-01-04'+'23:59:59.999999999'] 
                             }    
 
-
-                           // fechaCreacion: { [Op.between]: [fechaInicio, fechaFin] }
-                            },
-                       // [Op.between]:[{fechaCreacion: fechaInicio}, {fechaCreacion: fechaFin}]
-                       
+                            },                       
                     
                     offset: (pagina*regxpag), 
                     limit: regxpag
@@ -124,4 +121,4 @@ Comprobante.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobant
 
 
 };
-module.exports = Comprobante;
+module.exports = Retencion;

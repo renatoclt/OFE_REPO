@@ -7,19 +7,19 @@ var controladorRetenciones = function (ruta, rutaEsp) {
 
     hateoas.registerLinkHandler(nombreHateo, function (objecto) {
         var links = {
-            "self": rutaEsp.concat('/retenciones/') + objecto.id
+            "self": rutaEsp.concat('/') + objecto.id
         };
         return links;
     });
 
     hateoas.registerCollectionLinkHandler(nombreHateo, function (objectoCollection) {
         var links = {
-            "self": rutaEsp.concat('/retenciones')
+            "self": rutaEsp
         };
         return links;
     });
 
-    router.get(ruta.concat('/retenciones'), function (req, res, next) {
+    router.get(ruta.concat('/'), function (req, res, next) {
         var regxpag = 10
         pagina = 0;
 
@@ -35,7 +35,7 @@ var controladorRetenciones = function (ruta, rutaEsp) {
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;
             hateoasObj_comprobante.nombreColeccion = "retenciones";
-            hateoasObj_comprobante.ruta = rutaEsp.concat('/retenciones');
+            hateoasObj_comprobante.ruta = rutaEsp;
             hateoasObj_comprobante.paginacion.activo = true;
             hateoasObj_comprobante.paginacion.totalreg = resDTO.cantidadReg;
             hateoasObj_comprobante.paginacion.regxpag = regxpag;
@@ -45,7 +45,7 @@ var controladorRetenciones = function (ruta, rutaEsp) {
         });
     });
 
-    router.get(ruta.concat('/retenciones/:id'), function (req, res, next) {
+    router.get(ruta.concat('/:id'), function (req, res, next) {
         RetencionDTO.buscarComprobante(req.params.id).then(function (resDTO) {
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
@@ -56,8 +56,8 @@ var controladorRetenciones = function (ruta, rutaEsp) {
         });
     });
 
-    router.get(ruta.concat('/search'), function (req, res, next) {
-//pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
+    router.get(ruta.concat('/search/buscar'), function (req, res, next) {
+
         var numeroComprobante="",
             generado="",
             estado="",
@@ -101,12 +101,14 @@ var controladorRetenciones = function (ruta, rutaEsp) {
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;
             hateoasObj_comprobante.nombreColeccion = "retenciones";
-            hateoasObj_comprobante.ruta = rutaEsp.concat('/retenciones');
+            hateoasObj_comprobante.ruta = rutaEsp;
             hateoasObj_comprobante.paginacion.activo = true;
             hateoasObj_comprobante.paginacion.totalreg = resDTO.cantidadReg;
             hateoasObj_comprobante.paginacion.regxpag = limite;
             hateoasObj_comprobante.paginacion.pagina = pagina;
-            hateoasObj_comprobante.busqueda.activo = false;         
+            hateoasObj_comprobante.busqueda.activo = true; 
+            hateoasObj_comprobante.busqueda.parametros = {numeroComprobante:numeroComprobante,generado:generado,estado:estado,estadoSincronizado:estadoSincronizado,fechaInicio:fechaInicio,fechaFin:fechaFin};
+            hateoasObj_comprobante.busqueda.ruta = "/search/buscar";        
             res.json(hateoas.link(hateoasObj_comprobante));
         });
     });
