@@ -18,7 +18,8 @@ Sincronizacion.filtro = function sincronizacionFiltro(idioma){
 var filtroAtributos = {
     attributes: [
                 'id',
-                'descripcion'
+                'descripcion',
+                'tipoComprobante'
             ],
 }
 module.exports = Sincronizacion;
