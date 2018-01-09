@@ -55,7 +55,11 @@ var Sincronizacion = conexion.define('Sincronizacion',
     estadoSincronizado: {
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
-    }        
+    },
+    tipoComprobante: {
+      type: sequelize.TEXT,
+      field: "ts_tipo_comprobante"
+    }       
   },
   {
     tableName: 't_sincronizacion',
