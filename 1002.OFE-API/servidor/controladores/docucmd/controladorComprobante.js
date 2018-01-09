@@ -92,15 +92,15 @@ var contoladorComprobante =  function (ruta, rutaEsp){
                 documento.dataValues.usuarioModificacion = documentoEntidad.usuarioModificacion;
                 documentoEntidad.dataValues.descripcionTipoEntidad = documentoEntidad.dataValues.TipoEnt.descripcionTipoEntidad;
                 documentoEntidad.dataValues.idEntidad = documentoEntidad.dataValues.Entidad.id;
-                documentoEntidad.dataValues.tipoDocumento = "....... falta";
+                documentoEntidad.dataValues.tipoDocumento = "....... falta"; //json
                 documentoEntidad.dataValues.documento =  documentoEntidad.dataValues.Entidad.documento;
                 documentoEntidad.dataValues.denominacion = documentoEntidad.dataValues.Entidad.denominacion;
                 documentoEntidad.dataValues.correo = documentoEntidad.dataValues.Entidad.correo;
-                documentoEntidad.dataValues.ubigeo = "....... falta";
-                documentoEntidad.dataValues.departamento = "....... falta";
-                documentoEntidad.dataValues.provincia = "....... falta";
-                documentoEntidad.dataValues.distrito = "....... falta";
-                documentoEntidad.dataValues.direccionFiscal = "....... falta";
+                documentoEntidad.dataValues.ubigeo = "....... falta"; //json
+                documentoEntidad.dataValues.departamento = "....... falta"; //json
+                documentoEntidad.dataValues.provincia = "....... falta";    //json
+                documentoEntidad.dataValues.distrito = "....... falta"; //json
+                documentoEntidad.dataValues.direccionFiscal = "....... falta"; //json
                 documentoEntidad.dataValues.idComprobante = documento.dataValues.id;
                 delete documentoEntidad.dataValues.Entidad;
                 delete documentoEntidad.dataValues.TipoEnt;

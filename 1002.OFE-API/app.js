@@ -23,7 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 app.use(function (req, res, next) {
-  const err = new Error('No Encontrado');
+  const err = new Error('No Encontrado' );
+  console.log(req);
   err.status = 404;
   next(err);
 });
@@ -44,6 +45,10 @@ app.use(function (err, req, res) {
     message: err.message,
     error: {}
   });
+});
+
+app.get('/', (req, res) => {
+  res.end('<h1>hola mundo desde express</h1>');
 });
 
 module.exports = app;

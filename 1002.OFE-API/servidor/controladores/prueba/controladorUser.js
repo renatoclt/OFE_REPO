@@ -3,10 +3,7 @@ var controladorUser = function(ruta){
   var UserDTO = require("../../dtos/prueba/UserDTO");
 
   router.get('/', function(req, res, next) {
-    console.log("sajjajajja");
-      UserDTO.buscarProducto(1).then(function(user){
-        res.json(user);   
-      });
+    res.end('<h1>hola mundo desde express</h1>');
   });
 }
 
