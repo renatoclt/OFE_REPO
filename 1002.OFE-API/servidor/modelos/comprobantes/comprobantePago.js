@@ -1,5 +1,4 @@
 var DocEntidad = require('./docEntidad');
-var DocReferencia = require('./docReferencia');
 /**
  * persistencia de la tabla t_comprobantepago en la variable ComprobantePago
  * Modificado --- creado --/--/----
@@ -17,13 +16,9 @@ var ComprobantePago = conexion.define('ComprobantePago',
         primaryKey: true,
         allowNull:false
     },
-    idSerie: {
+    numeroComprobante: {
       type: sequelize.TEXT(30),
-      field: "vc_serie",
-    },
-    correlativo: {
-      type: sequelize.TEXT(30),
-      field: "vc_correlativo",
+      field: "ch_numerocomprobantepago",
     },
     idProveedor: {
       type: sequelize.INTEGER(32),
@@ -436,12 +431,6 @@ var ComprobantePago = conexion.define('ComprobantePago',
   }
 );
 ComprobantePago.hasMany(DocEntidad,
-    { 
-      as: 'documentoEntidad',foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
+    { as: 'documentoEntidad',foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
     );
-
-ComprobantePago.hasMany(DocReferencia,
-      { 
-        as: 'documentoReferencia',foreignKey: 'idDocumentoOrigen', targetKey: 'idcomprobantepago'}
-      );
 module.exports = ComprobantePago;
