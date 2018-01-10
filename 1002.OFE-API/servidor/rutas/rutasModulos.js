@@ -14,6 +14,5 @@ parmqry = require('./rutasControladoresParmqry')(nav.ruta);
 entidad = require('./rutasControladoresEntidad')(nav.ruta);
 docucmd = require('./rutasControladoresDocucmd')(nav.ruta);
 offline = require('./rutasControladoresOffline')(nav.ruta);
-//prueba = require('./rutasControladoresPrueba')(nav.ruta); //borrar
 
 module.exports = router;
