@@ -62,7 +62,7 @@ var Sincronizacion = conexion.define('Sincronizacion',
     }       
   },
   {
-    tableName: 't_sincronizacion',
+    tableName: 'fe_offline_t_sincronizacion',
     timestamps: false
   }
 );

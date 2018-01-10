@@ -2,7 +2,7 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var Sincronizacion = require('../../dtos/configuracion/sincronizacionDTO');
+var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
 
 /**
  * Controlador de la tabla serie 

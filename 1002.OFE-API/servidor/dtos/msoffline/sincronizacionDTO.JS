@@ -1,4 +1,4 @@
-Sincronizacion = require('../../modelos/configuracion/sincronizacion');
+Sincronizacion = require('../../modelos/msoffline/sincronizacion');
 
 /**
  * Funcion que retorna la tabla T_Maestra segun el campo codigo
