@@ -1,6 +1,6 @@
 /**
  * persistencia de la tabla t_parametro_doc en la variable ParametroDoc
- * Modificado --- creado --/--/----
+ * @author Renato Modificado 10/01/2018
  * @author Renato creado 14/12/2017
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
@@ -48,7 +48,7 @@ var Sincronizacion = conexion.define('Sincronizacion',
       field: "in_estado",
       allowNull:false,
     },
-    fechaSincronizado: {
+    fechaSincronizacion: {
       type: sequelize.TEXT,
       field: "ts_fec_sincronizado"
     },

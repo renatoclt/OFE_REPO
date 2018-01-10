@@ -19,7 +19,8 @@ var filtroAtributos = {
     attributes: [
                 'id',
                 'descripcion',
-                'tipoComprobante'
+                'tipoComprobante',
+                'fechaSincronizacion'
             ],
 }
 module.exports = Sincronizacion;
