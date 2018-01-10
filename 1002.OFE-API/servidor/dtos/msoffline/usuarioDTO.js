@@ -1,4 +1,4 @@
-Usuario = require('../../modelos/organizaciones/usuario');
+Usuario = require('../../modelos/msoffline/usuario');
 
 Usuario.buscarUsuario = function (id) {
     var promise = new Promise(function (resolve, reject) {

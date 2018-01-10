@@ -107,7 +107,7 @@ var Usuario = conexion.define('Usuario',
     }          
   },
   {
-    tableName: 't_usuario',
+    tableName: 'fe_offline_t_usuario',
     timestamps: false
   }
 );
