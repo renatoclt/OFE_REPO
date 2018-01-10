@@ -3,7 +3,7 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var Maestra = require('../../dtos/configuracion/maestrasDTO');
+var Maestra = require('../../dtos/msparametrosquery/maestraDTO');
 
 /**
  * Controlador de la tabla maestra 
@@ -46,7 +46,7 @@ var contoladorMaestras =  function (ruta, rutaEsp){
      * y declaramos una funcion asincrona q espera los datos de la tabla
      */
     router.get(ruta.concat('/search/filtros'), async function (req, res) {
-        if (req.query.tabla && req.query.tabla>0){
+        if (req.query.tabla){
             let tabla = req.query.tabla;
             var data = await Maestra.filtro(tabla);  
             var hateoasObj_n = Object.assign({},hateoasObj);

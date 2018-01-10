@@ -1,7 +1,6 @@
-var DominioEnt = require('../organizaciones/dominioEnt')
 /**
  * persistencia de la tabla t_serie en la variable Serie
- * Modificado --- creado --/--/----
+ * @author Renato Modificado 10/01/2018
  * @author Renato creado 14/12/2017
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
@@ -9,7 +8,7 @@ var DominioEnt = require('../organizaciones/dominioEnt')
  */
 var Serie = conexion.define('Serie',
   {
-    id:{
+    idSerie:{
       type: sequelize.INTEGER,
       field: "se_iserie",
       autoIncrement: true,
@@ -18,22 +17,12 @@ var Serie = conexion.define('Serie',
     },
     idEntidad: {
       type: sequelize.INTEGER(32),
-      field: "se_ientidad",
-      allowNull:false
-    },
-    DominioEntId: {
-      type: sequelize.INTEGER(32),
-      field: "se_idominio_ent",
+      field: "in_ientidad",
       allowNull:false
     },
     idTipoSerie: {
       type: sequelize.INTEGER(32),
       field: "in_tipo_serie",
-      allowNull:false
-    },
-    idTipoComprobante: {
-      type: sequelize.INTEGER(32),
-      field: "vc_idtipodocumento",
       allowNull:false
     },
     direccion: {
@@ -49,6 +38,16 @@ var Serie = conexion.define('Serie',
     correlativo: {
       type: sequelize.INTEGER(32),
       field: "in_correlativo",
+      allowNull:false
+    },
+    idTipoComprobante: {
+      type: sequelize.INTEGER(32),
+      field: "vc_idtipodocumento",
+      allowNull:false
+    },
+    idUbigeo: {
+      type: sequelize.INTEGER(32),
+      field: "in_idominio_ubigeo",
       allowNull:false
     },
     usuarioCreacion: {
@@ -86,9 +85,8 @@ var Serie = conexion.define('Serie',
     }        
   },
   {
-    tableName: 't_serie',
+    tableName: 'fe_query_t_serie',
     timestamps: false,
   }
 );
-Serie.belongsTo(DominioEnt);
 module.exports = Serie;

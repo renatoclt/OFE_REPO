@@ -3,7 +3,7 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var Maestra = require('../../modelos/comprobantes/maestra')
+var Maestra = require('../../modelos/msparametrosquery/Maestra')
 
 /**
  * Funcion que retorna la tabla T_Maestra segun el campo codigo
@@ -21,7 +21,7 @@ Maestra.filtro = function maestraFiltro(codigoTabla){
 //atributos utilizados por function maestraFiltro
 var filtroAtributos = {
     attributes: [
-                ['vc_org','organizacion'], 
+                'organizacion', 
                 'tabla',
                 'codigo',
                 'descripcionCorta',

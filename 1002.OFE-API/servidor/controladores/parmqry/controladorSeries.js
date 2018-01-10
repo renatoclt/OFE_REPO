@@ -2,7 +2,7 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var Serie = require('../../dtos/organizaciones/serieDto');
+var Serie = require('../../dtos/msparametrosquery/serieDto');
 
 /**
  * Controlador de la tabla serie 
@@ -21,10 +21,10 @@ var contoladorSeries =  function (ruta, rutaEsp){
     hateoas.registerLinkHandler(nombreHateo, function (data) {
         var links = {
             "self": {
-                "href": "http://localhost:3000/v1"+rutaEsp.concat('/',data.tabla,data.codigo)
+                "href": "http://localhost:3000/v1"+rutaEsp.concat('/',data.idSerie)
             },
             "seriesRedis":{
-                "href":  "http://localhost:3000/v1"+rutaEsp.concat('/',data.tabla, data.codigo) 
+                "href":  "http://localhost:3000/v1"+rutaEsp.concat('/',data.idSerie) 
             }
         };
         return links;
@@ -33,7 +33,7 @@ var contoladorSeries =  function (ruta, rutaEsp){
     hateoas.registerCollectionLinkHandler(nombreHateo, function (data) {
         var links = {
             "self": {
-                "href": "http://localhost:3000/v1"+ rutaEsp.concat('/','search/filtros?tabla=',data[0].tabla)
+                "href": "http://localhost:3000/v1"+ rutaEsp.concat('/','search/filtros?tabla=',data[0].idSerie)
             }
         };
         return links;
@@ -48,7 +48,7 @@ var contoladorSeries =  function (ruta, rutaEsp){
         if (req.query.id_entidad && req.query.id_entidad>0 && req.query.id_tipo_comprobante && req.query.id_tipo_comprobante > 0 && req.query.id_tipo_serie){
             let tabla = req.query.tabla;
             try{
-                var data = await Serie.filtro(req.query.id_entidad, req.query.id_tipo_comprobante,req.query.id_tipo_serie);  
+                var data = await Serie.filtro(req.query.id_entidad, req.query.id_tipo_comprobante,req.query.id_tipo_serie); 
                 var hateoasObj_n = Object.assign({},hateoasObj);
                 hateoasObj_n.type = nombreHateo;
                 hateoasObj_n.data =  data.map(function (series) {

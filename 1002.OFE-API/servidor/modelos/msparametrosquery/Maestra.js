@@ -2,14 +2,14 @@
  * persistencia de la tabla t_maestra en la variable Maestra
  * tabla creada de EBIZ
  * Modificado --- creado --/--/----
- * @author Renato creado 14/12/2017
+ * @author Renato creado 09/01/2018
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
 var Maestra = conexion.define('Maestra',
   {
-    id:{
+    organizacion:{
       primaryKey: true,
       type: sequelize.TEXT(255),
       field: "vc_org",
@@ -100,9 +100,11 @@ var Maestra = conexion.define('Maestra',
     }        
   },
   {
-    tableName: 't_maestra',
+    tableName: 'master_t_maestra',
     timestamps: false
   }
 );
+
+Maestra.removeAttribute('id');
 
 module.exports = Maestra;
