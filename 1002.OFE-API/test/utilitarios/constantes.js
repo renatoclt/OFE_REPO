@@ -5,7 +5,7 @@ var constantes = {
     maestra: '/maestra/search',
     estadoComprobante: '/estadoscomprobante',
     usuarios: '/usuarios/search',
-
+    sincronizacion:  '/sincronizacion',
     renato: 'renato', //valores para asignar incidencias testing
     miguel: 'miguel', //valores para asignar incidencias testing
     jose: 'jose', //valores para asignar incidencias testing
