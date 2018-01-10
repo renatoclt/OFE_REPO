@@ -3,7 +3,7 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var EstadoComprobante = require('../../modelos/configuracion/estadoComprobante')
+var EstadoComprobante = require('../../modelos/msparametrosquery/estadoComprobante')
 
 /**
  * Funcion que retorna la tabla T_Maestra segun el campo codigo

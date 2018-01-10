@@ -40,7 +40,7 @@ var EstadoComprobante = conexion.define('EstadoComprobante',
   }        
 },
 {
-  tableName: 't_est_comprobante',
+  tableName: 'fe_query_t_est_comprobante',
   timestamps: false
 }
 );

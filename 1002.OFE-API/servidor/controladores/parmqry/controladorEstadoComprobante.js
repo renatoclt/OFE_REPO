@@ -1,9 +1,8 @@
-
 /**
- * @author --- Modificado **-**-****
+ * @author renato Modificado 10-01-2018
  * @author renato creado 18-12-2017 
  */
-var EstadoComprobante = require('../../dtos/configuracion/estadoComprobanteDTO');
+var EstadoComprobante = require('../../dtos/msparametrosquery/estadoComprobanteDTO');
 
 /**
  * Controlador de la tabla maestra 

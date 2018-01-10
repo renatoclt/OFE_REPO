@@ -3,7 +3,7 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var Maestra = require('../../modelos/msparametrosquery/Maestra')
+var Maestra = require('../../modelos/msparametrosquery/maestra')
 
 /**
  * Funcion que retorna la tabla T_Maestra segun el campo codigo
