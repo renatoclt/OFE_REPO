@@ -49,6 +49,11 @@ var rutas = {
                     "concepto": {"ruta":"/concepto", "descripcion": "Imprementacion de servicios conceptos"},
                     "series":  {"ruta":"/seriess", "descripcion":"Implementacion de servicio rest para listar las series de offline"},
                     "estadoComprobante": {"ruta":"/estadoscomprobante", "descripcion":"Implementacion de servicio rest para listar los estados comprobantes"},
+                }
+            },
+            "offline":{
+                "ruta":"",
+                "hijos":{
                     "sincronizacion": {"ruta":"/sincronizacion", "descripcion":"Implementacion de servicio rest para listar los elementos a sincronizar"},
                 }
             },
