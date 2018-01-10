@@ -1,4 +1,4 @@
-var UsuarioDTO = require("../../dtos/organizaciones/usuarioDTO");
+var UsuarioDTO = require("../../dtos/msoffline/usuarioDTO");
 //var EntParametrosDTO = require("../../dtos/comprobantes/entParametrosDTO");
 //var DominioEntDTO = require("../../dtos/organizaciones/dominioEntDTO");
 
