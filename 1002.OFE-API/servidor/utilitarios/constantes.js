@@ -10,9 +10,9 @@ var constantes = {
     ubigeo: '3',//valor en t_parametro_ent
     logo: '4',//valor en t_parametro_ent
     notificarCorreo: '5',//valor en t_parametro_ent
-    idTipocomprobanteRetencion:'RT', // valor del id del conprobante tipo de retencion,
-    idTipocomprobanteFactura:'0000001', // valor del id del conprobante tipo de factura
-    idTipocomprobanteBoleta:'0000005', // valor del id del conprobante tipo de boleta
+    idTipocomprobanteRetencion:'20', // valor del id del conprobante tipo de retencion,
+    idTipocomprobanteFactura:'01', // valor del id del conprobante tipo de factura
+    idTipocomprobanteBoleta:'03', // valor del id del conprobante tipo de boleta
     idTipocomprobantePercepcion:'PR' // valor del id del conprobante tipo de guias de remision
 } 
 module.exports = constantes;

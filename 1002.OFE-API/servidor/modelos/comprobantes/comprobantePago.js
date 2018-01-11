@@ -426,7 +426,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
     }
   }, 
   {
-    tableName: 't_comprobantepago',
+    tableName: 'comprobante_t_comprobantepago',
     timestamps: false
   }
 );
