@@ -6,6 +6,7 @@ app.on("ready", () => {
   mainWindow.loadURL(`file://${__dirname}/1002.OFE-PROD/PROD_ANGULAR/dist/index.html`);
   mainWindow.webContents.openDevTools();
   mainWindow.once("ready-to-show", () => { mainWindow.show() }); 
+  mainWindow.setMenu(null);
 });
 
 app.on("window-all-closed", () => { app.quit() })
