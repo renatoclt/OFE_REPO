@@ -1,4 +1,4 @@
-var PercepcionDTO = require("../../dtos/comprobante/PercepcionDTO");
+var PercepcionDTO = require("../../dtos/comprobante/percepcionDTO");
 
 var controladorPercepciones = function (ruta, rutaEsp) {
     var nombreHateo = "hComprobante";
