@@ -1,78 +1,78 @@
 var EntidadQuery = conexion.define('EntidadQuery',
   {
-    seIentidad:{
+      seIentidad:{
       type: sequelize.INTEGER,
       field: "se_ientidad",
       unique: true,
       primaryKey: true,
       allowNull:false            
     },
-    vcDocumento: {
+      vcDocumento: {
       type: sequelize.TEXT,
       field: "vc_documento",
       allowNull:false
     },
-    vc_denominacion: {
+      vcDenominacion: {
       type: sequelize.TEXT,
-      field: "vcDenominacion"
+      field: "vc_denominacion"
     },
-    vc_nom_comercia: {
+      vcNomComercia: {
       type: sequelize.TEXT,
-      field: "vcNomComercia",
+      field: "vc_nom_comercia",
       allowNull:false
     },
-    vc_dir_fiscal: {
+      vcDirFiscal: {
       type: sequelize.TEXT,
-      field: "vcDirFiscal"
+      field: "vc_dir_fiscal"
     },
-    vc_correo: {
+      vcCorreo: {
       type: sequelize.TEXT,
-      field: "vcCorreo"
+      field: "vc_correo"
     },
-    vc_logo: {
+      vcLogo: {
       type: sequelize.TEXT,
-      field: "vcLogo"
+      field: "vc_logo"
     },
-    vc_pais: {
+      vcPais: {
       type: sequelize.TEXT,
-      field: "vcPais"
+      field: "vc_pais"
     },
-    vc_ubigeo: {
+      vcUbigeo: {
       type: sequelize.TEXT,
-      field: "vcUbigeo"
+      field: "vc_ubigeo"
     },
-    vc_tipo_documento: {
+      vcTipoDocumento: {
       type: sequelize.TEXT,
-      field: "vcTipoDocumento"
+      field: "vc_tipo_documento"
     },
-    in_tipo_documento: {
+      inTipoDocumento: {
       type: sequelize.INTEGER,
-      field: "inTipoDocumento"
+      field: "in_tipo_documento"
     },
-    vc_idebiz: {
+      vcIdebiz: {
       type: sequelize.TEXT,
-      field: "vcIdebiz"
+      field: "vc_idebiz"
     },
-    vc_usu_creacion: {
+      vcUsuCreacion: {
       type: sequelize.TEXT,
-      field: "vcUsuCreacion"
+      field: "vc_usu_creacion"
     },
-    vc_usu_modifica: {
+      vcUsuModifica: {
       type: sequelize.TEXT,
-      field: "vcUsuModifica"
+      field: "vc_usu_modifica"
     },
-    ts_fec_creacion: {
+      tsFecCreacion: {
       type: sequelize.TEXT,
-      field: "tsFecCreacion"
+      field: "ts_fec_creacion"
     },
-    ts_fec_modifica: {
+      tsFecModifica: {
       type: sequelize.TEXT,
-      field: "tsFecModifica"
+      field: "ts_fec_modifica"
     },
-    in_estado: {
+      inEstado: {
       type: sequelize.INTEGER,
-      field: "inEstado"
-    }
+      field: "in_estado"
+      }
     /*,
     estadoSincronizado: {
       type: sequelize.INTEGER,

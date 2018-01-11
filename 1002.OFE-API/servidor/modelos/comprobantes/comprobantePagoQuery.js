@@ -1,5 +1,6 @@
 var DocParametroQuery   = require('./feQuerydocParametro');
 var EntidadQuery=require('./feQuerydocEntidad');
+var ComprobanteEventoQuery_=require('./feQueryComprobanteEvento');
 var ComprobantePagoQuery = conexion.define('ComprobantePagoQuery',
   {
       
@@ -461,11 +462,11 @@ var ComprobantePagoQuery = conexion.define('ComprobantePagoQuery',
     dePagomontopagado: {
       type: sequelize.REAL,
       field: "de_pagomontopagado",
-    },/*
+    },
     inIdentidademisor:{
       type: sequelize.INTEGER,
       field: "in_identidademisor",
-    },*/
+    },
     inIdentidadreceptor:{
       type: sequelize.INTEGER,
       field: "in_identidadreceptor",
@@ -489,13 +490,24 @@ var ComprobantePagoQuery = conexion.define('ComprobantePagoQuery',
 ComprobantePagoQuery.hasMany(DocParametroQuery,
   {
       as: 'parametros',
-      foreignKey: 'inIcomprobantepago'
+      foreignKey: 'inIcomprobantepago'     // fk de la tabla parametro query inIdcomprobantepago
 });
+// relacion 1-1
+ComprobantePagoQuery.belongsTo(EntidadQuery,{
+        as: 'entidadproveedora',
+        foreignKey: 'inIdentidademisor'     // fk de la tabla comprobante
+    });
 
-ComprobantePagoQuery.hasOne(EntidadQuery,
-  {
-      as: 'inIdentidademisor',
-      foreignKey: 'inIdentidademisor'
-  }
-);
+// relacion 1-1
+ComprobantePagoQuery.belongsTo(EntidadQuery,{
+    as: 'entidadcompradora',
+    foreignKey: 'inIdentidadreceptor'         // fk de la tabla comprobante
+});
+// relacion 1-N
+
+ComprobantePagoQuery.hasMany(ComprobanteEventoQuery_,
+    {
+        as: 'eventos',
+        foreignKey: 'inIdcomprobante'
+    });
 module.exports = ComprobantePagoQuery;
