@@ -16,34 +16,102 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
         var
         pagina=0,
         limite=0,
-        ordenar=0;
-        idEntidadEmisora=0;             // inIdentidademisor
-        tipoComprobanteTabla=10007&     // vcIdtablatipocomprobante
-        tipoComprobanteRegistro=20&     // vcIdregistrotipocomprobante
-        fechaEmisionDel=06/01/2010&     // tsFechaemision
-        fechaEmisionAl=6/1/2018&        // tsFechaemision
-        tipoDocumento=&                 // tabla entidad
-        nroDocumento=&                  // tabla entidad
-        ticket=&                        // vcTicketRetencion
-        estado=&                        // chEstadocomprobantepago
-        nroSerie=&                      // vcSerie
-        correlativoInicial=&            // vcCorrelativo
-        correlativoFinal=&              // vcCorrelativo
-        nroPagina=7&
-        regXPagina=10&
-        ordenar=tsFechaemision&
-        fechaBajaDel=&
-        fechaBajaAl=&
-        ticketBaja=                     // vcParamTicket
+        
+        idEntidadEmisora=0,             // inIdentidademisor
+        tipoComprobanteTabla='',     // vcIdtablatipocomprobante
+        tipoComprobanteRegistro='',     // vcIdregistrotipocomprobante
+        fechaEmisionDel='',     // tsFechaemision
+        fechaEmisionAl='',        // tsFechaemision
+        tipoDocumento='',                 // tabla entidad
+        nroDocumento='',                  // tabla entidad
+        ticket='',                        // vcTicketRetencion
+        estado='',                        // chEstadocomprobantepago
+        nroSerie='',                      // vcSerie
+        correlativoInicial='',            // vcCorrelativo
+        correlativoFinal='',              // vcCorrelativo
+        ordenar='',
+        fechaBajaDel='',
+        fechaBajaAl='',
+        ticketBaja='';                     // vcParamTicket
 
-        if (req.query.nroPagina && req.query.nroPagina>0){
+        if (req.query.nroPagina && req.query.nroPagina!=''){
             pagina = parseInt(req.query.nroPagina);
         }
-        if (req.query.regXPagina && req.query.regXPagina>0){
+        if (req.query.regXPagina && req.query.regXPagina!=''){
             limite = parseInt(req.query.regXPagina);
         }
+        if (req.query.idEntidadEmisora && parseInt(req.query.idEntidadEmisora)>0){
+            idEntidadEmisora = req.query.idEntidadEmisora;
+        }
+        if (req.query.tipoComprobanteTabla && req.query.tipoComprobanteTabla!=''){
+            tipoComprobanteTabla = req.query.tipoComprobanteTabla;
+        }
+        if (req.query.tipoComprobanteRegistro && req.query.tipoComprobanteRegistro!=''){
+            tipoComprobanteRegistro = req.query.tipoComprobanteRegistro;
+        }
+        if (req.query.fechaEmisionDel && req.query.fechaEmisionDel!=''){
+            fechaEmisionDel = req.query.fechaEmisionDel;
+        }
+        if (req.query.fechaEmisionAl && req.query.fechaEmisionAl!=''){
+            fechaEmisionAl = req.query.fechaEmisionAl;
+        }   
+        if (req.query.tipoDocumento && req.query.tipoDocumento!=''){
+            tipoDocumento = req.query.tipoDocumento;
+        } 
+        if (req.query.nroDocumento && req.query.nroDocumento!=''){
+            nroDocumento = req.query.nroDocumento;
+        }    
+        if (req.query.ticket && req.query.ticket!=''){
+            ticket = req.query.ticket;
+        }   
+        if (req.query.estado && req.query.estado!=''){
+            estado = req.query.estado;
+        } 
+        if (req.query.nroSerie && req.query.nroSerie!=''){
+            nroSerie = req.query.nroSerie;
+        }
+        if (req.query.correlativoInicial && req.query.correlativoInicial!=''){
+            correlativoInicial = req.query.correlativoInicial;
+        }
+        if (req.query.correlativoFinal && req.query.correlativoFinal!=''){
+            correlativoFinal = req.query.correlativoFinal;
+        }
+        if (req.query.ordenar && req.query.ordenar!=''){
+            ordenar = req.query.ordenar;
+        }
+        if (req.query.fechaBajaDel && req.query.fechaBajaDel!=''){
+            fechaBajaDel = req.query.fechaBajaDel;
+        }
+        if (req.query.fechaBajaAl && req.query.fechaBajaAl!=''){
+            fechaBajaAl = req.query.fechaBajaAl;
+        }
+        if (req.query.ticketBaja && req.query.ticketBaja!=''){
+            ticketBaja = req.query.ticketBaja;
+        }
+        
+        
 
-        ComprobantePagoQueryDTO.buscarComprobanteConFiltros(pagina, limite).then(function (resDTO) {
+        ComprobantePagoQueryDTO.buscarComprobanteConFiltros(
+            pagina, 
+            limite,
+            idEntidadEmisora,               // inIdentidademisor
+            tipoComprobanteTabla,           // vcIdtablatipocomprobante
+            tipoComprobanteRegistro,        // vcIdregistrotipocomprobante
+            fechaEmisionDel,                // tsFechaemision
+            fechaEmisionAl,                 // tsFechaemision
+            tipoDocumento,                  // tabla entidad
+            nroDocumento,                   // tabla entidad
+            ticket,                         // vcTicketRetencion
+            estado,                         // chEstadocomprobantepago ?
+            nroSerie,                       // vcSerie ?
+            correlativoInicial,             // vcCorrelativo
+            correlativoFinal,               // vcCorrelativo
+            ordenar,
+            fechaBajaDel,                   // tsParamFechabaja
+            fechaBajaAl,                    // tsParamFechabaja
+            ticketBaja  
+        )
+            .then(function (resDTO) {
             var ObjetoSalida = {};
             ObjetoSalida.content=resDTO.comprobantes;
             ObjetoSalida.last=false;

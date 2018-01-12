@@ -184,8 +184,10 @@ var ComprobantePagoQuery = conexion.define('ComprobantePagoQuery',
       field: "ts_fecharegistro",
     },
     tsFechaemision: {
+     // type: sequelize.DATE,
       type: sequelize.TEXT(20),
       field: "ts_fechaemision",
+      
     },
     tsFecharecepcioncomprobantepa: {
       type: sequelize.TEXT(250),
