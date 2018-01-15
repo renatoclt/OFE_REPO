@@ -67,12 +67,8 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
             fechaBajaAl,
             ticketBaja
 ){
-
-    console.log(pagina);
-    console.log(ticketBaja);
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
-            console.log('entro');
             ComprobantePagoQuery.findAndCountAll(
                 {
                     where:filtrosDinamicos(idEntidadEmisora,tipoComprobanteTabla,tipoComprobanteRegistro,fechaEmisionDel,fechaEmisionAl,tipoDocumento,nroDocumento,ticket,estado,nroSerie,correlativoInicial,correlativoFinal,ordenar,fechaBajaDel,fechaBajaAl,ticketBaja), 
@@ -88,12 +84,18 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
                         {
                             model: EntidadQuery,
                             as: 'entidadcompradora'
+                      /*      where: {
+                                vcTipoDocumento: tipoDocumento
+                                ,vcDocumento:nroDocumento
+                              },
+                            required: true*/
                         },
                         {
                             model: ComprobanteEventoQuery,
                             as: 'eventos'
                         }
                     ],
+                    order:[ [ordenar, 'DESC']],
                     group: 'in_idcomprobantepago',
                     offset:(pagina*limite),
                     limit: limite
@@ -125,8 +127,8 @@ function filtrosDinamicos(
             ticket,                         // vcTicketRetencion
             estado,                         // chEstadocomprobantepago
             nroSerie,                       // vcSerie
-            //correlativoInicial,             // vcCorrelativo
-            //correlativoFinal,               // vcCorrelativo
+            correlativoInicial,             // vcCorrelativo
+            correlativoFinal,               // vcCorrelativo
             ordenar,
             fechaBajaDel,
             fechaBajaAl,
@@ -162,10 +164,17 @@ function filtrosDinamicos(
     }
     if (ticketBaja!='') {
         whereClause['vcParamTicket'] =ticketBaja; 
+    }    
+    if (correlativoInicial!='') {
+        whereClause['vcCorrelativo'] ={
+            [Op.gte]:correlativoInicial
+        };
     }
-
-    
-
+    if (correlativoFinal!='') {
+        whereClause['vcCorrelativo'] ={
+            [Op.lte]:correlativoFinal
+        }; 
+    }
     var splitemisionInicio=fechaEmisionDel.split('/');
     var splitemisionFin=fechaEmisionAl.split('/');
     var fechaemision_inicio    =    new Date(parseInt(splitemisionInicio[2]),parseInt(splitemisionInicio[1])-1,parseInt(splitemisionInicio[0]));
@@ -177,6 +186,19 @@ function filtrosDinamicos(
         [Op.between]: 
                     [ formatInicio , formatFin]
     };
+
+    if(fechaBajaDel!=''&&fechaBajaAl!=''){
+        var spliteBajaInicio=fechaBajaDel.split('/');
+        var spliteBajaFin=fechaBajaAl.split('/');
+        var fechaBaja_inicio    =    new Date(parseInt(spliteBajaInicio[2]),parseInt(spliteBajaInicio[1])-1,parseInt(spliteBajaInicio[0]));
+        var fechaBaja_fin       =    new Date(parseInt(spliteBajaFin[2]),parseInt(spliteBajaFin[1])-1,parseInt(spliteBajaFin[0]),23,59,59,999);
+        var formatBajaInicio=dateFormat(fechaBaja_inicio, "yyyy-mm-dd HH:MM:ss");
+        var formatBajaFin=dateFormat(fechaBaja_fin, "yyyy-mm-dd HH:MM:ss");
+        whereClause['tsParamFechabaja'] ={
+            [Op.between]: 
+                        [ formatBajaInicio , formatBajaFin]
+        };
+    }
     return whereClause;
 } 
 

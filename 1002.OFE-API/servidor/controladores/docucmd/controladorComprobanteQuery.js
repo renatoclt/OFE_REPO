@@ -16,7 +16,6 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
         var
         pagina=0,
         limite=0,
-        
         idEntidadEmisora=0,             // inIdentidademisor
         tipoComprobanteTabla='',     // vcIdtablatipocomprobante
         tipoComprobanteRegistro='',     // vcIdregistrotipocomprobante
@@ -89,8 +88,6 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
             ticketBaja = req.query.ticketBaja;
         }
         
-        
-
         ComprobantePagoQueryDTO.buscarComprobanteConFiltros(
             pagina, 
             limite,
@@ -114,21 +111,17 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
             .then(function (resDTO) {
             var ObjetoSalida = {};
             ObjetoSalida.content=resDTO.comprobantes;
-            ObjetoSalida.last=false;
+            ObjetoSalida.last=(parseInt(pagina)==Math.ceil(resDTO.cantidadReg/limite)-1)?true:false;;
             ObjetoSalida.totalPages=Math.ceil(resDTO.cantidadReg/limite);
             ObjetoSalida.totalElements=resDTO.cantidadReg;
-            ObjetoSalida.sort=null;                // por corregir
-            ObjetoSalida.numberOfElements=resDTO.comprobantes.length|0;// por corregir
-            ObjetoSalida.first=true|0;
+            ObjetoSalida.sort=null;                
+            ObjetoSalida.numberOfElements=resDTO.comprobantes.length|0;
+            ObjetoSalida.first=(pagina=='0')?true:false;
             ObjetoSalida.size= parseInt(limite);
             ObjetoSalida.number=parseInt(pagina);
-
             res.json(ObjetoSalida);
         });
     });
-
-
-
 };
 
 module.exports = controladorComprobanteQuery;
