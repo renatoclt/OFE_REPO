@@ -13,11 +13,11 @@ var ComprobantePagoQuery = conexion.define('ComprobantePagoQuery',
     },
     vcSerie: {
       type: sequelize.TEXT(30),
-      field: "vc_serie",
+      field: "vc_serie"
     },
     vcCorrelativo: {
       type: sequelize.TEXT,
-      field: "vc_correlativo",
+      field: "vc_correlativo"
     },
     inIdorganizacionproveedora: {
       type: sequelize.TEXT,
@@ -176,8 +176,16 @@ var ComprobantePagoQuery = conexion.define('ComprobantePagoQuery',
       field: "ts_fechapagocomprobantepago",
     },
     tsFechacreacion: {
-      type: sequelize.TEXT,
+      type:sequelize.INTEGER,
       field: "ts_fechacreacion",
+      set(val){
+        var salida=new Date(val);
+        
+          this.setDataValue('tsFechacreacion', salida.getTime());
+      },
+      get() {
+          return this.getDataValue('tsFechacreacion');
+        }  
     },
     tsFecharegistro: {
       type: sequelize.TEXT,
@@ -484,7 +492,13 @@ var ComprobantePagoQuery = conexion.define('ComprobantePagoQuery',
   }, 
   {
     tableName: 'fe_query_t_comprobantepago',
-    timestamps: false
+    timestamps: false,
+    getterMethods: {
+      fechacreacionintimestamp:function() {
+        var salida=this.getDataValue('tsFechacreacion') + ' hola';
+        return salida;
+      }
+    }
   }
 );
 
@@ -513,3 +527,4 @@ ComprobantePagoQuery.hasMany(ComprobanteEventoQuery_,
         foreignKey: 'inIdcomprobante'
     });
 module.exports = ComprobantePagoQuery;
+

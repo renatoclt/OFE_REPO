@@ -69,8 +69,26 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
 ){
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
+
+            var objetoEntidadCompradora={
+                model: EntidadQuery,
+                as: 'entidadcompradora',
+                where:{
+                    vcDocumento:nroDocumento,        
+                    inTipoDocumento: parseInt(tipoDocumento),
+                  },
+                required: true
+            };
+            
+            if(tipoDocumento===''||nroDocumento===''){
+                delete objetoEntidadCompradora['where'];
+                delete objetoEntidadCompradora['required'];
+            }
+
             ComprobantePagoQuery.findAndCountAll(
-                {
+                {   
+                    //attributes: ['vcSerie','tsFechacreacion','inIdentidademisor','inIdentidadreceptor'],
+                    //attributes:['fullName'],
                     where:filtrosDinamicos(idEntidadEmisora,tipoComprobanteTabla,tipoComprobanteRegistro,fechaEmisionDel,fechaEmisionAl,tipoDocumento,nroDocumento,ticket,estado,nroSerie,correlativoInicial,correlativoFinal,ordenar,fechaBajaDel,fechaBajaAl,ticketBaja), 
                     include:[
                         {
@@ -81,15 +99,7 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
                             model: EntidadQuery,
                             as: 'entidadproveedora'
                         },
-                        {
-                            model: EntidadQuery,
-                            as: 'entidadcompradora'
-                      /*      where: {
-                                vcTipoDocumento: tipoDocumento
-                                ,vcDocumento:nroDocumento
-                              },
-                            required: true*/
-                        },
+                        objetoEntidadCompradora,         
                         {
                             model: ComprobanteEventoQuery,
                             as: 'eventos'
@@ -104,6 +114,18 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
 
                 var cantidadReg = comprobantes.count.length;
                 comprobantes = comprobantes.rows.map(function (data) {
+                  
+                    delete data.dataValues['inIdentidademisor'];
+                    delete data.dataValues['inIdentidadreceptor'];
+
+                    var tsFechacreacion=new Date(data.dataValues['tsFechacreacion']);
+                    data.dataValues['tsFechacreacion']=tsFechacreacion.getTime();
+
+                    var tsFecharegistro=new Date(data.dataValues['tsFecharegistro']);
+                    data.dataValues['tsFecharegistro']=tsFecharegistro.getTime();
+                    
+                    var tsFechaemision=new Date(data.dataValues['tsFechaemision']);
+                    data.dataValues['tsFechaemision']=tsFechaemision.getTime();
                     return data.dataValues;
                 });
                 resolve({ 'comprobantes': comprobantes, 'cantidadReg': cantidadReg });
@@ -145,14 +167,6 @@ function filtrosDinamicos(
     if (tipoComprobanteRegistro!='') {
         whereClause['vcIdregistrotipocomprobante'] =tipoComprobanteRegistro; 
     }
-    /*
-    if (tipoDocumento!='') {
-        whereClause['tipoDocumento'] =tipoDocumento; 
-    }
-    if (nroDocumento!='') {
-        whereClause['nroDocumento'] =nroDocumento; 
-    }
-    */
     if (ticket!='') {
         whereClause['vcTicketRetencion'] =ticket; 
     }
@@ -165,16 +179,23 @@ function filtrosDinamicos(
     if (ticketBaja!='') {
         whereClause['vcParamTicket'] =ticketBaja; 
     }    
-    if (correlativoInicial!='') {
+    if (correlativoInicial!=''&&correlativoFinal=='') {
         whereClause['vcCorrelativo'] ={
             [Op.gte]:correlativoInicial
+            
         };
     }
-    if (correlativoFinal!='') {
+    if (correlativoInicial==''&&correlativoFinal!='') {
         whereClause['vcCorrelativo'] ={
             [Op.lte]:correlativoFinal
         }; 
     }
+    if (correlativoInicial!=''&&correlativoFinal!='') {
+        whereClause['vcCorrelativo'] ={
+            [Op.between]:[correlativoInicial,correlativoFinal]
+        }; 
+    }
+
     var splitemisionInicio=fechaEmisionDel.split('/');
     var splitemisionFin=fechaEmisionAl.split('/');
     var fechaemision_inicio    =    new Date(parseInt(splitemisionInicio[2]),parseInt(splitemisionInicio[1])-1,parseInt(splitemisionInicio[0]));
@@ -201,5 +222,5 @@ function filtrosDinamicos(
     }
     return whereClause;
 } 
-
+ 
 module.exports = ComprobantePagoQuery;

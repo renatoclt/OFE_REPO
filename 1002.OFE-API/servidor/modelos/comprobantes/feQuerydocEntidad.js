@@ -83,6 +83,6 @@ var EntidadQuery = conexion.define('EntidadQuery',
     tableName: 'fe_query_t_entidad',
     timestamps: false
   }
-);
+);2
 
 module.exports = EntidadQuery;
