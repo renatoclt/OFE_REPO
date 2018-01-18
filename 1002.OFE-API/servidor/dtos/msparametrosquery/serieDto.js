@@ -21,6 +21,20 @@ Serie.filtro = function serieFiltro(id_entidad,id_tipo_comprobante,id_tipo_serie
     return  data;
 }
 
+/**
+ * Funcion que retorna la tabla T_Serie segun su id
+ * 
+ * @param {*} codigoTabla Se envia el codigo del catalogo
+ */
+Serie.buscarId = function buscarId(id){
+    var data = Serie.findAll({ attributes: filtroAtributosSerie.attributes ,
+        where: {
+            idSerie: id
+        }
+      });
+    return  data;
+}
+
 //atributos utilizados por function maestraFiltro
 var filtroAtributosSerie = {
     attributes: [

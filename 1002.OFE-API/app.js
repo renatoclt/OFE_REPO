@@ -8,6 +8,8 @@ bodyParser = require('body-parser');
 routes = require('./servidor/rutas/rutasModulos');
 hateoasLinker = require('express-hateoas-links');
 constantes = require('./servidor/utilitarios/constantes');
+dateFormat = require('dateformat');
+
 app = express();
 
 app.set('views', path.join(__dirname, 'views'));

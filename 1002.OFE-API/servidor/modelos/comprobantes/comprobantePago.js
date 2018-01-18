@@ -94,7 +94,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
     },
     moneda: {
       type: sequelize.TEXT(30),
-      field: "ch_monedacomprobantepago_",
+      field: "ch_monedacomprobantepago",
     },
     fechaProgPagoComprobantePag: {
       type: sequelize.TEXT,
@@ -430,7 +430,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
     timestamps: false
   }
 );
-ComprobantePago.hasMany(DocEntidad,
-    { as: 'documentoEntidad',foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
-    );
+// ComprobantePago.hasMany(DocEntidad,
+//     { as: 'documentoEntidad',foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
+//     );
 module.exports = ComprobantePago;

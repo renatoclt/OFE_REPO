@@ -33,12 +33,31 @@ var contoladorSeries =  function (ruta, rutaEsp){
     hateoas.registerCollectionLinkHandler(nombreHateo, function (data) {
         var links = {
             "self": {
-                "href": "http://localhost:3000/v1"+ rutaEsp.concat('/','search/filtros?tabla=',data[0].idSerie)
+                "href": "http://localhost:3000/v1"+ rutaEsp.concat('/','search/filtros?id_entidad=',data[0].idEntidad,'&id_tipo_comprobante=',data[0].idTipoComprobante,'&id_tipo_serie=',data[0].idTipoSerie)
             }
         };
         return links;
     });
 
+    router.get(ruta.concat('/:id'), async function (req, res) {
+        try{
+            var data = await Serie.buscarId(req.params.id); 
+            var hateoasObj_n = Object.assign({},hateoasObj);
+            hateoasObj_n.type = nombreHateo;
+            console.log(data);
+            hateoasObj_n.data = data.length == 0 ? res.status(200).json({}) :  data.map(function (series) {
+                return series.dataValues;
+            });
+            hateoasObj_n.nombreColeccion = "serieRedises";
+            hateoasObj_n.ruta = rutaEsp;
+            hateoasObj_n.paginacion.activo = false;
+            hateoasObj_n.busqueda.activo = false;
+            res.json(hateoas.link(hateoasObj_n));
+        }
+        catch(e){
+            res.status(400).send('error');
+        }
+    });
 
     /**
      * Enviamos la ruta 
@@ -51,7 +70,8 @@ var contoladorSeries =  function (ruta, rutaEsp){
                 var data = await Serie.filtro(req.query.id_entidad, req.query.id_tipo_comprobante,req.query.id_tipo_serie); 
                 var hateoasObj_n = Object.assign({},hateoasObj);
                 hateoasObj_n.type = nombreHateo;
-                hateoasObj_n.data =  data.map(function (series) {
+                hateoasObj_n.data = data.length == 0 ? res.status(200).json({}) :  data.map(function (series) {
+                    console.log(series.dataValues);
                     return series.dataValues;
                 });
                 hateoasObj_n.nombreColeccion = "serieRedises";
@@ -61,7 +81,6 @@ var contoladorSeries =  function (ruta, rutaEsp){
                 res.json(hateoas.link(hateoasObj_n));
             }
             catch(e){
-                console.log(e);
                 res.status(400).send('error');
             }
         }
