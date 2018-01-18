@@ -11,7 +11,7 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
         });
     });
 */
-    router.get('/documentosquery/query', function (req, res, next) {
+    router.get(ruta.concat('/query'), function (req, res, next) {
 
         var
         pagina=0,

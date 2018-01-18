@@ -5,12 +5,21 @@ var controladoresInveqry = function (ruta) {
     /**
      * Controladores
      */
+<<<<<<< HEAD
     //documentos = require('../controladores/docucmd/controladorComprobante')(ruta.concat(navC.hijos['documento'].ruta),navC.hijos['documento'].ruta);
+=======
+
+    documentos = require('../controladores/docucmd/controladorComprobante')(ruta.concat(navC.hijos['documento'].ruta),navC.hijos['documento'].ruta);
+>>>>>>> 31ae492ef5378780426b956595aeee5495a93ce8
     retenciones = require('../controladores/docucmd/controladorRetencionSincronizar')(ruta.concat(navC.hijos['retenciones'].ruta),navC.hijos['retenciones'].ruta);
     facturas = require('../controladores/docucmd/controladorFacturaSincronizar')(ruta.concat(navC.hijos['facturas'].ruta),navC.hijos['facturas'].ruta);
     boletas = require('../controladores/docucmd/controladorBoletaSincronizar')(ruta.concat(navC.hijos['boletas'].ruta),navC.hijos['boletas'].ruta);
     percepciones = require('../controladores/docucmd/controladorPercepcionSincronizar')(ruta.concat(navC.hijos['percepciones'].ruta),navC.hijos['percepciones'].ruta);
+<<<<<<< HEAD
     documento = require('../controladores/docucmd/controladorDocumentoCmd')(ruta.concat(navC.hijos['documento'].ruta),navC.hijos['documento'].ruta);
+=======
+    comprobantesquery = require('../controladores/docucmd/controladorComprobanteQuery')(ruta.concat(navC.hijos['documentoquery'].ruta),navC.hijos['documentoquery'].ruta);
+>>>>>>> 31ae492ef5378780426b956595aeee5495a93ce8
 
 }
 
