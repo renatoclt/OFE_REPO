@@ -10,9 +10,9 @@ var Documento = require('../../modelos/msdocucmd/documento');
  */
 
 Documento.guardar = function guardarDocumento(data){
-    console.log(data);
     return Documento.create({
         id: data.id,
+        idOrganizacionProveedora: data.idOrganizacionProveedora,
         numeroComprobante: data.numeroComprobante,
         rucProveedor: data.rucProveedor,
         rucComprador: data.rucComprador,
@@ -39,10 +39,6 @@ Documento.guardar = function guardarDocumento(data){
         flagRegistroEliminado: ' ',
         flagOrigenComprobante: data.flagOrigenComprobante,
         flagOrigenCreacion: data.flagOrigenCreacion,
-
-        //data.idSerie,
-
-        //datos q no estan en el dto
         fechaRegistro: data.fechaRegistro,
         fechaCreacion: data.fechaCreacion,
         estado : data.estado,
@@ -58,6 +54,10 @@ Documento.guardar = function guardarDocumento(data){
         montoComprobante: data.montoComprobante,
         idindicadorImpuesto: data.idindicadorImpuesto,
         impuestoGvr: data.impuestoGvr,
+        generado: data.generado,
+        idProveedor: data.idProveedor,
+        idUsuarioCreacion: data.idUsuarioCreacion,
+        idUsuarioModificacion: data.idUsuarioModificacion,
     });
 }
 
