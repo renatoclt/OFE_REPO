@@ -58,6 +58,8 @@ Documento.guardar = function guardarDocumento(data){
         idProveedor: data.idProveedor,
         idUsuarioCreacion: data.idUsuarioCreacion,
         idUsuarioModificacion: data.idUsuarioModificacion,
+        estadoSincronizado: data.estadoSincronizado,
+        fechaSincronizado: data.fechaSincronizado
     });
 }
 

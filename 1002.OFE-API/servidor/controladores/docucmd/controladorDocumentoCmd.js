@@ -61,6 +61,8 @@ var contoladorComprobante =  function (ruta, rutaEsp){
             data.idindicadorImpuesto = 0;
             data.impuestoGvr = 0;
             data.generado = 0;
+            data.estadoSincronizado = 0;
+            data.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l");
             await Documento.guardar(data);
             for (let documentoEntidad of req.body.documentoEntidad){
                 documentoEntidad.idComprobante = data.id;
