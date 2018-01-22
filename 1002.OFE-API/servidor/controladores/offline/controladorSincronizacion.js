@@ -3,7 +3,8 @@
  * @author renato creado 18-12-2017 
  */
 var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
-
+var Evento = require('../../dtos/msoffline/eventoDTO');
+var Idioma = require('../../dtos/msoffline/idiomaDTO');
 /**
  * Controlador de la tabla serie 
  * 
@@ -30,6 +31,19 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             res.send('error');
         }
     });
+    router.post(ruta.concat('/evento'), async function(req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoInactivo;
+        await Evento.guardar(req.body);
+        res.status(200).send('ok');
+    });
+    router.post(ruta.concat('/idioma'), async function(req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoInactivo;
+        await Idioma.guardar(req.body);
+        res.status(200).send('ok');
+    });
+    
 };
 
 module.exports = contoladorSincronizacion;

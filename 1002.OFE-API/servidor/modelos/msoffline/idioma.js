@@ -1,23 +1,23 @@
 /**
- * persistencia de la tabla t_evento en la variable Evento
+ * persistencia de la tabla t_idioma en la variable Idioma
  * Modificado --- creado --/--/----
  * @author Renato creado 22/01/2018
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var Evento = conexion.define('Evento',
+var Idioma = conexion.define('Idioma',
   {
     id:{
       type: sequelize.INTEGER,
-      field: "se_ievento",
+      field: "se_iidioma",
       autoIncrement: true,
       unique: true,
       primaryKey: true
     },
-    idioma: {
-      type: sequelize.TEXT(32),
-      field: "se_iidioma",
+    descripcionCorta: {
+      type: sequelize.TEXT(2),
+      field: "ch_desc_corta",
       allowNull:false
     },
     descripcion: {
@@ -28,26 +28,22 @@ var Evento = conexion.define('Evento',
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",
-      allowNull:false
     },
     usuarioModificacion: {
       type: sequelize.TEXT,
       field: "vc_usu_modifica",
-      allowNull:false
     },
     fechaCreacion: {
       type: sequelize.TEXT(6),
       field: "ts_fec_creacion",
-      allowNull:false
     },
     fechaModificacion: {
       type: sequelize.TEXT(6),
-      field: "ts_fecha_modifica",
+      field: "ts_fec_modifica",
     },
     estado: {
       type: sequelize.INTEGER(32),
-      field: "in_estado",
-      allowNull:false
+      field: "in_estado"
     },
     fechaSincronizado: {
       type: sequelize.TEXT,
@@ -59,9 +55,9 @@ var Evento = conexion.define('Evento',
     }        
   },
   {
-    tableName: 'fe_configuracion_t_evento',
+    tableName: 'fe_configuracion_t_idioma',
     timestamps: false
   }
 );
 
-module.exports = Evento;
+module.exports = Idioma;
