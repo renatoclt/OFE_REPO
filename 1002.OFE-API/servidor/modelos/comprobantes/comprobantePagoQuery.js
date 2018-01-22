@@ -1,6 +1,9 @@
 var DocParametroQuery   = require('./feQuerydocParametro');
 var EntidadQuery=require('./feQuerydocEntidad');
 var ComprobanteEventoQuery_=require('./feQueryComprobanteEvento');
+var ComprobanteConcepto =require('./feQueryComprobanteConcepto');
+var ComprobanteDocReferenci =require('./feQueryComprobanteDocReferenci');
+var ProductoxComprobantePago =require('./feQueryProductoxComprobantePago');
 var ComprobantePagoQuery = conexion.define('ComprobantePagoQuery',
   {
       
@@ -526,5 +529,22 @@ ComprobantePagoQuery.hasMany(ComprobanteEventoQuery_,
         as: 'eventos',
         foreignKey: 'inIdcomprobante'
     });
+  
+  ComprobantePagoQuery.hasMany(ComprobanteConcepto,
+    {
+        as: 'conceptos',
+        foreignKey: 'inIdcomprobante'
+    });
+  ComprobantePagoQuery.hasMany(ComprobanteDocReferenci,
+    {
+        as: 'referencias',
+        foreignKey: 'inIdocOrigen'
+    });
+  ComprobantePagoQuery.hasMany(ProductoxComprobantePago,
+    {
+        as: 'detalle',
+        foreignKey: 'inIdcomprobantepago'
+    });
+
 module.exports = ComprobantePagoQuery;
 
