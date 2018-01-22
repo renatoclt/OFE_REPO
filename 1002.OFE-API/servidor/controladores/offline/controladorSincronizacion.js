@@ -5,7 +5,8 @@
 var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
 var Evento = require('../../dtos/msoffline/eventoDTO');
 var Idioma = require('../../dtos/msoffline/idiomaDTO');
-var DominioDocumento = require('../../dtos/msoffline/dominioDocumento')
+var DominioDocumento = require('../../dtos/msoffline/dominioDocumento');
+var Concepto = require('../../dtos/msoffline/conceptoDTO')
 /**
  * Controlador de la tabla serie 
  * 
@@ -50,6 +51,12 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         await DominioDocumento.guardar(req.body);
         res.status(200).send('ok');
     });    
+    router.post(ruta.concat('/concepto'), async function(req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoInactivo;
+        await Concepto.guardar(req.body);
+        res.status(200).send('ok');
+    }); 
     
 };
 
