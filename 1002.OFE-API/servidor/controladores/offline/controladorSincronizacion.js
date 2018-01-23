@@ -8,7 +8,8 @@ var Idioma = require('../../dtos/msoffline/idiomaDTO');
 var DominioDocumento = require('../../dtos/msoffline/dominioDocumentoDTO');
 var Concepto = require('../../dtos/msoffline/conceptoDTO')
 var ParametroDocumento = require('../../dtos/msoffline/parametroDocumentoDTO');
-var TipoAfecIgv = require('../../dtos/msoffline/tipoAfecIgvDTO')
+var TipoAfecIgv = require('../../dtos/msoffline/tipoAfecIgvDTO');
+var TipoCalcIsc = require('../../dtos/msoffline/tipoCalcIscDTO');
 /**
  * Controlador de la tabla serie 
  * 
@@ -71,7 +72,12 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         await TipoAfecIgv.guardar(req.body);
         res.status(200).send('ok');
     });
-    
+    router.post(ruta.concat('/tipoCalcIsc'), async function(req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoInactivo;
+        await TipoCalcIsc.guardar(req.body);
+        res.status(200).send('ok');
+    });
 };
 
 module.exports = contoladorSincronizacion;
