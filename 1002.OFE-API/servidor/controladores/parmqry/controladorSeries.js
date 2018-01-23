@@ -42,17 +42,22 @@ var contoladorSeries =  function (ruta, rutaEsp){
     router.get(ruta.concat('/:id'), async function (req, res) {
         try{
             var data = await Serie.buscarId(req.params.id); 
-            var hateoasObj_n = Object.assign({},hateoasObj);
-            hateoasObj_n.type = nombreHateo;
-            console.log(data);
-            hateoasObj_n.data = data.length == 0 ? res.status(200).json({}) :  data.map(function (series) {
-                return series.dataValues;
-            });
-            hateoasObj_n.nombreColeccion = "serieRedises";
-            hateoasObj_n.ruta = rutaEsp;
-            hateoasObj_n.paginacion.activo = false;
-            hateoasObj_n.busqueda.activo = false;
-            res.json(hateoas.link(hateoasObj_n));
+            if(data.length == 0){
+                res.status(200).json({});
+            }
+            else{
+                var hateoasObj_n = Object.assign({},hateoasObj);
+                hateoasObj_n.type = nombreHateo;
+                hateoasObj_n.data = data.map(function (series) {
+                    return series.dataValues;
+                });
+                hateoasObj_n.nombreColeccion = "serieRedises";
+                hateoasObj_n.ruta = rutaEsp;
+                hateoasObj_n.paginacion.activo = false;
+                hateoasObj_n.busqueda.activo = false;
+                res.json(hateoas.link(hateoasObj_n));
+            }
+            
         }
         catch(e){
             res.status(400).send('error');
@@ -68,17 +73,22 @@ var contoladorSeries =  function (ruta, rutaEsp){
             let tabla = req.query.tabla;
             try{
                 var data = await Serie.filtro(req.query.id_entidad, req.query.id_tipo_comprobante,req.query.id_tipo_serie); 
-                var hateoasObj_n = Object.assign({},hateoasObj);
-                hateoasObj_n.type = nombreHateo;
-                hateoasObj_n.data = data.length == 0 ? res.status(200).json({}) :  data.map(function (series) {
-                    console.log(series.dataValues);
-                    return series.dataValues;
-                });
-                hateoasObj_n.nombreColeccion = "serieRedises";
-                hateoasObj_n.ruta = rutaEsp;
-                hateoasObj_n.paginacion.activo = false;
-                hateoasObj_n.busqueda.activo = false;
-                res.json(hateoas.link(hateoasObj_n));
+                if(data.length == 0 ){
+                    res.status(200).json({});
+                }
+                else{
+                    var hateoasObj_n = Object.assign({},hateoasObj);
+                    hateoasObj_n.type = nombreHateo;
+                    hateoasObj_n.data = data.map(function (series) {
+                        return series.dataValues;
+                    });
+                    hateoasObj_n.nombreColeccion = "serieRedises";
+                    hateoasObj_n.ruta = rutaEsp;
+                    hateoasObj_n.paginacion.activo = false;
+                    hateoasObj_n.busqueda.activo = false;
+                    res.json(hateoas.link(hateoasObj_n));
+                }
+                
             }
             catch(e){
                 res.status(400).send('error');
