@@ -15,6 +15,7 @@ var TipoPrecioVenta = require('../../dtos/msoffline/tipoPrecioVentaDTO');
 var DominioEntidad = require('../../dtos/msoffline/dominioEntidadDTO');
 var EntidadParametro = require('../../dtos/msoffline/entidadParametroDTO');
 var Entidad = require ('../../dtos/msoffline/entidadDTO');
+var ParametroEntidad = require('../../dtos/msoffline/parametroEntidadDTO');
 /**
  * Controlador de la tabla serie 
  * 
@@ -113,6 +114,12 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await Entidad.guardar(req.body);
+        res.status(200).send('ok');
+    });
+    router.post(ruta.concat('/parametroEntidad'), async function(req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoActivo;
+        await ParametroEntidad.guardar(req.body);
         res.status(200).send('ok');
     });
 };
