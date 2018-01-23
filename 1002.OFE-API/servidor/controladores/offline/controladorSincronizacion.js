@@ -11,6 +11,7 @@ var ParametroDocumento = require('../../dtos/msoffline/parametroDocumentoDTO');
 var TipoAfecIgv = require('../../dtos/msoffline/tipoAfecIgvDTO');
 var TipoCalcIsc = require('../../dtos/msoffline/tipoCalcIscDTO');
 var TipoEntidad = require('../../dtos/msoffline/tipoEntidadDTO');
+var TipoPrecioVenta = require('../../dtos/msoffline/tipoPrecioVentaDTO');
 
 /**
  * Controlador de la tabla serie 
@@ -84,6 +85,12 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoInactivo;
         await TipoEntidad.guardar(req.body);
+        res.status(200).send('ok');
+    });
+    router.post(ruta.concat('/tipoPrecioVenta'), async function(req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoInactivo;
+        await TipoPrecioVenta.guardar(req.body);
         res.status(200).send('ok');
     });
 
