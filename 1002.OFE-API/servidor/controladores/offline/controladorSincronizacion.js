@@ -8,6 +8,7 @@ var Idioma = require('../../dtos/msoffline/idiomaDTO');
 var DominioDocumento = require('../../dtos/msoffline/dominioDocumentoDTO');
 var Concepto = require('../../dtos/msoffline/conceptoDTO')
 var ParametroDocumento = require('../../dtos/msoffline/parametroDocumentoDTO');
+var TipoAfecIgv = require('../../dtos/msoffline/tipoAfecIgvDTO')
 /**
  * Controlador de la tabla serie 
  * 
@@ -62,6 +63,12 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoInactivo;
         await ParametroDocumento.guardar(req.body);
+        res.status(200).send('ok');
+    });
+    router.post(ruta.concat('/tipoAfecIgv'), async function(req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoInactivo;
+        await TipoAfecIgv.guardar(req.body);
         res.status(200).send('ok');
     });
     
