@@ -1,30 +1,32 @@
 var referenciasQueryDTO = require("../../dtos/msdocuqry/referenciasQueryDTO");
 
+var baseUrl_="http://localhost:3000/v1";
+
 var controladorReferenciasQuery = function (ruta, rutaEsp) {
     var nombreHateo = "hReferenciaQuery";
-    var hateoas = require('./../../utilitarios/hateoas')({ baseUrl: "http://localhost:3000/v1" });
+    var hateoas = require('./../../utilitarios/hateoas')({ baseUrl: baseUrl_ });
     var hateoasObj = require('./../../utilitarios/hateoasObj');
-
     hateoas.registerLinkHandler(nombreHateo, function (objecto) {
         var links = {
-            "self":{  "href":rutaEsp.concat('/') + objecto.inIdocOrigen},
-
-            "tDocReferenciEntity":{"href":rutaEsp.concat('/') + objecto.inIdocOrigen},
-            "comprobante":{"href":rutaEsp.concat('/') + objecto.inIdocOrigen+'/comprobante'}
+            "self":{  
+                        "href":baseUrl_+ rutaEsp.concat('/') + objecto.seIdocreferencia
+                    },
+            "tDocReferenciEntity":{
+                        "href":baseUrl_+ rutaEsp.concat('/') + objecto.seIdocreferencia
+                    },
+            "comprobante":{
+                        "href":baseUrl_+ rutaEsp.concat('/') + objecto.seIdocreferencia+'/comprobante'
+                    }
         };
         return links;
     });
 
     hateoas.registerCollectionLinkHandler(nombreHateo, function (objectoCollection) {
         var links = {
-            "self": rutaEsp
+            "self": rutaEsp+'/search/comprobanteID'
         };
         return links;
     });
-
-    
-
-
 
     router.get(ruta.concat('/search/comprobanteID'), function (req, res, next) {
 
@@ -42,7 +44,7 @@ var controladorReferenciasQuery = function (ruta, rutaEsp) {
         if (req.query.size && req.query.size>0){
             limite = req.query.size;
         }
-        if (req.query.sort && req.query.sort>0){
+        if (req.query.sort && req.query.sort!=''){
             ordenar = req.query.sort;
         }
  
@@ -52,14 +54,45 @@ var controladorReferenciasQuery = function (ruta, rutaEsp) {
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.referencias;
-            hateoasObj_comprobante.nombreColeccion = "tDocReferenciEntities";
-            hateoasObj_comprobante.ruta = rutaEsp;
+            hateoasObj_comprobante.nombreColeccion = "tDocReferenciEntities";   
+            hateoasObj_comprobante.ruta = rutaEsp;                              // ruta para la siguiente pagina
             hateoasObj_comprobante.paginacion.activo = true;
             hateoasObj_comprobante.paginacion.totalreg = resDTO.cantidadReg;
             hateoasObj_comprobante.paginacion.regxpag = limite;
             hateoasObj_comprobante.paginacion.pagina = pagina;
-            hateoasObj_comprobante.busqueda.activo = false; 
-            res.json(hateoas.link(hateoasObj_comprobante));
+            hateoasObj_comprobante.busqueda.activo = true;                  /// desde aqui son para las paginas prev, next, last, first
+            hateoasObj_comprobante.busqueda.parametros = {comprobanteID:comprobanteID,felix:'jeje'};        /// parametros de las paginas            
+            hateoasObj_comprobante.busqueda.ruta = "/search/comprobanteID";            /// cadena que concatena la ruta basica para las paginas     
+            
+            var hateoas_link=hateoas.link(hateoasObj_comprobante);
+            var sort_='';
+            if(ordenar!=0) sort_='&sort='+ordenar;
+
+            hateoas_link._links.self=hateoas_link._links.self+'?comprobanteID='+comprobanteID+'&page='+pagina+'&size='+limite + sort_;
+            if(hateoas_link._links.next!=undefined)
+            hateoas_link._links.next.href= hateoas_link._links.next.href.replace(/pagina|limite/g,function(x){
+                    if(x=='pagina') return 'page';
+                    if(x=='limite') return 'size';
+            })+sort_;
+            if(hateoas_link._links.last!=undefined)
+            hateoas_link._links.last.href= hateoas_link._links.last.href.replace(/pagina|limite/g,function(x){
+                if(x=='pagina') return 'page';
+                if(x=='limite') return 'size';
+            })+sort_; 
+            
+            if(hateoas_link._links.first!=undefined)
+            hateoas_link._links.first.href= hateoas_link._links.first.href.replace(/pagina|limite/g,function(x){
+                if(x=='pagina') return 'page';
+                if(x=='limite') return 'size';
+            })+sort_;
+            
+            if(hateoas_link._links.prev!=undefined)
+            hateoas_link._links.prev.href= hateoas_link._links.prev.href.replace(/pagina|limite/g,function(x){
+                if(x=='pagina') return 'page';
+                if(x=='limite') return 'size';
+            })+sort_;
+
+            res.json(hateoas_link);
         });
     });
 

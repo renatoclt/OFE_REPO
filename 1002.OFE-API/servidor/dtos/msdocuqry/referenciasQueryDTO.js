@@ -28,6 +28,7 @@ ReferenciasQuery.buscarReferenciasByComprobante = function (pagina,limite,compro
                     where:{
                         inIdocOrigen:comprobanteID
                     },
+                    order:[ ['vcTdocDesDesc', 'DESC']],
                     offset: (pagina*limite), 
                     limit: limite
                 }
