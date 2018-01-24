@@ -1,19 +1,25 @@
-
 /**
  * @author --- Modificado **-**-****
  * @author renato creado 22-01-2018 
  */
-var ParametroEntidad = require('../../modelos/msoffline/parametroEntidad');
+var Producto = require('../../modelos/msoffline/producto');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
  * 
  */
 
-ParametroEntidad.guardar = function guardarParametroEntidad(data){
-    return ParametroEntidad.create({
+Producto.guardar = function guardarProducto(data){
+    return Producto.create({
         id: data.id,
-        descripcion: data.descripcion,
+        entidad: data.entidad,
+        tipoCalc: data.tipoCalc ,
+        codigo: data.codigo ,
+        descripcion: data.descripcion ,
+        precioUnitario: data.precioUnitario ,
+        montoIsc: data.montoIsc ,
+        unidadMedida: data.unidadMedida ,
+        afectaDetraccion: data.afectaDetraccion ,
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,
         fechaCreacion: data.fechaCreacion,
@@ -24,4 +30,4 @@ ParametroEntidad.guardar = function guardarParametroEntidad(data){
     });
 }
 
-module.exports = ParametroEntidad;
+module.exports = Producto;
