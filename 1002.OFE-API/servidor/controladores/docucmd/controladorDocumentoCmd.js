@@ -25,7 +25,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
      * idUsuarioModifiacion 
      */
     router.post(ruta.concat('/guardarRetencion'), async function(req, res){
-        data = req.body;
+        data = req.body
         data.id = uuid();
         try{
             

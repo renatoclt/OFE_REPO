@@ -19,6 +19,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
     numeroComprobante: {
       type: sequelize.TEXT(30),
       field: "ch_numerocomprobantepago",
+      allowNull:false
     },
     idProveedor: {
       type: sequelize.INTEGER(32),
@@ -35,30 +36,37 @@ var ComprobantePago = conexion.define('ComprobantePago',
     rucProveedor: {
       type: sequelize.TEXT(30),
       field: "ch_rucproveedor",
+      allowNull:false
     },
     rucComprador: {
       type: sequelize.TEXT(30),
       field: "ch_ruccomprador",
+      allowNull:false
     },
     estadoComprobante: {
       type: sequelize.TEXT(30),
-      field: "ch_estadocomprobantepago",
+      field: "ch_estadocomprobantepagoprov",
+      allowNull:false
     },
     flagPlazoPago: {
       type: sequelize.TEXT(1),
       field: "ch_flagplazopago",
+      allowNull:false
     },
     flagRegistroEliminado: {
       type: sequelize.TEXT(1),
       field: "ch_flagregistroeliminado",
+      allowNull:false
     },
     flagOrigenComprobante: {
       type: sequelize.TEXT(1),
       field: "ch_flagorigencomprobantepago",
+      allowNull:false
     },
     flagOrigenCreacion: {
       type: sequelize.TEXT(1),
       field: "ch_flagorigencreacion",      
+      allowNull:false
     },
     idGuia: {
       type: sequelize.INTEGER(32),

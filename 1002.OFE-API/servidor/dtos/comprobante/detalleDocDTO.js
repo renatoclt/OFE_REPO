@@ -1,17 +1,14 @@
-/**
- * @author --- Modificado **-**-****
- * @author renato creado 18-12-2017 
- */
-var DocEntidad = require('../../modelos/comprobantes/docEntidad')
+var DocDetalle = require('../../modelos/comprobantes/detalleDoc')
 
 /**
  * Funcion que guarda en la tabla t_doc_referncia
  */
-DocEntidad.guardar = function docEntidadGuardar(data){
-    return DocEntidad.create({
+DocDetalle.guardar = function docEntidadGuardar(data){
+    return DocDetalle.create({
+        id: data.id,
         idTipoEntidad: data.idTipoEntidad,
         idEntidad:data.idEntidad,
-        idcomprobantepago: data.idComprobantePago,
+        idComprobantepago: data.idComprobantePago,
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,
         fechaCreacion: data.fechaCreacion,
@@ -20,4 +17,4 @@ DocEntidad.guardar = function docEntidadGuardar(data){
         estadoSincronizado: data.estado,
     });
 }
-module.exports = DocEntidad;
+module.exports = DocDetalle;

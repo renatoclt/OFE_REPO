@@ -1,3 +1,7 @@
+var TipoAfec = require('../configuracion/tipoAfecIgv');
+var TipoCalc = require('../configuracion/tipoCalcIsc');
+var TipoPrec = require('../configuracion/tipoPrecVen');
+var Producto = require('../organizaciones/producto');
 /**
  * persistencia de la tabla t_detalle_doc en la variable DetalleDoc
  * Modificado --- creado --/--/----
@@ -114,7 +118,11 @@ var DetalleDoc = conexion.define('DetalleDoc',
     }        
   },
   {
-    tableName: 't_detalle_doc',
+    tableName: 'fe_comprobante_t_detalle_doc',
     timestamps: false
   }
 );
+
+
+
+module.exports = DetalleDoc;

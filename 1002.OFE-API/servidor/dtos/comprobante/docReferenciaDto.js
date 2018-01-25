@@ -10,11 +10,6 @@ var DocReferencia = require('../../modelos/comprobantes/docReferencia')
  */
 DocReferencia.guardar = function docReferenciaGuardar(data){
     return DocReferencia.create({
-        usuarioCreacion:data.usuarioCreacion,
-        usuarioModificacion: data.usuarioModificacion,
-        fechaCreacion:data.fechaCreacion,
-        fechaModificacion:data.fechaModificacion,
-        estado: constantes.estadoActivo,
         id: data.id,
         idDocumentoOrigen: data.idDocumentoOrigen,
         idDocumentoDestino: data.idDocumentoDestino,
@@ -34,7 +29,13 @@ DocReferencia.guardar = function docReferenciaGuardar(data){
         anticipo: data.anticipo,
         auxiliar1: data.auxiliar1,
         auxiliar2: data.auxiliar2,
-        estadoSincronizado: constantes.estadoInactivo
+        estadoSincronizado: constantes.estadoInactivo,
+        usuarioCreacion:data.usuarioCreacion,
+        usuarioModificacion: data.usuarioModificacion,
+        fechaCreacion:data.fechaCreacion,
+        fechaModificacion:data.fechaModificacion,
+        estado: constantes.estadoActivo,
+        fechaSincronizado: data.fechaSincronizado
     });
 }
 module.exports = DocReferencia;

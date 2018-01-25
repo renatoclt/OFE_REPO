@@ -57,7 +57,7 @@ var TipoEnt = conexion.define('TipoEnt',
     }        
   },
   {
-    tableName: 't_tipo_ent',
+    tableName: 'fe_configuracion_t_tipo_ent',
     timestamps: false
   }
 );
