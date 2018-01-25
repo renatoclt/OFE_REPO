@@ -42,6 +42,12 @@ var rutas = {
                     "baja":{"ruta":"/baja","descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"}
                 }
             },
+            "docuqry":{
+                "ruta":"",
+                "hijos":{
+                    "referencias":{"ruta":"/referencias", "descripcion": "Implementacion de servicio rest para gestionar referencias_query en la base de datos"}
+                }
+            },
             "parmqry":{
                 "ruta":"ms-documentos-query",
                 "hijos":{

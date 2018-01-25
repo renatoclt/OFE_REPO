@@ -6,11 +6,11 @@ var Producto = conexion.define('Producto', {
     unique: true,
     primaryKey: true
   },
-  idEntidad: {
+  entidad: {
     type: sequelize.INTEGER(32),
     field: "se_ientidad",
   },
-  idTipoCalc: {
+  tipoCalc: {
     type: sequelize.INTEGER(32),
     field: "se_itipo_calc",
   },
@@ -72,16 +72,3 @@ var Producto = conexion.define('Producto', {
   });
   
 module.exports = Producto;
-
-
-
-
-
-
-
-
-
-
-
-
-

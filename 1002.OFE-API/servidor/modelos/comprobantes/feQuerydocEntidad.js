@@ -1,3 +1,5 @@
+var SerieQuery =require('../msdocumentosquery/SerieQuery');
+var EntParametrosQuery =require('../msdocumentosquery/EntParametrosQuery');
 var EntidadQuery = conexion.define('EntidadQuery',
   {
       seIentidad:{
@@ -83,6 +85,16 @@ var EntidadQuery = conexion.define('EntidadQuery',
     tableName: 'fe_query_t_entidad',
     timestamps: false
   }
-);2
+);
+EntidadQuery.hasMany(SerieQuery,
+  {
+      as: 'series',
+      foreignKey: 'inIentidad'
+  });
+EntidadQuery.hasMany(EntParametrosQuery,
+  {
+      as: 'parametros',
+      foreignKey: 'inIentidad'
+  });  
 
 module.exports = EntidadQuery;

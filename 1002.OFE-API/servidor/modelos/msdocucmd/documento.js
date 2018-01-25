@@ -327,7 +327,19 @@ var Documento = conexion.define('ComprobantePago',
       type: sequelize.TEXT(8),
       field: "vc_idregistromoneda",
     },
-
+    generado:{
+        type: sequelize.INTEGER,
+        field: "in_generado",
+    },
+    estadoSincronizado: {
+        type: sequelize.INTEGER(32),
+        field: "in_estado_sincronizado",
+        allowNull:false
+    },
+    fechaSincronizado: {
+        type: sequelize.TEXT,
+        field: "ts_fec_sincronizado"
+    },
     
 
   }, 

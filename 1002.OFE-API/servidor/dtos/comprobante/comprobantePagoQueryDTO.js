@@ -6,12 +6,88 @@ var ComprobantePagoQuery= require('../../modelos/comprobantes/comprobantePagoQue
 var DocParametroQuery=require('../../modelos/comprobantes/feQuerydocParametro');
 var EntidadQuery =require('../../modelos/comprobantes/feQuerydocEntidad');
 var ComprobanteEventoQuery =require('../../modelos/comprobantes/feQueryComprobanteEvento');
+var ComprobanteConcepto =require('../../modelos/comprobantes/feQueryComprobanteConcepto');
+var ComprobanteDocReferenci =require('../../modelos/comprobantes/feQueryComprobanteDocReferenci');
+var ProductoxComprobantePago =require('../../modelos/comprobantes/feQueryProductoxComprobantePago');
+var SerieQuery =require('../../modelos/msdocumentosquery/SerieQuery');
+var EntParametrosQuery =require('../../modelos/msdocumentosquery/EntParametrosQuery');
+
 var dateFormat = require('dateformat');
 contantes = require("../../utilitarios/constantes");
 sequelize = require("sequelize");
 
 
 const Op = conexion.Op;
+
+ComprobantePagoQuery.buscarComprobanteById = function (id) {
+    var promise = new Promise(function (resolve, reject) {
+        conexion.sync().then(function () {
+            ComprobantePagoQuery.findById(id,{
+                    include:[
+                        {
+                            model: DocParametroQuery,
+                            as: 'parametros'
+                        },
+                        {
+                            model: EntidadQuery,
+                            as: 'entidadproveedora',
+                            include:[
+                                {
+                                    model: SerieQuery,
+                                    as: 'series'
+                                },
+                                {
+                                    model: EntParametrosQuery,
+                                    as: 'parametros'
+                                }
+                            ]
+                        },
+                        {
+                            model: EntidadQuery,
+                            as: 'entidadcompradora',
+                            include:[ 
+                                {
+                                    model: SerieQuery,
+                                    as: 'series'
+                                },
+                                {
+                                    model: EntParametrosQuery,
+                                    as: 'parametros'
+                                }
+                            ]
+                        },
+                        {
+                            model: ComprobanteConcepto,
+                            as: 'conceptos'
+                        },
+                       {
+                            model: ComprobanteDocReferenci,
+                            as: 'referencias'
+                       },
+                        {
+                            model: ProductoxComprobantePago,
+                            as: 'detalle'
+                        },
+                        {
+                            model: ComprobanteEventoQuery,
+                            as: 'eventos'
+                        }
+                    ]
+            }
+            ).then(function (comprobante) {
+                if(comprobante!=null)
+                    resolve(comprobante.dataValues);
+                else
+                    resolve({});
+            });
+        }, function (err) {
+            console.log(err);
+            resolve({});
+        });
+    });
+    return promise;
+};
+
 
 ComprobantePagoQuery.buscarComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
@@ -37,7 +113,10 @@ ComprobantePagoQuery.buscarComprobante = function (id) {
                     ]
             }
             ).then(function (comprobante) {
-                resolve(comprobante.dataValues);
+                if(comprobante!=null)
+                    resolve(comprobante.dataValues);
+                else
+                    resolve({});
             });
         }, function (err) {
             console.log(err);
