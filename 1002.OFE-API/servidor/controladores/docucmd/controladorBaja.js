@@ -18,8 +18,9 @@ var controladorBaja = function (ruta,rutaEsp){
       //  ComprobantePagoQuery.buscarComprobanteById(data.id).then(function(data){
       //      res.json
 //});
-        var Comprobante = await ComprobantePagoQuery.buscarComprobanteById(req.body.detalleBaja.idComprobante);
+        
         try{
+            //FOR COMPROBANTE
             data.rucComprador = ' ';
             data.numeroComprobante= ' ';
             data.fechaEmision = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");
@@ -43,6 +44,7 @@ var controladorBaja = function (ruta,rutaEsp){
             data.impuestoGvr = 0;
             await RetencionBajaDTO.BajaRetencion(data);
             for (let instanciaDetalleBaja of data.detalleBaja){
+                var Comprobante = await ComprobantePagoQuery.buscarComprobanteById(req.body.detalleBaja[0]);
                 instanciaDetalleBaja.idDocumentoOrigen = data.id;
                 instanciaDetalleBaja.usuarioCreacion = req.headers.usuario;
                 instanciaDetalleBaja.usuarioModifica = req.headers.usuario;
