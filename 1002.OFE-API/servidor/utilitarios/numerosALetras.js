@@ -190,4 +190,3 @@ var numeroALetras = module.exports.numeroALetras = function NumeroALetras(num) {
     else 
         return Millones(data.enteros) + " CON " + data.letrasCentavos;
 }//NumeroALetras()
-
