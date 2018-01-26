@@ -10,15 +10,15 @@ var DocReferencia = require('../../modelos/comprobantes/docReferencia')
  */
 DocReferencia.guardar = function docReferenciaGuardar(data){
     return DocReferencia.create({
-        id: data.id,
-        idDocumentoOrigen: data.idDocumentoOrigen,
+        id: data.id, //not null
+        idDocumentoOrigen: data.idDocumentoOrigen, //not null
         idDocumentoDestino: data.idDocumentoDestino,
-        tipoDocumentoOrigen: data.tipoDocumentoOrigen,
+        tipoDocumentoOrigen: data.tipoDocumentoOrigen,//not null
         tipoDocumentoDestino: data.tipoDocumentoDestino,
-        serieDocumentoDestino: data.serieDocumentoDestino,
-        correlativoDocumentoDestino: data.correlativoDocumentoDestino,
-        fechaEmisionDestino: data.fechaEmisionDestino,
-        totalImporteDestino: data.totalImporteDestino,
+        serieDocumentoDestino: data.serieDocumentoDestino, //not null
+        correlativoDocumentoDestino: data.correlativoDocumentoDestino,//not null
+        fechaEmisionDestino: data.fechaEmisionDestino,//not null
+        totalImporteDestino: data.totalImporteDestino,//not null
         totalImporteAuxiliarDestino:data.totalImporteAuxiliarDestino,
         totalPorcentajeAuxiliarDestino:data.totalPorcentajeAuxiliarDestino,
         tipoDocumentoOrigenDescripcion:data.tipoDocumentoOrigenDescripcion,
@@ -30,12 +30,12 @@ DocReferencia.guardar = function docReferenciaGuardar(data){
         auxiliar1: data.auxiliar1,
         auxiliar2: data.auxiliar2,
         estadoSincronizado: constantes.estadoInactivo,
-        usuarioCreacion:data.usuarioCreacion,
-        usuarioModificacion: data.usuarioModificacion,
-        fechaCreacion:data.fechaCreacion,
-        fechaModificacion:data.fechaModificacion,
-        estado: constantes.estadoActivo,
-        fechaSincronizado: data.fechaSincronizado
+        usuarioCreacion:data.usuarioCreacion, //not null
+        usuarioModificacion: data.usuarioModificacion,//not null
+        fechaCreacion:data.fechaCreacion,//not null
+        fechaModificacion:data.fechaModificacion,//not null
+        estado: constantes.estadoActivo,//not null
+        fechaSincronizado: data.fechaSincronizado//not null
     });
 }
 module.exports = DocReferencia;

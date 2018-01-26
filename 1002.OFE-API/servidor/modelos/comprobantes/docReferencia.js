@@ -17,14 +17,13 @@ var DocReferencia = conexion.define('DocReferencia',
       allowNull:false   
     },
     idDocumentoOrigen: {
-      type: sequelize.INTEGER(32),
+      type: sequelize.TEXT,
       field: "in_idoc_origen",
       allowNull:false 
     },
     idDocumentoDestino: {
-      type: sequelize.INTEGER(32),
-      field: "se_idoc_destino",
-      allowNull:false 
+      type: sequelize.TEXT,
+      field: "se_idoc_destino"
     },
     tipoDocumentoOrigen: {
       type: sequelize.TEXT(3),
@@ -33,8 +32,7 @@ var DocReferencia = conexion.define('DocReferencia',
     },
     tipoDocumentoDestino: {
       type: sequelize.TEXT(3),
-      field: "ch_tipo_doc_des",
-      allowNull:false 
+      field: "ch_tipo_doc_des"
     },
     serieDocumentoDestino: {
       type: sequelize.TEXT(4),
@@ -59,7 +57,6 @@ var DocReferencia = conexion.define('DocReferencia',
     totalImporteAuxiliarDestino: {
       type: sequelize.REAL(12,2) ,
       field: "nu_tot_imp_aux",
-      allowNull:false 
     },
     totalPorcentajeAuxiliarDestino: {
       type: sequelize.REAL(12,2) ,
