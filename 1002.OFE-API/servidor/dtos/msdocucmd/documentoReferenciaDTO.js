@@ -33,12 +33,13 @@ DocumentoReferencia.guardar = function guardarDocumento(data){
         usuarioModifica: data.usuarioModifica ,
         fechaCreacion: (dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l")) ,
         fechaModificacion: (dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l")) ,
-        estado: 1 ,
+        estado: 1,
       //  fechaSincronizacion: data.fechaSincronizacion ,
 //estadoSincronizado: data.estadoSincronizado ,
      //   generado : 0,
      //   motivo : data.motivo,
         //id: 0
+
     });
 }
 

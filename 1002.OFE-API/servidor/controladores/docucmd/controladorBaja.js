@@ -1,6 +1,6 @@
 var RetencionBajaDTO = require('../../dtos/comprobante/retencionBajaDTO');
 var uuid = require('../../utilitarios/uuid');
-var DocReferencia = require('../../dtos/msdocucmd/documentoReferenciaDTO');
+var DocReferencia = require('../../dtos/msdocucmd/documentoReferenciaBajaDTO');
 var DocParametro = require('../../dtos/msdocucmd/documentoParametroDTO');
 var constantes = require('../../utilitarios/constantes');
 var ComprobantePagoQuery = require('../../dtos/comprobante/comprobantePagoQueryDTO');
@@ -14,61 +14,73 @@ var InstanciaDocParametro = require('../../dtos/msdocucmd/documentoParametroDTO'
 var controladorBaja = function (ruta,rutaEsp){
     router.post(ruta.concat('/comunicacionesDeBaja'), async function(req,res){
         var data = req.body;
-        data.id = uuid();
-      //  ComprobantePagoQuery.buscarComprobanteById(data.id).then(function(data){
-      //      res.json
-//});
-        
+        data.id = uuid();      
+        var fechaActual = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l");
+
         try{
-            //FOR COMPROBANTE
-            data.rucComprador = ' ';
-            data.numeroComprobante= ' ';
             data.fechaEmision = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");
-            data.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l");
-            data.fechaRegistro = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l");
-            data.flagOrigenComprobante = 'p';
-            data.estadoComprobante = '2';
-            data.flagOrigenCreacion = '1';
-            data.estado = 'Bloqueado';
-            data.version = 1;
-            data.tipoFactura = 'M';
-            data.igv = 0;
-            data.isc = 0;
-            data.otrosTributos = 0; 
-            data.descuento = 0;
-            data.totalcomprobante = 0;
-            data.importeReferencial =  data.totalComprobante;
-            data.subtotalComprobante = 0;
-            data.montoComprobante = data.totalComprobante;
-            data.idindicadorImpuesto = 0;
-            data.impuestoGvr = 0;
+            data.version = 0;
             await RetencionBajaDTO.BajaRetencion(data);
+            var loop = 0;
             for (let instanciaDetalleBaja of data.detalleBaja){
-                var Comprobante = await ComprobantePagoQuery.buscarComprobanteById(req.body.detalleBaja[0]);
+                instanciaDetalleBaja.documentoParametro=new Array();
                 instanciaDetalleBaja.idDocumentoOrigen = data.id;
-                instanciaDetalleBaja.usuarioCreacion = req.headers.usuario;
-                instanciaDetalleBaja.usuarioModifica = req.headers.usuario;
+                instanciaDetalleBaja.usuarioCreacion = data.usuarioCreacion;
+                instanciaDetalleBaja.usuarioModifica = data.usuarioCreacion;
                 instanciaDetalleBaja.totalImporteDestino = 0;
+                instanciaDetalleBaja.estado = 'Bloqueado';
+                instanciaDetalleBaja.estadoComprobante = 2;
                 await DocReferencia.guardar(instanciaDetalleBaja);
+
+                delete instanciaDetalleBaja.usuarioCreacion;
+                delete instanciaDetalleBaja.usuarioModifica;
+                delete instanciaDetalleBaja.idDocumentoOrigen;
+                delete instanciaDetalleBaja.totalImporteDestino;
+
+                var Comprobante = await ComprobantePagoQuery.buscarComprobanteById(req.body.detalleBaja[0].idComprobante);
+               
+               
+               
+                // Hardcode DOCUMENTOSPARAMETROS
                 InstanciaDocParametro.iParamEnt = constantes.numeroDeComprobante;
                 InstanciaDocParametro.idComprobantePago = data.id;
                 var obj = new Object();
                 obj.tipo = 3;
-                obj.valor = "NumeroComprobante";
+                obj.valor = Comprobante.vcSerie.concat(Comprobante.vcCorrelativo);
                 obj.auxiliarEntero = 0;
                 obj.auxiliarImporte = 0.0;
                 obj.auxiliarFecha = null;
                 InstanciaDocParametro.json = JSON.stringify(obj);
-                InstanciaDocParametro.usuarioCreacion = req.headers.usuario;
-                InstanciaDocParametro.usuarioModificacion = req.headers.usuario;
-                InstanciaDocParametro.fechaCreacion = data.fechaCreacion;
-                InstanciaDocParametro.fechaModificacion = data.fechaCreacion;
+                InstanciaDocParametro.usuarioCreacion = data.usuarioCreacion;
+                InstanciaDocParametro.usuarioModificacion = data.usuarioCreacion;
+                InstanciaDocParametro.fechaCreacion = fechaActual;
+                InstanciaDocParametro.fechaModificacion = fechaActual;
                 InstanciaDocParametro.estado = 1;
-                await DocParametro.guardar(InstanciaDocParametro);
-
+                await DocParametro.guardar(InstanciaDocParametro).then(function(dataDoc){
+                    dataDoc.dataValues.fechaCreacion = new Date(dataDoc.dataValues.fechaCreacion).getTime();
+                    dataDoc.dataValues.fechaModificacion = new Date(dataDoc.dataValues.fechaModificacion).getTime();
+                    instanciaDetalleBaja.documentoParametro.push(dataDoc.dataValues);
+                });
+                obj.valor = dateFormat(new Date(), "yyyy-mm-dd");
+                InstanciaDocParametro.iParamEnt = constantes.fechaBaja;
+                InstanciaDocParametro.json = JSON.stringify(obj);
+                await DocParametro.guardar(InstanciaDocParametro).then(function(dataDoc){
+                   dataDoc.dataValues.fechaCreacion = new Date(dataDoc.dataValues.fechaCreacion).getTime();
+                   dataDoc.dataValues.fechaModificacion = new Date(dataDoc.dataValues.fechaModificacion).getTime();
+                   instanciaDetalleBaja.documentoParametro.push(dataDoc.dataValues);
+                });
+                obj.valor = instanciaDetalleBaja.motivo;
+                InstanciaDocParametro.iParamEnt = constantes.motivoBaja;
+                InstanciaDocParametro.json = JSON.stringify(obj);
+                await DocParametro.guardar(InstanciaDocParametro).then(function(dataDoc){
+                    dataDoc.dataValues.fechaCreacion = new Date(dataDoc.dataValues.fechaCreacion).getTime();
+                    dataDoc.dataValues.fechaModificacion = new Date(dataDoc.dataValues.fechaModificacion).getTime();
+                    instanciaDetalleBaja.documentoParametro.push(dataDoc.dataValues);
+                });
 
             }        
           //   await listarDocumento;
+            delete data.id;
             res.json(data);
         }
         catch(err){

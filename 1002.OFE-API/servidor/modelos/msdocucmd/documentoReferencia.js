@@ -149,7 +149,7 @@ var DocumentoReferencia = conexion.define('DocumentoReferencia',
         allowNull: false
     },
 
-    estado: {
+    estadoComprobante: {
         type: sequelize.INTEGER(32),
         field: "in_estado",
         allowNull: false
