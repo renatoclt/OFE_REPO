@@ -11,17 +11,16 @@ var DocumentoReferencia = require('../../modelos/msdocucmd/documentoReferencia')
 
 DocumentoReferencia.guardar = function guardarDocumento(data){    
     return DocumentoReferencia.create({
-        fecha = new Date(),
         idDocumentoOrigen: data.idDocumentoOrigen ,
         tipoDocumentoOrigen: data.tipoComprobante ,
         serieDocumentoDestino: data.serie ,
         correlativoDocumentoDestino: data.correlativo ,
-        fechaEmisionDestino: fecha,
+        fechaEmisionDestino: data.fechaEmisionDestino,
         totalImporteDestino: data.totalImporteDestino ,
         usuarioCreacion: data.usuarioCreacion ,
         usuarioModifica: data.usuarioModifica ,
-        fechaCreacion: fecha ,
-        fechaModificacion: fecha ,
+        fechaCreacion: data.fechaCreacion ,
+        fechaModificacion: data.fechaModificacion ,
         estadoComprobante: data.estadoComprobante ,
 
     });

@@ -16,6 +16,7 @@ var constantes = {
     idTipocomprobantePercepcion:'PR', // valor del id del conprobante tipo de guias de remision
     numeroDeComprobante: '15', // Comunicación de Baja - Número de Comprobante
     motivoBaja: '16', //Comunicación de Baja - Motivo de Baja
-    fechaBaja: '12' //Comunicacion de baja - Fecha de baja
+    fechaBaja: '12', //Comunicacion de baja - Fecha de baja
+    bloqueoLocal: 'Bloqueado Local', // Estado Bloqueado falta sincronizacion
 } 
 module.exports = constantes;
