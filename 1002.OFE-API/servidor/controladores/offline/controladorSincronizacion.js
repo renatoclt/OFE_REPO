@@ -17,7 +17,8 @@ var EntidadParametro = require('../../dtos/msoffline/entidadParametroDTO');
 var Entidad = require ('../../dtos/msoffline/entidadDTO');
 var ParametroEntidad = require('../../dtos/msoffline/parametroEntidadDTO');
 var Producto = require('../../dtos/msoffline/productoDTO');
-
+var Serie = require('../../dtos/msoffline/serieDTO');
+var Maestra = require('../../dtos/msoffline/maestraDTO');
 /**
  * Controlador de la tabla serie 
  * 
@@ -124,10 +125,16 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         await ParametroEntidad.guardar(req.body);
         res.status(200).send('ok');
     });
-    router.post(ruta.concat('/producto'), async function(req, res){
+    router.post(ruta.concat('/serie'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
-        await Producto.guardar(req.body);
+        await Serie.guardar(req.body);
+        res.status(200).send('ok');
+    });
+    router.post(ruta.concat('/maestra'), async function(req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoActivo;
+        await Maestra.guardar(req.body);
         res.status(200).send('ok');
     });
 };
