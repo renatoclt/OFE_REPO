@@ -8,11 +8,12 @@ contantes = require("../../utilitarios/constantes");
 sequelize = require("sequelize");
 const Op = conexion.Op;
 
-ComprobantePagoQueryUpdate.actualizarQuery = function updateQuery(_id){
+ComprobantePagoQueryUpdate.actualizarQuery = function updateQuery(_id,fecha){
     return ComprobantePagoQueryUpdate.update({
         chEstadocomprobantepago:  contantes.estadoInactivo,
         inVersion: 1,
         chEstadocomprobantepagocomp:contantes.bloqueoLocal,
+        tsParamFechabaja: fecha,
     },{
         where: {inIdcomprobantepago: _id}
     }

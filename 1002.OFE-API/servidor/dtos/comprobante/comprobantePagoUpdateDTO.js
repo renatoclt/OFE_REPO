@@ -16,9 +16,9 @@ const Op = conexion.Op;
  */
 ComprobantePago.actualizar = function updateCommands(_id){
     return ComprobantePago.update({
-        estadoComprobante: constantes.bloqueoLocal,
+        estadoComprobante: constantes.estadoInactivo,
         version: 0,
-        estado: constantes.estadoInactivo,
+        estado: constantes.bloqueoLocal,
     },
     {
         where: {id: _id}

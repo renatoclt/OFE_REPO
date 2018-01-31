@@ -6,7 +6,7 @@ var constantes = require('../../utilitarios/constantes');
 var ComprobantePagoQuery = require('../../dtos/comprobante/comprobantePagoQueryDTO');
 var InstanciaDocParametro = require('../../dtos/msdocucmd/documentoParametroDTO');
 var ComprobantePago = require('../../dtos/comprobante/comprobantePagoUpdateDTO');
-var ComprobantePagoQuery = require('../../dtos/comprobante/comprobantePagoQueryUpdateDTO');
+var ComprobantePagoQueryUpdate = require('../../dtos/comprobante/comprobantePagoQueryUpdateDTO');
 /**
  *  Controlador de RETENCIONES BAJA
  * @param {*} ruta ruta del servicio
@@ -94,6 +94,6 @@ async function detalleDocumento(data,Comprobante,instanciaDetalleBaja){
                        instanciaDetalleBaja.documentoParametro.push(dataDoc.dataValues);
                     });
                await ComprobantePago.actualizar(instanciaDetalleBaja.idComprobante);
-               await ComprobantePagoQuery.actualizarQuery(instanciaDetalleBaja.idComprobante);
+               await ComprobantePagoQueryUpdate.actualizarQuery(instanciaDetalleBaja.idComprobante,data.fechaEmision);
 };
 module.exports = controladorBaja;
