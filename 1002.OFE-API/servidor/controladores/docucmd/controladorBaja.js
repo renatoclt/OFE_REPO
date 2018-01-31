@@ -16,7 +16,8 @@ var ComprobantePagoQuery = require('../../dtos/comprobante/comprobantePagoQueryU
 var controladorBaja = function (ruta,rutaEsp){
     router.post(ruta.concat('/comunicacionesDeBaja'), async function(req,res){
         var data = req.body;
-        data.id = uuid();      
+        data.id = uuid();   
+        data.ticket = 'null';
         var loop = 0;
         try{
             data.fechaEmision = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");
@@ -28,7 +29,7 @@ var controladorBaja = function (ruta,rutaEsp){
                 instanciaDetalleBaja.usuarioCreacion = data.usuarioCreacion;
                 instanciaDetalleBaja.usuarioModifica = data.usuarioCreacion;
                 instanciaDetalleBaja.totalImporteDestino = 0;
-                instanciaDetalleBaja.estado = 'Bloqueado';
+                instanciaDetalleBaja.estado = constantes.bloqueoLocal;
                 instanciaDetalleBaja.estadoComprobante = 2;
                 instanciaDetalleBaja.fechaCreacion = data.fechaEmision;
                 instanciaDetalleBaja.fechaModificacion= data.fechaEmision;
@@ -43,7 +44,7 @@ var controladorBaja = function (ruta,rutaEsp){
              
 
                 var Comprobante = await ComprobantePagoQuery.buscarComprobanteById(req.body.detalleBaja[loop].idComprobante);
-                detalleDocumento(data);
+                detalleDocumento(data,Comprobante,instanciaDetalleBaja);
                 loop++;
             }        
             delete data.id;
@@ -55,7 +56,7 @@ var controladorBaja = function (ruta,rutaEsp){
         }
     })
 };
-async function detalleDocumento(data){
+async function detalleDocumento(data,Comprobante,instanciaDetalleBaja){
                // Hardcode DOCUMENTOSPARAMETROS
                InstanciaDocParametro.iParamEnt = constantes.numeroDeComprobante;
                InstanciaDocParametro.idComprobantePago = data.id;

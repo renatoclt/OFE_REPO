@@ -36,6 +36,7 @@ Comprobante.BajaRetencion= function guardarDocumento(data){
         //data.idSerie,
 
         //datos q no estan en el dto
+        ticketBaja: data.ticket,
         fechaRegistro: dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l"),
         fechaCreacion: dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l"),
         version: data.version, 
