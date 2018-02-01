@@ -30,6 +30,7 @@ var controladorBoletas = function (ruta, rutaEsp) {
             regxpag = req.query.limite;
         }
         BoletaDTO.buscarComprobantes(pagina, regxpag).then(function (resDTO) {
+            
 
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
