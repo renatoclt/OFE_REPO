@@ -147,6 +147,12 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         await ComprobantePago.guardar(req.body);
         res.status(200).send('ok');
     });   
+    router.post(ruta.concat('/producto'), async function (req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoActivo;
+        await Producto.guardar(req.body);
+        res.status(200).send('ok');
+    });   
     router.post(ruta.concat('/ProductoXComprobantePago'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;

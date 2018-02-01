@@ -68,7 +68,7 @@ var Producto = conexion.define('Producto', {
       field: "in_estado_sincronizado"
     }
   }, {
-      tableName: 'organizaciones_t_producto',
+      tableName: 'fe_organizacion_t_producto',
       timestamps: false
     });
     
