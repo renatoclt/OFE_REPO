@@ -19,6 +19,9 @@ var ParametroEntidad = require('../../dtos/msoffline/parametroEntidadDTO');
 var Producto = require('../../dtos/msoffline/productoDTO');
 var Serie = require('../../dtos/msoffline/serieDTO');
 var Maestra = require('../../dtos/msoffline/maestraDTO');
+var ComprobantePago = require('../../dtos/msoffline/comprobantePagoDTO');
+var ProductoXComprobantePago = require('../../dtos/msoffline/productoXComprobantePagoDTO');
+
 /**
  * Controlador de la tabla serie 
  * 
@@ -137,6 +140,19 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         await Maestra.guardar(req.body);
         res.status(200).send('ok');
     });
+    router.post(ruta.concat('/comprobantePago'), async function (req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoActivo;
+        req.body.estadoComprobantePago = 1;
+        await ComprobantePago.guardar(req.body);
+        res.status(200).send('ok');
+    });   
+    router.post(ruta.concat('/ProductoXComprobantePago'), async function (req, res){
+        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        req.body.estadoSincronizado =  constantes.estadoActivo;
+        await ProductoXComprobantePago.guardar(req.body);
+        res.status(200).send('ok');
+    });   
 };
 
 module.exports = contoladorSincronizacion;

@@ -1,4 +1,3 @@
-var DocEntidad = require('./docEntidad');
 /**
  * persistencia de la tabla t_comprobantepago en la variable ComprobantePago
  * Modificado --- creado --/--/----
@@ -39,6 +38,10 @@ var ComprobantePago = conexion.define('ComprobantePago',
     rucComprador: {
       type: sequelize.TEXT(30),
       field: "ch_ruccomprador",
+    },
+    estadoComprobante: {
+      type: sequelize.TEXT(30),
+      field: "ch_estadocomprobantepago",
     },
     flagPlazoPago: {
       type: sequelize.TEXT(1),
@@ -192,7 +195,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(250),
       field: "vc_firma",
     },
-    pagoTipoDocumento: {
+    pagoTioDocumento: {
       type: sequelize.TEXT(200),
       field: "vc_pagotipodocumento",
     },
@@ -228,7 +231,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.TEXT(10),
       field: "ch_codigointerno",
     },
-    guiaPublicada: {
+    deGuiaPublicada: {
       type: sequelize.INTEGER(32),
       field: "in_deguiapublicada",
     },
@@ -404,19 +407,38 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado",
     },
+    identidadReceptor: {
+      type: sequelize.INTEGER,
+      field: "in_identidadreceptor",
+    },
+    identidadEmisor: {
+      type: sequelize.INTEGER,
+      field: "in_identidademisor",
+    },
+    ticketRetencion: {
+      type: sequelize.TEXT,
+      field: "vc_ticketretencion",
+    },
     generado: {
       type: sequelize.INTEGER,
       field: "in_generado",
     },
-    
-    
+    estadoComprobantePago: {
+      type: sequelize.TEXT,
+      field: "ch_estadocomprobantepagoprov",
+    },
+    pagoTipoDocumento: {
+      type: sequelize.TEXT,
+      field: "vc_pagotipodocumento",
+    },
+    guiapublicada:{
+      type: sequelize.INTEGER,
+      field: "in_deguiapublicada",
+    }
   }, 
   {
     tableName: 'comprobante_t_comprobantepago',
     timestamps: false
   }
 );
-// ComprobantePago.hasMany(DocEntidad,
-//     { as: 'documentoEntidad',foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
-//     );
 module.exports = ComprobantePago;
