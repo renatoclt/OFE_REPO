@@ -24,6 +24,7 @@ var ProductoXComprobantePago = require('../../dtos/msoffline/productoXComprobant
 var DetalleDoc = require('../../dtos/msoffline/detalleDocDTO');
 var DocConcepto = require('../../dtos/msoffline/docConcepetoDTO');
 var DocEntidad = require('../../dtos/msoffline/docEntidadDTO');
+var DocEvento = require('../../dtos/msoffline/docEventoDTO');
 /**
  * Controlador de la tabla serie 
  * 
@@ -182,13 +183,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
     router.post(ruta.concat('/docEvento'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
-        await DocEntidad.guardar(req.body);
-        res.status(200).send('ok');
-    });
-    router.post(ruta.concat('/docEntidad'), async function(req, rest){
-        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-        req.body.estadoSincronizado =  constantes.estadoActivo;
-        await DocEntidad.guardar(req.body);
+        await DocEvento.guardar(req.body);
         res.status(200).send('ok');
     });
 };
