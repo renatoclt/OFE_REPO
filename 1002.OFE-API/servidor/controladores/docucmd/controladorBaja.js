@@ -7,11 +7,14 @@ var ComprobantePagoQuery = require('../../dtos/comprobante/comprobantePagoQueryD
 var InstanciaDocParametro = require('../../dtos/msdocucmd/documentoParametroDTO');
 var ComprobantePago = require('../../dtos/comprobante/comprobantePagoUpdateDTO');
 var ComprobantePagoQueryUpdate = require('../../dtos/comprobante/comprobantePagoQueryUpdateDTO');
+var listaTemporal = new Array();
 /**
  *  Controlador de RETENCIONES BAJA
  * @param {*} ruta ruta del servicio
  * @param {*} rutaEsp ruta para el hateos
  */
+
+
 
 var controladorBaja = function (ruta,rutaEsp){
     router.post(ruta.concat('/comunicacionesDeBaja'), async function(req,res){
@@ -44,11 +47,14 @@ var controladorBaja = function (ruta,rutaEsp){
              
 
                 var Comprobante = await ComprobantePagoQuery.buscarComprobanteById(req.body.detalleBaja[loop].idComprobante);
-                detalleDocumento(data,Comprobante,instanciaDetalleBaja);
+                instanciaDetalleBaja =await detalleDocumento(data,Comprobante,instanciaDetalleBaja);
+                data.detalleBaja[loop].documentoParametro = listaTemporal
                 loop++;
             }        
             delete data.id;
+            console.log(data);
             res.json(data);
+            listaTemporal= [];
         }
         catch(err){
             res.status(404).send('error');
@@ -75,7 +81,7 @@ async function detalleDocumento(data,Comprobante,instanciaDetalleBaja){
                await DocParametro.guardar(InstanciaDocParametro).then(function(dataDoc){
                        dataDoc.dataValues.fechaCreacion = new Date(dataDoc.dataValues.fechaCreacion).getTime();
                        dataDoc.dataValues.fechaModificacion = new Date(dataDoc.dataValues.fechaModificacion).getTime();
-                       instanciaDetalleBaja.documentoParametro.push(dataDoc.dataValues);
+                       listaTemporal.push(dataDoc.dataValues);
                    });
                obj.valor =new Date(data.fechaEmision);
                InstanciaDocParametro.iParamEnt = constantes.fechaBaja;
@@ -83,7 +89,7 @@ async function detalleDocumento(data,Comprobante,instanciaDetalleBaja){
                await DocParametro.guardar(InstanciaDocParametro).then(function(dataDoc){
                        dataDoc.dataValues.fechaCreacion = new Date(dataDoc.dataValues.fechaCreacion).getTime();
                        dataDoc.dataValues.fechaModificacion = new Date(dataDoc.dataValues.fechaModificacion).getTime();
-                       instanciaDetalleBaja.documentoParametro.push(dataDoc.dataValues);
+                       listaTemporal.push(dataDoc.dataValues);
                     });
                obj.valor = instanciaDetalleBaja.motivo;
                InstanciaDocParametro.iParamEnt = constantes.motivoBaja;
@@ -91,9 +97,10 @@ async function detalleDocumento(data,Comprobante,instanciaDetalleBaja){
                await DocParametro.guardar(InstanciaDocParametro).then(function(dataDoc){
                        dataDoc.dataValues.fechaCreacion = new Date(dataDoc.dataValues.fechaCreacion).getTime();
                        dataDoc.dataValues.fechaModificacion = new Date(dataDoc.dataValues.fechaModificacion).getTime();
-                       instanciaDetalleBaja.documentoParametro.push(dataDoc.dataValues);
+                       listaTemporal.push(dataDoc.dataValues);
                     });
                await ComprobantePago.actualizar(instanciaDetalleBaja.idComprobante);
                await ComprobantePagoQueryUpdate.actualizarQuery(instanciaDetalleBaja.idComprobante,data.fechaEmision);
+               return instanciaDetalleBaja;
 };
 module.exports = controladorBaja;
