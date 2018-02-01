@@ -2,19 +2,20 @@
  * @author --- Modificado **-**-****
  * @author renato creado 22-01-2018 
  */
-var DocConcepto = require('../../modelos/msoffline/docConcepto');
+var DocEntidad = require('../../modelos/msoffline/docEntidad');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
  * 
  */
 
-DocConcepto.guardar = function guardarDocConcepto(data){
-    return DocConcepto.create({
+DocEntidad.guardar = function guardarDocEntidad(data){
+    console.log(data);
+    return DocEntidad.create({
         id: data.id,
-        concepto: data.concepto,
-        comprobantePago: data.comprobantePago,
-        importe: data.importe,
+        tipoEntidad: data.tipoEntidad,
+        entidad: data.entidad,
+        comprobantepago: data.comprobantepago,
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,
         fechaCreacion: data.fechaCreacion,
@@ -25,4 +26,4 @@ DocConcepto.guardar = function guardarDocConcepto(data){
     });
 }
 
-module.exports = DocConcepto;
+module.exports = DocEntidad;
