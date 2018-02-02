@@ -28,7 +28,8 @@ var controladorQueryEntidades = function (ruta, rutaEsp) {
                 limite = req.query.limite;
             }
 
-            EntidadQueryDTO.buscarEntidades(idTipoDocumento, denominacion, page, size)
+            EntidadQueryDTO.buscarEntidades(idTipoDocumento, denominacion
+                , page, size)
                 .then(function (resDTO) {
                     if (resDTO.cantidadReg == 0)
                         res.status(404).send(resDTO);
