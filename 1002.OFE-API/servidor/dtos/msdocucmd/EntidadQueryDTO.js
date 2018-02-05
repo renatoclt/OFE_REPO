@@ -40,7 +40,7 @@ EntidadQueryDTO.buscarEntidadById = function (numDocumento) {
             EntidadQueryCommand.findOne({
                 where: { documento: numDocumento }
             }).then(function (entidad) {
-                var DTO = ConvertirOrganizacionesDTO(data.dataValues);
+                var DTO = ConvertirOrganizacionesDTO(entidad.dataValues);
                 resolve(DTO);
             }, function (err) {
                 console.log(err);
@@ -54,17 +54,17 @@ EntidadQueryDTO.buscarEntidadById = function (numDocumento) {
 
 function ConvertirOrganizacionesDTO(data) {
     var salida = new RecursoOrganizacion();
-        salida.identificador = data.id,
+        salida.id = data.id, //identificador
         salida.documento = data.documento,
         salida.denominacion = data.denominacion,
         salida.nombreComercial = data.nombreComercial,
         salida.direccionFiscal = data.direccionFiscal,
         salida.correoElectronico = data.correoElectronico,
         salida.logo = data.logo,
-        salida.certificadoDigitalClave = '',
-        salida.certificadoDigitalArchivo = '',
-        salida.solUsuario = '',
-        salida.solClave = '',
+        salida.certificadoDigitalClave = null,
+        salida.certificadoDigitalArchivo = null,
+        salida.solUsuario = null,
+        salida.solClave = null,
         salida.pais = data.pais,
         salida.ubigeo = data.ubigeo,
         salida.tipoDocumento = data.tipoDocumento,

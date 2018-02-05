@@ -47,6 +47,12 @@ var rutas = {
                     "referencias":{"ruta":"/referencias", "descripcion": "Implementacion de servicio rest para gestionar referencias_query en la base de datos"}
                 }
             },
+            "orgacmd":{
+                "ruta":"",
+                "hijos":{
+                    "organizaciones":{"ruta":"/organizaciones", "descripcion": "Implementacion de servicio rest para gestionar referencias_query en la base de datos"}
+                }
+            },
             "parmqry":{
                 "ruta":"ms-documentos-query",
                 "hijos":{

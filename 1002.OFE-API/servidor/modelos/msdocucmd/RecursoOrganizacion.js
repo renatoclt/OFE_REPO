@@ -1,7 +1,7 @@
 
 var RecursoOrganizacion = function() {
     var organizacion = {
-        identificador: '',
+        id: '',  //  identificador
         documento:'',
         denominacion:'',
         nombreComercial:'',
