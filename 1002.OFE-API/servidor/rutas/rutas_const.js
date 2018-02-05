@@ -38,7 +38,8 @@ var rutas = {
                     "boletas":{"ruta":"/boletas", "descripcion": "Implementacion de servicio rest obtener boletas de la base de datos"},
                     //"guiasremision":{"ruta":"/guiasremision", "descripcion": "Implementacion de servicio rest obtener guias de remision de la base de datos"}
                     "percepciones":{"ruta":"/percepciones", "descripcion": "Implementacion de servicio rest obtener percepciones de la base de datos"},
-                    "documentoquery": {"ruta":"/documento", "descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"}
+                    "documentoquery": {"ruta":"/documento", "descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"},
+                    "baja":{"ruta":"/baja","descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"}
                 }
             },
             "docuqry":{

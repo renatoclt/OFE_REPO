@@ -13,6 +13,10 @@ var constantes = {
     idTipocomprobanteRetencion:'20', // valor del id del conprobante tipo de retencion,
     idTipocomprobanteFactura:'01', // valor del id del conprobante tipo de factura
     idTipocomprobanteBoleta:'03', // valor del id del conprobante tipo de boleta
-    idTipocomprobantePercepcion:'PR' // valor del id del conprobante tipo de guias de remision
+    idTipocomprobantePercepcion:'PR', // valor del id del conprobante tipo de guias de remision
+    numeroDeComprobante: '15', // Comunicación de Baja - Número de Comprobante
+    motivoBaja: '16', //Comunicación de Baja - Motivo de Baja
+    fechaBaja: '12', //Comunicacion de baja - Fecha de baja
+    bloqueoLocal: 'Bloqueado Local', // Estado Bloqueado falta sincronizacion
 } 
 module.exports = constantes;

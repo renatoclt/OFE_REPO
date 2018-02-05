@@ -60,7 +60,7 @@ var TipoAfecIgv = conexion.define('TipoAfecIgv', {
   } 
 },
   {
-    tableName: 't_tipo_afec_igv',
+    tableName: 'fe_configuracion_t_tipo_afec_igv',
     timestamps: false
   });
 

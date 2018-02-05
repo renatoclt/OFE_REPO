@@ -65,7 +65,7 @@ var TipoCalcIsc = conexion.define('TipoCalcIsc',
     }        
   },
   {
-    tableName: 't_tipo_calc_isc',
+    tableName: 'fe_configuracion_t_tipo_calc_isc',
     timestamps: false
   }
 );

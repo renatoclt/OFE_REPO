@@ -43,11 +43,14 @@ var ComprobantePago = conexion.define('ComprobantePago',
       field: "ch_ruccomprador",
       allowNull:false
     },
+<<<<<<< HEAD
+=======
     estadoComprobante: {
       type: sequelize.TEXT(30),
       field: "ch_estadocomprobantepagoprov",
       allowNull:false
     },
+>>>>>>> b_ricardo
     flagPlazoPago: {
       type: sequelize.TEXT(1),
       field: "ch_flagplazopago",
@@ -415,18 +418,6 @@ var ComprobantePago = conexion.define('ComprobantePago',
     estadoSincronizado: {
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado",
-    },
-    identidadReceptor: {
-      type: sequelize.INTEGER,
-      field: "in_identidadreceptor",
-    },
-    identidadEmisor: {
-      type: sequelize.INTEGER,
-      field: "in_identidademisor",
-    },
-    ticketRetencion: {
-      type: sequelize.TEXT,
-      field: "vc_ticketretencion",
     },
     generado: {
       type: sequelize.INTEGER,

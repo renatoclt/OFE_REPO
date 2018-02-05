@@ -34,7 +34,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
      * usuario modificacion
      */
     router.post(ruta.concat('/guardarRetencion'), async function(req, res){
-        data = req.body;
+        data = req.body
         data.id = uuid();
         try{
             data.fechaEmision = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");

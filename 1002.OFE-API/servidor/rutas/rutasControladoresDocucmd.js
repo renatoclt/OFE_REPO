@@ -14,7 +14,7 @@ var controladoresInveqry = function (ruta) {
     percepciones = require('../controladores/docucmd/controladorPercepcionSincronizar')(ruta.concat(navC.hijos['percepciones'].ruta),navC.hijos['percepciones'].ruta);
     documento = require('../controladores/docucmd/controladorDocumentoCmd')(ruta.concat(navC.hijos['documento'].ruta),navC.hijos['documento'].ruta);
     comprobantesquery = require('../controladores/docucmd/controladorComprobanteQuery')(ruta.concat(navC.hijos['documentoquery'].ruta),navC.hijos['documentoquery'].ruta);
-
+    baja = require('../controladores/docucmd/controladorBaja')(ruta.concat(navC.hijos['baja'].ruta),navC.hijos['baja'].ruta);
 }
 
 module.exports = controladoresInveqry;

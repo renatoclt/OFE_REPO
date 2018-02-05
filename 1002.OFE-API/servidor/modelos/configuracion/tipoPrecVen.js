@@ -69,7 +69,7 @@ var TipoPrecVenta = conexion.define('TipoPrecVenta',
     }        
   },
   {
-    tableName: 't_tipo_prec_ven',
+    tableName: 'fe_configuracion_t_tipo_prec_ven',
     timestamps: false
   }
 );

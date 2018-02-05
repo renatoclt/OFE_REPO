@@ -16,7 +16,7 @@
   },
   "keywords": [],
   "build": {
-    "buildDependenciesFromSource": true,
+    "buildDependenciesFromSource": true, 
     "appId": "sqlite-electron",
     "asar": true,
     "dmg": {

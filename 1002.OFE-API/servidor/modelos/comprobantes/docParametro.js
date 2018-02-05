@@ -66,7 +66,8 @@ var DocParametro = conexion.define('DocParametro',
     }        
   },
   {
-    tableName: 't_doc_parametro',
+    tableName: 'fe_comprobante_t_doc_parametro',
     timestamps: false
   }
 );
+module.exports = DocParametro;
