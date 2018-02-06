@@ -15,6 +15,7 @@ node {
 
    stage ('Instalando Librerías'){
         bat 'npm install'
+        bat 'npm run rebuild'
    }
 
    
