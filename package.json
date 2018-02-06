@@ -16,7 +16,7 @@
   },
   "keywords": [],
   "build": {
-    "buildDependenciesFromSource": true, 
+    "buildDependenciesFromSource": true,
     "appId": "sqlite-electron",
     "asar": true,
     "dmg": {
@@ -52,6 +52,7 @@
     "express": "^4.15.2",
     "request": "^2.81.0",
     "sqlite3": "3.1.13",
+    "morgan": "^1.8.1",
     "strip": "^3.0.0"
   },
   "devDependencies": {
