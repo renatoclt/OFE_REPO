@@ -15,11 +15,17 @@ node {
 
    stage ('Instalando Librerías'){
         bat 'npm install'
+   }
+   stage ('Rebuild'){        
         bat 'npm run rebuild'
    }
 
    
    stage ('Creando instalador'){
         bat 'npm run dist'
+   }
+   stage('subiendo'){
+       bat 'copy offline.exe offline${env.BUILD_NUMBER}.exe'
+       bat 'd:\\Programas\\PneumaticTube\\PneumaticTube.exe -f offline${env.BUILD_NUMBER}.exe -p offline_dev'
    }
 }
