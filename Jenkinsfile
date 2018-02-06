@@ -9,7 +9,7 @@ node {
    ///build, junit,, sonaqube, imagen docker, push, despliegue
    stage ('Actualizar Repositorio') {
       echo 'Descargando código de SCM'
-      bat 'del ./*.* /s /q'
+      bat 'del *.* /s /q'
       checkout scm
    }
 
