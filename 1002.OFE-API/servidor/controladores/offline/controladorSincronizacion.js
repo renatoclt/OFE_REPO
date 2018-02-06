@@ -51,6 +51,21 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             res.send('error');
         }
     });
+    router.post(ruta.concat('sincronizacionInicial'), async function(req, res){
+        if(req.body.ParametroDocumento){
+            req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            req.body.estadoSincronizado =  constantes.estadoActivo;
+            //await ParametroEntidad.guardar(req.body);
+            res.status(200).send('ok');
+        }
+        else{
+            res.status(500).send('Falta ParametroDocumento');
+        }
+
+    });
+
+    
+
     //fe_configuracion
     router.post(ruta.concat('/evento'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
@@ -126,10 +141,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('ok');
     });
     router.post(ruta.concat('/parametroEntidad'), async function(req, res){
-        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-        req.body.estadoSincronizado =  constantes.estadoActivo;
-        await ParametroEntidad.guardar(req.body);
-        res.status(200).send('ok');
+        
     });
     router.post(ruta.concat('/serie'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
