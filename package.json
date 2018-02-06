@@ -49,7 +49,7 @@
     "keymaster": "^1.6.2",
     "lodash": "^4.17.4",
     "request": "^2.81.0",
-    "sqlite3": "^3.1.13",
+    "sqlite3": "3.1.13",
     "strip": "^3.0.0"
   },
   "devDependencies": {
