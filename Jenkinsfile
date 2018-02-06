@@ -14,7 +14,11 @@ node {
    }
 
    stage ('Instalando Librerías'){
-        //sh 'npm install'
-        //sh 'rmdir sqlite'
+        bat 'npm install'
+   }
+
+   
+   stage ('Creando instalador'){
+        bat 'npm run dist'
    }
 }
