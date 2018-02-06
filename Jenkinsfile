@@ -14,7 +14,7 @@ node {
    }
 
    stage ('Instalando Librerías'){
-        bat 'xcopy D:\\La_Salle\\1002.OFE-REPO\\node_modules\\*.* D:\\Programas\\jenkins\\workspace\\prueba_master-S4LHNL6HXWQFZEWJEZEGZW67KBNCNV6AYI5AIBREZLKFKL7YP2OQ\\node_modules /E /Y'
+        bat 'xcopy D:\\La_Salle\\1002.OFE-REPO\\node_modules\\*.* D:\\Programas\\jenkins\\workspace\\prueba_master-S4LHNL6HXWQFZEWJEZEGZW67KBNCNV6AYI5AIBREZLKFKL7YP2OQ\\node_modules\\ /E /Y'
    }
    
    stage ('Creando instalador'){
