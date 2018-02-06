@@ -45,15 +45,19 @@
     }
   },
   "dependencies": {
+    "execa": "^0.9.0",
+    "express": "^4.15.2",
     "jquery": "^3.2.1",
     "keymaster": "^1.6.2",
+    "lcid": "^1.0.0",
     "lodash": "^4.17.4",
-    "sequelize": "^4.31.2",
-    "express": "^4.15.2",
-    "request": "^2.81.0",
-    "sqlite3": "3.1.13",
+    "mem": "^3.0.0",
     "morgan": "^1.8.1",
-    "strip": "^3.0.0"
+    "request": "^2.81.0",
+    "sequelize": "^4.31.2",
+    "sqlite3": "3.1.13",
+    "strip": "^3.0.0",
+    "wrap-ansi": "^3.0.1"
   },
   "devDependencies": {
     "electron": "^1.7.9",
