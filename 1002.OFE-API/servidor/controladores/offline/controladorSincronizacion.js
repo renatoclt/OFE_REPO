@@ -52,6 +52,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         }
     });
     router.post(ruta.concat('sincronizacionInicial'), async function(req, res){
+        console.log('ingresar');
         if(req.body.ParametroDocumento){
             req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             req.body.estadoSincronizado =  constantes.estadoActivo;
