@@ -1,5 +1,7 @@
 var EntidadQueryDTO = require("../../dtos/msdocucmd/EntidadQueryDTO");
 var baseUrl_ = "http://localhost:3000/v1";
+LocalDateTime = require('js-joda').LocalDateTime;
+excepcion = require('../../utilitarios/excepcion');
 var controladorQueryEntidades = function (ruta, rutaEsp) {
         var nombreHateo = "hOrganizaciones";
         var hateoas = require('./../../utilitarios/hateoas')({ baseUrl:baseUrl_});
@@ -8,28 +10,25 @@ var controladorQueryEntidades = function (ruta, rutaEsp) {
     hateoas.registerLinkHandler(nombreHateo, function (objecto) {
         var links = {
            "self":{
-                    "href":baseUrl_+ rutaEsp.concat('/') + objecto.documento+'?idTipoDocumento='+objecto.idTipoDocumento
+                    "href":baseUrl_+ rutaEsp.concat('/') + objecto.documento
            }
         };
-        
         return links;
     });
 
     hateoas.registerCollectionLinkHandler(nombreHateo, function (objectoCollection) {
         var links = {
-            //"self": rutaEsp
-            "self": {
-                "href": baseUrl_+ rutaEsp+'/'
-            }
+                    "self": { 
+                        "href": baseUrl_+ rutaEsp+'/'
+                    }
         };
-       
         return links;
     });
 
     router.get(ruta.concat('//?'), function (req, res, next) {
 
-        if (req.query.denominacion == undefined || req.query.idTipoDocumento == undefined) {
-            res.status(400).send('Solicitud incorrecta: Revisar parametros error de peticion');
+        if (req.query.denominacion == undefined) {
+            res.status(400).send({"message":'Solicitud incorrecta: Revisar parametros error de peticion'});
         } else {
             var denominacion = "",
                 idTipoDocumento = "-1",
@@ -52,9 +51,9 @@ var controladorQueryEntidades = function (ruta, rutaEsp) {
             EntidadQueryDTO.buscarEntidades(idTipoDocumento, denominacion
                 , page, size)
                 .then(function (resDTO) {
-                    if (resDTO.cantidadReg == 0){
-                        res.status(404).send(resDTO);
-                    }else{
+                  /*  if (resDTO.cantidadReg == 0){
+                        res.status(404).send(excepcion.NOT_FOUND);
+                    }else{*/
                         var hateoasObj_organizaciones = Object.assign({}, hateoasObj);
                         hateoasObj_organizaciones.type = nombreHateo;
                         hateoasObj_organizaciones.data = resDTO.entidades;
@@ -71,25 +70,46 @@ var controladorQueryEntidades = function (ruta, rutaEsp) {
                         var hrefcoleccion= org['_links']['self']['href'];   
                         org['_links']['self']['href']=hrefcoleccion+'?denominacion='+denominacion+'&idTipoDocumento='+idTipoDocumento+'&page='+page+'&size='+size;
                         res.status(200).json(org);
-                    }
+                   // }
                 });
         }
-
-
     });
 
     router.get(ruta.concat('/:id'), function (req, res, next) {
-        EntidadQueryDTO.buscarEntidadById(req.params.id).then(function (resDTO) {
+
+        var numDocumento=req.params.id;
+        var idTipoDocumento= '-1';
+
+        if(req.query.idTipoDocumento&&req.query.idTipoDocumento!=''){
+            idTipoDocumento= req.query.idTipoDocumento
+        }else{
+            if(numDocumento.length==11) idTipoDocumento=6;
+            else if(numDocumento.length==8) idTipoDocumento=1;
+            else idTipoDocumento=9;
+        
+        }
+        
+     
+
+        EntidadQueryDTO.buscarEntidadById(numDocumento,idTipoDocumento).then(function (resDTO) {
             
-            var hateoasObj_comprobante = Object.assign({}, hateoasObj);
-            hateoasObj_comprobante.type = nombreHateo;
-            hateoasObj_comprobante.data = resDTO;
-            hateoasObj_comprobante.paginacion.activo = false;
-            hateoasObj_comprobante.busqueda.activo = false;
-            res.json(hateoas.link(hateoasObj_comprobante));
+            if (Object.keys(resDTO).length === 0){
+                res.status(404).send(excepcion.NOT_FOUND);
+            }else{
+                var hateoasObj_entidad = Object.assign({}, hateoasObj);
+                hateoasObj_entidad.type = nombreHateo;
+                hateoasObj_entidad.data = resDTO;
+                hateoasObj_entidad.paginacion.activo = false;
+                hateoasObj_entidad.busqueda.activo = false;
+
+                var org =hateoas.link(hateoasObj_entidad);
+                var hrefEntidad= org['_links']['self']['href'];   
+                org['_links']['self']['href']=hrefEntidad+'?idTipoDocumento='+idTipoDocumento;
+                
+                res.status(200).json(org);
+            }
         })
     });
-
 };
 
 module.exports = controladorQueryEntidades;
