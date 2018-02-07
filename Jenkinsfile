@@ -15,10 +15,12 @@ node {
 
    stage ('Instalando Librerías'){
         bat 'xcopy D:\\La_Salle\\1002.OFE-REPO\\node_modules\\*.* D:\\Programas\\jenkins\\workspace\\prueba_master-S4LHNL6HXWQFZEWJEZEGZW67KBNCNV6AYI5AIBREZLKFKL7YP2OQ\\node_modules\\ /E /Y'
+        bat 'npm install node-gyp'
+        bat 'npm run rebuild'
    }
    
    stage ('Creando instalador'){
-        bat 'npm run dist'
+       bat 'npm run dist'
    }
    stage('subiendo'){
        bat 'copy offline.exe offline${env.BUILD_NUMBER}.exe'

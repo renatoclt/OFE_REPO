@@ -2,7 +2,7 @@
  * @author renato Modificado 10-01-2018
  * @author renato creado 18-12-2017 
  */
-var Serie = require('../../modelos/msparametrosquery/serie');
+var Serie = require('../../modelos/msparametrosquery/Serie');
 
 /**
  * Funcion que retorna la tabla T_Maestra segun el campo codigo
