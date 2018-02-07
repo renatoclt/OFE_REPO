@@ -4,8 +4,7 @@
  */
 var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
 var DocEntidad = require('../../modelos/comprobantes/docEntidad');
-var Entidad = require('../../modelos/organizaciones/entidad');
-var EntidadParametro = require('../../modelos/organizaciones/entidadParametro');
+//var EntidadParametro = require('../../modelos/organizaciones/entidadParametro');
 var TipoEnt = require('../../modelos/configuracion/tipoEnt')
 var DocReferencia = require('../../modelos/comprobantes/docReferencia')
 var constantes = require('../../utilitarios/constantes')

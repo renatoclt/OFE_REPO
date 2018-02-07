@@ -1,22 +1,20 @@
 /**
  * @author --- Modificado **-**-****
- * @author renato creado 22-01-2018 
+ * @author renato creado 18-12-2017 
  */
-var DocParametro = require('../../modelos/msoffline/docParametro');
+var Archivo = require('../../modelos/msoffline/archivo');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
  * 
  */
 
-DocParametro.guardar = function guardarDocEntidad(data){    
-    return DocParametro.create({
+Archivo.guardar = function guardarComprobantePago(data){
+    return Archivo.create({
         id: data.id,
-        evento: data.evento, 
-        entidad: data.entidad, 
-        comprobantePago: data.comprobantePago, 
-        desc: data.desc, 
-        estEvento: data.estEvento,
+        idComprobantePago: data.idComprobantePago,
+        ubicacion: data.ubicacion,
+        tipo: data.tipo,
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,
         fechaCreacion: data.fechaCreacion,
@@ -27,4 +25,4 @@ DocParametro.guardar = function guardarDocEntidad(data){
     });
 }
 
-module.exports = DocParametro;
+module.exports = Archivo;

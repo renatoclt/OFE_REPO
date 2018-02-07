@@ -1,36 +1,42 @@
-var ComprobantePago = require('./comprobantePago');
-//var Entidad = require('../organizaciones/entidad');
-var TipoEnt = require('../configuracion/tipoEnt');
 /**
- * persistencia de la tabla t_doc_entidad en la variable DocEntidad
- * Modificado --- creado --/--/----
+ * persistencia de la tabla t_serie en la variable Serie
+ * @author Renato Modificado 10/01/2018
  * @author Renato creado 14/12/2017
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var DocEntidad = conexion.define('DocEntidad',
+var QueryConcepto = conexion.define('QueryConcepto',
   {
     id:{
       type: sequelize.INTEGER,
-      field: "se_ientidad",
+      field: "se_iconcepto",
       autoIncrement: true,
       unique: true,
       primaryKey: true
     },
-    idTipoEntidad: {
-      type: sequelize.INTEGER,
-      field: "se_itipo_ent",
+    idioma: {
+      type: sequelize.INTEGER(32),
+      field: "se_iidioma",
       allowNull:false
     },
-    idEntidad: {
-      type:sequelize.INTEGER ,
-      field: "se_ientidad",
+    codigo: {
+      type: sequelize.INTEGER(32),
+      field: "in_codigo",
+    },
+    descripcion: {
+      type: sequelize.TEXT,
+      field: "vc_desc",
       allowNull:false
     },
-    idcomprobantepago: {
-      type: sequelize.INTEGER,
-      field: "in_idcomprobantepago",
+    concepto: {
+      type: sequelize.TEXT(4),
+      field: "t_concepto",
+      allowNull:false
+    },
+    catalogo: {
+      type: sequelize.INTEGER(32),
+      field: "vc_catalogo",
       allowNull:false
     },
     usuarioCreacion: {
@@ -63,18 +69,13 @@ var DocEntidad = conexion.define('DocEntidad',
       field: "ts_fec_sincronizado"
     },
     estadoSincronizado: {
-      type: sequelize.TEXT,
+      type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
     }        
   },
   {
-    tableName: 't_doc_entidad',
-    timestamps: false
+    tableName: 'fe_query_t_concepto',
+    timestamps: false,
   }
 );
-
-
-DocEntidad.belongsTo(TipoEnt, {foreignKey: 'idTipoEntidad'});
-
-
-module.exports = DocEntidad;
+module.exports = QueryConcepto;

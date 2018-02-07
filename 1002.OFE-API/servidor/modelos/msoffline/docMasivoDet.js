@@ -1,64 +1,72 @@
 /**
- * persistencia de la tabla t_dominio_ent en la variable DominioEnt
+ * persistencia de la tabla t_doc_parametro en la variable DocParametro
  * Modificado --- creado --/--/----
- * @author Renato creado 14/12/2017
+ * @author Renato creado 07/02/2018
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var DominioEnt = conexion.define('DominioEnt',
+var DocMasivo = conexion.define('DocParametro',
   {
     id:{
       type: sequelize.INTEGER,
-      field: "se_idominio_ent",
+      field: "se_idocmasivdet",
       autoIncrement: true,
       unique: true,
-      primaryKey: true
+      primaryKey: true,
+      allowNull:false            
     },
-    iParamEnt: {
+    docMasivo: {
       type: sequelize.INTEGER(32),
-      field: "se_iparam_ent",
-      allownull:false,
+      field: "se_idocmasivo",
+      allowNull:false
     },
-    iIdioma: {
+    fila: {
       type: sequelize.INTEGER(32),
-      field: "se_iidioma",
-      allownull:false,
+      field: "in_fila",
+      allowNull:false
     },
-    codigo: {
-      type:sequelize.TEXT ,
-      field: "vc_codigo",
-    },
-    descCorta: {
+    columna: {
       type: sequelize.TEXT,
-      field: "vc_desc_corta",
-      allownull:false,
+      field: "in_columna",
+      allowNull:false
     },
-    desc: {
-      type: sequelize.TEXT,
-      field: "vc_desc",
-      allownull:false,
+    serie: {
+        type: sequelize.TEXT,
+        field: "vc_serie",
+    },
+    numero: {
+        type: sequelize.TEXT,
+        field: "vc_numero",
+    },
+    descripcionError: {
+        type: sequelize.TEXT,
+        field: "vc_descerror",
     },
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",
-      allownull:false,
+      allowNull:false
     },
     usuarioModificacion: {
       type: sequelize.TEXT,
       field: "vc_usu_modifica",
+      allowNull:false
     },
     fechaCreacion: {
       type: sequelize.TEXT(6),
       field: "ts_fec_creacion",
+      allowNull:false
     },
     fechaModificacion: {
       type: sequelize.TEXT(6),
       field: "ts_fec_modifica",
+      allowNull:false
     },
     estado: {
       type: sequelize.INTEGER(32),
-      field: "in_estado"
+      field: "in_estado",
+      allowNull:false
     },
     fechaSincronizado: {
       type: sequelize.TEXT,
@@ -70,8 +78,7 @@ var DominioEnt = conexion.define('DominioEnt',
     }        
   },
   {
-    tableName: 't_dominio_ent',
+    tableName: 'fe_comprobante_t_docmasivo_det',
     timestamps: false
   }
 );
-module.exports = DominioEnt;

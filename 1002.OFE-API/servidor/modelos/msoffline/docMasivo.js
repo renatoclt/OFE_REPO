@@ -1,37 +1,59 @@
-var ComprobantePago = require('./comprobantePago');
-//var Entidad = require('../organizaciones/entidad');
-var TipoEnt = require('../configuracion/tipoEnt');
 /**
- * persistencia de la tabla t_doc_entidad en la variable DocEntidad
+ * persistencia de la tabla t_doc_parametro en la variable DocParametro
  * Modificado --- creado --/--/----
- * @author Renato creado 14/12/2017
+ * @author Renato creado 07/02/2018
  * @argument 1 sobrenombre de la tabla
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var DocEntidad = conexion.define('DocEntidad',
+var DocMasivo = conexion.define('DocParametro',
   {
     id:{
       type: sequelize.INTEGER,
-      field: "se_ientidad",
+      field: "se_idocmasivo",
       autoIncrement: true,
       unique: true,
-      primaryKey: true
+      primaryKey: true,
+      allowNull:false            
     },
-    idTipoEntidad: {
-      type: sequelize.INTEGER,
-      field: "se_itipo_ent",
-      allowNull:false
-    },
-    idEntidad: {
-      type:sequelize.INTEGER ,
+    entidad: {
+      type: sequelize.INTEGER(32),
       field: "se_ientidad",
       allowNull:false
     },
-    idcomprobantepago: {
-      type: sequelize.INTEGER,
-      field: "in_idcomprobantepago",
+    tipoDocumento: {
+      type: sequelize.INTEGER(32),
+      field: "in_tipodoc",
       allowNull:false
+    },
+    usuario: {
+      type: sequelize.TEXT,
+      field: "vc_usuario",
+      allowNull:false
+    },
+    fecha: {
+        type: sequelize.TEXT,
+        field: "ts_fecha",
+    },
+    nomarchivo: {
+        type: sequelize.TEXT,
+        field: "vc_nomarchivo",
+    },
+    tamanioArchivo: {
+        type: sequelize.TEXT,
+        field: "vc_tamarchivo",
+    },
+    ticket: {
+        type: sequelize.TEXT,
+        field: "vc_ticket",
+    },
+    totalLineas: {
+        type: sequelize.INTEGER,
+        field: "in_total_lineas",
+    },
+    totalError: {
+        type: sequelize.INTEGER,
+        field: "in_total_error",
     },
     usuarioCreacion: {
       type: sequelize.TEXT,
@@ -63,18 +85,12 @@ var DocEntidad = conexion.define('DocEntidad',
       field: "ts_fec_sincronizado"
     },
     estadoSincronizado: {
-      type: sequelize.TEXT,
+      type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
     }        
   },
   {
-    tableName: 't_doc_entidad',
+    tableName: 'fe_comprobante_t_docmasivo',
     timestamps: false
   }
 );
-
-
-DocEntidad.belongsTo(TipoEnt, {foreignKey: 'idTipoEntidad'});
-
-
-module.exports = DocEntidad;

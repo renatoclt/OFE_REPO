@@ -2,29 +2,62 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
+var ComprobantePago = require('../../dtos/msoffline/comprobantePagoDTO');
+var ProductoXComprobantePago = require('../../dtos/msoffline/productoXComprobantePagoDTO');
+var archivo = require ('../../dtos/msoffline/archivoDTO') //falta
+var DetalleDoc = require('../../dtos/msoffline/detalleDocDTO');
+var DocConcepto = require('../../dtos/msoffline/docConcepetoDTO');
+var DocEntidad = require('../../dtos/msoffline/docEntidadDTO');
+var DocEvento = require('../../dtos/msoffline/docEventoDTO');
+var DocParametro = require('../../dtos/msoffline/docParametroDTO');//falta
+var DocReferencia = require('../../dtos/msoffline/docReferenciaDTO');
+var DocMasivo = require('../../dtos/msoffline/docMasivoDTO');//falta
+var DocMasivoDet = require('../../dtos/msoffline/docMasivoDetDTO');//falta
+var Concepto = require('../../dtos/msoffline/conceptoDTO')
+var DominioDocumento = require('../../dtos/msoffline/dominioDocumentoDTO');
 var Evento = require('../../dtos/msoffline/eventoDTO');
 var Idioma = require('../../dtos/msoffline/idiomaDTO');
-var DominioDocumento = require('../../dtos/msoffline/dominioDocumentoDTO');
-var Concepto = require('../../dtos/msoffline/conceptoDTO')
 var ParametroDocumento = require('../../dtos/msoffline/parametroDocumentoDTO');
 var TipoAfecIgv = require('../../dtos/msoffline/tipoAfecIgvDTO');
 var TipoCalcIsc = require('../../dtos/msoffline/tipoCalcIscDTO');
 var TipoEntidad = require('../../dtos/msoffline/tipoEntidadDTO');
 var TipoPrecioVenta = require('../../dtos/msoffline/tipoPrecioVentaDTO');
+var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
+var Usuario = require('../../dtos/msoffline/usuarioDTO');//falta comprobar
 var DominioEntidad = require('../../dtos/msoffline/dominioEntidadDTO');
 var EntidadParametro = require('../../dtos/msoffline/entidadParametroDTO');
 var Entidad = require ('../../dtos/msoffline/entidadDTO');
 var ParametroEntidad = require('../../dtos/msoffline/parametroEntidadDTO');
 var Producto = require('../../dtos/msoffline/productoDTO');
 var Serie = require('../../dtos/msoffline/serieDTO');
+var QueryComprobanteConcepto = require('../../dtos/msoffline/queryComprobanteConceptoDTO') ; //falta
+var QueryComprobanteEvento = require('../../dtos/msoffline/queryComprobanteEventoDTO') ; //falta
+var QueryComprobantePago = require('../../dtos/msoffline/queryComprobantePagoDTO') ; //falta
+var QueryConcepto = require('../../dtos/msoffline/queryConceptoDTO') ; //falta
+var QueryDocParametros = require('../../dtos/msoffline/') ; //falta
+var QueryDocRefenci = require('../../dtos/msoffline/docReferenciaDTO') ; //falta
+
+// var QueryDocMasivo = require('../../dtos/msoffline/') ; //falta
+// var QueryDocMasivoDet = require('../../dtos/msoffline/') ; //falta
+// var QueryEntParametros = require('../../dtos/msoffline/') ; //falta
+// var QueryEntidad = require('../../dtos/msoffline/') ; //falta
+// var QueryEstComprobante = require('../../dtos/msoffline/') ; //falta
+// var QueryIdioma = require('../../dtos/msoffline/') ; //falta
+// var QueryParametroDominioDoc = require('../../dtos/msoffline/') ; //falta
+// var QueryParametroDominioEnt = require('../../dtos/msoffline/') ; //falta
+// var QueryProducto = require('../../dtos/msoffline/') ; //falta
+// var QueryProductoXComprobantePago = require('../../dtos/msoffline/') ;  //falta
+// var QuerySerie = require('../../dtos/msoffline/') ;  //falta
+// var QueryTipoAfecIgv = require('../../dtos/msoffline/') ; //falta
+// var QueryTipoCalcIsc = require('../../dtos/msoffline/') ; //falta
+// var QueryTipoPrecVen = require('../../dtos/msoffline/') ;  //falta
+
 var Maestra = require('../../dtos/msoffline/maestraDTO');
-var ComprobantePago = require('../../dtos/msoffline/comprobantePagoDTO');
-var ProductoXComprobantePago = require('../../dtos/msoffline/productoXComprobantePagoDTO');
-var DetalleDoc = require('../../dtos/msoffline/detalleDocDTO');
-var DocConcepto = require('../../dtos/msoffline/docConcepetoDTO');
-var DocEntidad = require('../../dtos/msoffline/docEntidadDTO');
-var DocEvento = require('../../dtos/msoffline/docEventoDTO');
+
+
+
+
+
 /**
  * Controlador de la tabla serie 
  * 

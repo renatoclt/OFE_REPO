@@ -1,4 +1,5 @@
 Sincronizacion = require('../../modelos/msoffline/sincronizacion');
+ProductoXComprobantePago = require ('../../modelos/msoffline/productoXComprobantePago'); 
 
 /**
  * Funcion que retorna la tabla T_Maestra segun el campo codigo

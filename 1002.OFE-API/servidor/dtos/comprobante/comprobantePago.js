@@ -4,8 +4,8 @@
  */
 var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
 var DocEntidad = require('../../modelos/comprobantes/docEntidad');
-var Entidad = require('../../modelos/organizaciones/entidad');
-var EntidadParametro = require('../../modelos/organizaciones/entidadParametro');
+//var Entidad = require('../../modelos/organizaciones/entidad');
+//var EntidadParametro = require('../../modelos/organizaciones/entidadParametro');
 var TipoEnt = require('../../modelos/configuracion/tipoEnt')
 var DocReferencia = require('../../modelos/comprobantes/docReferencia')
 const Op = conexion.Op;
@@ -90,14 +90,16 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
                 as: 'documentoEntidad', 
                 attributes: atributosDocumentoEntidad.attributes,
                 include:[
+
+                    // {
+                    //     model: Entidad,
+                    //     attributes: atributosEntidad.attributes,
+                    //     include:{
+                    //         model: EntidadParametro,
+                    //         attributes: atributosEntidadParametro.attributes,
+                    //     },
+                    // },
                     {
-                        model: Entidad,
-                        attributes: atributosEntidad.attributes,
-                        include:{
-                            model: EntidadParametro,
-                            attributes: atributosEntidadParametro.attributes,
-                        },
-                    },{
                         model: TipoEnt,
                         attributes: atributosTipoEntidad.attributes,
                     }
