@@ -11,7 +11,7 @@ var configuracion = {
   },
   "produccion":{
     "basedatos":"dbFacturacion",
-    "almacenamiento":"./1002.OFE-DATABASE/dbFacturacion.sqlite",
+    "almacenamiento":"./resources/dbFacturacion.sqlite",
     "dialecto": "sqlite"
   },
   "knex":{
