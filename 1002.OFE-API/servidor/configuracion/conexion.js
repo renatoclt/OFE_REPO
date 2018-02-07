@@ -1,4 +1,4 @@
-conf = require('./configuracion_const')['produccion'];
+conf = require('./configuracion_const')['desarrollo'];
 
 const sqlite = require('sqlite3');
 const db = new sqlite.Database(conf.almacenamiento);

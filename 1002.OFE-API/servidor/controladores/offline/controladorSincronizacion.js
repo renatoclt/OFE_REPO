@@ -34,7 +34,7 @@ var QueryComprobanteConcepto = require('../../dtos/msoffline/queryComprobanteCon
 var QueryComprobanteEvento = require('../../dtos/msoffline/queryComprobanteEventoDTO') ; //falta
 var QueryComprobantePago = require('../../dtos/msoffline/queryComprobantePagoDTO') ; //falta
 var QueryConcepto = require('../../dtos/msoffline/queryConceptoDTO') ; //falta
-var QueryDocParametros = require('../../dtos/msoffline/') ; //falta
+//var QueryDocParametros = require('../../dtos/msoffline/q') ; //falta
 var QueryDocRefenci = require('../../dtos/msoffline/docReferenciaDTO') ; //falta
 
 // var QueryDocMasivo = require('../../dtos/msoffline/') ; //falta

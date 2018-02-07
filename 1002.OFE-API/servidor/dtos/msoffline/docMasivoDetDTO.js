@@ -9,7 +9,7 @@ var DocMasivoDet = require('../../modelos/msoffline/docEvento');
  * 
  */
 
-DocEvento.guardar = function guardarDocEntidad(data){
+DocMasivoDet.guardar = function guardarDocEntidad(data){
     console.log(data);
     return DocEvento.create({
         id: data.id,
@@ -29,4 +29,4 @@ DocEvento.guardar = function guardarDocEntidad(data){
     });
 }
 
-module.exports = DocEvento;
+module.exports = DocMasivoDet;

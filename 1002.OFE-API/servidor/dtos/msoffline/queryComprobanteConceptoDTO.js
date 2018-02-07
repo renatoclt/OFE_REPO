@@ -23,4 +23,4 @@ QueryComprobanteConcepto.guardar = function guardarQueryComprobanteConcepto(data
     });
 }
 
-module.exports = ProductoXQueryComprobanteConcepto;
+module.exports = QueryComprobanteConcepto;
