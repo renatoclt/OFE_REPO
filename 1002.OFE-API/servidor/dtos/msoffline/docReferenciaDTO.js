@@ -2,15 +2,15 @@
  * @author --- Modificado **-**-****
  * @author renato creado 22-01-2018 
  */
-var DocReferencia = require('../../modelos/msoffline/DocParametro');
+var QueryDocRefenci = require('../../modelos/msoffline/queryDocReferenci');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
  * 
  */
 
-DocReferencia.guardar = function guardarDocReferencia(data){    
-    return DocReferencia.create({
+QueryDocRefenci.guardar = function guardarDocReferencia(data){    
+    return QueryDocRefenci.create({
         id: data.id,
         idDocumentoOrigen: data.idDocumentoOrigen ,
         idDocumentoDestino: data.idDocumentoDestino ,
@@ -41,4 +41,4 @@ DocReferencia.guardar = function guardarDocReferencia(data){
     });
 }
 
-module.exports = DocReferencia;
+module.exports = QueryDocRefenci;

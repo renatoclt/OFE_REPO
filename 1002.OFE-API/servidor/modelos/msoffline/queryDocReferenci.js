@@ -6,7 +6,7 @@
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var QueryConcepto = conexion.define('QueryConcepto',
+var QueryDocRefenci = conexion.define('QueryDocRefenci',
   {
     id:{
       type: sequelize.INTEGER,
@@ -15,16 +15,16 @@ var QueryConcepto = conexion.define('QueryConcepto',
       unique: true,
       primaryKey: true
     },
-    idioma: {
+    docOrigen: {
       type: sequelize.INTEGER(32),
       field: "in_idoc_origen",
       allowNull:false
     },
-    codigo: {
+    documentoDestino: {
       type: sequelize.INTEGER(32),
       field: "se_idoc_destino",
     },
-    descripcion: {
+    tipoDocumentoOrigen: {
       type: sequelize.TEXT,
       field: "ch_tipo_doc_ori",
       allowNull:false
@@ -34,51 +34,37 @@ var QueryConcepto = conexion.define('QueryConcepto',
       field: "ch_tipo_doc_des",
       allowNull:false
     },
-    catalogo: {
+    serieDestino: {
       type: sequelize.INTEGER(32),
       field: "ch_serie_dest",
       allowNull:false
     },
-    catalogo: {
+    corrDest: {
         type: sequelize.INTEGER(32),
         field: "ch_corr_dest",
         allowNull:false
     },
-    catalogo: {
+    fechaEmisionDestino: {
         type: sequelize.INTEGER(32),
         field: "da_fec_emi_dest",
         allowNull:false
     },
-    catalogo: {
+    totalImpustoDestino: {
         type: sequelize.INTEGER(32),
         field: "nu_tot_imp_dest",
         allowNull:false
     },
-    catalogo: {
+    totalPorAuxiliar: {
         type: sequelize.INTEGER(32),
         field: "nu_tot_por_aux",
         allowNull:false
     },
-    catalogo: {
+    tdocoriDesc: {
         type: sequelize.INTEGER(32),
         field: "vc_tdocori_desc",
         allowNull:false
     },
-    catalogo: {
-        type: sequelize.INTEGER(32),
-        field: "ch_serie_dest",
-        allowNull:false
-    },
-    catalogo: {
-        type: sequelize.INTEGER(32),
-        field: "ch_serie_dest",
-        allowNull:false
-    },
-    catalogo: {
-        type: sequelize.INTEGER(32),
-        field: "ch_serie_dest",
-        allowNull:false
-    },
+    
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",
@@ -114,8 +100,8 @@ var QueryConcepto = conexion.define('QueryConcepto',
     }        
   },
   {
-    tableName: 'fe_query_t_concepto',
+    tableName: 'fe_query_t_doc_referenci',
     timestamps: false,
   }
 );
-module.exports = QueryConcepto;
+module.exports = QueryDocRefenci;
