@@ -19,6 +19,7 @@
     "express": "^4.15.2",
     "express-hateoas-links": "^1.0.7",
     "hbs": "^4.0.1",
+    "js-joda": "^1.6.2",
     "knex": "^0.13.0",
     "mocha": "^4.1.0",
     "morgan": "^1.8.1",

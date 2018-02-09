@@ -10,6 +10,9 @@ hateoasLinker = require('express-hateoas-links');
 constantes = require('./servidor/utilitarios/constantes');
 dateFormat = require('dateformat');
 
+LocalDateTime = require('js-joda').LocalDateTime;
+
+//excepcion = require('./servidor/utilitarios/excepcion');
 app = express();
 
 app.set('views', path.join(__dirname, 'views'));
