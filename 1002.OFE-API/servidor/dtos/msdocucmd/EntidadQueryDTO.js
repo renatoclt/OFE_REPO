@@ -8,7 +8,7 @@ OP = sequelize.Op;
 var EntidadQueryDTO = function () { };
 
 
-EntidadQueryDTO.buscarEntidades = function (idTipoDocumento, denominacion, pagina, regxpag) {
+async function buscarEntidades(idTipoDocumento, denominacion, pagina, regxpag) {
 
     var clauseWhere = {
         idTipoDocumento: idTipoDocumento,
@@ -25,15 +25,32 @@ EntidadQueryDTO.buscarEntidades = function (idTipoDocumento, denominacion, pagin
         conexion.sync().then(function () {
             EntidadQueryCommand.findAndCountAll(
                 {
-                    where: clauseWhere
+                    where: clauseWhere,
+                    offset: (pagina * regxpag), 
+                    limit: regxpag 
                 }
             ).then(function (entidades) {
-                var cantidadTotalEntidades = entidades.count;
-                entidades = entidades.rows.map(function (data) {
-                    return  ConvertirOrganizacionesDTO(data.dataValues);
-                    
-                });
-                resolve({ 'entidades': entidades, 'cantidadReg': cantidadTotalEntidades });
+              var cantidadTotalEntidades = entidades.count;
+              var registros=entidades.rows;
+              if(registros.length>0&&registros!=undefined){
+                var cont=0;
+                var entidades_ =[]; 
+                  entidades.rows.map(function (data) {
+                      return ConvertirOrganizacionesDTO(data.dataValues).then(function(DTO){
+                          cont ++;
+                          entidades_.push(DTO);
+                          if(cont==registros.length) 
+                              resolve({ 'entidades': entidades_, 'cantidadReg': cantidadTotalEntidades });
+                      });
+                      
+                  });
+              }else{
+                    buscarEntidadesOffline(idTipoDocumento, denominacion, pagina, regxpag).then(function(data){
+
+                        console.log(data);
+                        resolve({ 'entidades':data.entidades, 'cantidadReg': data.cantidadReg});
+                    });
+              }
             }, function (err) {
                 console.log(err);
                 resolve({});
@@ -61,11 +78,13 @@ EntidadQueryDTO.buscarEntidadById = function (numDocumento, tipoDocumento) {
                 where: clauseWhere
             }).then(function (entidad) {
                 if (entidad != null) {
-                    var DTO = ConvertirOrganizacionesDTO(entidad.dataValues);
-                    resolve(DTO);
+                    ConvertirOrganizacionesDTO(entidad.dataValues).then(function(DTO){
+                        resolve(DTO);
+                    });
+                   
                 } else {
                     //si no encuntra busca tabla entidada offline
-                    this.buscarEntidadByNumDocumentoOffline(numDocumento, tipoDocumento).then(function (DTO) {
+                    buscarEntidadByNumDocumentoOffline(numDocumento, tipoDocumento).then(function (DTO) {
                         resolve(DTO);
                     });
                 }
@@ -80,7 +99,7 @@ EntidadQueryDTO.buscarEntidadById = function (numDocumento, tipoDocumento) {
 };
 
 
-buscarEntidadesOffline= function (idTipoDocumento, denominacion, pagina, regxpag) {
+ function buscarEntidadesOffline (idTipoDocumento, denominacion, pagina, regxpag) {
 
     var clauseWhere = {
         idTipoDocumento: idTipoDocumento,
@@ -88,24 +107,41 @@ buscarEntidadesOffline= function (idTipoDocumento, denominacion, pagina, regxpag
         estado: 1
 
     };
-    /* if(idTipoDocumento=='-1')
+     if(idTipoDocumento=='-1')
      {
          delete clauseWhere['idTipoDocumento'];
      }
-*/
+
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             EntidadQueryOffline.findAndCountAll(
                 {
-                    where: clauseWhere
+                    where: clauseWhere,
+                    offset: (pagina * regxpag), 
+                    limit: regxpag 
                 }
             ).then(function (entidades) {
+
+
                 var cantidadTotalEntidades = entidades.count;
-                entidades = entidades.rows.map(function (data) {
-                    var DTO = ConvertirOrganizacionesDTO(data.dataValues);
-                    return DTO;
-                });
-                resolve({ 'entidades': entidades, 'cantidadReg': cantidadTotalEntidades });
+                var cont=0;
+                var entidades_ =[];
+                var registros=entidades.rows;
+                if(registros.length>0&&registros!=undefined){                  
+                    entidades.rows.map(function (data) {
+                        return ConvertirOrganizacionesDTO(data.dataValues).then(function(DTO){
+                            cont ++;
+                            entidades_.push(DTO);
+                            if(cont==registros.length) 
+                                resolve({ 'entidades': entidades_, 'cantidadReg': cantidadTotalEntidades });
+                        });
+                        
+                    });
+                }else{
+                            resolve({ 'entidades': entidades_, 'cantidadReg': 0 });
+                }
+
+    
             }, function (err) {
                 console.log(err);
                 resolve({});
@@ -117,10 +153,10 @@ buscarEntidadesOffline= function (idTipoDocumento, denominacion, pagina, regxpag
 
 
 
-buscarEntidadByNumDocumentoOffline = function (numDocumento, idTipoDocumento) {
+function buscarEntidadByNumDocumentoOffline (numDocumento, idTipoDocumento) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
-            EntParametrosQuery.findOne({
+            EntidadQueryOffline.findOne({
                 where: { documento: numDocumento, idTipoDocumento: idTipoDocumento }
             }).then(function (entidad) {
                 if (entidad != null) {
@@ -138,7 +174,7 @@ buscarEntidadByNumDocumentoOffline = function (numDocumento, idTipoDocumento) {
     return promise;
 };
 
-function ConvertirOrganizacionesDTO(data) {
+async function ConvertirOrganizacionesDTO(data) {
     var salida = new RecursoOrganizacion();
     salida.id = data.id, //identificador
     salida.documento = data.documento,
@@ -164,57 +200,42 @@ function ConvertirOrganizacionesDTO(data) {
 //      salida.estadoRegistro = 9,  // REGISTRO_EXISTE_BD //data.estadoRegistro,
 //      salida.tipoFuente = 3               // BASE_DATOS_QUERY
     
-    var parametros= buscarEntidadParametros(data.id);
-            if(parametros.cantidadReg>0){
-                var listaparametros= parametros.parametros;
-                listaparametros.forEach(parametro => {
-                    var objeto=agregarParametrosaEntidad(parametro);
-                    Object.assign(salida, objeto);
-                });
-            }else{
-                    console.log('no hay parametros');
-            }
+   await buscarEntidadParametros(data.id).then(function(parametros){
 
+        if(parametros.cantidadReg>0){
+            var listaparametros= parametros.parametros;
+            listaparametros.forEach(parametro => {
+                var objeto=agregarParametrosaEntidad(parametro);
+                Object.assign(salida, objeto);
+            });
+        }else{
+                console.log(data.id +' : sin parametros');
+        }
+        
+    });
+           
     return salida;
+    
 }
 
- function buscarEntidadParametros (idDocumento){
-/*
-        var promise = new Promise(function (resolve, reject) {
-            conexion.sync().then(function () {
-                EntParametrosQuery.findAndCountAll(
-                    {
-                        where: { inIentidad: idDocumento}
-                    }
-                ).then(function (parametros) {
-                    var cantidadRegistros = parametros.count;
-                    parametros = parametros.rows.map(function (data) {
-                        return data.dataValues;
-                    });
-                    resolve({ 'parametros': parametros, 'cantidadReg': cantidadRegistros});
-                }, function (err) {
-                    console.log(err);
-                    resolve({});
-                });
-            });
-        });
-        return promise;*/
+ async function buscarEntidadParametros (idDocumento){
+
         var objeto={};
-       return EntParametrosQuery.findAndCountAll(
-            { where: { inIentidad: idDocumento} }
-        ).then(function (parametros) {
-            var cantidadRegistros = parametros.count;
-            parametros = parametros.rows.map(function (data) {
-                return data.dataValues;
+       return EntParametrosQuery.findAndCountAll({ 
+                where: { inIentidad: idDocumento} 
+            }).then(function (parametros) {
+                            var cantidadRegistros = parametros.count;
+                            parametros = parametros.rows.map(function (data) {
+                                return data.dataValues;
+                            });
+                    //return{ 'parametros': parametros, 'cantidadReg': cantidadRegistros};
+                    objeto.parametros=parametros;
+                    objeto.cantidadReg=cantidadRegistros;
+                    return objeto;
+            },function (err) {
+                    console.log(err);
+                    return objeto;
             });
-            //return{ 'parametros': parametros, 'cantidadReg': cantidadRegistros};
-            objeto.parametros=parametros;
-            objeto.cantidadReg=cantidadRegistros;
-            return objeto;
-        }, function (err) {
-            console.log(err);
-            return objeto;
-        });
         //return objeto;
 }
 
@@ -290,5 +311,5 @@ function agregarParametrosaEntidad(parametro){
     }
     return objeto;
 }
-
+EntidadQueryDTO.buscarEntidades=buscarEntidades;
 module.exports = EntidadQueryDTO;
