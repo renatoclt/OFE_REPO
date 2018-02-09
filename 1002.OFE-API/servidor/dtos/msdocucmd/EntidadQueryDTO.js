@@ -16,11 +16,11 @@ EntidadQueryDTO.buscarEntidades = function (idTipoDocumento, denominacion, pagin
         estado: 1
 
     };
-    /* if(idTipoDocumento=='-1')
+     if(idTipoDocumento=='-1')
      {
          delete clauseWhere['idTipoDocumento'];
      }
-*/
+
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             EntidadQueryCommand.findAndCountAll(
@@ -30,8 +30,8 @@ EntidadQueryDTO.buscarEntidades = function (idTipoDocumento, denominacion, pagin
             ).then(function (entidades) {
                 var cantidadTotalEntidades = entidades.count;
                 entidades = entidades.rows.map(function (data) {
-                    var DTO = ConvertirOrganizacionesDTO(data.dataValues);
-                    return DTO;
+                    return  ConvertirOrganizacionesDTO(data.dataValues);
+                    
                 });
                 resolve({ 'entidades': entidades, 'cantidadReg': cantidadTotalEntidades });
             }, function (err) {
@@ -138,7 +138,7 @@ buscarEntidadByNumDocumentoOffline = function (numDocumento, idTipoDocumento) {
     return promise;
 };
 
-async function ConvertirOrganizacionesDTO(data) {
+function ConvertirOrganizacionesDTO(data) {
     var salida = new RecursoOrganizacion();
     salida.id = data.id, //identificador
     salida.documento = data.documento,
@@ -164,7 +164,7 @@ async function ConvertirOrganizacionesDTO(data) {
 //      salida.estadoRegistro = 9,  // REGISTRO_EXISTE_BD //data.estadoRegistro,
 //      salida.tipoFuente = 3               // BASE_DATOS_QUERY
     
-    var parametros= await buscarEntidadParametros(data.id);
+    var parametros= buscarEntidadParametros(data.id);
             if(parametros.cantidadReg>0){
                 var listaparametros= parametros.parametros;
                 listaparametros.forEach(parametro => {
@@ -179,7 +179,7 @@ async function ConvertirOrganizacionesDTO(data) {
 }
 
  function buscarEntidadParametros (idDocumento){
-
+/*
         var promise = new Promise(function (resolve, reject) {
             conexion.sync().then(function () {
                 EntParametrosQuery.findAndCountAll(
@@ -198,7 +198,24 @@ async function ConvertirOrganizacionesDTO(data) {
                 });
             });
         });
-        return promise;
+        return promise;*/
+        var objeto={};
+       return EntParametrosQuery.findAndCountAll(
+            { where: { inIentidad: idDocumento} }
+        ).then(function (parametros) {
+            var cantidadRegistros = parametros.count;
+            parametros = parametros.rows.map(function (data) {
+                return data.dataValues;
+            });
+            //return{ 'parametros': parametros, 'cantidadReg': cantidadRegistros};
+            objeto.parametros=parametros;
+            objeto.cantidadReg=cantidadRegistros;
+            return objeto;
+        }, function (err) {
+            console.log(err);
+            return objeto;
+        });
+        //return objeto;
 }
 
 function agregarParametrosaEntidad(parametro){
