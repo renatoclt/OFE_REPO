@@ -59,5 +59,5 @@ var Idioma = conexion.define('Idioma',
     timestamps: false
   }
 );
-
+Idioma.sync();
 module.exports = Idioma;

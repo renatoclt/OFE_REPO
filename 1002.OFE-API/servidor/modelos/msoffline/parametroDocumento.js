@@ -59,5 +59,5 @@ var ParametroDocumento = conexion.define('ParametroDoc',
     timestamps: false
   }
 );
-
+ParametroDocumento.sync();
 module.exports = ParametroDocumento;

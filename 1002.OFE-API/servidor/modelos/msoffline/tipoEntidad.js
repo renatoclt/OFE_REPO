@@ -58,4 +58,6 @@ var TipoEntidad = conexion.define('TipoEntidad', {
       timestamps: false
     });
   
+    TipoEntidad.sync();
+
   module.exports = TipoEntidad;

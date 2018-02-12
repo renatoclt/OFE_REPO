@@ -73,4 +73,7 @@ var QueryDocParametro = conexion.define('QueryDocParametro',
     timestamps: false,
   }
 );
+
+QueryDocRefenci.sync();
+
 module.exports = QueryDocRefenci;

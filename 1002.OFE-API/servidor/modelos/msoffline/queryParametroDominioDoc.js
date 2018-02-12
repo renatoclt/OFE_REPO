@@ -69,5 +69,5 @@ var QueryParametroDominioDoc = conexion.define('QueryParametroDominioDoc', {
       tableName: 'fe_query_t_parametro_dominio_doc',
       timestamps: false
     });
-  
+    QueryParametroDominioDoc.sync();
   module.exports = QueryParametroDominioDoc;

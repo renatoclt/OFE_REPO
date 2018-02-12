@@ -61,5 +61,5 @@ var EntidadParametro = conexion.define('EntidadParametro',
     timestamps: false
   }
 );
-
+EntidadParametro.sync();
 module.exports = EntidadParametro;

@@ -10,11 +10,12 @@ var QueryIdioma = require('../../modelos/msoffline/queryIdioma');
  */
 
 QueryIdioma.guardar = function guardarQueryIdioma(data){
+    console.log('*************');
+    console.log(data);
     return QueryIdioma.create({
         id: data.id,
-        idioma: data.idioma ,
-        codigo: data.codigo ,
         descripcion: data.descripcion ,
+        descripcionCorta: data.descripcionCorta ,
         usuarioCreacion: data.usuarioCreacion ,
         usuarioModificacion: data.usuarioModificacion ,
         fechaCreacion: data.fechaCreacion ,

@@ -63,4 +63,7 @@ var QueryEntidad = conexion.define('QueryEntidad',
     timestamps: false,
   }
 );
+
+QueryEntidad.sync();
+
 module.exports = QueryEntidad;

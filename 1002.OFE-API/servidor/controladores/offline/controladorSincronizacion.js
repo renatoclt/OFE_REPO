@@ -50,12 +50,7 @@ var QuerySerie = require('../../dtos/msoffline/querySerieDTO') ;  //falta
 var QueryTipoAfecIgv = require('../../dtos/msoffline/queryTipoAfecIgvDTO') ; //falta
 var QueryTipoCalcIsc = require('../../dtos/msoffline/queryTipoCalcIscDTO') ; //falta
 var QueryTipoPrecVen = require('../../dtos/msoffline/queryTipoPrecVenDTO') ;  //falta
-
 var Maestra = require('../../dtos/msoffline/maestraDTO');
-
-
-
-
 
 /**
  * Controlador de la tabla serie 
@@ -99,19 +94,77 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
 
     
 
-    //fe_configuracion
+    //fe_configuracion_t_evento
     router.post(ruta.concat('/evento'), async function(req, res){
-        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-        req.body.estadoSincronizado =  constantes.estadoActivo;
-        await Evento.guardar(req.body);
+        
+        req.body.forEach(async element => {
+            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado =  constantes.estadoActivo;
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estado  = constantes.estadoActivo;
+            await Evento.guardar(element);
+            }
+        );
         res.status(200).send('ok');
     });
+
+    //fe_configuracion_t_idioma
     router.post(ruta.concat('/idioma'), async function(req, res){
-        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-        req.body.estadoSincronizado =  constantes.estadoActivo;
-        await Idioma.guardar(req.body);
-        res.status(200).send('ok');
+        console.log(req.body);
+        req.body.forEach(async element => {
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estado  = constantes.estadoActivo;
+            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado =  constantes.estadoActivo;
+            await Idioma.guardar(element);
+            res.status(200).send('ok');
+        }) 
     });
+
+    //QueryIdioma
+    //fe_configuracion_t_idioma
+    router.post(ruta.concat('/queryIdioma'), async function(req, res){
+        req.body.forEach(async element => {
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estado  = constantes.estadoActivo;
+            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado =  constantes.estadoActivo;
+            await QueryIdioma.guardar(element);
+            res.status(200).send('ok');
+        }) 
+    });
+
+
+    router.post(ruta.concat('/maestra'), async function(req, res){
+        console.log(req.body);
+        req.body.forEach(async element => {
+            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado =  constantes.estadoActivo;
+            element.tipo = constantes.vacio;
+            element.equivalencia = constantes.vacio;
+            element.orden = constantes.vacio;
+            element.default = constantes.vacio;
+            element.idTablaPadre = constantes.vacio;
+            element.registroPadre = constantes.vacio;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");;
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");;
+            element.portal = constantes.vacio;
+            element.perfil = constantes.vacio;
+            await Maestra.guardar(element);
+            res.status(200).send('ok');
+        });
+    });
+
+
     router.post(ruta.concat('/dominioDocumento'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
@@ -182,12 +235,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         await Serie.guardar(req.body);
         res.status(200).send('ok');
     });
-    router.post(ruta.concat('/maestra'), async function(req, res){
-        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-        req.body.estadoSincronizado =  constantes.estadoActivo;
-        await Maestra.guardar(req.body);
-        res.status(200).send('ok');
-    });
+    
     router.post(ruta.concat('/comprobantePago'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;

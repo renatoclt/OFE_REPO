@@ -82,5 +82,5 @@ var QuerySerie = conexion.define('QuerySerie', {
       tableName: 'fe_query_t_serie',
       timestamps: false
     });
-  
+    QuerySerie.sync();
   module.exports = QuerySerie;

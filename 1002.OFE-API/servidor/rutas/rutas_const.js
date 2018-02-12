@@ -64,7 +64,8 @@ var rutas = {
                 "ruta":"",
                 "hijos":{
                     "sincronizacion": {"ruta":"/sincronizacion", "descripcion":"Implementacion de servicio rest para listar los elementos a sincronizar"},
-                    "usuario": {"ruta":"/usuarios", "descripcion": "Implementacion de servicio rest para usuarios del offline"}
+                    "usuario": {"ruta":"/usuarios", "descripcion": "Implementacion de servicio rest para usuarios del offline"},
+                    "idioma": {"ruta":"/idiomas", "descripcion": "Idioma Servicio"}
                 }
             },            
         }

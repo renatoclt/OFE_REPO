@@ -78,4 +78,7 @@ var QueryDocMasivo = conexion.define('QueryDocMasivo',
     timestamps: false,
   }
 );
+
+QueryDocMasivo.sync();
+
 module.exports = QueryDocMasivo;

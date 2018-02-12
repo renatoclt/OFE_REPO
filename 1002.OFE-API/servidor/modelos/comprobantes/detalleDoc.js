@@ -15,7 +15,6 @@ var DetalleDoc = conexion.define('DetalleDoc',
     id:{
       type: sequelize.TEXT,
       field: "in_idcomprobantepagodetalle",
-      autoIncrement: true,
       unique: true,
       primaryKey: true,
       allowNull:false

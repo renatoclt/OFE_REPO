@@ -43,4 +43,7 @@ var QueryEstComprobante = conexion.define('QueryEstComprobante',
     timestamps: false,
   }
 );
+
+QueryEstComprobante.sync();
+
 module.exports = QueryEstComprobante;

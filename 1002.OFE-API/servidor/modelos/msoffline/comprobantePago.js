@@ -441,4 +441,6 @@ var ComprobantePago = conexion.define('ComprobantePago',
     timestamps: false
   }
 );
+
+ComprobantePago.sync();
 module.exports = ComprobantePago;

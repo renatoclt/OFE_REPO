@@ -1,6 +1,8 @@
 var constantes = {
     estadoActivo: '1',
     estadoInactivo: '0',
+    usuarioOffline: 'offline',
+    vacio: ' ',
     renato: 'renato', //valores para asignar incidencias testing
     miguel: 'miguel', //valores para asignar incidencias testing
     jose: 'jose', //valores para asignar incidencias testing

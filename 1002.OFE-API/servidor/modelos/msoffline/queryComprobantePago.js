@@ -492,5 +492,7 @@ var QueryComprobantePago = conexion.define('QueryComprobantePago',
   }
 );
 
+QueryComprobantePago.sync();
+
 module.exports = QueryComprobantePago;
 

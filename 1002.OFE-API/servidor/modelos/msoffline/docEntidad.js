@@ -69,5 +69,5 @@ var DocEntidad = conexion.define('DocEntidad',
     timestamps: false
   }
 );
-
+DocEntidad.sync();
 module.exports = DocEntidad;

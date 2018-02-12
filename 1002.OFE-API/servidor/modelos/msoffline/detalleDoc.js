@@ -11,7 +11,6 @@ var DetalleDoc = conexion.define('DetalleDoc',
     id:{
       type: sequelize.TEXT,
       field: "in_idcomprobantepagodetalle",
-      autoIncrement: true,
       unique: true,
       primaryKey: true,
       allowNull:false
@@ -118,5 +117,5 @@ var DetalleDoc = conexion.define('DetalleDoc',
     timestamps: false
   }
 );
-
+DetalleDoc.sync();
 module.exports = DetalleDoc;

@@ -76,5 +76,8 @@ var TipoAfecIgv = conexion.define('TipoAfecIgv', {
       tableName: 'fe_configuracion_t_tipo_afec_igv',
       timestamps: false
     });
-  
+    
+    TipoAfecIgv.sync();
+
+
   module.exports = TipoAfecIgv;

@@ -74,4 +74,5 @@ var DominioEntidad = conexion.define('DominioEntidad',
     timestamps: false
   }
 );
+DominioEntidad.sync();
 module.exports = DominioEntidad;

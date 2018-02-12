@@ -70,3 +70,6 @@ var DocParametro = conexion.define('DocParametro',
     timestamps: false
   }
 );
+
+DocParametro.sync();
+module.exports = DocParametro;

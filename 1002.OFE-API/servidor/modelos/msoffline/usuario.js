@@ -11,7 +11,6 @@ var Usuario = conexion.define('Usuario',
     id:{
       type: sequelize.TEXT,
       field: "se_iusuario",
-      autoIncrement: true,
       unique: true,
       primaryKey: true
     },
@@ -111,5 +110,8 @@ var Usuario = conexion.define('Usuario',
     timestamps: false
   }
 );
+
+
+Usuario.sync();
 
 module.exports = Usuario;

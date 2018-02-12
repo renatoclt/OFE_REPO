@@ -66,4 +66,7 @@ var Sincronizacion = conexion.define('Sincronizacion',
     timestamps: false
   }
 );
+
+Sincronizacion.sync();
+
 module.exports = Sincronizacion;

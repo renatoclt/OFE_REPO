@@ -46,4 +46,6 @@ var ComprobanteEventoQuery = conexion.define('ComprobanteEventoQuery',
   }
 );
 
+ComprobanteEventoQuery.sync();
+
 module.exports = ComprobanteEventoQuery;

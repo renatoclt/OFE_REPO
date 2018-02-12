@@ -73,5 +73,5 @@ var Entidad = conexion.define('Entidad',
         tableName: 'fe_organizacion_t_entidad',
         timestamps: false
 });
-
+Entidad.sync();
 module.exports = Entidad;

@@ -1,4 +1,4 @@
-conf = require('./configuracion_const')['desarrollo'];
+conf = require('./configuracion_const')['produccion'];
 
 const sqlite = require('sqlite3');
 const db = new sqlite.Database(conf.almacenamiento);
@@ -14,7 +14,6 @@ conexion
   .then(function(err) {
     console.log('Conexion establecida con la base de datos.');
   }, function (err) {
-
     console.log('Error de conexion de base de datos:', err);
   });
 

@@ -74,4 +74,6 @@ var DocEvento = conexion.define('DocEvento',
     timestamps: false
   }
 );
+
+DocEvento.sync();
 module.exports = DocEvento;
