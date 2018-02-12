@@ -14,6 +14,7 @@ parmqry = require('./rutasControladoresParmqry')(nav.ruta);
 entidad = require('./rutasControladoresEntidad')(nav.ruta);
 docucmd = require('./rutasControladoresDocucmd')(nav.ruta);
 docuqry = require('./rutasControladoresDocuqry')(nav.ruta);
+orgacmd = require('./rutasControladoresOrgacmd')(nav.ruta);
 offline = require('./rutasControladoresOffline')(nav.ruta);
 
 module.exports = router;
