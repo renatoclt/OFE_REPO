@@ -2,15 +2,15 @@
  * @author --- Modificado **-**-****
  * @author renato creado 22-01-2018 
  */
-var QueryDocMasivoDet = require('../../modelos/msoffline/queryDocMasivoDet');
+var QueryDocMasivoDetDTO = require('../../modelos/msoffline/queryDocMasivoDet');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
  * 
  */
 
-QueryDocMasivoDet.guardar = function guardarQueryDocMasivoDet(data){
-    return QueryDocMasivoDet.create({
+QueryDocMasivoDetDTO.guardar = function guardarQueryDocMasivoDet(data){
+    return QueryDocMasivoDetDTO.create({
         id: data.id,
         docMasivo: data.docMasivo ,
         fila: data.fila ,
@@ -23,4 +23,4 @@ QueryDocMasivoDet.guardar = function guardarQueryDocMasivoDet(data){
     });
 }
 
-module.exports = QueryDocMasivoDet;
+module.exports = QueryDocMasivoDetDTO;

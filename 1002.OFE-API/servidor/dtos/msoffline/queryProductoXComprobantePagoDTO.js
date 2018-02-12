@@ -2,14 +2,14 @@
  * @author --- Modificado **-**-****
  * @author renato creado 22-01-2018 
  */
-var QueryProducto = require('../../modelos/msoffline/QueryProducto');
+var QueryProductoDTO = require('../../modelos/msoffline/QueryProducto');
  /**
  * Funcion que guarda los comprobantes de pago
  * 
  */
 
-QueryProducto.guardar = function guardarQueryProducto(data){
-    return QueryProducto.create({
+QueryProductoDTO.guardar = function guardarQueryProducto(data){
+    return QueryProductoDTO.create({
         id: data.id,
         comprobantePago: data.comprobantePago ,
         tipoPrecioVenta: data.tipoPrecioVenta ,
@@ -57,4 +57,4 @@ QueryProducto.guardar = function guardarQueryProducto(data){
     });
 }
 
-module.exports = QueryProducto;
+module.exports = QueryProductoDTO;
