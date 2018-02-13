@@ -10,6 +10,7 @@
 var Maestra = conexion.define('Maestra',
   {
     organizacion:{
+      
       type: sequelize.TEXT(255),
       field: "vc_org",
       allowNull:false   

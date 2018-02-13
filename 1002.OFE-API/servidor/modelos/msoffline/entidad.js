@@ -9,9 +9,8 @@
 var Entidad = conexion.define('Entidad', 
     {
         id: {
-            type: sequelize.INTEGER,
+            type: sequelize.TEXT,
             field: "se_ientidad",
-            autoIncrement: true,
             unique: true,
             primaryKey: true
         },
