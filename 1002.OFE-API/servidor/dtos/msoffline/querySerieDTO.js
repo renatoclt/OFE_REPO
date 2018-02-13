@@ -10,14 +10,15 @@ var QuerySerie = require('../../modelos/msoffline/querySerie');
 
 QuerySerie.guardar = function guardarQuerySerie(data){
     return QuerySerie.create({
-        id: data.id,
-        entidad: data.entidad ,
-        tipoSerie: data.tipoSerie ,
+        id: data.idSerie,
+        entidad: data.idEntidad ,
+        tipoSerie: data.idTipoSerie ,
         direccion: data.direccion ,
         serie: data.serie ,
+        idTipoDocumento: data.idTipoComprobante,
         correlativo: data.correlativo ,
-        dominioUbigeo: data.dominioUbigeo ,
-        calculoIsc: data.calculoIsc ,
+        dominioUbigeo: data.codigoUbigeo ,
+        codigoUbigeo: data.idUbigeo ,
         usuarioCreacion: data.usuarioCreacion ,
         usuarioModificacion: data.usuarioModificacion ,
         fechaCreacion: data.fechaCreacion ,

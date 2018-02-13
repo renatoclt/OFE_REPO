@@ -43,10 +43,15 @@ var QuerySerie = conexion.define('QuerySerie', {
       allowNull: false,
       field: "in_idominio_ubigeo",
     },
-    calculoIsc: {
+    codigoUbigeo: {
       type: sequelize.TEXT(6),
       allowNull: false,
       field: "vc_codigo_ubigeo",
+    },
+    idTipoDocumento: {
+      type: sequelize.TEXT(6),
+      allowNull: false,
+      field: "vc_idtipodocumento",
     },
     usuarioCreacion: {
       type: sequelize.TEXT,

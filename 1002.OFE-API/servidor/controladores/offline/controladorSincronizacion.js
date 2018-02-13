@@ -79,25 +79,40 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         }
     });
 
-    router.post(ruta.concat('sincronizacionInicial'), async function(req, res){
-        console.log('ingresar');
-        if(req.body.ParametroDocumento){
-            req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-            req.body.estadoSincronizado =  constantes.estadoActivo;
-            //await ParametroEntidad.guardar(req.body);
+    router.post(ruta.concat('/parametroEntidad'), async function(req, res){        
+        req.body.forEach(async element => {
+            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado =  constantes.estadoActivo;
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estado  = constantes.estadoActivo;
+            await ParametroEntidad.guardar(element);
             res.status(200).send('ok');
-        }
-        else{
-            res.status(500).send('Falta ParametroDocumento');
-        }
+        });
 
     });
 
-    
+    //querySerie
+    router.post(ruta.concat('/querySerie'), async function(req, res){
+        req.body.forEach(async element => {
+            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado =  constantes.estadoActivo;
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estado  = constantes.estadoActivo;
+            await QuerySerie.guardar(element);
+            }
+        );
+        res.status(200).send('ok');
+    });
+
 
     //fe_configuracion_t_evento
     router.post(ruta.concat('/evento'), async function(req, res){
-        
         req.body.forEach(async element => {
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
