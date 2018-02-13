@@ -79,6 +79,13 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         }
     });
 
+    router.post(ruta.concat('/usuario'), async function(req, res){  
+        req.body.forEach(async element => {      
+            await Usuario.registrarUsuario(element);
+            res.status(200).send('ok');
+        })
+    });
+        
     router.post(ruta.concat('/parametroEntidad'), async function(req, res){        
         req.body.forEach(async element => {
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");

@@ -45,6 +45,7 @@ Usuario.registrarUsuario =function(usuario){
         conexion.sync().then(function () {
             
             Usuario.create({
+                id:                     usuario.id,
                 nombreusuario:          usuario.nombreusuario,
                 password:               usuario.password,
                 nombre:                 usuario.nombre,
