@@ -9,8 +9,6 @@ var QuerySerie = require('../../modelos/msoffline/querySerie');
  */
 
 QuerySerie.guardar = function guardarQuerySerie(data){
-    console.log('*************************************');
-    console.log(data);
     return QuerySerie.create({
         id: data.idSerie,
         entidad: data.idEntidad ,

@@ -39,7 +39,7 @@ var QueryEstComprobante = conexion.define('QueryEstComprobante',
     }        
   },
   {
-    tableName: 'fe_query_t_parametros',
+    tableName: 'fe_query_t_est_comprobante',
     timestamps: false,
   }
 );

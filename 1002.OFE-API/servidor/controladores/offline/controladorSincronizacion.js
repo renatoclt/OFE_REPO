@@ -225,8 +225,14 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     });
 
-    
-
+    router.post(ruta.concat('/queryEstado'), async function(req, res){
+        req.body.forEach(async element => {
+            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado =  constantes.estadoActivo;
+            await QueryEstComprobante.guardar(element);
+            res.status(200).send('{}');
+        });
+    });
 
 
     router.post(ruta.concat('/dominioDocumento'), async function(req, res){
