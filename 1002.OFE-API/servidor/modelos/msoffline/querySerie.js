@@ -40,12 +40,10 @@ var QuerySerie = conexion.define('QuerySerie', {
     },
     dominioUbigeo: {
       type: sequelize.TEXT(6),
-      allowNull: false,
       field: "in_idominio_ubigeo",
     },
     codigoUbigeo: {
       type: sequelize.TEXT(6),
-      allowNull: false,
       field: "vc_codigo_ubigeo",
     },
     idTipoDocumento: {

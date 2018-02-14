@@ -82,7 +82,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
     router.post(ruta.concat('/usuario'), async function(req, res){  
         req.body.forEach(async element => {      
             await Usuario.registrarUsuario(element);
-            res.status(200).send('ok');
+            res.status(200).send('{}');
         })
     });
         
@@ -96,7 +96,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estado  = constantes.estadoActivo;
             await ParametroEntidad.guardar(element);
-            res.status(200).send('ok');
+            res.status(200).send('{}');
         });
 
     });
@@ -114,7 +114,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             await QuerySerie.guardar(element);
             }
         );
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
 
 
@@ -131,7 +131,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             await Evento.guardar(element);
             }
         );
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
 
     //fe_configuracion_t_idioma
@@ -146,7 +146,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
             await Idioma.guardar(element);
-            res.status(200).send('ok');
+            res.status(200).send('{}');
         }) 
     });
 
@@ -162,7 +162,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
             await QueryIdioma.guardar(element);
-            res.status(200).send('ok');
+            res.status(200).send('{}');
         }) 
     });
 
@@ -172,7 +172,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.usuarioCreacion = constantes.usuarioOffline;
             element.usuarioModificacion = constantes.usuarioOffline;
             await QueryEntidad.guardar(element);
-            res.status(200).send('ok');
+            res.status(200).send('{}');
         }) 
     });
 
@@ -181,7 +181,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await DominioEntidad.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
 
 
@@ -200,7 +200,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.portal = constantes.vacio;
             element.perfil = constantes.vacio;
             await Maestra.guardar(element);
-            res.status(200).send('ok');
+            res.status(200).send('{}');
         });
     });
 
@@ -210,7 +210,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
             await TipoEntidad.guardar(element);
-            res.status(200).send('ok');
+            res.status(200).send('{}');
         });
     });
 
@@ -222,7 +222,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         await Entidad.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
 
     
@@ -233,7 +233,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await DominioDocumento.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });    
 
 
@@ -242,39 +242,39 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await Concepto.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     }); 
     router.post(ruta.concat('/parametroDocumento'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await ParametroDocumento.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
     router.post(ruta.concat('/tipoAfecIgv'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await TipoAfecIgv.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
     router.post(ruta.concat('/tipoCalcIsc'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await TipoCalcIsc.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
     
     router.post(ruta.concat('/tipoPrecioVenta'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await TipoPrecioVenta.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
     
     router.post(ruta.concat('/entidadParametro'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await EntidadParametro.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
     
     router.post(ruta.concat('/parametroEntidad'), async function(req, res){
@@ -284,7 +284,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await Serie.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
     
     router.post(ruta.concat('/comprobantePago'), async function (req, res){
@@ -292,43 +292,43 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.estadoSincronizado =  constantes.estadoActivo;
         req.body.estadoComprobantePago = 1;
         await ComprobantePago.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });   
     router.post(ruta.concat('/producto'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await Producto.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });   
     router.post(ruta.concat('/ProductoXComprobantePago'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await ProductoXComprobantePago.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });   
     router.post(ruta.concat('/detalleDoc'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await DetalleDoc.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });   
     router.post(ruta.concat('/docConcepto'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await DocConcepto.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     }); 
     router.post(ruta.concat('/docEntidad'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await DocEntidad.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     }); 
     router.post(ruta.concat('/docEvento'), async function (req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await DocEvento.guardar(req.body);
-        res.status(200).send('ok');
+        res.status(200).send('{}');
     });
 };
 
