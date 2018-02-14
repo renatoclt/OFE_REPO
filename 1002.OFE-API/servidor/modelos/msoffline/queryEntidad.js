@@ -6,6 +6,8 @@
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
+var SerieQuery =require('../msdocumentosquery/SerieQuery');
+var EntParametrosQuery =require('../msdocumentosquery/EntParametrosQuery');
 var QueryEntidad = conexion.define('QueryEntidad',
   {
     id:{
@@ -104,6 +106,17 @@ var QueryEntidad = conexion.define('QueryEntidad',
     timestamps: false,
   }
 );
+
+QueryEntidad.hasMany(SerieQuery,
+  {
+      as: 'series',
+      foreignKey: 'inIentidad'
+  });
+  QueryEntidad.hasMany(EntParametrosQuery,
+  {
+      as: 'parametros',
+      foreignKey: 'inIentidad'
+  });  
 
 QueryEntidad.sync();
 

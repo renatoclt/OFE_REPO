@@ -14,8 +14,7 @@ Serie.filtro = function serieFiltro(id_entidad,id_tipo_comprobante,id_tipo_serie
         where: {
             idEntidad: id_entidad,
             idTipoComprobante:id_tipo_comprobante,
-            idTipoSerie:id_tipo_serie,
-            estado: constantes.estadoActivo
+            idTipoSerie:id_tipo_serie
         }
       });
     return  data;
@@ -45,8 +44,7 @@ var filtroAtributosSerie = {
                 'idTipoComprobante',
                 'serie',
                 'correlativo',
-                'idUbigeo',
-                'estado'],
+                'idUbigeo'],
 }
 module.exports = Serie;
 
