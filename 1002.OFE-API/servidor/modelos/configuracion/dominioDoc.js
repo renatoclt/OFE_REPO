@@ -78,3 +78,5 @@ var DominioDoc = conexion.define('DominioDoc',
     timestamps: false
   }
 );
+
+module.exports = DominioDoc;
