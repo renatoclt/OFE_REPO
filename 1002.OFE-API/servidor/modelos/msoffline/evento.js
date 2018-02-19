@@ -63,5 +63,5 @@ var Evento = conexion.define('Evento',
     timestamps: false
   }
 );
-
+Evento.sync();
 module.exports = Evento;

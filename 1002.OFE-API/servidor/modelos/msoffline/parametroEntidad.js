@@ -53,5 +53,5 @@ var ParametroEntidad = conexion.define('ParametroEntidad',
     timestamps: false
   }
 );
-
+ParametroEntidad.sync();
 module.exports = ParametroEntidad;

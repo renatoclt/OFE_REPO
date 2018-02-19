@@ -142,6 +142,6 @@ var DocReferencia = conexion.define('DocReferencia',
     timestamps: false
   }
 );
-
+DocReferencia.sync();
 module.exports = DocReferencia;
 

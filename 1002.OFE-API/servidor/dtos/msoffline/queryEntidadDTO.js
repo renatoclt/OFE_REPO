@@ -12,15 +12,24 @@ var QueryEntidadDTO = require('../../modelos/msoffline/queryEntidad');
 QueryEntidadDTO.guardar = function guardarQueryEntidadDTO(data){
     return QueryEntidadDTO.create({
         id: data.id,
-        entidad: data.entidad ,
-        paramEntidad: data.paramEntidad ,                             
-        json: data.json ,
-        tipo: data.tipo ,
-        valor: data.valor ,
-        auxEntero: data.auxEntero ,
-        auxCaracter: data.auxCaracter ,
+        documento: data.documento ,
+        denominacion: data.denominacion ,
+        nombreComercial: data.nombreComercial ,
+        direccion: data.direccion ,
+        correo: data.correo ,
+        logo: data.logo ,
+        pais: data.pais ,
+        ubigeo: data.ubigeo ,
+        tipoDocumento: data.tipoDocumento ,
+        idTipoDocumento: data.idTipoDocumento ,
+        idEbiz: data.idEbiz ,
+        usuarioCreacion: data.usuarioCreacion,
+        usuarioModificacion: data.usuarioModificacion,
+        fechaCreacion: data.fechaCreacion ,
+        fechaModificacion: data.fechaModificacion ,
+        estado: data.estado ,
         fechaSincronizado: data.fechaSincronizado ,
-        estadoSincronizado: data.estadoSincronizado
+        estadoSincronizado: data.estadoSincronizado 
     });
 }
 

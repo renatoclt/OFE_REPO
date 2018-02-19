@@ -12,7 +12,6 @@ var ProductoXComprobantePago = conexion.define('ProductoXComprobantePago',
     id:{
       type: sequelize.TEXT,
       field: "in_idcomprobantepagodetalle",
-      autoIncrement: true,
       unique: true,
       primaryKey: true,
       allowNull:false   
@@ -137,4 +136,7 @@ var ProductoXComprobantePago = conexion.define('ProductoXComprobantePago',
       timestamps: false
   }
 );
+
+
+ProductoXComprobantePago.sync();
 module.exports = ProductoXComprobantePago

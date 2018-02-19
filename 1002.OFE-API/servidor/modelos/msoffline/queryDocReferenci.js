@@ -104,4 +104,7 @@ var QueryDocRefenci = conexion.define('QueryDocRefenci',
     timestamps: false,
   }
 );
+
+QueryDocRefenci.sync();
+
 module.exports = QueryDocRefenci;

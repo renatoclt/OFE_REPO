@@ -54,8 +54,12 @@ var QueryDocMasivoDet = conexion.define('QueryDocMasivoDet',
     }        
   },
   {
-    tableName: 'fe_query_t_docmasivo',
+    tableName: 'fe_query_t_docmasivo_det',
     timestamps: false,
   }
 );
+
+
+QueryDocMasivoDet.sync();
+
 module.exports = QueryDocMasivoDet;

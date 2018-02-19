@@ -57,5 +57,5 @@ var QueryComprobanteConcepto = conexion.define('QueryComprobanteConcepto',
     timestamps: false
   }
 );
-
+QueryComprobanteConcepto.sync();
 module.exports =  QueryComprobanteConcepto;

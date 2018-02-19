@@ -203,5 +203,5 @@ var QueryProductoXComprobantePago = conexion.define('QueryProducto', {
       tableName: 'fe_query_t_productoxcomprobantepago',
       timestamps: false
     });
-  
+    QueryProductoXComprobantePago.sync();
   module.exports = QueryProductoXComprobantePago;

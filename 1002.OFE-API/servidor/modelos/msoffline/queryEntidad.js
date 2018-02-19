@@ -6,6 +6,8 @@
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
+var SerieQuery =require('../msdocumentosquery/SerieQuery');
+var EntParametrosQuery =require('../msdocumentosquery/EntParametrosQuery');
 var QueryEntidad = conexion.define('QueryEntidad',
   {
     id:{
@@ -15,39 +17,80 @@ var QueryEntidad = conexion.define('QueryEntidad',
       unique: true,
       primaryKey: true
     },
-    entidad: {
+    documento: {
       type: sequelize.INTEGER(32),
-      field: "in_ientidad",
+      field: "vc_documento",
       allowNull:false
     },
-    paramEntidad: {
+    denominacion: {
       type: sequelize.INTEGER(32),
-      field: "in_iparam_ent",
+      field: "vc_denominacion",
     },
-    json: {
+    nombreComercial: {
       type: sequelize.TEXT,
-      field: "vc_json",
+      field: "vc_nom_comercia",
       allowNull:false
     },
-    tipo: {
+    direccion: {
       type: sequelize.TEXT(4),
-      field: "in_tipo",
+      field: "vc_dir_fiscal",
       allowNull:false
     },
-    valor: {
+    correo: {
       type: sequelize.INTEGER(32),
-      field: "vc_valor",
+      field: "vc_correo",
       allowNull:false
     },
-    auxEntero: {
+    logo: {
       type: sequelize.TEXT,
-      field: "aux_entero",
+      field: "vc_logo",
       allowNull:false
     },
-    auxCaracter: {
+    pais: {
         type: sequelize.TEXT,
-        field: "aux_caracter",
+        field: "vc_pais",
         allowNull:false
+    },
+    ubigeo: {
+      type: sequelize.TEXT,
+      field: "vc_ubigeo",
+    },
+    tipoDocumento: {
+      type: sequelize.TEXT,
+      field: "vc_tipo_documento",
+    },
+    idTipoDocumento: {
+      type: sequelize.TEXT,
+      field: "in_tipo_documento",
+    },
+    idEbiz: {
+      type: sequelize.TEXT,
+      field: "vc_idebiz",
+    },
+    usuarioCreacion: {
+      type: sequelize.TEXT,
+      field: "vc_usu_creacion",
+      allowNull:false
+    },
+    usuarioModificacion: {
+      type: sequelize.TEXT,
+      field: "vc_usu_modifica",
+      allowNull:false
+    },
+    fechaCreacion: {
+      type: sequelize.TEXT(6),
+      field: "ts_fec_creacion",
+      allowNull:false
+    },
+    fechaModificacion: {
+      type: sequelize.TEXT(6),
+      field: "ts_fec_modifica",
+      allowNull:false
+    },
+    estado: {
+      type: sequelize.INTEGER(32),
+      field: "in_estado",
+      allowNull:false
     },
     fechaSincronizado: {
       type: sequelize.TEXT,
@@ -63,4 +106,18 @@ var QueryEntidad = conexion.define('QueryEntidad',
     timestamps: false,
   }
 );
+
+QueryEntidad.hasMany(SerieQuery,
+  {
+      as: 'series',
+      foreignKey: 'inIentidad'
+  });
+  QueryEntidad.hasMany(EntParametrosQuery,
+  {
+      as: 'parametros',
+      foreignKey: 'inIentidad'
+  });  
+
+QueryEntidad.sync();
+
 module.exports = QueryEntidad;

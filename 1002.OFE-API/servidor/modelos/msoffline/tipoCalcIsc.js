@@ -70,4 +70,6 @@ var TipoCalcIsc = conexion.define('TipoCalcIsc',
   }
 );
 
+TipoCalcIsc.sync();
+
 module.exports =  TipoCalcIsc;

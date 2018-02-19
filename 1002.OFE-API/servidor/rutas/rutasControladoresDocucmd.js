@@ -15,6 +15,7 @@ var controladoresInveqry = function (ruta) {
     documento = require('../controladores/docucmd/controladorDocumentoCmd')(ruta.concat(navC.hijos['documento'].ruta),navC.hijos['documento'].ruta);
     comprobantesquery = require('../controladores/docucmd/controladorComprobanteQuery')(ruta.concat(navC.hijos['documentoquery'].ruta),navC.hijos['documentoquery'].ruta);
     baja = require('../controladores/docucmd/controladorBaja')(ruta.concat(navC.hijos['baja'].ruta),navC.hijos['baja'].ruta);
+    //pdfretencion = require('../controladores/pdf/controladorPdf')(ruta.concat(navC.hijos['pdfretencion'].ruta),navC.hijos['pdfretencion'].ruta);
     retencionesIndividuales= require('../controladores/docucmd/controladorRetencionIndividual')(ruta.concat(navC.hijos['retencion'].ruta),navC.hijos['retencion'].ruta);
 }
 

@@ -6,7 +6,6 @@ var Evento = require('../../modelos/msoffline/evento');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
- * 
  */
 
 Evento.guardar = function guardarEvento(data){

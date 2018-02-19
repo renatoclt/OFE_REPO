@@ -11,7 +11,6 @@ var Usuario = conexion.define('Usuario',
     id:{
       type: sequelize.TEXT,
       field: "se_iusuario",
-      autoIncrement: true,
       unique: true,
       primaryKey: true
     },
@@ -111,5 +110,34 @@ var Usuario = conexion.define('Usuario',
     timestamps: false
   }
 );
+
+
+Usuario.sync().then(() => {
+  Usuario.create({
+    id: '5a94d1a3-0cd3-471e-a18c-9e4e2f71abc6',
+    nombreusuario: 'jose',
+    password: '12',
+    nombre: 'jose',
+    apellido: 'felix',
+    docIdentidad: 'DNI',
+    numDocIdentidad: '44548745',
+    correo: 'demo@gmailcom',
+    identidad: '127.15.120.105',
+    usuarioCreacion: 'admin',
+    usuarioModificacion: 'admin',
+    fechaCreacion: '11/6/2017',
+    fechaModificacion: '11/6/2017',
+    estado: '1',
+    fechaSincronizado: '11/6/2017',
+    estadoSincronizado: '0',
+    nombrecompleto: 'PROVEEDOR FELIX',
+    url_image: '',
+    org_id: '94e4e927-554d-418c-a770-e6cfe6235000',
+    tipo_empresa: 'C',
+    token: 'comprador1',
+    perfil: 'comprador',
+    organizaciones: '[{"id":"94e4e927-554d-418c-a770-e6cfe6235000","nombre":"TRANSPORTES 77 S.A.","tipo_empresa":"P","keySuscripcion":"07a12d074c714f62ab037bb2f88e30d3","ruc":"20100015103"}]',
+  });
+});;
 
 module.exports = Usuario;

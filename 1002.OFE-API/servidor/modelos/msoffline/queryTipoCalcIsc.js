@@ -72,5 +72,5 @@ var QueryTipoCalcIsc= conexion.define('QueryTipoCalcIsc', {
       tableName: 'fe_configuracion_t_tipo_calc_isc',
       timestamps: false
     });
-  
+    QueryTipoCalcIsc.sync();
   module.exports = QueryTipoCalcIsc;

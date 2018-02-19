@@ -63,4 +63,7 @@ var QueryEntParametros = conexion.define('QueryEntParametros',
     timestamps: false,
   }
 );
+
+QueryEntParametros.sync();
+
 module.exports = QueryEntParametros;

@@ -73,4 +73,6 @@ var TipoPrecioVenta = conexion.define('TipoPrecioVenta',
   }
 );
 
+TipoPrecioVenta.sync();
+
 module.exports = TipoPrecioVenta;

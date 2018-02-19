@@ -94,3 +94,6 @@ var DocMasivo = conexion.define('DocParametro',
     timestamps: false
   }
 );
+
+DocMasivo.sync();
+module.exports = DocMasivo;

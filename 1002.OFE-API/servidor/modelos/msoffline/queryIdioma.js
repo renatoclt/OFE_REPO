@@ -14,14 +14,10 @@ var QueryIdioma = conexion.define('QueryIdioma', {
       allowNull: false,
       primaryKey: true
     },
-    idioma: {
+    descripcionCorta: {
       type: sequelize.INTEGER(32),
       allowNull: false,
       field: "ch_desc_corta",
-    },
-    codigo: {
-      type: sequelize.INTEGER(32),
-      field: "in_codigo",
     },
     descripcion: {
       type: sequelize.TEXT,
@@ -58,8 +54,8 @@ var QueryIdioma = conexion.define('QueryIdioma', {
     } 
   },
     {
-      tableName: 'fe_configuracion_t_idioma',
+      tableName: 'fe_query_t_idioma',
       timestamps: false
     });
-  
+    QueryIdioma.sync();
   module.exports = QueryIdioma;

@@ -86,5 +86,5 @@ var QueryProducto = conexion.define('QueryProducto', {
       tableName: 'fe_configuracion_t_producto',
       timestamps: false
     });
-  
+    QueryProducto.sync();
   module.exports = QueryProducto;

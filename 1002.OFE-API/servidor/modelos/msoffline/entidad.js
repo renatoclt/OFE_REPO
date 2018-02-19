@@ -9,9 +9,8 @@
 var Entidad = conexion.define('Entidad', 
     {
         id: {
-            type: sequelize.INTEGER,
+            type: sequelize.TEXT,
             field: "se_ientidad",
-            autoIncrement: true,
             unique: true,
             primaryKey: true
         },
@@ -73,5 +72,5 @@ var Entidad = conexion.define('Entidad',
         tableName: 'fe_organizacion_t_entidad',
         timestamps: false
 });
-
+Entidad.sync();
 module.exports = Entidad;

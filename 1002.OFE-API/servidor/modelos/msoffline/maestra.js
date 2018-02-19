@@ -10,7 +10,7 @@
 var Maestra = conexion.define('Maestra',
   {
     organizacion:{
-      primaryKey: true,
+      
       type: sequelize.TEXT(255),
       field: "vc_org",
       allowNull:false   
@@ -105,6 +105,7 @@ var Maestra = conexion.define('Maestra',
   }
 );
 
+Maestra.sync();
 Maestra.removeAttribute('id');
 
 module.exports = Maestra;

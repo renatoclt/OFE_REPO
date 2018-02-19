@@ -40,7 +40,8 @@ var rutas = {
                     //"guiasremision":{"ruta":"/guiasremision", "descripcion": "Implementacion de servicio rest obtener guias de remision de la base de datos"}
                     "percepciones":{"ruta":"/percepciones", "descripcion": "Implementacion de servicio rest obtener percepciones de la base de datos"},
                     "documentoquery": {"ruta":"/documento", "descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"},
-                    "baja":{"ruta":"/baja","descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"}
+                    "baja":{"ruta":"/baja","descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"},
+                    "pdfretencion":{"ruta":"/pdfretencion","descripcion":"Implementacion del servicio de descarga de archivos pdf"}
                 }
             },
             "docuqry":{
@@ -71,7 +72,8 @@ var rutas = {
                 "ruta":"",
                 "hijos":{
                     "sincronizacion": {"ruta":"/sincronizacion", "descripcion":"Implementacion de servicio rest para listar los elementos a sincronizar"},
-                    "usuario": {"ruta":"/usuarios", "descripcion": "Implementacion de servicio rest para usuarios del offline"}
+                    "usuario": {"ruta":"/usuarios", "descripcion": "Implementacion de servicio rest para usuarios del offline"},
+                    "idioma": {"ruta":"/idiomas", "descripcion": "Idioma Servicio"}
                 }
             },            
         }

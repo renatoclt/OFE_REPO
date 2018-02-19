@@ -72,5 +72,7 @@ var Producto = conexion.define('Producto', {
       timestamps: false
     });
     
+
+    Producto.sync();
 module.exports = Producto;
   

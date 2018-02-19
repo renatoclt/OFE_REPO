@@ -78,5 +78,5 @@ var DominioDocumento = conexion.define('DominioDoc',
     timestamps: false
   }
 );
-
+DominioDocumento.sync();
 module.exports = DominioDocumento;

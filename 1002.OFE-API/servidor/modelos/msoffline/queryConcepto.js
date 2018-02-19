@@ -78,4 +78,6 @@ var QueryConcepto = conexion.define('QueryConcepto',
     timestamps: false,
   }
 );
+
+QueryConcepto.sync();
 module.exports = QueryConcepto;

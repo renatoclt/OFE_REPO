@@ -83,4 +83,7 @@ var Serie = conexion.define('Serie',
     timestamps: false,
   }
 );
+
+Serie.sync();
+
 module.exports = Serie;

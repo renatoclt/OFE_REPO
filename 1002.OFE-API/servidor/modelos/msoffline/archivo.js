@@ -70,3 +70,5 @@ var Archivo = conexion.define(
         timestamps: false
     }
 );
+Archivo.sync();
+module.exports = Archivo;

@@ -8,7 +8,19 @@ var Idioma = require('../../modelos/msoffline/idioma');
  * Funcion que guarda los comprobantes de pago
  * 
  */
+Idioma.contar = function contarIdioma(){
+    return Idioma.findAndCountAll();
+}
 
+Idioma.CrearTabla = function CrearTabla(){
+    console.log('****************************');
+    Idioma.createTable('Todos', {
+        id
+    }).then(() => {
+        console.log('cree tabla idioma');
+        // perform further operations if needed
+    });;
+}
 Idioma.guardar = function guardarIdioma(data){
     return Idioma.create({
         id: data.id,

@@ -6,7 +6,7 @@
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var DocMasivo = conexion.define('DocParametro',
+var DocMasivoDet = conexion.define('DocMasivoDet',
   {
     id:{
       type: sequelize.INTEGER,
@@ -82,3 +82,6 @@ var DocMasivo = conexion.define('DocParametro',
     timestamps: false
   }
 );
+
+DocMasivoDet.sync();
+module.exports = DocMasivoDet;

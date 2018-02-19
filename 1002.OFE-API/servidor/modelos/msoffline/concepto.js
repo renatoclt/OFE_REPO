@@ -65,5 +65,5 @@ var Concepto = conexion.define('Concepto',
     timestamps: false
   }
 );
-
+Concepto.sync();
 module.exports = Concepto;

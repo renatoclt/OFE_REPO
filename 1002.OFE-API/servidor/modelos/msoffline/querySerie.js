@@ -40,13 +40,16 @@ var QuerySerie = conexion.define('QuerySerie', {
     },
     dominioUbigeo: {
       type: sequelize.TEXT(6),
-      allowNull: false,
       field: "in_idominio_ubigeo",
     },
-    calculoIsc: {
+    codigoUbigeo: {
+      type: sequelize.TEXT(6),
+      field: "vc_codigo_ubigeo",
+    },
+    idTipoDocumento: {
       type: sequelize.TEXT(6),
       allowNull: false,
-      field: "vc_codigo_ubigeo",
+      field: "vc_idtipodocumento",
     },
     usuarioCreacion: {
       type: sequelize.TEXT,
@@ -82,5 +85,5 @@ var QuerySerie = conexion.define('QuerySerie', {
       tableName: 'fe_query_t_serie',
       timestamps: false
     });
-  
+    QuerySerie.sync();
   module.exports = QuerySerie;

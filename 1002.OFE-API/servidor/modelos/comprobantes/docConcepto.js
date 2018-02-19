@@ -69,3 +69,4 @@ var DocConcepto = conexion.define('DocConcepto',
     timestamps: false
   }
 );
+module.exports = DocConcepto;
