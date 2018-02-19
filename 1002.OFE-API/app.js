@@ -11,7 +11,7 @@ constantes = require('./servidor/utilitarios/constantes');
 dateFormat = require('dateformat');
 
 LocalDateTime = require('js-joda').LocalDateTime;
-
+var Client = require('node-rest-client').Client;
 //excepcion = require('./servidor/utilitarios/excepcion');
 app = express();
 

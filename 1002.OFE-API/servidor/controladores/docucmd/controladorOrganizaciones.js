@@ -1,3 +1,4 @@
+    var nuevoComprobante=require('../../modelos/msdocucmd/nuevoComprobanteDTO');
     var EntidadQueryDTO = require("../../dtos/msdocucmd/EntidadQueryDTO");
     var baseUrl_ = "http://localhost:3000/v1";
     LocalDateTime = require('js-joda').LocalDateTime;
@@ -26,7 +27,7 @@
         });
 
         router.get(ruta.concat('//?'), function (req, res, next) {
-
+            var nuevo=nuevoComprobante;
             if (req.query.denominacion == undefined) {
                 res.status(400).send({"message":'Solicitud incorrecta: Revisar parametros error de peticion'});
             } else {
