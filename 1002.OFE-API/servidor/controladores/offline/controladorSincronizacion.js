@@ -59,7 +59,6 @@ var Maestra = require('../../dtos/msoffline/maestraDTO');
  * @param {*} rutaEsp ruta para el hateos 
  */
 var contoladorSincronizacion =  function (ruta, rutaEsp){ 
-    
     /**
      * Enviamos la ruta 
      * y declaramos una funcion asincrona q espera los datos de la tabla
@@ -96,9 +95,8 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estado  = constantes.estadoActivo;
             await ParametroEntidad.guardar(element);
-            res.status(200).send('{}');
         });
-
+        res.status(200).send('{}');
     });
 
     //querySerie
@@ -200,8 +198,8 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.portal = constantes.vacio;
             element.perfil = constantes.vacio;
             await Maestra.guardar(element);
-            res.status(200).send('{}');
         });
+        res.status(200).send('{}');
     });
 
 
@@ -210,8 +208,8 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
             await TipoEntidad.guardar(element);
-            res.status(200).send('{}');
         });
+        res.status(200).send('{}');
     });
 
     router.post(ruta.concat('/entidad'), async function(req, res){
@@ -229,9 +227,9 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.forEach(async element => {
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
-            await QueryEstComprobante.guardar(element);
-            res.status(200).send('{}');
+            await QueryEstComprobante.guardar(element);            
         });
+        res.status(200).send('{}');
     });
 
 
@@ -283,9 +281,6 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     });
     
-    router.post(ruta.concat('/parametroEntidad'), async function(req, res){
-        
-    });
     router.post(ruta.concat('/serie'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;

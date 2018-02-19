@@ -32,9 +32,14 @@ var contoladorMaestras =  function (ruta, rutaEsp){
     });
     
     hateoas.registerCollectionLinkHandler(nombreHateo, function (data) {
+        let valor = 0; 
+        for(var propiedad in data[0]){
+            if(propiedad[0].hasOwnProperty(tabla))
+                valor = propiedad[0].tabla;
+        }
         var links = {
             "self": {
-                "href": "http://localhost:3000/v1"+ rutaEsp.concat('/','search/filtros?tabla=',data[0].tabla)
+                "href": "http://localhost:3000/v1"+ rutaEsp.concat('/','search/filtros?tabla=', valor)
             }
         };
         return links;
