@@ -6,29 +6,28 @@
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var DocEntidad = conexion.define('DocEntidad',
+var DocumentoEntidad = conexion.define('DocumentoEntidad',
   {
     id:{
-      type: sequelize.INTEGER,
-      field: "se_ientidad",
-      autoIncrement: true,
-      unique: true,
-      primaryKey: true
+      type:sequelize.INTEGER,
+      primaryKey: true,
+      field: "se_idocentidad",
+      autoincremnt: true,
+      allowNull: false ,
+      AUTO_INCREMENT:1,
+      omitNull: true,
     },
     tipoEntidad: {
       type: sequelize.INTEGER,
       field: "se_itipo_ent",
-      allowNull:false
     },
     entidad: {
       type:sequelize.INTEGER ,
       field: "se_ientidad",
-      allowNull:false
     },
     comprobantepago: {
       type: sequelize.INTEGER,
       field: "in_idcomprobantepago",
-      allowNull:false
     },
     usuarioCreacion: {
       type: sequelize.TEXT,
@@ -38,7 +37,6 @@ var DocEntidad = conexion.define('DocEntidad',
     usuarioModificacion: {
       type: sequelize.TEXT,
       field: "vc_usu_modifica",
-      allowNull:false
     },
     fechaCreacion: {
       type: sequelize.TEXT(6),
@@ -62,12 +60,16 @@ var DocEntidad = conexion.define('DocEntidad',
     estadoSincronizado: {
       type: sequelize.TEXT,
       field: "in_estado_sincronizado"
-    }        
+    },
+    generado:{
+      type: sequelize.INTEGER,
+      field: "in_generado",
+    }    
   },
   {
     tableName: 'fe_comprobante_t_doc_entidad',
     timestamps: false
   }
 );
-DocEntidad.sync();
-module.exports = DocEntidad;
+DocumentoEntidad.sync();
+module.exports = DocumentoEntidad;

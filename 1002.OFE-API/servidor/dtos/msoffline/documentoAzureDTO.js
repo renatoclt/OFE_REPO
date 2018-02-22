@@ -1,18 +1,21 @@
 /**
  * @author --- Modificado **-**-****
- * @author renato creado 22-01-2018 
+ * @author renato creado 20-02-2018 
  */
-var Evento = require('../../modelos/msoffline/evento');
+var DocumentosAzure = require('../../modelos/msoffline/documentoAzure');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
+ * 
  */
 
-Evento.guardar = function guardarEvento(data){
-    return Evento.create({
+DocumentosAzure.guardar = function guardarDocumentosAzure(data){
+    return DocumentosAzure.create({
         id: data.id,
-        idioma: data.idioma,
-        descripcion: data.descripcion,
+        idEntidad: data.idEntidad,
+        logoEntidad: data.logoEntidad,
+        logoEbiz: data.logoEbiz,
+        plantillaPdf: data.plantillaPdf,
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,
         fechaCreacion: data.fechaCreacion,
@@ -23,4 +26,4 @@ Evento.guardar = function guardarEvento(data){
     });
 }
 
-module.exports = Evento
+module.exports = DocumentosAzure;

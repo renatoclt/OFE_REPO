@@ -84,5 +84,5 @@ var EntidadQueryOffline = conexion.define('EntidadQueryOffline',
     timestamps: false
   }
 );
-
+EntidadQueryOffline.sync();
 module.exports = EntidadQueryOffline;

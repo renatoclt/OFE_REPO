@@ -2,19 +2,20 @@
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
  */
-var DocumentoEntidad = require('../../modelos/msdocucmd/documentoEntidad');
+var DocumentoEntidad = require('../../modelos/msoffline/docEntidad');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
  * 
  */
 
-DocumentoEntidad.guardar = function guardarDocumento(data){    
-    console.log(data);
+DocumentoEntidad.guardar = function guardarDocumentoEntidad(data){
+    console.log('gasdfasd');
     return DocumentoEntidad.create({
-        idTipoEntidad: data.idTipoEntidad,
-        idEntidad: data.idEntidad ,
-        idComprobante: data.idComprobante ,
+        id: data.id,
+        tipoEntidad: data.idTipoEntidad,
+        entidad: data.idEntidad ,
+        comprobantepago: data.idComprobante ,
         usuarioCreacion: data.usuarioCreacion ,
         usuarioModifica: data.usuarioModifica ,
         fechaCreacion: data.fechaCreacion ,

@@ -20,12 +20,22 @@ var contoladorMaestras =  function (ruta, rutaEsp){
     var hateoas = require('./../../utilitarios/hateoas')({ baseUrl: "http://localhost:3000/v1" });
     var hateoasObj = require('./../../utilitarios/hateoasObj');
     hateoas.registerLinkHandler(nombreHateo, function (data) {
+        let valor = 0; 
+        for(var propiedad in data[0]){
+            if(propiedad[0].hasOwnProperty(tabla))
+                valor = propiedad[0].tabla;
+        }
+        let codigo = 0;
+        for(var propiedad in data[0]){
+            if(propiedad[0].hasOwnProperty(codigo))
+                codigo = propiedad[0].codigo;
+        }
         var links = {
             "self": {
-                "href": "http://localhost:3000/v1"+rutaEsp.concat('/',data.tabla,data.codigo)
+                "href": "http://localhost:3000/v1"+rutaEsp.concat('/',valor,codigo)
             },
             "maestraRedis":{
-                "href":  "http://localhost:3000/v1"+rutaEsp.concat('/',data.tabla, data.codigo) 
+                "href":  "http://localhost:3000/v1"+rutaEsp.concat('/',valor, codigo) 
             }
         };
         return links;
@@ -34,8 +44,8 @@ var contoladorMaestras =  function (ruta, rutaEsp){
     hateoas.registerCollectionLinkHandler(nombreHateo, function (data) {
         let valor = 0; 
         for(var propiedad in data[0]){
-            if(propiedad[0].hasOwnProperty(tabla))
-                valor = propiedad[0].tabla;
+            if(propiedad == 'tabla')
+                valor = data[0].tabla;
         }
         var links = {
             "self": {
@@ -58,7 +68,7 @@ var contoladorMaestras =  function (ruta, rutaEsp){
             hateoasObj_n.type = nombreHateo;
             hateoasObj_n.data =  data.map(function (maestra) {
                 return maestra.dataValues;
-            });
+            });            
             hateoasObj_n.nombreColeccion = "maestraRedises";
             hateoasObj_n.ruta = rutaEsp;
             hateoasObj_n.paginacion.activo = false;

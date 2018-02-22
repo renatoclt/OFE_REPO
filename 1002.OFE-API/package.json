@@ -14,7 +14,7 @@
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "cookie-parser": "^1.4.3",
-    "dateformat": "^3.0.2",
+    "dateformat": "^3.0.3",
     "debug": "^2.6.6",
     "express": "^4.15.2",
     "express-hateoas-links": "^1.0.7",
@@ -24,7 +24,7 @@
     "mocha": "^4.1.0",
     "morgan": "^1.8.1",
     "node-rest-client": "^3.1.0",
-    "sequelize": "^4.31.2",
+    "sequelize": "^4.33.4",
     "serve-favicon": "^2.4.2",
     "sqlite3": "^3.1.13"
   }

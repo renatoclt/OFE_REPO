@@ -6,7 +6,7 @@
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var DocumentoEntidad = conexion.define('documentoEntidad',
+var DocumentoEntidad = conexion.define('DocumentoEntidad',
   {
     id:{
         type: sequelize.INTEGER,
@@ -14,7 +14,7 @@ var DocumentoEntidad = conexion.define('documentoEntidad',
         autoIncrement: true,
         unique: true,
         primaryKey: true,
-        allowNull: false   
+        allowNull:false 
     },
 
     idTipoEntidad: {

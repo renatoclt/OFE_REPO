@@ -62,9 +62,13 @@ var contoladorComprobante =  function (ruta, rutaEsp){
             data.impuestoGvr = 0;
             data.generado = 0;
             data.estadoSincronizado = 0;
+            data.porcentajeImpuesto = 0;
             data.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l");
             await Documento.guardar(data);
+            let i = 0;
             for (let documentoEntidad of req.body.documentoEntidad){
+                i = i+1;
+                documentoEntidad.id = i;
                 documentoEntidad.idComprobante = data.id;
                 documentoEntidad.usuarioCreacion = 'Usuario creacion';
                 documentoEntidad.usuarioModifica = 'Usuario Modificacion';
@@ -73,6 +77,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
                 documentoEntidad.estado = constantes.estadoActivo;
                 documentoEntidad.estadoSincronizado = constantes.estadoInactivo;
                 documentoEntidad.generado = constantes.estadoInactivo;
+                console.log('hasta aca llega');
                 await DocumentoEntidad.guardar(documentoEntidad);
             }        
             for(let documentoReferencia of req.body.documentoReferencia ){

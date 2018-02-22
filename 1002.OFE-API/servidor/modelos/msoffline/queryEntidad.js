@@ -12,7 +12,7 @@ var QueryEntidad = conexion.define('QueryEntidad',
   {
     id:{
       type: sequelize.INTEGER,
-      field: "se_identidad",
+      field: "se_ientidad",
       autoIncrement: true,
       unique: true,
       primaryKey: true

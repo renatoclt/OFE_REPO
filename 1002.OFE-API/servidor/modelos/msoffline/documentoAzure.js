@@ -1,5 +1,5 @@
 /**
- *  * persistencia de la tabla t_dominio_doc en la variable DominioDoc
+ *  * persistencia de la tabla t_dominio_doc en la variable DocumentosAzure
  * Modificado --- creado --/--/----
  * @author Ricardo Gamero creado 15/02/2018
  * @argument 1 sobrenombre de la tabla
@@ -7,8 +7,8 @@
  * @argument 3 tabla sqlite
  */
 
-var documentosAzure = conexion.define(
-    'documentosAzure',
+var DocumentosAzure = conexion.define(
+    'DocumentosAzure',
     {
         id: {
             type: sequelize.INTEGER,
@@ -23,12 +23,12 @@ var documentosAzure = conexion.define(
             field: "se_identidad",
             allowNull: false
         },
-        logoentidad: {
+        logoEntidad: {
             type: sequelize.BLOB,
             field: "bb_logoentidad",
             allowNull: false
         },
-        logoebiz: {
+        logoEbiz: {
             type: sequelize.BLOB,
             field: "bb_logoebiz",
             allowNull: false
@@ -78,6 +78,6 @@ var documentosAzure = conexion.define(
     }
 );
 
+DocumentosAzure.sync();
 
-
-module.exports = documentosAzure;
+module.exports = DocumentosAzure;

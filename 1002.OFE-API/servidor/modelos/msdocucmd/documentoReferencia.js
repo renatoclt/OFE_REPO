@@ -11,8 +11,6 @@ var DocumentoReferencia = conexion.define('DocumentoReferencia',
     id:{
         type: sequelize.INTEGER,
         field: "se_idocreferencia",
-        autoIncrement: true,
-        unique: true,
         primaryKey: true,
         allowNull: false     
     },
