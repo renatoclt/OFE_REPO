@@ -51,7 +51,8 @@ var QueryTipoAfecIgv = require('../../dtos/msoffline/queryTipoAfecIgvDTO') ; //f
 var QueryTipoCalcIsc = require('../../dtos/msoffline/queryTipoCalcIscDTO') ; //falta
 var QueryTipoPrecVen = require('../../dtos/msoffline/queryTipoPrecVenDTO') ;  //falta
 var Maestra = require('../../dtos/msoffline/maestraDTO');
-var DocumentoAzure = require('../../dtos/msoffline/documentoAzureDTO')
+var DocumentoAzure = require('../../dtos/msoffline/documentoAzureDTO');
+var QueryEntidadOffline = require('../../dtos/msoffline/queryEntidadOfflineDTO');
 /**
  * Controlador de la tabla serie 
  * 
@@ -219,7 +220,10 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.usuarioOffline = constantes.usuarioOffline;
         req.body.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        await QueryEntidadOffline.guardar(req.body);
         await Entidad.guardar(req.body);
+        await QueryEntidad.guardar(req.body);
+        
         res.status(200).send('{}');
     });
 

@@ -15,6 +15,7 @@ DocumentosAzure.guardar = function guardarDocumentosAzure(data){
         idEntidad: data.idEntidad,
         logoEntidad: data.logoEntidad,
         logoEbiz: data.logoEbiz,
+        tipoComprobante: data.tipoComprobante,
         plantillaPdf: data.plantillaPdf,
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,
@@ -24,6 +25,25 @@ DocumentosAzure.guardar = function guardarDocumentosAzure(data){
         fechaSincronizado: data.fechaSincronizado,
         estadoSincronizado: data.estadoSincronizado
     });
+}
+
+DocumentosAzure.mostarPlantilla = function(entidad, idTipoComprobante){
+    return DocumentosAzure.findAll({ attributes: filtroAtributos.attributes ,
+        where: {
+            idEntidad: entidad , tipoComprobante: idTipoComprobante
+        }
+      });
+
+}
+
+var filtroAtributos = {
+    attributes: [
+                'id', 
+                'idEntidad',
+                'tipoComprobante',
+                'logoEntidad',
+                'logoEbiz',
+                'plantillaPdf'],
 }
 
 module.exports = DocumentosAzure;

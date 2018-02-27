@@ -12,9 +12,7 @@ var Archivo = require('../../modelos/msoffline/archivo');
 Archivo.guardar = function guardarComprobantePago(data){
     return Archivo.create({
         id: data.id,
-        idComprobantePago: data.idComprobantePago,
-        ubicacion: data.ubicacion,
-        tipo: data.tipo,
+        archivo: data.archivo,
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,
         fechaCreacion: data.fechaCreacion,
@@ -23,6 +21,18 @@ Archivo.guardar = function guardarComprobantePago(data){
         fechaSincronizado: data.fechaSincronizado,
         estadoSincronizado: data.estadoSincronizado
     });
+}
+
+Archivo.mostrar = function mostrarArchivo(data){
+    return Archivo.findAll({ attributes: filtroAtributos.attributes ,
+        where: {
+            id: 1
+        }
+      });
+}
+var filtroAtributos = {
+    attributes: [
+                'archivo']
 }
 
 module.exports = Archivo;

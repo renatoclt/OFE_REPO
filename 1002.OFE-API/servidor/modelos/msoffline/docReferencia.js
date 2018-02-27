@@ -10,11 +10,12 @@ var DocReferencia = conexion.define('DocReferencia',
   {
     id:{
       type: sequelize.INTEGER,
+      primaryKey: true,
       field: "se_idocreferencia",
       autoIncrement: true,
+      //defaultValue:1,
       unique: true,
-      primaryKey: true,
-      allowNull:false   
+      allowNull: false ,
     },
     idDocumentoOrigen: {
       type: sequelize.TEXT,

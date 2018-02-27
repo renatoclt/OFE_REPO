@@ -16,19 +16,9 @@ var Archivo = conexion.define(
             primaryKey: true,
             allowNull:false            
         },
-        idComprobantePago: {
-            type: sequelize.INTEGER(32),
-            field: "in_idComprobantePago",
-            allowNull:false
-        },
-        ubicacion: {
+        archivo: {
             type: sequelize.TEXT,
-            field: "vc_ubicacion",
-            allowNull:false
-        },
-        tipo: {
-            type: sequelize.INTEGER(32),
-            field: "in_tipo",
+            field: "bl_archivo",
             allowNull:false
         },
         usuarioCreacion: {
@@ -66,7 +56,7 @@ var Archivo = conexion.define(
         }        
     },
     {
-        tableName: 'fe_archivo_t_archivo',
+        tableName: 'fe_offline_t_archivo',
         timestamps: false
     }
 );

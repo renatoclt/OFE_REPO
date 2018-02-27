@@ -115,4 +115,41 @@ ComprobantePago.guardar = function guardarComprobantePago(data){
     });
 }
 
+
+ComprobantePago.filtro = function comprobantePagoFiltro(){
+    return ComprobantePago.findAll({ attributes: atributosComprobantePago.attributes ,
+        include:[ 
+            {
+                model: DocEntidad,
+                as: 'documentoEntidad', 
+                attributes: atributosDocumentoEntidad.attributes,
+                include:[
+
+                    // {
+                    //     model: Entidad,
+                    //     attributes: atributosEntidad.attributes,
+                    //     include:{
+                    //         model: EntidadParametro,
+                    //         attributes: atributosEntidadParametro.attributes,
+                    //     },
+                    // },
+                    {
+                        model: TipoEnt,
+                        attributes: atributosTipoEntidad.attributes,
+                    }
+
+                ],
+            },
+            {
+                model: DocReferencia,
+                as: 'documentoReferencia',
+                attributes: atributosDocumentoReferencia.attributes
+            }
+        ],
+        where: {
+            estadoSincronizado: constantes.estadoInactivo
+        }
+      });
+}
+
 module.exports = ComprobantePago;

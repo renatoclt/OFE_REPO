@@ -44,7 +44,6 @@ var QueryEntidad = conexion.define('QueryEntidad',
     logo: {
       type: sequelize.TEXT,
       field: "vc_logo",
-      allowNull:false
     },
     pais: {
         type: sequelize.TEXT,

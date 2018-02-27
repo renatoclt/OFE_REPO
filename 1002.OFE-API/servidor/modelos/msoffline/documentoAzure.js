@@ -23,6 +23,11 @@ var DocumentosAzure = conexion.define(
             field: "se_identidad",
             allowNull: false
         },
+        tipoComprobante:{
+            type: sequelize.INTEGER,
+            field: "se_idTipoComprobante",
+            allowNull: false,
+        },
         logoEntidad: {
             type: sequelize.BLOB,
             field: "bb_logoentidad",

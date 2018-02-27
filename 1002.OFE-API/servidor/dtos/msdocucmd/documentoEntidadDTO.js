@@ -9,10 +9,8 @@ var DocumentoEntidad = require('../../modelos/msoffline/docEntidad');
  * 
  */
 
-DocumentoEntidad.guardar = function guardarDocumentoEntidad(data){
-    console.log('gasdfasd');
+DocumentoEntidad.guardarEntidad = function guardarDocumentoEntidad(data){
     return DocumentoEntidad.create({
-        id: data.id,
         tipoEntidad: data.idTipoEntidad,
         entidad: data.idEntidad ,
         comprobantepago: data.idComprobante ,

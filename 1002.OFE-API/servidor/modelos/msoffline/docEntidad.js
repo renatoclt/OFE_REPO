@@ -9,13 +9,13 @@
 var DocumentoEntidad = conexion.define('DocumentoEntidad',
   {
     id:{
-      type:sequelize.INTEGER,
+      type: sequelize.INTEGER,
       primaryKey: true,
       field: "se_idocentidad",
-      autoincremnt: true,
+      autoIncrement: true,
+      //defaultValue:1,
+      unique: true,
       allowNull: false ,
-      AUTO_INCREMENT:1,
-      omitNull: true,
     },
     tipoEntidad: {
       type: sequelize.INTEGER,
@@ -71,5 +71,7 @@ var DocumentoEntidad = conexion.define('DocumentoEntidad',
     timestamps: false
   }
 );
+
 DocumentoEntidad.sync();
+
 module.exports = DocumentoEntidad;

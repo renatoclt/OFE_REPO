@@ -19,7 +19,7 @@
 		<text>{{direccionFiscalProveedor}}</text>
 	</group>
 	
-	<group type="table" row="6" column="0" column-span="8" border="0" number-columns="8">
+	<group type="table" row="6" column="0" column-span	="8" border="0" number-columns="8">
 		<cell column-span="2" border="0" 
 			  font-family="Times-Roman" font-color="#000000" font-style="0" font-size="10" alignment="0" background-color="#FFFFFF">
 			Fecha de Emisión:
