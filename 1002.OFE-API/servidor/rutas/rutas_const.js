@@ -75,6 +75,7 @@ var rutas = {
                     "usuario": {"ruta":"/usuarios", "descripcion": "Implementacion de servicio rest para usuarios del offline"},
                     "idioma": {"ruta":"/idiomas", "descripcion": "Idioma Servicio"},
                     "archivo": {"ruta":"/archivos", "descripcion": "Servicio que descarga archivos"},
+                    "sincronizacionRetencion": {"ruta":"/sincronizacionRetencion", "descripcion":"sincronizarRetenciones"}
                 }
             },            
         }

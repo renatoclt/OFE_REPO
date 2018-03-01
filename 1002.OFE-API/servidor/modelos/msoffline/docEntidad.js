@@ -29,6 +29,10 @@ var DocumentoEntidad = conexion.define('DocumentoEntidad',
       type: sequelize.INTEGER,
       field: "in_idcomprobantepago",
     },
+    correo:{
+      type: sequelize.TEXT,
+      field: "vc_correo"
+    },
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",
@@ -64,7 +68,7 @@ var DocumentoEntidad = conexion.define('DocumentoEntidad',
     generado:{
       type: sequelize.INTEGER,
       field: "in_generado",
-    }    
+    }   
   },
   {
     tableName: 'fe_comprobante_t_doc_entidad',

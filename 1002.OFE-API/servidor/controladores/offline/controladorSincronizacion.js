@@ -347,6 +347,17 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         await DocEvento.guardar(req.body);
         res.status(200).send('{}');
     });
+    router.get(ruta.concat('/listarMac'), async function (req, res){
+        await require('getmac').getMac(function(err, macAddress){
+            if (err) {
+                console.log(err);
+            } 
+            console.log(macAddress)
+        })
+        
+        console.log(require('os').networkInterfaces());
+        res.status(200).send('{}');
+    });
 };
 
 module.exports = contoladorSincronizacion;

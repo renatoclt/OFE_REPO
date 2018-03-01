@@ -14,6 +14,7 @@ DocumentoEntidad.guardarEntidad = function guardarDocumentoEntidad(data){
         tipoEntidad: data.idTipoEntidad,
         entidad: data.idEntidad ,
         comprobantepago: data.idComprobante ,
+        correo: data.correo,
         usuarioCreacion: data.usuarioCreacion ,
         usuarioModifica: data.usuarioModifica ,
         fechaCreacion: data.fechaCreacion ,

@@ -9,15 +9,14 @@
 var Archivo = conexion.define(
     'Archivo',{
         id:{
-            type: sequelize.INTEGER,
+            type: sequelize.TEXT,
             field: "se_iarchivo",
-            autoIncrement: true,
             unique: true,
             primaryKey: true,
-            allowNull:false            
+            allowNull:false             
         },
         archivo: {
-            type: sequelize.TEXT,
+            type: sequelize.BLOB,
             field: "bl_archivo",
             allowNull:false
         },

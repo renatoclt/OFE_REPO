@@ -1,3 +1,6 @@
+var DocReferencia = require('./docReferencia');
+var DocEntidad = require('./docEntidad');
+
 /**
  * persistencia de la tabla t_comprobantepago en la variable ComprobantePago
  * Modificado --- creado --/--/----
@@ -441,6 +444,18 @@ var ComprobantePago = conexion.define('ComprobantePago',
     timestamps: false
   }
 );
+
+ComprobantePago.hasMany(DocReferencia,
+    { as: 'DocReferencia',foreignKey: 'idDocumentoOrigen', targetKey: 'idDocumentoOrigen'}
+    );
+
+ComprobantePago.hasMany(DocReferencia,
+  { as: 'facturasAfectadas',foreignKey: 'idDocumentoOrigen', targetKey: 'idDocumentoOrigen'}
+  );
+
+ComprobantePago.hasMany(DocEntidad,
+  { as: 'DocEntidad',foreignKey: 'comprobantepago', targetKey: 'comprobantepago'}
+  );
 
 ComprobantePago.sync();
 module.exports = ComprobantePago;

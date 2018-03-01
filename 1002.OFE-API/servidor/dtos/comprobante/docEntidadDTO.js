@@ -11,6 +11,7 @@ DocEntidad.guardar = function docEntidadGuardar(data){
     return DocEntidad.create({
         idTipoEntidad: data.idTipoEntidad,
         idEntidad:data.idEntidad,
+        correo: data.correo,
         idcomprobantepago: data.idComprobantePago,
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,

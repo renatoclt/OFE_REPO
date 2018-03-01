@@ -136,7 +136,7 @@ var DocReferencia = conexion.define('DocReferencia',
     fechaSincronizado: {
       type: sequelize.TEXT,
       field: "ts_fec_sincronizado"
-    }       
+    }
   },
   {
     tableName: 'fe_comprobante_t_doc_referenci',

@@ -3,6 +3,8 @@
  * @author renato creado 18-12-2017 
  */
 var ComprobantePago = require('../../modelos/msoffline/comprobantePago');
+var documentoReferencia = require('../../modelos/msoffline/docReferencia');
+var documentoEntidad = require('../../modelos/msoffline/docEntidad');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
@@ -121,7 +123,7 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
         include:[ 
             {
                 model: DocEntidad,
-                as: 'documentoEntidad', 
+                as: 'docEntidad', 
                 attributes: atributosDocumentoEntidad.attributes,
                 include:[
 
@@ -142,7 +144,7 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
             },
             {
                 model: DocReferencia,
-                as: 'documentoReferencia',
+                as: 'DocEntidad',
                 attributes: atributosDocumentoReferencia.attributes
             }
         ],
@@ -150,6 +152,80 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
             estadoSincronizado: constantes.estadoInactivo
         }
       });
+}
+
+
+ComprobantePago.sincornizar = function comprobanteSincronizar(){
+    return ComprobantePago.findAll({ attributes: atributosSincronizar.attributes ,
+        include:[ 
+            {
+                model: documentoReferencia,
+                as: 'facturasAfectadas', 
+                attributes: atributosDocumentoReferencia.attributes,
+            },
+            {
+                model: documentoEntidad,
+                as: 'DocEntidad', 
+                attributes: atributosDocumentoEntidad.attributes,
+            },
+        ],
+        where: {
+            estadoSincronizado: constantes.estadoInactivo
+        }
+      });
+}
+
+var atributosSincronizar = {
+    attributes: [
+                ['in_idcomprobantepago', 'idComprobanteOffline'], 
+                'numeroComprobante',
+                'rucComprador',
+                'razonSocialComprador',
+                //'correoProveedor',
+                //'correoComprador',
+                'moneda',
+                'fechaEmision',
+                'observacionComprobante',
+                'montoPagado',
+                'monedaDescuento',
+                'montoDescuento',
+                'totalComprobante',
+                'tipoItem'
+            ],
+}
+
+// "serie": "F002",
+// "correlativo": "0000002",
+// "fechaEmision": 1517892988428,
+// "totalImporteSoles": "972",
+// "totalRetenidoSoles": "29.16",
+// "porcentajeRetenido": "3",
+// "monedaOriginal": "USD",
+// "totalMonedaOriginal": "300",
+// "tipoDeCambio": "3.24",
+// "totalFacturaConRetencion": "942.84"
+
+var atributosDocumentoReferencia = {
+    attributes: [
+        ['ch_serie_dest','serie'], 
+        ['ch_corr_dest','correlativo'],
+        ['da_fec_emi_dest','fechaEmision'],
+        ['nu_tot_imp_dest','totalImporteSoles'],
+        ['nu_tot_imp_aux','totalRetenidoSoles'],
+        [sequelize.literal('(COALESCE(nu_tot_imp_aux, 0) * 100) / COALESCE(nu_tot_imp_dest, 0)'),'porcentajeRetenido'],
+        ['vc_mone_des','monedaOriginal'],
+        ['de_tot_mone_des','totalMonedaOriginal'],
+        ['vc_aux_1','tipoDeCambio'],
+        [sequelize.literal('COALESCE(nu_tot_imp_dest, 0) + COALESCE(nu_tot_imp_aux, 0)'),'totalFacturaConRetencion']
+    ],
+}
+
+var atributosDocumentoEntidad = {
+    attributes: [
+        'id',
+        'tipoEntidad',
+        'correo',
+    ]
 }
 
 module.exports = ComprobantePago;

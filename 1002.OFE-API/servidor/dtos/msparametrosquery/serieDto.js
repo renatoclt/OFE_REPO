@@ -34,6 +34,31 @@ Serie.buscarId = function buscarId(id){
     return  data;
 }
 
+/**
+ * Funcion que retorna la tabla T_Serie segun su id
+ * 
+ * @param {*} codigoTabla Se envia el codigo del catalogo
+ */
+Serie.buscarSerie = function buscarSerie(tipoComprobante, serie, tipoSerie , entidad){
+    var data = Serie.findAll({ attributes: filtroAtributosSerie.attributes ,
+        where: {
+            idEntidad: entidad,
+            idTipoSerie: tipoSerie,
+            idTipoComprobante: tipoComprobante,
+            serie: serie,            
+        }
+      });
+    return  data;
+}
+Serie.acturalizarCorrelativo = function(id, correlativo){
+    var data = Serie.update({
+        correlativo: correlativo
+    },
+    { where: { idSerie: id } }
+);
+}
+
+
 //atributos utilizados por function maestraFiltro
 var filtroAtributosSerie = {
     attributes: [
