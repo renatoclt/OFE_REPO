@@ -361,3 +361,4 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
 };
 
 module.exports = contoladorSincronizacion;
+

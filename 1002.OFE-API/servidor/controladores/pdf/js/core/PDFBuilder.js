@@ -1,11 +1,10 @@
 var builder = {};
-const QRious = require('node-qrious');
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+//const QRious = require('node-qrious');
 var xmlBuilder = require('xmlbuilder');
 var xmlReader = require('read-xml');
 
-var jsdom = require('jsdom');
-$ = require('jquery')(new jsdom.JSDOM().window);
+// var jsdom = require('jsdom');
+// $ = require('jquery')(new jsdom.JSDOM().window);
 
 var parser = require('xml2json');
 
@@ -17,14 +16,14 @@ builder = (function () {
 	var maxColumns = 0;		// Cantidad máxima de columnas del documento PDF
 	var dto = {};			// DTO contenedor de la información con la que se construirá el documento PDF
 
-	var qr = new QRious({
-		backgroundAlpha: 1,
-	  	foreground: 'black',
-	  	foregroundAlpha: 1,
-	  	level: 'Q',
-	  	padding: 4,
-	  	size: 227
-	});
+	// var qr = new QRious({
+	// 	backgroundAlpha: 1,
+	//   	foreground: 'black',
+	//   	foregroundAlpha: 1,
+	//   	level: 'Q',
+	//   	padding: 4,
+	//   	size: 227
+	// });
 
 	var pageOrientation = 'landscape'; // portrait
 	var pageSize = 'A4';

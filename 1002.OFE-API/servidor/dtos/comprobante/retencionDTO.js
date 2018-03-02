@@ -17,6 +17,27 @@ Retencion.buscarComprobante = function (id) {
     });
     return promise;
 };
+Retencion.buscarComprobanteNumeroComprobante = function (id) {
+    var promise = new Promise(function (resolve, reject) {
+        conexion.sync().then(function () {
+            Comprobante.findAll({
+                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado'],
+                where: {
+                    numeroComprobante : id
+                }
+            }).then(function (comprobante) {
+                if (comprobante.length > 0)
+                    resolve(comprobante[0].dataValues);
+                else    
+                    resolve({});
+            });
+        }, function (err) {
+            console.log(err);
+            resolve({});
+        });
+    });
+    return promise;
+};
 
 Retencion.buscarComprobantes = function (pagina, regxpag) {
     if (pagina == null) {
@@ -33,7 +54,6 @@ Retencion.buscarComprobantes = function (pagina, regxpag) {
                 offset: (pagina * regxpag), 
                 limit: regxpag 
                 }).then(function (comprobantes) {
-
                     var cantidadReg = comprobantes.count;
                     comprobantes = comprobantes.rows.map(function (data) {
                     return data.dataValues;
