@@ -105,7 +105,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 3,
+    tipoComprobante: 20,
   }),
   Sincronizacion.create({
     id: 4,

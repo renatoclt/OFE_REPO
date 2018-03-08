@@ -3,6 +3,9 @@ var constantes = {
     estadoInactivo: '0',
     usuarioOffline: 'offline',
     estadoOffline: '0',
+    generadoOnline: '1',
+    emisor: 1,
+    receptor: 2,
     vacio: ' ',
     renato: 'renato', //valores para asignar incidencias testing
     miguel: 'miguel', //valores para asignar incidencias testing
@@ -21,6 +24,8 @@ var constantes = {
     motivoBaja: '16', //Comunicación de Baja - Motivo de Baja
     fechaBaja: '12', //Comunicacion de baja - Fecha de baja
     bloqueoLocal: 'Bloqueado Local', // Estado Bloqueado falta sincronizacion
+    docuquery: 'http://104.196.1.181:8081',
+    pathDocumentoDetalle: '/api/fe/ms-documentos-query/v1/documento?id=',
     /**
      * Constantes de API
      */

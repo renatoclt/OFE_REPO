@@ -73,7 +73,7 @@ var QueryComprobantePago = conexion.define('QueryComprobantePago',
     },
     inIdarchivoCdr: {
       type: sequelize.INTEGER,
-      field: "in_idarchivo_xml",
+      field: "in_idarchivo_cdr",
     },
     vcArchivopdfUbicacion: {
       type: sequelize.TEXT,

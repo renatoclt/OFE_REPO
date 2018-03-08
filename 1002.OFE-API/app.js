@@ -8,6 +8,7 @@ bodyParser = require('body-parser');
 routes = require('./servidor/rutas/rutasModulos');
 hateoasLinker = require('express-hateoas-links');
 constantes = require('./servidor/utilitarios/constantes');
+servicios = require('./servidor/utilitarios/servicios')
 dateFormat = require('dateformat');
 
 LocalDateTime = require('js-joda').LocalDateTime;
@@ -22,7 +23,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('express-jquery')('/jquery.js'));
+//TODO app.use(require('express-jquery')('/jquery.js'));
 app.use(hateoasLinker);
 app.use(express.static(path.join(__dirname, 'public')));
 

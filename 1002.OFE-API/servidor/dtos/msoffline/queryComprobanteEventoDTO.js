@@ -9,17 +9,34 @@ var QueryComprobanteEvento = require('../../modelos/msoffline/queryComprobanteEv
  * 
  */
 
-QueryComprobanteEvento.guardar = function guardarQueryComprobanteConcepto(data){
-    return QueryComprobanteEvento.create({
-        id: data.id,
-        comprobante: data.comprobante ,
-        evento: data.evento ,
-        idioma: data.idioma ,
-        descripcionEvento: data.descripcionEvento ,
-        observacionEvento: data.observacionEvento ,
-        estadoEvento: data.estadoEvento ,
-        fechaCreacion: data.fechaCreacion ,
-        usuarioCreacion: data.usuarioCreacion ,
+QueryComprobanteEvento.guardar = function guardarQueryComprobanteConcepto(data, id){
+    return QueryComprobanteEvento.findOne({where: {id: id}}).then(function(obj){
+        if(obj){
+            return QueryComprobanteEvento.update({
+                id: data.seIdocevento,
+                comprobante: data.inIdcomprobante ,
+                evento: data.inIdevento ,
+                idioma: data.inIidioma ,
+                descripcionEvento: data.vcDescripcionEvento ,
+                observacionEvento: data.vcObservacionEvento ,
+                estadoEvento: data.inEstadoEvento ,
+                fechaCreacion: data.fechaCreacion ,
+                usuarioCreacion: data.usuarioCreacion 
+            }, {where: {id: id}})
+        }
+        else{
+            return QueryComprobanteEvento.create({
+                id: data.seIdocevento,
+                comprobante: data.inIdcomprobante ,
+                evento: data.inIdevento ,
+                idioma: data.inIidioma ,
+                descripcionEvento: data.vcDescripcionEvento ,
+                observacionEvento: data.vcObservacionEvento ,
+                estadoEvento: data.inEstadoEvento ,
+                fechaCreacion: data.fechaCreacion ,
+                usuarioCreacion: data.usuarioCreacion 
+            })
+        }
 
     });
 }

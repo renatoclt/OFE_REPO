@@ -156,7 +156,6 @@ async function agregarDatosEntidad (nuevoDocumento,headers){
 
 }
 function obtenerOrganizacion(){
-
     var client = new Client();  // consumir api rest
     var url='http://localhost:3000/v1/organizaciones/20100015103';
     var promise = new Promise(function(resolve,reject){

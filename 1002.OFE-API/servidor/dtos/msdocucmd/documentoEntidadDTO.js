@@ -16,13 +16,50 @@ DocumentoEntidad.guardarEntidad = function guardarDocumentoEntidad(data){
         comprobantepago: data.idComprobante ,
         correo: data.correo,
         usuarioCreacion: data.usuarioCreacion ,
-        usuarioModifica: data.usuarioModifica ,
+        usuarioModificacion: data.usuarioModifica ,
         fechaCreacion: data.fechaCreacion ,
         fechaModificacion: data.fechaModificacion ,
         estado: data.estado ,
-        fechaSincronizacion: data.fechaSincronizacion ,
+        fechaSincronizado: data.fechaSincronizacion ,
         estadoSincronizado: data.estadoSincronizado ,
         generado: data.generado ,
+    });
+}
+
+DocumentoEntidad.buscarGuardarActualizar = function buscarGuardarActualizar(data,id){
+    return DocumentoEntidad.findOne({where: {id: id}}).then(function(obj){
+        if(obj){
+            return DocumentoEntidad.update({
+                tipoEntidad: data.idTipoEntidad,
+                entidad: data.idEntidad ,
+                comprobantepago: data.idComprobante ,
+                correo: data.correo,
+                usuarioCreacion: data.usuarioCreacion ,
+                usuarioModificacion: data.usuarioModifica ,
+                fechaCreacion: data.fechaCreacion ,
+                fechaModificacion: data.fechaModificacion ,
+                estado: data.estado ,
+                fechaSincronizado: data.fechaSincronizacion ,
+                estadoSincronizado: data.estadoSincronizado ,
+                generado: data.generado ,
+            }, {where: {id: id}});
+        }
+        else{
+            return DocumentoEntidad.create({
+                tipoEntidad: data.idTipoEntidad,
+                entidad: data.idEntidad ,
+                comprobantepago: data.idComprobante ,
+                correo: data.correo,
+                usuarioCreacion: data.usuarioCreacion ,
+                usuarioModificacion: data.usuarioModifica ,
+                fechaCreacion: data.fechaCreacion ,
+                fechaModificacion: data.fechaModificacion ,
+                estado: data.estado ,
+                fechaSincronizado: data.fechaSincronizacion ,
+                estadoSincronizado: data.estadoSincronizado ,
+                generado: data.generado ,
+            });
+        }
     });
 }
 

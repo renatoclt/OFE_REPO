@@ -1,12 +1,12 @@
 var builder = {};
 //const QRious = require('node-qrious');
 var xmlBuilder = require('xmlbuilder');
-var xmlReader = require('read-xml');
+
 
 // var jsdom = require('jsdom');
 // $ = require('jquery')(new jsdom.JSDOM().window);
 
-var parser = require('xml2json');
+
 
 builder = (function () {
 	var path = 'http:\\\\localhost:80\\PDFBuilder\\resource\\input.xml';

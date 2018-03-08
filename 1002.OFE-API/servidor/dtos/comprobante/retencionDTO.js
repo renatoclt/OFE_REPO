@@ -49,7 +49,7 @@ Retencion.buscarComprobantes = function (pagina, regxpag) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findAndCountAll({  
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado'],
+                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
                 where: { idTipoComprobante: contantes.idTipocomprobanteRetencion}, 
                 offset: (pagina * regxpag), 
                 limit: regxpag 
@@ -68,9 +68,43 @@ Retencion.buscarComprobantes = function (pagina, regxpag) {
     return promise;
 };
 
+Retencion.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio_,fechaFin_,estadoSincronizado_){
+    let whereDinamico = {};
+    const Op = sequelize.Op;
+    console.log(estadoSincronizado_);
+    if(numeroComprobante_ !== null && numeroComprobante_ !== '')
+        whereDinamico.numeroComprobante = numeroComprobante_;
+    else{
+        if(generado_ !== null && generado_ !== ''){
+            whereDinamico.generado = generado_;
+        }
+        if(estado_ !== null && estado_ !== ''){
+            whereDinamico.estado = estado_;
+        }
+        if(estadoSincronizado_ !== null && estadoSincronizado_ !== ''){
+            whereDinamico.estadoSincronizado = estadoSincronizado_;
+        }
+        if(fechaInicio_ !== null && fechaInicio_ !== '' && fechaFin_ !== null && fechaFin_ !== ''){
+            whereDinamico.fechaCreacion = { 
+                [Op.between]: [fechaInicio_,fechaFin_+'23:59:59.999999999'] 
+                //[Op.between]: ['2018-01-02','2018-01-04'+'23:59:59.999999999'] 
+            }  
+        }
+    }
+    console.log(whereDinamico);
+    return Comprobante.findAndCountAll({
+        attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+        where: whereDinamico 
+    } ).then(function (comprobantes) {
+        var cantidadReg = comprobantes.count;
+        comprobantes = comprobantes.rows.map(function(comprobante){ 
+            return comprobante.dataValues;
+        });
+        return({'comprobantes': comprobantes, 'cantidadReg': cantidadReg});
+    });
+}
+
 Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_){
-
-
     if (pagina==null){
         throw Error("Falta de argumentos requeridos 'pagina'");
     }
@@ -95,16 +129,14 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
     if (estadoSincronizado_==null){
         throw Error("Falta de argumentos requeridos 'estado sincronización'");
     }
-
     const Op = sequelize.Op;
     var promise = new Promise(function(resolve, reject){
         conexion.sync()
-        .then(function () {
+        .then(function () { 
             Comprobante.findAndCountAll(
                 { 
-//pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
-                    
-                    attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado'],
+                    //pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
+                    attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
                     where: { 
                             numeroComprobante:numeroComprobante_ ,
                             generado:generado_,                         // 0: offline , 1: online
@@ -116,12 +148,14 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
                                // [Op.between]: ['2018-01-02','2018-01-04'+'23:59:59.999999999'] 
                             }    
 
-                            },                       
+                        },                       
                     
                     offset: (pagina*regxpag), 
                     limit: regxpag
                 })
                 .then(function (comprobantes) {
+                    console.log('***********************************************************************************************');
+                    console.log(comprobantes);
                     var cantidadReg = comprobantes.count;
 
                     comprobantes = comprobantes.rows.map(function(comprobante){ 
@@ -134,11 +168,8 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
             console.log(err);
             resolve({});
         });
-    });
-    
+    });    
     return promise;
-
-
-
 };
+
 module.exports = Retencion;

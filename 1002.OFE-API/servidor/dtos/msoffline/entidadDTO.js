@@ -28,4 +28,44 @@ Entidad.guardar = function guardarEntidad(data){
     });
 }
 
+Entidad.buscarGuardarActualizar = function buscarGuardarActualizar(data, id){
+    return Entidad.findOne({where: {id: id}}).then(function(obj){
+        if(obj){
+            return Entidad.update({
+                id: data.id,
+                documento: data.documento,
+                denominacion: data.denominacion,
+                nombreComercial: data.nombreComercial,
+                direccion: data.direccion,
+                correo: data.correo,
+                idEbiz: data.idEbiz,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion,
+                fechaModificacion: data.fechaModificacion,
+                estado: data.estado,
+                fechaSincronizado: data.fechaSincronizado,
+                estadoSincronizado: data.estadoSincronizado
+            },  {where: {id: id}});
+        }else{
+            return Entidad.create({
+                id: data.id,
+                documento: data.documento,
+                denominacion: data.denominacion,
+                nombreComercial: data.nombreComercial,
+                direccion: data.direccion,
+                correo: data.correo,
+                idEbiz: data.idEbiz,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion,
+                fechaModificacion: data.fechaModificacion,
+                estado: data.estado,
+                fechaSincronizado: data.fechaSincronizado,
+                estadoSincronizado: data.estadoSincronizado
+            });
+        }
+    });
+}
+
 module.exports = Entidad;

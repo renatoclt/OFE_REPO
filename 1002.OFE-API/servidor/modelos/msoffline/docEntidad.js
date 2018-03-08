@@ -13,7 +13,6 @@ var DocumentoEntidad = conexion.define('DocumentoEntidad',
       primaryKey: true,
       field: "se_idocentidad",
       autoIncrement: true,
-      //defaultValue:1,
       unique: true,
       allowNull: false ,
     },
@@ -41,6 +40,7 @@ var DocumentoEntidad = conexion.define('DocumentoEntidad',
     usuarioModificacion: {
       type: sequelize.TEXT,
       field: "vc_usu_modifica",
+      allowNull:false
     },
     fechaCreacion: {
       type: sequelize.TEXT(6),

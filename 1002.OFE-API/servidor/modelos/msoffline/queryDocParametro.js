@@ -42,22 +42,18 @@ var QueryDocParametro = conexion.define('QueryDocParametro',
     auxEntero: {
         type: sequelize.INTEGER(32),
         field: "aux_entero",
-        allowNull:false
     },
     auxImporte: {
         type: sequelize.INTEGER(32),
         field: "aux_importe",
-        allowNull:false
     },
     auxFecha: {
         type: sequelize.INTEGER(32),
         field: "aux_fecha",
-        allowNull:false
     },
     auxCaracter: {
         type: sequelize.INTEGER(32),
         field: "aux_caracter",
-        allowNull:false
     },
     fechaSincronizado: {
       type: sequelize.TEXT,
@@ -69,11 +65,11 @@ var QueryDocParametro = conexion.define('QueryDocParametro',
     }        
   },
   {
-    tableName: 'fe_query_t_doc_referenci',
+    tableName: 'fe_query_t_doc_parametros',
     timestamps: false,
   }
 );
 
-QueryDocRefenci.sync();
+QueryDocParametro.sync();
 
-module.exports = QueryDocRefenci;
+module.exports = QueryDocParametro;

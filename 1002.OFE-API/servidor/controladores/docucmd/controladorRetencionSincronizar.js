@@ -54,27 +54,26 @@ var controladorRetenciones = function (ruta, rutaEsp) {
         });
     });
 
-    router.get(ruta.concat('/search/buscar'), function (req, res, next) {
-        if(req.query.numeroComprobante && req.query.numeroComprobante !== ''){
-            RetencionDTO.buscarComprobanteNumeroComprobante(req.query.numeroComprobante).then(function (resDTO) {
-                var hateoasObj_comprobante = Object.assign({}, hateoasObj);
-                hateoasObj_comprobante.type = nombreHateo;
-                hateoasObj_comprobante.data = resDTO ;
-                hateoasObj_comprobante.paginacion.activo = false;
-                hateoasObj_comprobante.busqueda.activo = false;
-                res.json(hateoas.link(hateoasObj_comprobante));
-            });
-        }else {
+    router.get(ruta.concat('/search/buscar'), async function (req, res, next) {
+        // if(req.query.numeroComprobante && req.query.numeroComprobante !== ''){
+        //     RetencionDTO.buscarComprobanteNumeroComprobante(req.query.numeroComprobante).then(function (resDTO) {
+        //         var hateoasObj_comprobante = Object.assign({}, hateoasObj);
+        //         hateoasObj_comprobante.type = nombreHateo;
+        //         hateoasObj_comprobante.data = resDTO ;
+        //         hateoasObj_comprobante.paginacion.activo = false;
+        //         hateoasObj_comprobante.busqueda.activo = false;
+        //         res.json(hateoas.link(hateoasObj_comprobante));
+        //     });
+        // }else {
             var numeroComprobante="",
                 generado="",
                 estado="",
                 fechaInicio=new Date(),
                 fechaFin=new Date(),
-                estadoSincronizado=0,
+                estadoSincronizado="",
                 pagina=0,
                 limite=0,
                 ordenar=0;
-
             if (req.query.numeroComprobante && req.query.numeroComprobante!=""){
                 numeroComprobante = req.query.numeroComprobante;
             }
@@ -99,11 +98,9 @@ var controladorRetenciones = function (ruta, rutaEsp) {
             if (req.query.limite && req.query.limite>0){
                 limite = req.query.limite;
             }
-    
-            //function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
-            RetencionDTO.buscarRetencionEspecifico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
+            
+            await RetencionDTO.buscarComprobanteDinamico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
             .then(function (resDTO) {
-
                 var hateoasObj_comprobante = Object.assign({}, hateoasObj);
                 hateoasObj_comprobante.type = nombreHateo;
                 hateoasObj_comprobante.data = resDTO.comprobantes;
@@ -118,7 +115,7 @@ var controladorRetenciones = function (ruta, rutaEsp) {
                 hateoasObj_comprobante.busqueda.ruta = "/search/buscar";        
                 res.json(hateoas.link(hateoasObj_comprobante));
             });
-        }
+        // }
     });
 
 };
