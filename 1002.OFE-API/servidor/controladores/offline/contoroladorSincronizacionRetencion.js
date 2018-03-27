@@ -5,12 +5,15 @@ var comprobantePagoDTO = require('../../dtos/msoffline/comprobantePagoDTO');
 var documentoEntidadDTO = require('../../dtos/msdocucmd/documentoEntidadDTO');
 var documentoReferenciaDTO = require('../../dtos/msdocucmd/documentoReferenciaDTO');
 var entidadDTO = require('../../dtos/msoffline/entidadDTO')
+var queryEntidad = require('../../dtos/msoffline/queryEntidadDTO');
+var queryEntidadOffline = require('../../dtos/msoffline/queryEntidadOfflineDTO');
 var Client = require('node-rest-client').Client;
+var Usuario = require('../../dtos/msoffline/usuarioDTO');
 
 var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
     router.get(ruta.concat('/'), async function (req, res) {
         try{
-            var data = await comprobante.sincornizar();
+            var data = await comprobantePagoDTO.sincornizar();
             data.forEach((element) => {
                 element.DocEntidad.forEach(entidad => {
                     if(entidad.tipoEntidad == 1){
@@ -20,7 +23,7 @@ var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
                         element.dataValues.correoComprador = entidad.correo;
                     }
                 });
-               delete element.dataValues.DocEntidad;
+                delete element.dataValues.DocEntidad;
             });
             res.json(data);
         }catch (e){
@@ -29,27 +32,73 @@ var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
         }
     });
 
+    router.get(ruta.concat('/actualizarEstadoComprobante'), async function(req, res){
+        try{
+            var data = await comprobantePagoDTO.estadosPendientes(constantes.FILECMD.tipos_documento.retencion);
+            res.json(data);
+        }catch(e){
+            console.log(e);
+            res.json({error: e});
+        }
+    });
+
+    router.post(ruta.concat('/actualizarComprobanteLocal'), async function (req, res) {
+        let data = {};
+        data.id = req.body.id;
+        data.chEstadocomprobantepagocomp = req.body.chEstadocomprobantepagocomp;
+        data.chEstadocomprobantepago = req.body.chEstadocomprobantepago;
+        await comprobantePagoDTO.sincronizarDocumentoEstado(data);
+        await queryComprobante.sincronizarDocumentoEstado(data);
+        for(evento of req.body.eventos){
+            await queryComprobanteEventoDTO.guardar(evento);
+        }
+        res.send('{}');
+    });
+    router.post(ruta.concat('/actualizarSincronizacion'), async function (req, res) {
+        await comprobantePagoDTO.sincronizarDocumento(req.body.id);
+        res.send('{}');
+    });
+    router.post(ruta.concat('/actualizarSincronizacionErronea'), async function (req, res) {
+        await comprobantePagoDTO.sincronizarDocumentoErroneo(req.body.id);
+        await queryComprobante.sincronizarDocumentoErroneo(req.body.id);
+        let data = {};
+        data.inIdcomprobante = req.body.id;
+        data.inIdevento = constantes.inEstadoEliminadoLocal ;
+        data.inIidioma = constantes.idiomaEspañol ,
+        data.vcDescripcionEvento = constantes.estadoEliminadoLocal ,
+        data.vcObservacionEvento = req.body.error ,
+        data.inEstadoEvento = constantes.estadoActivo,
+        data.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        data.usuarioCreacion = constantes.usuarioOffline; 
+        await queryComprobanteEventoDTO.guardarOffline(data);
+        res.send('{}');
+    });
     router.post(ruta.concat('/'), async function (req, res) {
         try{
-            for (let comprobanteQ of req.body ){
-                comprobanteQ.id = comprobanteQ.inIdcomprobantepago;
-                comprobanteQ.tsFechacreacion = dateFormat(new Date(parseInt(comprobanteQ.tsFechacreacion)), "yyyy-mm-dd HH:MM:ss");
-                await queryComprobante.guardar(comprobanteQ, comprobanteQ.id);
-                for (let parametro of comprobanteQ.parametros) {
-                    parametro.id = parametro.inIdocparametro;
-                    parametro.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-                    parametro.estadoSincronizado = constantes.estadoActivo;
-                    await queryComprobanteDocParametroDTO.guardar(parametro, parametro.id);  
-                 
-                }
-                for (let evento of comprobanteQ.eventos){
-                    evento.id = evento.seIdocevento;
-                    evento.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-                    evento.estadoSincronizado = constantes.estadoActivo;
-                    await queryComprobanteEventoDTO.guardar(evento, evento.seIdocevento);
-                }
-                guardarComprobante(comprobanteQ);
+            comprobanteQ = req.body;
+            guardarEntidad(comprobanteQ.entidadcompradora);
+            guardarEntidad(comprobanteQ.entidadproveedora);
+            comprobanteQ.id = comprobanteQ.inIdcomprobantepago;
+            comprobanteQ.tsFechacreacion = dateFormat(new Date(parseInt(comprobanteQ.tsFechacreacion)), "yyyy-mm-dd HH:MM:ss");
+            comprobanteQ.inIdentidadreceptor = comprobanteQ.entidadcompradora.seIentidad;
+            comprobanteQ.inIdentidademisor = comprobanteQ.entidadproveedora.seIentidad;
+            comprobanteQ.tsFechaemision = parseJsonDate(comprobanteQ.tsFechaemision);
+            comprobanteQ.tsFecharegistro = parseJsonDate(comprobanteQ.tsFecharegistro);
+            comprobanteQ.tsFechacreacion = parseJsonDate(comprobanteQ.tsFechacreacion);
+            await queryComprobante.guardar(comprobanteQ, comprobanteQ.id);
+            for (let parametro of comprobanteQ.parametros) {
+                parametro.id = parametro.inIdocparametro;
+                parametro.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                parametro.estadoSincronizado = constantes.estadoActivo;
+                await queryComprobanteDocParametroDTO.guardar(parametro, parametro.id);
             }
+            for (let evento of comprobanteQ.eventos){
+                evento.id = evento.seIdocevento;
+                evento.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                evento.estadoSincronizado = constantes.estadoActivo;
+                await queryComprobanteEventoDTO.guardar(evento, evento.seIdocevento);
+            }
+            guardarComprobante(comprobanteQ);   
             res.send('{}');
         }catch (e){
             console.log(e);
@@ -59,8 +108,7 @@ var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
 }
 
 async function guardarComprobante(data){
-    guardarEntidad(data.entidadcompradora);
-    guardarEntidad(data.entidadproveedora);
+    guardarUsuario(data.idUsuarioCreacion);
     let comprobante = {};
     comprobante.id = data.inIdcomprobantepago;
     comprobante.numeroComprobante = data.vcSerie + '-' + data.vcCorrelativo;
@@ -84,9 +132,9 @@ async function guardarComprobante(data){
     comprobante.moneda = data.chMonedacomprobantepago;
     comprobante.fechaProgPagoComprobantePag = data.tsFechaprogpagocomprobantepag;
     comprobante.fechaPagoComprobantePago = data.tsFechapagocomprobantepago;
-    comprobante.fechaCreacion = data.tsFechacreacion;
-    comprobante.fechaRegistro = data.tsFecharegistro;
-    comprobante.fechaEmision = data.tsFechaemision;
+    comprobante.fechaCreacion = parseJsonDate(data.tsFechacreacion);
+    comprobante.fechaRegistro = parseJsonDate(data.tsFecharegistro);
+    comprobante.fechaEmision = parseJsonDate(data.tsFechaemision);
     comprobante.fechaRecepcionComprobantePa = data.tsFecharecepcioncomprobantepa;
     comprobante.fechaVencimiento = data.tsFechavencimiento;
     comprobante.fechaEnvio = data.tsFechaenvio;
@@ -163,6 +211,8 @@ async function guardarComprobante(data){
     comprobante.generado = constantes.generadoOnline ;
     comprobante.estadoComprobantePago = data.chEstadocomprobantepagocomp;
     comprobante.guiapublicada = data.inDeguiapublicada;
+    comprobante.identidadEmisor = data.entidadproveedora.seIentidad;
+    comprobante.identidadReceptor = data.entidadcompradora.seIentidad;
     await comprobantePagoDTO.buscarGuardarActualizar(comprobante, comprobante.id);
     let documentoEntidadProveedor = {};
     documentoEntidadProveedor.idTipoEntidad = constantes.emisor ;
@@ -192,8 +242,14 @@ async function guardarComprobante(data){
     documentoEntidadComprador.idTipoEntidad = constantes.receptor;
     await documentoEntidadDTO.guardarEntidad(documentoEntidadProveedor);
     await documentoEntidadDTO.guardarEntidad(documentoEntidadComprador);
-    await detalleComprobante(comprobante.id);
+    //await detalleComprobante(comprobante.id);
     
+}
+
+
+function parseJsonDate(jsonDateString){
+    jsonDateString = jsonDateString.toString();
+    return dateFormat(new Date(parseInt(jsonDateString.replace('/Date(', ''))), "yyyy-mm-dd HH:MM:ss");
 }
 
 function guardarEntidad(data){
@@ -211,7 +267,19 @@ function guardarEntidad(data){
     entidad.estado = data.inEstado;
     entidad.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     entidad.estadoSincronizado = constantes.estadoActivo;
+    entidad.pais = data.vcPais;
+    entidad.ubigeo = data.vcUbigeo;
+    entidad.tipoDocumento = data.vcTipoDocumento;
+    entidad.idTipoDocumento = data.inTipoDocumento;
     entidadDTO.buscarGuardarActualizar(entidad, entidad.id);
+    queryEntidad.buscarGuardarActualizar(entidad, entidad.id);
+    queryEntidadOffline.buscarGuardarActualizar(entidad, entidad.id);
+}
+
+async function guardarUsuario(idUsuario){
+    let data = {};
+    data.id = idUsuario;
+    await Usuario.buscarYGuardar(data, idUsuario);
 }
 
 function detalleComprobante(id){

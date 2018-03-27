@@ -80,6 +80,8 @@ Sincronizacion.sync().then(() => {
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
     tipoComprobante: 1,
+  }).catch(function (err){
+    console.log("El estado ya existe");
   }),
   Sincronizacion.create({
     id: 2,
@@ -93,6 +95,8 @@ Sincronizacion.sync().then(() => {
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
     tipoComprobante: 2,
+  }).catch(function (err){
+    console.log("El estado ya existe");
   }),
   Sincronizacion.create({
     id: 3,
@@ -106,6 +110,8 @@ Sincronizacion.sync().then(() => {
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
     tipoComprobante: 20,
+  }).catch(function (err){
+    console.log("El estado ya existe");
   }),
   Sincronizacion.create({
     id: 4,
@@ -119,6 +125,8 @@ Sincronizacion.sync().then(() => {
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
     tipoComprobante: 4,
+  }).catch(function (err){
+    console.log("El estado ya existe");
   }),
   Sincronizacion.create({
     id: 5,
@@ -132,6 +140,8 @@ Sincronizacion.sync().then(() => {
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
     tipoComprobante: 5,
+  }).catch(function (err){
+    console.log("El estado ya existe");
   }),
   Sincronizacion.create({
     id: 6,
@@ -145,6 +155,8 @@ Sincronizacion.sync().then(() => {
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
     tipoComprobante: 6,
+  }).catch(function (err){
+    console.log("El estado ya existe");
   })
 });
 

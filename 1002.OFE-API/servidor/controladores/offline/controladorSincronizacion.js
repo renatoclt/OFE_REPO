@@ -82,8 +82,8 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
     router.post(ruta.concat('/usuario'), async function(req, res){  
         req.body.forEach(async element => {      
             await Usuario.registrarUsuario(element);
-            res.status(200).send('{}');
         })
+        res.status(200).send('{}');
     });
         
     router.post(ruta.concat('/parametroEntidad'), async function(req, res){        
@@ -145,8 +145,8 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
             await Idioma.guardar(element);
-            res.status(200).send('{}');
         }) 
+        res.status(200).send('{}');
     });
 
     //QueryIdioma
@@ -161,8 +161,8 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
             await QueryIdioma.guardar(element);
-            res.status(200).send('{}');
         }) 
+        res.status(200).send('{}');
     });
 
     //fe_query_t_idioma
@@ -171,8 +171,8 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.usuarioCreacion = constantes.usuarioOffline;
             element.usuarioModificacion = constantes.usuarioOffline;
             await QueryEntidad.guardar(element);
-            res.status(200).send('{}');
         }) 
+        res.status(200).send('{}');
     });
 
     //FALTA dominio entidad 

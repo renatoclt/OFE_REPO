@@ -148,7 +148,6 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
 ){
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
-
             var objetoEntidadCompradora={
                 model: EntidadQuery,
                 as: 'entidadcompradora',
@@ -163,7 +162,7 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
                 delete objetoEntidadCompradora['where'];
                 delete objetoEntidadCompradora['required'];
             }
-
+            console.log(fechaEmisionDel);
             ComprobantePagoQuery.findAndCountAll(
                 {   
                     //attributes: ['vcSerie','tsFechacreacion','inIdentidademisor','inIdentidadreceptor'],
@@ -192,6 +191,9 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
             ).then(function (comprobantes) {
 
                 var cantidadReg = comprobantes.count.length;
+                console.log('********************************************************************************entre');
+                console.log(comprobantes);
+                console.log('********************************************************************************');
                 comprobantes = comprobantes.rows.map(function (data) {
                   
                     delete data.dataValues['inIdentidademisor'];
@@ -210,6 +212,7 @@ ComprobantePagoQuery.buscarComprobanteConFiltros = function (
                 resolve({ 'comprobantes': comprobantes, 'cantidadReg': cantidadReg });
             });
         }, function (err) {
+            console.log('fasdfjasldkfjalskñdjfñlk');
             console.log(err);
             resolve({});
         });
@@ -275,12 +278,19 @@ function filtrosDinamicos(
         }; 
     }
 
-    var splitemisionInicio=fechaEmisionDel.split('/');
-    var splitemisionFin=fechaEmisionAl.split('/');
+    var splitemisionInicio= fechaEmisionDel.split('/');
+    var splitemisionFin = fechaEmisionAl.split('/');
     var fechaemision_inicio    =    new Date(parseInt(splitemisionInicio[2]),parseInt(splitemisionInicio[1])-1,parseInt(splitemisionInicio[0]));
     var fechaemision_fin       =    new Date(parseInt(splitemisionFin[2]),parseInt(splitemisionFin[1])-1,parseInt(splitemisionFin[0]),23,59,59,999);
+    if(isNaN(fechaemision_inicio)){
+        fechaemision_inicio = parseJsonDate(fechaEmisionDel);
+    }
+    if(isNaN(fechaemision_fin)){
+        fechaemision_fin = parseJsonDate(fechaEmisionAl);
+    }
     var formatInicio=dateFormat(fechaemision_inicio, "yyyy-mm-dd HH:MM:ss");
     var formatFin=dateFormat(fechaemision_fin, "yyyy-mm-dd HH:MM:ss");
+    
 
     whereClause['tsFechaemision'] ={
         [Op.between]: 
@@ -292,8 +302,10 @@ function filtrosDinamicos(
         var spliteBajaFin=fechaBajaAl.split('/');
         var fechaBaja_inicio    =    new Date(parseInt(spliteBajaInicio[2]),parseInt(spliteBajaInicio[1])-1,parseInt(spliteBajaInicio[0]));
         var fechaBaja_fin       =    new Date(parseInt(spliteBajaFin[2]),parseInt(spliteBajaFin[1])-1,parseInt(spliteBajaFin[0]),23,59,59,999);
+        
         var formatBajaInicio=dateFormat(fechaBaja_inicio, "yyyy-mm-dd HH:MM:ss");
         var formatBajaFin=dateFormat(fechaBaja_fin, "yyyy-mm-dd HH:MM:ss");
+        
         whereClause['tsParamFechabaja'] ={
             [Op.between]: 
                         [ formatBajaInicio , formatBajaFin]
@@ -301,5 +313,11 @@ function filtrosDinamicos(
     }
     return whereClause;
 } 
- 
+
+
+function parseJsonDate(jsonDateString){
+    jsonDateString = jsonDateString.toString();
+    return dateFormat(new Date(parseInt(jsonDateString.replace('/Date(', ''))), "yyyy-mm-dd HH:MM:ss");
+}
+
 module.exports = ComprobantePagoQuery;

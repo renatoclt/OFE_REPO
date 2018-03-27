@@ -79,6 +79,64 @@ Usuario.registrarUsuario =function(usuario){
     return promise;
 }
 
+Usuario.buscarYGuardar = function(data, id){
+    return Usuario.findOne({where: {id: id}}).then(function(obj){
+        if(obj){
+            return Usuario.update({
+                id: data.id,
+                nombreusuario: data.nombreusuario,
+                password: data.password,
+                nombre: data.nombre,
+                apellido: data.apellido,
+                docIdentidad: data.docIdentidad,
+                numDocIdentidad: data.numDocIdentidad,
+                correo: data.correo,
+                identidad: data.identidad,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion,
+                fechaModificacion: data.fechaModificacion,
+                estado: data.estado,
+                fechaSincronizado: data.fechaSincronizado,
+                estadoSincronizado: data.estadoSincronizado,
+                nombrecompleto: estado.nombrecompleto,
+                url_image: data.url_image,
+                org_id: data.org_id,
+                tipo_empresa: data.tipo_empresa,
+                token: data.token,
+                perfil: data.perfil,
+                organizaciones: data.organizaciones,
+            },{where: {id: id}});
+        }
+        else{
+            return Usuario.create({
+                id: data.id,
+                nombreusuario: data.nombreusuario,
+                password: data.password,
+                nombre: data.nombre,
+                apellido: data.apellido,
+                docIdentidad: data.docIdentidad,
+                numDocIdentidad: data.numDocIdentidad,
+                correo: data.correo,
+                identidad: data.identidad,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion,
+                fechaModificacion: data.fechaModificacion,
+                estado: data.estado,
+                fechaSincronizado: data.fechaSincronizado,
+                estadoSincronizado: data.estadoSincronizado,
+                nombrecompleto: data.nombrecompleto,
+                url_image: data.url_image,
+                org_id: data.org_id,
+                tipo_empresa: data.tipo_empresa,
+                token: data.token,
+                perfil: data.perfil,
+                organizaciones: data.organizaciones,
+            });
+        }
+    });
+}
 
 Usuario.buscarProductoEspecifico = function(pagina, regxpag, usuario, password, ordenar){
 

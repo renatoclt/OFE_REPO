@@ -2,7 +2,8 @@
  * @author --- Modificado **-**-****
  * @author ricardo gamero 30-01-2018
  */
-var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
+//var ComprobantePago = require('../../modelos/comprobantes/comprobantePago');
+var ComprobantePago = require('../../modelos/msoffline/comprobantePago')
 var DocEntidad = require('../../modelos/comprobantes/docEntidad');
 //var EntidadParametro = require('../../modelos/organizaciones/entidadParametro');
 var TipoEnt = require('../../modelos/configuracion/tipoEnt')
@@ -14,6 +15,7 @@ const Op = conexion.Op;
  * 
  */
 ComprobantePago.actualizar = function updateCommands(_id){
+    console.log('////////////////////////////////////');
     return ComprobantePago.update({
         estadoComprobante: constantes.estadoInactivo,
         version: 0,

@@ -44,6 +44,37 @@ var QueryEstComprobante = conexion.define('QueryEstComprobante',
   }
 );
 
-QueryEstComprobante.sync();
+QueryEstComprobante.sync().then(() => {
+  QueryEstComprobante.create({
+    id: '-1',
+    idioma: 1,
+    descripcion:'Guardado Local',
+    abreviatura: 'Guardado Local',
+    fechaSincronizado: dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+    estadoSincronizado: constantes.estadoActivo
+  }).catch(function (err){
+    console.log("El estado ya existe");
+  }),
+  QueryEstComprobante.create({
+    id: '-90',
+    idioma: 1,
+    descripcion:'Bloqueado Local',
+    abreviatura: 'Bloqueado Local',
+    fechaSincronizado: dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+    estadoSincronizado: constantes.estadoActivo
+  }).catch(function (err){
+    console.log("El estado ya existe");
+  }),
+  QueryEstComprobante.create({
+    id: '-99',
+    idioma: 1,
+    descripcion:'Eliminado Local',
+    abreviatura: 'Eliminado Local',
+    fechaSincronizado: dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+    estadoSincronizado: constantes.estadoActivo
+  }).catch(function (err){
+    console.log("El estado ya existe");
+  });
+});
 
 module.exports = QueryEstComprobante;

@@ -9,11 +9,25 @@ var QueryComprobanteEvento = require('../../modelos/msoffline/queryComprobanteEv
  * 
  */
 
+
+QueryComprobanteEvento.guardarOffline = function guardarQueryComprobanteConcepto(data){
+    return QueryComprobanteEvento.create({
+        comprobante: data.inIdcomprobante ,
+        evento: data.inIdevento ,
+        idioma: data.inIidioma ,
+        descripcionEvento: data.vcDescripcionEvento ,
+        observacionEvento: data.vcObservacionEvento ,
+        estadoEvento: data.inEstadoEvento ,
+        fechaCreacion: data.fechaCreacion ,
+        usuarioCreacion: data.usuarioCreacion 
+    })
+}
+
 QueryComprobanteEvento.guardar = function guardarQueryComprobanteConcepto(data, id){
-    return QueryComprobanteEvento.findOne({where: {id: id}}).then(function(obj){
+    return QueryComprobanteEvento.findOne({where: {comprobante: data.inIdcomprobante, evento: data.inIdevento}}).then(function(obj){
         if(obj){
+            console.log(obj);
             return QueryComprobanteEvento.update({
-                id: data.seIdocevento,
                 comprobante: data.inIdcomprobante ,
                 evento: data.inIdevento ,
                 idioma: data.inIidioma ,
@@ -22,11 +36,10 @@ QueryComprobanteEvento.guardar = function guardarQueryComprobanteConcepto(data, 
                 estadoEvento: data.inEstadoEvento ,
                 fechaCreacion: data.fechaCreacion ,
                 usuarioCreacion: data.usuarioCreacion 
-            }, {where: {id: id}})
+            }, {where: {id: obj.id}})
         }
         else{
             return QueryComprobanteEvento.create({
-                id: data.seIdocevento,
                 comprobante: data.inIdcomprobante ,
                 evento: data.inIdevento ,
                 idioma: data.inIidioma ,
@@ -37,7 +50,6 @@ QueryComprobanteEvento.guardar = function guardarQueryComprobanteConcepto(data, 
                 usuarioCreacion: data.usuarioCreacion 
             })
         }
-
     });
 }
 

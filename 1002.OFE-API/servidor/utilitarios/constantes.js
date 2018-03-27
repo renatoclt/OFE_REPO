@@ -4,6 +4,16 @@ var constantes = {
     usuarioOffline: 'offline',
     estadoOffline: '0',
     generadoOnline: '1',
+    estadoGuardadoLocal:  'Guardado Local',
+    versionInicial: '0',
+    inEstadoGuardadoLocal:  '-1',
+    estadoEliminadoLocal: 'Eliminado Local',
+    inEstadoEliminadoLocal:  '-99',
+    estadoBloqueadoLocal: 'Bloqueado Local',// Estado Bloqueado falta sincronizacion
+    inEstadoBloqueadoLocal: '-90',// Estado Bloqueado falta sincronizacion
+    idiomaEspañol: '1',
+    obsEventoGuardarLocal: 'Creación de nuevo comprobante offline',
+    paisPeru: 'Perú',
     emisor: 1,
     receptor: 2,
     vacio: ' ',
@@ -23,9 +33,25 @@ var constantes = {
     numeroDeComprobante: '15', // Comunicación de Baja - Número de Comprobante
     motivoBaja: '16', //Comunicación de Baja - Motivo de Baja
     fechaBaja: '12', //Comunicacion de baja - Fecha de baja
-    bloqueoLocal: 'Bloqueado Local', // Estado Bloqueado falta sincronizacion
-    docuquery: 'http://104.196.1.181:8081',
+    docuquery: 'http://35.196.21.141:8081',
     pathDocumentoDetalle: '/api/fe/ms-documentos-query/v1/documento?id=',
+    idTipoDocumentoRuc: '6',
+    tipoDocumentoRuc: 'REG. UNICO DE CONTRIBUYENTES',
+    retencion: {
+        inDeguiapublicada: '0',
+        vcTipofactura: 'M',
+        deImpuesto1: '0.0',
+        deImpuesto2: '0.0',
+        deImpuesto3: '0.0',
+        deDescuento: '0.0',
+        deSubtotalcomprobantepago: '0.0',
+        inIdindicadorimpuesto: '0',
+        chOpregfac: '3',
+        chTipoemision: 'E',
+        inIdbienservicio: '0',
+        deAnticipo: '0.00'
+
+    },
     /**
      * Constantes de API
      */

@@ -98,6 +98,42 @@ var contoladorSeries =  function (ruta, rutaEsp){
             res.status(400).send('error');
         }
     });
+
+
+    /**
+     * Enviamos la ruta 
+     * y declaramos una funcion asincrona q espera los datos de la tabla
+     */
+    router.get(ruta.concat('/search/filtrossecundario'), async function (req, res) {
+        if (req.query.id_entidad && req.query.id_entidad>0 && req.query.id_tipo_comprobante && req.query.id_tipo_comprobante > 0 ){
+            let tabla = req.query.tabla;
+            try{
+                var data = await Serie.filtroSecundario(req.query.id_entidad, req.query.id_tipo_comprobante,req.query.id_tipo_serie); 
+                if(data.length == 0 ){
+                    res.status(200).json({});
+                }
+                else{
+                    var hateoasObj_n = Object.assign({},hateoasObj);
+                    hateoasObj_n.type = nombreHateo;
+                    hateoasObj_n.data = data.map(function (series) {
+                        return series.dataValues;
+                    });
+                    hateoasObj_n.nombreColeccion = "serieRedises";
+                    hateoasObj_n.ruta = rutaEsp;
+                    hateoasObj_n.paginacion.activo = false;
+                    hateoasObj_n.busqueda.activo = false;
+                    res.json(hateoas.link(hateoasObj_n));
+                }
+                
+            }
+            catch(e){
+                res.status(400).send('error');
+            }
+        }
+        else{
+            res.status(400).send('error');
+        }
+    });
 };
 
 module.exports = contoladorSeries;

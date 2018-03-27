@@ -155,16 +155,27 @@ function Millones(num) {
 }//Millones()
 
 function centavosNumeracion(num){
-    switch(num){
-        case(0):
-            return '00/100';
-        case(0):
-            return '00/100';
-    }
+    if(num>9 && num<20)
+        return '1'+ num%10 + '/100';
+    if(num>19 && num<30)
+        return '2'+ num%10 + '/100';
+    if(num>29 && num<40)
+        return '3'+ num%10 + '/100';
+    if(num>39 && num<50)
+        return '4'+ num%10 + '/100';    
+    if(num>49 && num<60)
+        return '5'+ num%10 + '/100';
+    if(num>59 && num<70)
+        return '6'+ num%10 + '/100';
+    if(num>69 && num<80)
+        return '7'+ num%10 + '/100';
+    if(num>79 && num<90)
+        return '8'+ num%10 + '/100';    
+    if(num>89 && num<100)
+        return '9'+ num%10 + '/100';    
 }
 
 var numeroALetras = module.exports.numeroALetras = function NumeroALetras(num) {
-    console.log(1);
     var data = {
         numero: num,
         enteros: Math.floor(num),
@@ -178,15 +189,14 @@ var numeroALetras = module.exports.numeroALetras = function NumeroALetras(num) {
 
     if (data.centavos > 0) {
         data.letrasCentavos = function (){
-            if (data.centavos == 1)
-                return Millones(data.centavos) + " " + data.letrasMonedaCentavoSingular;
-            else
-                return Millones(data.centavos) + " " + data.letrasMonedaCentavoPlural;
+            return centavosNumeracion(data.centavos) + " " + data.letrasMonedaCentavoPlural;
             }();
+    }else{
+        return '00/100 Soles'
     };
 
-    if(data.enteros == 0)
+    if(data.enteros == 0){
         return "CERO CON " + data.letrasCentavos;
-    else 
+    }else 
         return Millones(data.enteros) + " CON " + data.letrasCentavos;
 }//NumeroALetras()

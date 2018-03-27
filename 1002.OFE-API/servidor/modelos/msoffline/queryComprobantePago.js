@@ -172,16 +172,8 @@ var QueryComprobantePago = conexion.define('QueryComprobantePago',
       field: "ts_fechapagocomprobantepago",
     },
     tsFechacreacion: {
-      type:sequelize.INTEGER,
+      type:sequelize.TEXT,
       field: "ts_fechacreacion",
-      set(val){
-        var salida=new Date(val);
-        
-          this.setDataValue('tsFechacreacion', salida.getTime());
-      },
-      get() {
-          return this.getDataValue('tsFechacreacion');
-        }  
     },
     tsFecharegistro: {
       type: sequelize.TEXT,

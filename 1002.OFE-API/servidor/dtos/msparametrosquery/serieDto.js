@@ -20,6 +20,16 @@ Serie.filtro = function serieFiltro(id_entidad,id_tipo_comprobante,id_tipo_serie
     return  data;
 }
 
+Serie.filtroSecundario = function serieFiltroSecundario(id_entidad,id_tipo_comprobante){
+    var data = Serie.findAll({ attributes: filtroAtributosSerie.attributes ,
+        where: {
+            idEntidad: id_entidad,
+            idTipoComprobante:id_tipo_comprobante            
+        }
+      });
+    return  data;
+}
+
 /**
  * Funcion que retorna la tabla T_Serie segun su id
  * 

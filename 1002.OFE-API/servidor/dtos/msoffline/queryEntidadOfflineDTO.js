@@ -8,14 +8,21 @@ var EntidadQueryOffline = require('../../modelos/msoffline/EntidadQueryOffline')
  * Funcion que guarda los comprobantes de pago
  * 
  */
+EntidadQueryOffline.nuevoID = async function nuevoID(){
+    let id = await EntidadQueryOffline.max('id').error(function(error){
+        return 0;
+    });
+    return (id % 10000000) + 10000001;
+}
 
-EntidadQueryOffline.guardar = function guardarEntidadQueryOffline(data){
+EntidadQueryOffline.guardar = async function guardarEntidadQueryOffline(data){
+    
     return EntidadQueryOffline.create({
         id: data.id,
         documento: data.documento ,
         denominacion: data.denominacion ,
         nombreComercial: data.nombreComercial ,
-        direccion: data.direccion ,
+        direccionFiscal: data.direccion ,
         correo: data.correo ,
         logo: data.logo ,
         pais: data.pais ,
@@ -31,6 +38,60 @@ EntidadQueryOffline.guardar = function guardarEntidadQueryOffline(data){
         fechaSincronizado: data.fechaSincronizado ,
         estadoSincronizado: data.estadoSincronizado 
     });
+}
+
+EntidadQueryOffline.buscarGuardarActualizar = function buscarGuardarActualizar(data, id){
+    return EntidadQueryOffline.findOne({where: {id: id}}).then(function(obj){
+        if(obj){
+            return EntidadQueryOffline.update({
+                id: data.id,
+                documento: data.documento,
+                denominacion: data.denominacion,
+                nombreComercial: data.nombreComercial,
+                direccionFiscal: data.direccion,
+                correoElectronico: data.correo,
+                idEbiz: data.idEbiz,
+                pais: data.pais ,
+                ubigeo: data.ubigeo,
+                tipoDocumento: data.tipoDocumento,
+                idTipoDocumento: data.idTipoDocumento,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion,
+                fechaModificacion: data.fechaModificacion,
+                estado: data.estado,
+                fechaSincronizado: data.fechaSincronizado,
+                estadoSincronizado: data.estadoSincronizado
+            },  {where: {id: id}});
+        }else{
+            return EntidadQueryOffline.create({
+                id: data.id,
+                documento: data.documento,
+                denominacion: data.denominacion,
+                nombreComercial: data.nombreComercial,
+                direccionFiscal: data.direccion,
+                correoElectronico: data.correo,
+                idEbiz: data.idEbiz,
+                pais: data.pais ,
+                ubigeo: data.ubigeo,
+                tipoDocumento: data.tipoDocumento,
+                idTipoDocumento: data.idTipoDocumento,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion,
+                fechaModificacion: data.fechaModificacion,
+                estado: data.estado,
+                fechaSincronizado: data.fechaSincronizado,
+                estadoSincronizado: data.estadoSincronizado
+            });
+        }
+    });
+}
+
+
+
+EntidadQueryOffline.buscar = function buscarEntidad(tipoDocumento, documento){
+    return EntidadQueryOffline.findOne({ where: {idTipoDocumento: tipoDocumento, documento: documento } });
 }
 
 module.exports = EntidadQueryOffline;

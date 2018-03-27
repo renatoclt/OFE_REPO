@@ -137,6 +137,8 @@ Usuario.sync().then(() => {
     token: 'comprador1',
     perfil: 'comprador',
     organizaciones: '[{"id":"94e4e927-554d-418c-a770-e6cfe6235000","nombre":"TRANSPORTES 77 S.A.","tipo_empresa":"P","keySuscripcion":"07a12d074c714f62ab037bb2f88e30d3","ruc":"20100015103"}]',
+  }).catch(function (err){
+    console.log("El usuario ya existe");
   });
 });;
 

@@ -2,7 +2,7 @@
  * @author --- Modificado **-**-****
  * @author renato creado 22-01-2018 
  */
-var QueryProductoDTO = require('../../modelos/msoffline/QueryProducto');
+var QueryProductoDTO = require('../../modelos/msoffline/queryProducto');
  /**
  * Funcion que guarda los comprobantes de pago
  * 

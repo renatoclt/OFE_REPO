@@ -3,6 +3,7 @@ var ComprobanteEventoQuery = conexion.define('ComprobanteEventoQuery',
       id:{
       type: sequelize.INTEGER,
       field: "se_idocevento",
+      autoIncrement: true,
       unique: true,
       primaryKey: true,
       allowNull:false            

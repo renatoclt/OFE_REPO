@@ -20,13 +20,13 @@ var controladorRetenciones = function (ruta, rutaEsp) {
     });
 
     router.get(ruta.concat('/'), function (req, res, next) {
-        var regxpag = 10
+        var regxpag = 10;
         pagina = 0;
-        if (req.query.pagina) {
-            pagina = req.query.pagina;
+        if(req.query.size && req.query.size!=""){
+            regxpag = req.query.size;
         }
-        if (req.query.limite) {
-            regxpag = req.query.limite;
+        if(req.query.pagina && req.query.pagina !=""){
+            pagina = req.query.pagina;
         }
         RetencionDTO.buscarComprobantes(pagina, regxpag).then(function (resDTO) {
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);

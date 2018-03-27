@@ -32,23 +32,20 @@ var controladorBaja = function (ruta,rutaEsp){
                 instanciaDetalleBaja.usuarioCreacion = data.usuarioCreacion;
                 instanciaDetalleBaja.usuarioModifica = data.usuarioCreacion;
                 instanciaDetalleBaja.totalImporteDestino = 0;
-                instanciaDetalleBaja.estado = constantes.bloqueoLocal;
+                instanciaDetalleBaja.estado = constantes.estadoBloqueadoLocal;
                 instanciaDetalleBaja.estadoComprobante = 2;
                 instanciaDetalleBaja.fechaCreacion = data.fechaEmision;
                 instanciaDetalleBaja.fechaModificacion= data.fechaEmision;
                 instanciaDetalleBaja.fechaEmisionDestino  = data.fechaEmision;
-                
                 await DocReferencia.guardar(instanciaDetalleBaja);
                 // Edicion JSON
                 delete instanciaDetalleBaja.usuarioCreacion;
                 delete instanciaDetalleBaja.usuarioModifica;
                 delete instanciaDetalleBaja.idDocumentoOrigen;
                 delete instanciaDetalleBaja.totalImporteDestino;
-             
-
                 var Comprobante = await ComprobantePagoQuery.buscarComprobanteById(req.body.detalleBaja[loop].idComprobante);
-                instanciaDetalleBaja =await detalleDocumento(data,Comprobante,instanciaDetalleBaja);
-                data.detalleBaja[loop].documentoParametro = listaTemporal
+                instanciaDetalleBaja = await detalleDocumento(data,Comprobante,instanciaDetalleBaja);
+                data.detalleBaja[loop].documentoParametro = listaTemporal;
                 loop++;
             }        
             delete data.id;

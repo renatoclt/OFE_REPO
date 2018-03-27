@@ -259,7 +259,7 @@ function agregarParametrosaEntidad(parametro){
                 objeto.solUsuario=Json.valor;
                 objeto.solClave=Json.auxiliarCaracter;
             break;
-        case 5: ////////////////////////////////////////////////////
+        case 5: 
                 objeto.certificadoDigitalClave=Json.auxiliarCaracter;
                 objeto.certificadoDigitalCloud=Json.valor;
                 objeto.certificadoDigitalTiempo=Json.auxiliarFecha;

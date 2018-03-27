@@ -18,7 +18,6 @@ var QueryDocRefenci = conexion.define('QueryDocRefenci',
     docOrigen: {
       type: sequelize.INTEGER(32),
       field: "in_idoc_origen",
-      allowNull:false
     },
     documentoDestino: {
       type: sequelize.INTEGER(32),
@@ -27,44 +26,71 @@ var QueryDocRefenci = conexion.define('QueryDocRefenci',
     tipoDocumentoOrigen: {
       type: sequelize.TEXT,
       field: "ch_tipo_doc_ori",
-      allowNull:false
     },
-    concepto: {
+    tipoDocDes: {
       type: sequelize.TEXT(4),
       field: "ch_tipo_doc_des",
-      allowNull:false
     },
     serieDestino: {
       type: sequelize.INTEGER(32),
       field: "ch_serie_dest",
-      allowNull:false
     },
     corrDest: {
         type: sequelize.INTEGER(32),
         field: "ch_corr_dest",
-        allowNull:false
     },
     fechaEmisionDestino: {
         type: sequelize.INTEGER(32),
         field: "da_fec_emi_dest",
-        allowNull:false
+    },
+    nuTotImpAux: {
+      type: sequelize.REAL,
+      field: "nu_tot_imp_aux"
     },
     totalImpustoDestino: {
         type: sequelize.INTEGER(32),
         field: "nu_tot_imp_dest",
-        allowNull:false
     },
     totalPorAuxiliar: {
         type: sequelize.INTEGER(32),
         field: "nu_tot_por_aux",
-        allowNull:false
     },
     tdocoriDesc: {
         type: sequelize.INTEGER(32),
         field: "vc_tdocori_desc",
-        allowNull:false
     },
-    
+    vcTdocDesDesc: {
+      type: sequelize.TEXT,
+      field: "vc_tdocdes_desc"
+    },
+    deTipoCambio: {           /// actualizar la base de datos con este campo
+      type: sequelize.REAL,
+      field: "de_tipocambio"
+    },
+    vcMonedaDestino: {
+      type: sequelize.TEXT,
+      field: "vc_mone_des"
+    },
+    deTotMoneDes: {
+      type: sequelize.REAL,
+      field: "de_tot_mone_des"
+    },
+    vcPolizaFactura: {
+      type: sequelize.TEXT,
+      field: "vc_poliza_factura"
+    },
+    deAnticipo: {
+      type: sequelize.REAL,
+      field: "de_anticipo"
+    },
+    vcAuxiliar1: {
+      type: sequelize.TEXT,
+      field: "vc_aux_1"
+    },
+    vcAuxiliar2: {
+      type: sequelize.TEXT,
+      field: "vc_aux_2"
+    },
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",

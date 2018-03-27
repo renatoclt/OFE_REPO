@@ -8,10 +8,11 @@ var QueryComprobantePago = require('../../modelos/msoffline/queryComprobantePago
  * Funcion que guarda los comprobantes de pago
  * 
  */
-
 QueryComprobantePago.guardar = function guardarQueryComprobantePago(data, id){
     return QueryComprobantePago.findOne({where: {id: id}}).then(function(obj){
         if(obj){
+            console.log('///////////////////////////////////////////////////////////////////////');
+            console.log(data.tsFechaemision);
             return obj.update({
                 id: data.id,
                 vcSerie: data.vcSerie ,
@@ -254,6 +255,28 @@ QueryComprobantePago.guardar = function guardarQueryComprobantePago(data, id){
             });
         }
     })
+
+}
+
+
+QueryComprobantePago.sincronizarDocumentoEstado = function sincronizarDocumentoEstado(data){
+    QueryComprobantePago.findOne({where:{id:data.id}}).then(function(obj){
+        return QueryComprobantePago.update({
+            id: data.id,
+            chEstadocomprobantepago: data.chEstadocomprobantepago,
+            chEstadocomprobantepagocomp:  data.chEstadocomprobantepagocomp,
+        }, {where: {id: data.id}}) ;
+    });
+}
+
+QueryComprobantePago.sincronizarDocumentoErroneo = function sincronizarDocumentoErroneo(id){
+    QueryComprobantePago.findOne({where:{id:id}}).then(function(obj){
+        return QueryComprobantePago.update({
+            id: id,
+            chEstadocomprobantepago: constantes.inEstadoEliminadoLocal,
+            chEstadocomprobantepagocomp: constantes.estadoEliminadoLocal,
+        }, {where: {id: id}}) ;
+    });
 }
 
 module.exports = QueryComprobantePago;

@@ -10,12 +10,12 @@ hateoasLinker = require('express-hateoas-links');
 constantes = require('./servidor/utilitarios/constantes');
 servicios = require('./servidor/utilitarios/servicios')
 dateFormat = require('dateformat');
-
+var cors = require('cors')
 LocalDateTime = require('js-joda').LocalDateTime;
 var Client = require('node-rest-client').Client;
 //excepcion = require('./servidor/utilitarios/excepcion');
 app = express();
-
+app.use(cors())
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 

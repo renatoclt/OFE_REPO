@@ -38,7 +38,6 @@ ReferenciasQuery.buscarReferenciasByComprobante = function (pagina,limite,compro
             referencias = referencias.rows.map(function(referencia){ 
                 return referencia.dataValues;
             });
-        
             resolve({'referencias': referencias, 'cantidadReg': cantidadReg});
             });
         }, function (err) {

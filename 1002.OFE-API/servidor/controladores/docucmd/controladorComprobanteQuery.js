@@ -13,13 +13,14 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
         
         router.get(ruta.concat('/'), function (req, res, next) {
             ComprobantePagoQueryDTO.buscarComprobanteById(req.query.id).then(function (resDTO) {
+                var date = new Date(resDTO.tsFechaemision );
+                resDTO.tsFechaemision = date.getTime();
                 res.json(resDTO);
             });
         // next();
         });
         
         router.get(ruta.concat('/query'), function (req, res, next) {
-
             var
             pagina=0,
             limite=0,
@@ -100,7 +101,6 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
             if (req.query.ticketBaja && req.query.ticketBaja!=''){
                 ticketBaja = req.query.ticketBaja;
             }
-            
             ComprobantePagoQueryDTO.buscarComprobanteConFiltros(
                 pagina, 
                 limite,
@@ -138,11 +138,13 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
         });
 
         router.get(ruta.concat('/:id'), function (req, res, next) {
+            
             ComprobantePagoQueryDTO.buscarComprobante(req.params.id).then(function (resDTO) {
                 res.json(resDTO);
             });
         // next();
         });
+        
 };
 
 module.exports = controladorComprobanteQuery;

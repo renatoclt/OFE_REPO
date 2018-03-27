@@ -1,6 +1,6 @@
 var uuid = require('../../utilitarios/uuid');
 
-var ControladorPdfRetenciones = require('./ControladorPdfRetenciones');
+var ControladorPdfRetenciones = require('./controladorPdfRetenciones');
 var NuevoDocumentoCreado = require('../../dtos/comprobante/comprobantePago');
 
 var controladorPdf = function (ruta, rutaEsp) {

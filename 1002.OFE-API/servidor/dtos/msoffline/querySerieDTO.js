@@ -24,7 +24,8 @@ QuerySerie.guardar = function guardarQuerySerie(data){
         fechaCreacion: data.fechaCreacion ,
         fechaModificacion: data.fechaModificacion ,
         fechaSincronizado: data.fechaSincronizado ,
-        estadoSincronizado: data.estadoSincronizado ,        
+        estadoSincronizado: data.estadoSincronizado ,    
+        estado: constantes.estadoActivo    
     });
 }
 

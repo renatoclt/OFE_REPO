@@ -9,27 +9,70 @@ var QueryDocReferenci = require('../../modelos/msoffline/queryDocReferenci');
  * 
  */
 
-QueryDocReferenci.guardar = function guardarQueryDocReferenci(data){
+QueryDocReferenci.guardarQuery = function guardarQuery(data){
     return QueryDocReferenci.create({
         id: data.id,
         docOrigen: data.docOrigen ,
         documentoDestino: data.documentoDestino ,
         tipoDocumentoOrigen: data.tipoDocumentoOrigen ,
-        concepto: data.concepto ,
+        tipoDocDes: data.chTipoDocDes ,
         serieDestino: data.serieDestino ,
         corrDest: data.corrDest ,
         fechaEmisionDestino: data.fechaEmisionDestino ,
+        nuTotImpAux: data.nuTotImpAux,
         totalImpustoDestino: data.totalImpustoDestino ,
         totalPorAuxiliar: data.totalPorAuxiliar ,
         tdocoriDesc: data.tdocoriDesc ,
+        vcTdocDesDesc: data.vcTdocDesDesc,
+        deTipoCambio: data.deTipoCambio,
+        vcMonedaDestino: data.vcMonedaDestino,
+        deTotMoneDes: data.deTotMoneDes,
+        vcPolizaFactura: data.vcPolizaFactura,
+        deAnticipo: data.deAnticipo,
+        vcAuxiliar1: data.vcAuxiliar1,
+        vcAuxiliar2: data.vcAuxiliar2,
         usuarioCreacion: data.usuarioCreacion ,
         usuarioModificacion: data.usuarioModificacion ,
         fechaCreacion: data.fechaCreacion ,
         fechaModificacion: data.fechaModificacion ,
         estado: data.estado ,
         fechaSincronizado: data.fechaSincronizado ,
-        estadoSincronizado: data.estadoSincronizado ,
-                
+        estadoSincronizado: data.estadoSincronizado , 
+    });
+}
+
+QueryDocReferenci.guardar = function guardar(data){
+    console.log('///////////////////////////////////////////////////////////');
+    console.log(data);
+    console.log('///////////////////////////////////////////////////////////');
+    return QueryDocReferenci.create({
+        id: data.id,
+        docOrigen: data.docOrigen ,
+        documentoDestino: data.documentoDestino ,
+        tipoDocumentoOrigen: data.tipoDocumentoOrigen ,
+        tipoDocDes: data.chTipoDocDes ,
+        serieDestino: data.serieDestino ,
+        corrDest: data.corrDest ,
+        fechaEmisionDestino: data.fechaEmisionDestino ,
+        nuTotImpAux: data.nuTotImpAux,
+        totalImpustoDestino: data.totalImpustoDestino ,
+        totalPorAuxiliar: data.totalPorAuxiliar ,
+        tdocoriDesc: data.tdocoriDesc ,
+        vcTdocDesDesc: data.vcTdocDesDesc,
+        deTipoCambio: data.deTipoCambio,
+        vcMonedaDestino: data.vcMonedaDestino,
+        deTotMoneDes: data.deTotMoneDes,
+        vcPolizaFactura: data.vcPolizaFactura,
+        deAnticipo: data.deAnticipo,
+        vcAuxiliar1: data.vcAuxiliar1,
+        vcAuxiliar2: data.vcAuxiliar2,
+        usuarioCreacion: data.usuarioCreacion ,
+        usuarioModificacion: data.usuarioModificacion ,
+        fechaCreacion: data.fechaCreacion ,
+        fechaModificacion: data.fechaModificacion ,
+        estado: data.estado ,
+        fechaSincronizado: data.fechaSincronizado ,
+        estadoSincronizado: data.estadoSincronizado , 
     });
 }
 

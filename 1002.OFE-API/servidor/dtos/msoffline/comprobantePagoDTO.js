@@ -5,12 +5,11 @@
 var ComprobantePago = require('../../modelos/msoffline/comprobantePago');
 var documentoReferencia = require('../../modelos/msoffline/docReferencia');
 var documentoEntidad = require('../../modelos/msoffline/docEntidad');
-//const Op = conexion.Op;
+const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
  * 
  */
-
 ComprobantePago.guardar = function guardarComprobantePago(data){
     return ComprobantePago.create({
         id: data.id,
@@ -113,7 +112,7 @@ ComprobantePago.guardar = function guardarComprobantePago(data){
         estadoSincronizado: data.estadoSincronizado ,
         generado: data.generado ,
         estadoComprobantePago: data.estadoComprobantePago,
-        guiapublicada: data.guiapublicada
+        guiapublicada: data.guiapublicada,
     });
 }
 
@@ -222,7 +221,9 @@ ComprobantePago.buscarGuardarActualizar = function buscarGuardarActualizar(data,
                 estadoSincronizado: data.estadoSincronizado ,
                 generado: data.generado ,
                 estadoComprobantePago: data.estadoComprobantePago,
-                guiapublicada: data.guiapublicada
+                guiapublicada: data.guiapublicada,
+                identidadEmisor: data.identidadEmisor,
+                identidadReceptor: data.identidadReceptor
             }, {where: {id: id}});
         }
         else{
@@ -327,15 +328,52 @@ ComprobantePago.buscarGuardarActualizar = function buscarGuardarActualizar(data,
                 estadoSincronizado: data.estadoSincronizado ,
                 generado: data.generado ,
                 estadoComprobantePago: data.estadoComprobantePago,
-                guiapublicada: data.guiapublicada
+                guiapublicada: data.guiapublicada,
+                identidadEmisor: data.identidadEmisor,
+                identidadReceptor: data.identidadReceptor
             });
         }
     });
 }
 
 
+ComprobantePago.sincronizarDocumentoEstado = function sincronizarDocumentoEstado(data){
+    ComprobantePago.findOne({where:{id:data.id}}).then(function(obj){
+        return ComprobantePago.update({
+            id: data.id,
+            fecSincronizado:  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+            estadoSincronizado: constantes.estadoActivo,
+            estado: data.chEstadocomprobantepago,
+            estadoComprobantePago: data.chEstadocomprobantepagocomp,
+        }, {where: {id: data.id}}) ;
+    });
+}
 
+ComprobantePago.estadosPendientes = function estadosPendientes(idTipoComprobante){
+    return ComprobantePago.findAll({where: {estado: {[Op.lt]: 1}, idTipoComprobante: idTipoComprobante }});
+}
 
+ComprobantePago.sincronizarDocumentoErroneo = function sincronizarDocumentoErroneo(id){
+    ComprobantePago.findOne({where:{id:id}}).then(function(obj){
+        return ComprobantePago.update({
+            id: id,
+            fecSincronizado:  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+            estadoSincronizado: constantes.estadoActivo,
+            estado: constantes.inEstadoEliminadoLocal,
+            estadoComprobantePago: constantes.estadoEliminadoLocal,
+        }, {where: {id: id}}) ;
+    });
+}
+
+ComprobantePago.sincronizarDocumento = function sincronizarDocumento(id){
+    ComprobantePago.findOne({where:{id:id}}).then(function(obj){
+        return ComprobantePago.update({
+            id: id,
+            fecSincronizado:  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+            estadoSincronizado: constantes.estadoActivo,
+        }, {where: {id: id}}) ;
+    });
+}
 ComprobantePago.filtro = function comprobantePagoFiltro(){
     return ComprobantePago.findAll({ attributes: atributosComprobantePago.attributes ,
         include:[ 
@@ -371,6 +409,7 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
         }
       });
 }
+
 
 
 ComprobantePago.sincornizar = function comprobanteSincronizar(){

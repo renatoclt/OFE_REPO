@@ -51,6 +51,10 @@ var QuerySerie = conexion.define('QuerySerie', {
       allowNull: false,
       field: "vc_idtipodocumento",
     },
+    estado:{
+      type: sequelize.INTEGER,
+      field: "in_estado",
+    },
     usuarioCreacion: {
       type: sequelize.TEXT,
       allowNull: false,
@@ -79,7 +83,6 @@ var QuerySerie = conexion.define('QuerySerie', {
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
     }
-   
   },
     {
       tableName: 'fe_query_t_serie',
