@@ -24,7 +24,6 @@ var contoladorTipoafectacionigv = function (ruta, rutaEsp){
     });
 
     router.get(ruta.concat('/'), function (req, res, next) {
-    
         TipoAfecIgvDTO.todos().then(function (resDTO) {
             var hateoasObj_n = Object.assign({},hateoasObj);
             hateoasObj_n.type = nombreHateo;

@@ -42,7 +42,7 @@ var QueryEntParametros = require('../../dtos/msoffline/queryEntParametrosDTO') ;
 var QueryEntidad = require('../../dtos/msoffline/queryEntidadDTO') ; //falta
 var QueryEstComprobante = require('../../dtos/msoffline/queryEstComprobanteDTO') ; //falta
 var QueryIdioma = require('../../dtos/msoffline/queryIdiomaDTO') ; //falta
-var QueryParametroDominioDoc = require('../../dtos/msoffline/queryParametroDominioDocDTO') ; //falta
+var QueryParametroDominioDoc = require('../../dtos/msoffline/queryParametroDominioDocDTO') ; 
 var QueryParametroDominioEnt = require('../../dtos/msoffline/queryParametroDominioEntDTO') ; //falta
 var QueryProducto = require('../../dtos/msoffline/queryProductoDTO') ; //falta
 var QueryProductoXComprobantePago = require('../../dtos/msoffline/queryProductoXComprobantePagoDTO') ;  //falta
@@ -213,6 +213,56 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     });
 
+    router.post(ruta.concat('/tipoprecioventa'), async function(req, res){
+        req.body.forEach(async element =>{
+            element.catalogo = constantes.catalogoTipoPrecio;
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion =  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion =  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado =  constantes.estadoActivo;
+            console.log(element);
+            await QueryTipoPrecVen.guardar(element);
+        });
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/parametros'), async function(req, res){
+        req.body.forEach(async element =>{
+            element.fechaSincronizacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado = constantes.estadoActivo;
+            await QueryParametroDominioDoc.guardar(element);
+        });
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/queryTipoAfecacionIgv'), async function(req, res){
+        req.body.forEach(async element =>{
+            element.fechaSincronizacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.estadoSincronizado = constantes.estadoActivo;
+            element.catalogo = constantes.catalogoTipoAfecIgv;
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            await QueryTipoAfecIgv.guardar(element);
+        });
+        res.status(200).send('{}');
+    })
+
+    router.post(ruta.concat('/queryTipoCalcIsc'), async function(req, res){
+        req.body.forEach(async element =>{
+            element.catalogo = constantes.catalogoTipoCalcIsc;
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            await QueryTipoCalcIsc.guardar(element);
+        });
+        res.status(200).send('{}');
+    })
+
     router.post(ruta.concat('/entidad'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
@@ -253,10 +303,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await DominioDocumento.guardar(req.body);
         res.status(200).send('{}');
-    });    
-
-
-    
+    }); 
 
     router.post(ruta.concat('/concepto'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");

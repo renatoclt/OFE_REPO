@@ -11,5 +11,7 @@ var controladoresParmqry = function (ruta) {
     concepto = require('../controladores/parmqry/controladorConcepto')(ruta.concat(navC.hijos['concepto'].ruta), navC.hijos['concepto'].ruta);
     serie = require('../controladores/parmqry/controladorSeries')(ruta.concat(navC.hijos['series'].ruta),navC.hijos['series'].ruta);
     estadoComprobante = require('../controladores/parmqry/controladorEstadoComprobante')(ruta.concat(navC.hijos['estadoComprobante'].ruta),navC.hijos['estadoComprobante'].ruta);
+    parametros = require('../controladores/parmqry/controladorParametro')(ruta.concat(navC.hijos['parametros'].ruta),navC.hijos['parametros'].ruta);
+    tipocalculoisc = require('../controladores/parmqry/controladorTipoCalculoIsc')(ruta.concat(navC.hijos['tipocalculoisc'].ruta),navC.hijos['tipocalculoisc'].ruta);
 }
 module.exports = controladoresParmqry;

@@ -12,6 +12,9 @@ var constantes = {
     estadoBloqueadoLocal: 'Bloqueado Local',// Estado Bloqueado falta sincronizacion
     inEstadoBloqueadoLocal: '-90',// Estado Bloqueado falta sincronizacion
     idiomaEspañol: '1',
+    catalogoTipoPrecio: 'tipo_prec_ven',
+    catalogoTipoAfecIgv: 'tipo_afec_igv',
+    catalogoTipoCalcIsc: 'tipo_calc_isc',
     obsEventoGuardarLocal: 'Creación de nuevo comprobante offline',
     paisPeru: 'Perú',
     emisor: 1,
@@ -29,7 +32,7 @@ var constantes = {
     idTipocomprobanteRetencion: '20', // valor del id del conprobante tipo de retencion,
     idTipocomprobanteFactura: '01', // valor del id del conprobante tipo de factura
     idTipocomprobanteBoleta: '03', // valor del id del conprobante tipo de boleta
-    idTipocomprobantePercepcion: 'PR', // valor del id del conprobante tipo de guias de remision
+    idTipocomprobantePercepcion: '40', // valor del id del conprobante tipo de guias de remision
     numeroDeComprobante: '15', // Comunicación de Baja - Número de Comprobante
     motivoBaja: '16', //Comunicación de Baja - Motivo de Baja
     fechaBaja: '12', //Comunicacion de baja - Fecha de baja
@@ -51,6 +54,11 @@ var constantes = {
         inIdbienservicio: '0',
         deAnticipo: '0.00'
 
+    },
+    percepcion: {
+        flagOrigenComprobante: 'p',
+        flagOrigenCreacion: '1',
+        tipoFactura: 'M',
     },
     /**
      * Constantes de API

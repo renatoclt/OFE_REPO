@@ -94,7 +94,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 2,
+    tipoComprobante: 3,
   }).catch(function (err){
     console.log("El estado ya existe");
   }),
@@ -124,7 +124,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 4,
+    tipoComprobante: 40,
   }).catch(function (err){
     console.log("El estado ya existe");
   }),

@@ -38,10 +38,11 @@ var rutas = {
                     "facturas":{"ruta":"/facturas", "descripcion": "Implementacion de servicio rest obtener facturas de la base de datos"},
                     "boletas":{"ruta":"/boletas", "descripcion": "Implementacion de servicio rest obtener boletas de la base de datos"},
                     //"guiasremision":{"ruta":"/guiasremision", "descripcion": "Implementacion de servicio rest obtener guias de remision de la base de datos"}
-                    "percepciones":{"ruta":"/percepciones", "descripcion": "Implementacion de servicio rest obtener percepciones de la base de datos"},
+                    //"percepciones":{"ruta":"/percepciones", "descripcion": "Implementacion de servicio rest obtener percepciones de la base de datos"},
                     "documentoquery": {"ruta":"/documento", "descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"},
                     "baja":{"ruta":"/baja","descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"},
-                    "pdfretencion":{"ruta":"/pdfretencion","descripcion":"Implementacion del servicio de descarga de archivos pdf"}
+                    "pdfretencion":{"ruta":"/pdfretencion","descripcion":"Implementacion del servicio de descarga de archivos pdf"},
+                    "percepcion":{"ruta":"/percepcion","descripcion":"Implementacion del servicio de guardar percepcion"},
                 }
             },
             "docuqry":{
@@ -65,7 +66,8 @@ var rutas = {
                     "concepto": {"ruta":"/concepto", "descripcion": "Imprementacion de servicios conceptos"},
                     "series":  {"ruta":"/seriess", "descripcion":"Implementacion de servicio rest para listar las series de offline"},
                     "estadoComprobante": {"ruta":"/estadoscomprobante", "descripcion":"Implementacion de servicio rest para listar los estados comprobantes"},
-                   
+                    "parametros": {"ruta":"/parametros", "descripcion":"Implementacion de servicio rest para parametros"},
+                    "tipocalculoisc":{"ruta":"/tipocalculoisc", "descripcion": "descripcion tipo calculo de isc"},
                 }
             },
             "offline":{

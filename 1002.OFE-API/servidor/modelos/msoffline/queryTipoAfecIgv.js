@@ -69,7 +69,7 @@ var QueryTipoAfecIgv = conexion.define('QueryTipoAfecIgv', {
    
   },
     {
-      tableName: 'fe_configuracion_t_tipo_afec_igv',
+      tableName: 'fe_query_t_tipo_afec_igv',
       timestamps: false
     });
     QueryTipoAfecIgv.sync();

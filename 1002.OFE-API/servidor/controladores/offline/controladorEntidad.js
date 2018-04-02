@@ -23,13 +23,14 @@ var controladorEntidad = async function (ruta, rutaEsp) {
                 entidad.idEbiz = null;
                 entidad.usuarioCreacion = constantes.usuarioOffline;
                 entidad.usuarioModificacion = constantes.usuarioOffline;
+                entidad.correoElectronico = data.correo;
                 entidad.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
                 entidad.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
                 entidad.estado = constantes.estadoActivo;
                 entidad.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
                 entidad.estadoSincronizado = constantes.estadoInactivo;
-                await EntidadOffline.guardar(entidad);
-                await EntidadQuery.guardar(entidad);
+                await EntidadOffline.buscarDocumentoGuardar(entidad);
+                await EntidadQuery.buscarDocumentoGuardar(entidad);
             }
         }
         catch(e){

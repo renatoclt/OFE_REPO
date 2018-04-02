@@ -1,12 +1,11 @@
-TipoAfecIgv = require('../../modelos/configuracion/tipoAfecIgv');
+TipoAfecIgv = require('../../modelos/msoffline/queryTipoAfecIgv');
 OP = sequelize.Op;
 
 TipoAfecIgv.todos = function(){
-   
     var promise = new Promise(function(resolve,reject){
         conexion.sync()
         .then(function () {
-            TipoAfecIgv.findAll({ where: { estado: 1}}).then(function (tipoAfectacionIgvRedises) {
+            TipoAfecIgv.findAll().then(function (tipoAfectacionIgvRedises) {
                 tipoAfectacionIgvRedises = tipoAfectacionIgvRedises.map(function(tipoAfectacionIgv){ 
                     return tipoAfectacionIgv.dataValues;
                 });

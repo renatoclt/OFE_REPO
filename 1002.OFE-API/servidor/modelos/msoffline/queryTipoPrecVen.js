@@ -64,8 +64,8 @@ var QueryTipoPrecVen = conexion.define('QueryTipoPrecVen', {
    
   },
     {
-      tableName: 'fe_configuracion_t_tipo_prec_ven',
+      tableName: 'fe_query_t_tipo_prec_ven',
       timestamps: false
     });
-    QueryTipoPrecVen.sync();
+  QueryTipoPrecVen.sync();
   module.exports = QueryTipoPrecVen;

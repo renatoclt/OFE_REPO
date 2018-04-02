@@ -10,8 +10,8 @@ var QueryTipoCalcIsc = require('../../modelos/msoffline/queryTipoCalcIsc');
 
 QueryTipoCalcIsc.guardar = function guardarQueryTipoCalcIsc(data){
     return QueryTipoCalcIsc.create({
-        id: data.id,
-        idioma: data.idioma ,
+        id: data.idTipoCalculo,
+        idioma: data.idIdioma ,
         codigo: data.codigo ,
         descripcion: data.descripcion ,
         afectaIgv: data.afectaIgv ,

@@ -33,6 +33,55 @@ QueryEntidadDTO.guardar = function guardarQueryEntidadDTO(data){
     });
 }
 
+QueryEntidadDTO.buscarDocumentoGuardar = async function buscarDocumentoGuardar(data){
+    return QueryEntidadDTO.findOne({where: {documento: data.documento  , idTipoDocumento: data.idTipoDocumento}}).then(function(obj){
+        if(obj){
+            return QueryEntidadDTO.update({
+                id: obj.id,
+                documento: obj.documento,
+                denominacion: obj.denominacion,
+                nombreComercial: obj.nombreComercial,
+                direccion: obj.direccion,
+                correo: obj.correo,
+                idEbiz: obj.idEbiz,
+                pais: obj.pais ,
+                ubigeo: obj.ubigeo,
+                tipoDocumento: obj.tipoDocumento,
+                idTipoDocumento: obj.idTipoDocumento,
+                usuarioCreacion: obj.usuarioCreacion,
+                usuarioModificacion: obj.usuarioModificacion,
+                fechaCreacion: obj.fechaCreacion,
+                fechaModificacion: obj.fechaModificacion,
+                estado: obj.estado,
+                fechaSincronizado: obj.fechaSincronizado,
+                estadoSincronizado: obj.estadoSincronizado
+            },  {where: {tipoDocumento: obj.tipoDocumento , idTipoDocumento: obj.idTipoDocumento}});
+        }
+        else{
+            return QueryEntidadDTO.create({
+                id: data.id,
+                documento: data.documento ,
+                denominacion: data.denominacion ,
+                nombreComercial: data.nombreComercial ,
+                direccion: data.direccion ,
+                correo: data.correo ,
+                logo: data.logo ,
+                pais: data.pais ,
+                ubigeo: data.ubigeo ,
+                tipoDocumento: data.tipoDocumento ,
+                idTipoDocumento: data.idTipoDocumento ,
+                idEbiz: data.idEbiz ,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion ,
+                fechaModificacion: data.fechaModificacion ,
+                estado: data.estado ,
+                fechaSincronizado: data.fechaSincronizado ,
+                estadoSincronizado: data.estadoSincronizado 
+            });
+        }
+    });    
+}
 
 QueryEntidadDTO.buscarGuardarActualizar = function buscarGuardarActualizar(data, id){
     return QueryEntidadDTO.findOne({where: {id: id}}).then(function(obj){

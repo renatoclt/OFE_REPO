@@ -10,8 +10,8 @@ var QueryTipoAfecIgv = require('../../modelos/msoffline/queryTipoAfecIgv');
 
 QueryTipoAfecIgv.guardar = function guardarQueryTipoAfecIgv(data){
     return QueryTipoAfecIgv.create({
-        id: data.id,
-        idioma: data.idioma ,
+        id: data.idTipoAfectacion,
+        idioma: data.idIdioma ,
         codigo: data.codigo ,
         descripcion: data.descripcion ,
         afectaIgv: data.afectaIgv ,

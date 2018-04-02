@@ -10,8 +10,8 @@ var QueryTipoPrecVen = require('../../modelos/msoffline/queryTipoPrecVen');
 
 QueryTipoPrecVen.guardar = function guardarQueryTipoPrecVen(data){
     return QueryTipoPrecVen.create({
-        id: data.id,
-        idioma: data.idioma ,
+        id: data.idTipoPrecioVenta,
+        idioma: data.idIdioma ,
         codigo: data.codigo ,
         descripcion: data.descripcion ,
         catalogo: data.catalogo ,

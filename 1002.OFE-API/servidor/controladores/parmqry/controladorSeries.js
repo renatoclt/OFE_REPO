@@ -88,7 +88,6 @@ var contoladorSeries =  function (ruta, rutaEsp){
                     hateoasObj_n.busqueda.activo = false;
                     res.json(hateoas.link(hateoasObj_n));
                 }
-                
             }
             catch(e){
                 res.status(400).send('error');
