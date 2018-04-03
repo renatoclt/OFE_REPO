@@ -7,7 +7,7 @@ var archivo = require('../../dtos/msoffline/archivoDTO');
 var Serie = require('../../dtos/msparametrosquery/serieDto');
 var DocumentoQuery = require('../../dtos/msoffline/queryComprobantePagoDTO');
 var entidad = require('../../dtos/msoffline/queryEntidadOfflineDTO');
-var Evento = require('../../dtos/msoffline/queryComprobanteEventoDTO')
+var Evento = require('../../dtos/msoffline/queryComprobanteEventoDTO');
 var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
 /**
  * Controlador del

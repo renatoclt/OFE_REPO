@@ -11,8 +11,6 @@ var QueryComprobantePago = require('../../modelos/msoffline/queryComprobantePago
 QueryComprobantePago.guardar = function guardarQueryComprobantePago(data, id){
     return QueryComprobantePago.findOne({where: {id: id}}).then(function(obj){
         if(obj){
-            console.log('///////////////////////////////////////////////////////////////////////');
-            console.log(data.tsFechaemision);
             return obj.update({
                 id: data.id,
                 vcSerie: data.vcSerie ,

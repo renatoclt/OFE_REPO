@@ -432,6 +432,28 @@ ComprobantePago.sincornizar = function comprobanteSincronizar(){
       });
 }
 
+ComprobantePago.sincornizarPercepcion = function comprobanteSincronizarPercepcion(){
+    return ComprobantePago.findAll({ attributes: atributosSincronizar.attributes ,
+        include:[ 
+            {
+                model: documentoReferencia,
+                as: 'facturasAfectadas', 
+                attributes: atributosDocumentoReferencia.attributes,
+            },
+            {
+                model: documentoEntidad,
+                as: 'DocEntidad', 
+                attributes: atributosDocumentoEntidad.attributes,
+            },
+        ],
+        where: {
+            estadoSincronizado: constantes.estadoInactivo,
+            idTipoComprobante:  constantes.idTipocomprobantePercepcion
+        }
+      });
+}
+
+
 var atributosSincronizar = {
     attributes: [
                 ['in_idcomprobantepago', 'idComprobanteOffline'], 

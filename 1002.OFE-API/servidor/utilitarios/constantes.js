@@ -40,6 +40,8 @@ var constantes = {
     pathDocumentoDetalle: '/api/fe/ms-documentos-query/v1/documento?id=',
     idTipoDocumentoRuc: '6',
     tipoDocumentoRuc: 'REG. UNICO DE CONTRIBUYENTES',
+    idTablaTipoComprobante: '10007',
+    vcIdregistromoneda: '000001',
     retencion: {
         inDeguiapublicada: '0',
         vcTipofactura: 'M',
@@ -59,6 +61,19 @@ var constantes = {
         flagOrigenComprobante: 'p',
         flagOrigenCreacion: '1',
         tipoFactura: 'M',
+        inDeguiapublicada: '0',
+        vcTipofactura: 'M',
+        deImpuesto1: '0.0',
+        deImpuesto2: '0.0',
+        deImpuesto3: '0.0',
+        deDescuento: '0.0',
+        deSubtotalcomprobantepago: '0.0',
+        inIdindicadorimpuesto: '0',
+        chOpregfac: '3',
+        chTipoemision: 'E',
+        inIdbienservicio: '0',
+        deAnticipo: '0.00'
+
     },
     /**
      * Constantes de API

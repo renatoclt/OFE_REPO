@@ -78,6 +78,7 @@ var rutas = {
                     "idioma": {"ruta":"/idiomas", "descripcion": "Idioma Servicio"},
                     "archivo": {"ruta":"/archivos", "descripcion": "Servicio que descarga archivos"},
                     "sincronizacionRetencion": {"ruta":"/sincronizacionRetencion", "descripcion":"sincronizarRetenciones"},
+                    "sincronizacionPercepcion": {"ruta":"/sincronizacionPercepcion", "descripcion":"sincronizacionPercepcion"},
                     "entidad": {"ruta":"/entidad","descripcion":"Se trabajara sobre entidad offline"}
                 }
             },            

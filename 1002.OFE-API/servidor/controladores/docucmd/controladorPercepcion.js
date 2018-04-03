@@ -3,6 +3,10 @@ var uuid = require('../../utilitarios/uuid');
 var Serie = require('../../dtos/msparametrosquery/serieDto');
 var NumeroALetras = require('../../utilitarios/numerosALetras');
 var PercepcionDTO = require("../../dtos/comprobante/percepcionDTO");
+var DocumentoQuery = require('../../dtos/msoffline/queryComprobantePagoDTO');
+var entidad = require('../../dtos/msoffline/queryEntidadOfflineDTO');
+var Evento = require('../../dtos/msoffline/queryComprobanteEventoDTO');
+var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
 
 var contoladorPercepcion =  function (ruta, rutaEsp){ 
 
@@ -73,13 +77,13 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
             data.subtotalComprobante = 0.0;
             data.idindicadorImpuesto = 0
             data.idTablaMoneda = 10001;
-            data.idRegistroMoneda = 000001;
-            data.idtablaTipoComprobante = '10007';
+            data.idRegistroMoneda = '000001';
+            data.idtablaTipoComprobante = constantes.idTablaTipoComprobante;
             data.idRegistroTipoComprobante = 20;
             data.impuestoGvr = 0;
-            //
             data.estadoComprobante = constantes.estadoGuardadoLocal;
             await Documento.guardar(data);  
+            await guardarQuery(data);
         }catch(e){
             console.log(e);
             console.log('ingrese');
@@ -87,6 +91,194 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
         res.json(data);
     })   
 };
+
+async function guardarEvento(inIdcomprobante, usuarioCreacion ){
+    let eventoData = {};
+    //evento.id = data.seIdocevento;
+    eventoData.inIdcomprobante = inIdcomprobante;
+    eventoData.inIdevento = constantes.inEstadoGuardadoLocal;
+    eventoData.inIidioma = constantes.idiomaEspañol;
+    eventoData.vcDescripcionEvento = constantes.estadoGuardadoLocal;
+    eventoData.vcObservacionEvento =  constantes.obsEventoGuardarLocal;
+    eventoData.inEstadoEvento = constantes.estadoActivo;
+    eventoData.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    eventoData.usuarioCreacion = usuarioCreacion;
+    console.log(eventoData);
+    await Evento.guardar(eventoData);
+}
+
+async function guardarQuery(data){
+    let comprobante = {};
+    comprobante.id = data   .id;
+    comprobante.vcSerie= data.vcSerie ;
+    comprobante.vcCorrelativo = data.correlativo ;
+    for (let entidad of data.documentoEntidad){
+        if(entidad.idTipoEntidad == constantes.receptor){
+            let datosEntidad =  await buscarEntidad(entidad.tipoDocumento, entidad.documento);
+            datosEntidad = datosEntidad == null ? {} : datosEntidad.dataValues;
+            comprobante.inIdorganizacionproveedora = datosEntidad.idEbiz ;
+            comprobante.vcOrgproveedoraDocumento = datosEntidad.documento ;
+            comprobante.vcOrgproveedoraDenominacion = datosEntidad.denominacion ;
+            comprobante.vcOrgproveedoraNomcomercial = datosEntidad.nombreComercial;
+            comprobante.vcOrgproveedoraDirfiscal  = datosEntidad.direccionFiscal;
+            comprobante.vcOrgproveedoraCorreo = datosEntidad.correoElectronico;
+            comprobante.inIdentidadreceptor = datosEntidad.id;
+        }else if (entidad.idTipoEntidad == constantes.emisor){  
+            let datosEntidad =  await buscarEntidad(entidad.tipoDocumento, entidad.documento);
+            datosEntidad = datosEntidad.dataValues;
+            comprobante.inIdentidademisor = datosEntidad.id;
+            comprobante.vcOrgcompradoraNomcomercial = datosEntidad.nombreComercial;
+            comprobante.inIdorganizacioncompradora = datosEntidad.idEbiz ;
+            comprobante.vcOrgcompradoraDenominacio = datosEntidad.denominacion ;
+            comprobante.vcOrgcompradoraDocumento = datosEntidad.documento ;
+            comprobante.vcOrgcompradoraDirfiscal = datosEntidad.direccionFiscal ;
+            comprobante.vcOrgcompradoraCorreo = data.correoElectronico ;        
+        }   
+    }
+    comprobante.inIdarchivoPdf = null;
+    comprobante.inIdarchivoXml = null;
+    comprobante.inIdarchivoCdr = null;
+    comprobante.vcArchivopdfUbicacion = null;
+    comprobante.vcArchivoxmlUbicacion = null;
+    comprobante.vcArchivocdrUbicacion = null;
+    comprobante.vcParamTicket = null ;
+    comprobante.tsParamFechabaja = null;
+    comprobante.inIdusuarioproveedor = null;
+    comprobante.inIdusuariocomprador = null;
+    comprobante.inIdtransportista = null;
+    comprobante.vcTransportistaDocumento = null;
+    comprobante.vcTransportistaDenominacion = data.vcTransportistaDenominacion ;
+    comprobante.chEstadocomprobantepago =  '-1';
+    comprobante.chFlagplazopago = 'N' ;
+    comprobante.chFlagregistroeliminado = 'N';
+    comprobante.chFlagorigencomprobantepago = 'N';
+    comprobante.chFlagorigencreacion = 'N';
+    comprobante.inIdguia = null ;
+    comprobante.inIdoc = null ;
+    comprobante.inIdusuariocreacion = null;
+    comprobante.inIdusuariomodificacion = null;
+    comprobante.inIdorganizacioncreacion = null;
+    comprobante.inIdorganizacionmodificacion = null;
+    comprobante.chMonedacomprobantepago = data.moneda;
+    comprobante.tsFechaprogpagocomprobantepag = null;
+    comprobante.tsFechapagocomprobantepago = null;
+    //en el modelo implementaron para que guarde en numero aun no lo he arreglado
+    comprobante.tsFechacreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    comprobante.tsFecharegistro = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    comprobante.tsFechaemision = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");
+    comprobante.tsFecharecepcioncomprobantepa = null;
+    comprobante.tsFechavencimiento = null ;
+    comprobante.tsFechaenvio = null;
+    comprobante.tsFechacambioestado = null;
+    comprobante.vcObscomprobantepago = data.observacionComprobante ;
+    comprobante.vcObspagocomprobantepago = null ;
+    comprobante.vcCondicionpago = null;
+    comprobante.chTiempoplazo = null;
+    comprobante.vcDocumentopago = null;
+    comprobante.vcDocumentosap = null;
+    comprobante.vcFormapago = null;
+    comprobante.vcTipocomprobante = data.tipoComprobante ;
+    comprobante.chEstadocomprobantepagocomp = constantes.estadoGuardadoLocal ;
+    comprobante.inVersion = constantes.versionInicial ;
+    comprobante.vcNumoc = null ;
+    comprobante.vcNumguia = null ;
+    comprobante.vcMontocomprobantepago = NumeroALetras.numeroALetras(data.montoDescuento);
+    comprobante.vcLogo = null ;
+    comprobante.vcFirma  = null;
+    comprobante.vcPagotipodocumento = null;
+    comprobante.vcPagonrodocumento = null;
+    comprobante.vcPagomoneda = null;
+    comprobante.vcPagobanco = null;
+    comprobante.vcDctotipodocumento = null;
+    comprobante.vcDctonrodocumento = null;
+    comprobante.vcDctomoneda = data.monedaDescuento ;
+    comprobante.vcNrocheque = null ;
+    comprobante.chCodigointerno = null ;
+    comprobante.inDeguiapublicada = constantes.percepcion.inDeguiapublicada;
+    comprobante.vcTipofactura = constantes.percepcion.vcTipofactura ;
+    comprobante.vcCodigoerpproveedor = null;
+    comprobante.tsFechahoracreacion = null;
+    comprobante.vcCodigosociedad = null;
+    comprobante.deImpuesto1 = constantes.percepcion.deImpuesto1;
+    comprobante.deImpuesto2 = constantes.percepcion.deImpuesto2;
+    comprobante.deImpuesto3 = constantes.percepcion.deImpuesto3;
+    comprobante.deDescuento = constantes.retencion.deDescuento;
+    comprobante.deImportereferencial  = data.totalComprobante;
+    comprobante.deSubtotalcomprobantepago = constantes.percepcion.deSubtotalcomprobantepago;
+    comprobante.deTotalcomprobantepago = data.totalComprobante;
+    comprobante.dePagomontopagadoultimo = null;
+    comprobante.deDctomontoultimo = null;
+    comprobante.inIdindicadorimpuesto = constantes.percepcion.inIdindicadorimpuesto;
+    comprobante.vcIndicadorimpuesto = data.vcIndicadorimpuesto;
+    comprobante.chOpregfac = constantes.percepcion.chOpregfac;
+    comprobante.vcCodigoerp = null;
+    comprobante.vcCoderror = null;
+    comprobante.tsFechadocumentoret = null;
+    comprobante.vcDescerror = null;
+    comprobante.chTipoemision = constantes.percepcion.chTipoemision ;
+    comprobante.dePorcentajeimpuesto = null;
+    comprobante.inDetraccion = null;
+    comprobante.inIdbienservicio = constantes.percepcion.inIdbienservicio ;
+    comprobante.vcCodigobienservicio = null;
+    comprobante.vcDescripcionbienservicio = null;
+    comprobante.vcPorcentajedetraccion = null;        
+    comprobante.vcIdcondicionpago = null;
+    comprobante.vcDescripcioncondicionpago = null;
+    comprobante.vcLlaveerp = null;
+    comprobante.vcIdtablaestado = null;
+    comprobante.vcIdregistroestadoprov = null;
+    comprobante.vcIdregistroestadocomp = null;
+    comprobante.vcIdtablamoneda = data.idTablaMoneda ;
+    comprobante.vcIdregistromoneda = data.idRegistroMoneda ;
+    comprobante.vcIdtablatipocomprobante  = constantes.idTablaTipoComprobante ;
+    comprobante.vcIdregistrotipocomprobante = data.idTipoComprobante ;
+    comprobante.chIdtipocomprobante = data.tipoComprobante ;
+    comprobante.dePagomontopagado = data.montoPagado ;
+    comprobante.deDctomonto = data.montoDescuento ;
+    comprobante.vcTicketRetencion = null;
+    await DocumentoQuery.guardar(comprobante);
+    await guardarEvento(data.id, constantes.usuarioOffline);
+    await guardarDocumentoReferencia(comprobante.id, data.documentoReferencia);
+}
+
+
+async function guardarDocumentoReferencia(idOrigen, data){
+    for(referencia of data){
+        let referenciaDto = {};
+        referenciaDto.docOrigen = idOrigen;
+        referenciaDto.documentoDestino = null;
+        referenciaDto.tipoDocumentoOrigen = referencia.tipoDocumentoOrigen ;
+        referenciaDto.chTipoDocDes = referencia.tipoDocumentoDestino;
+        referenciaDto.serieDestino = referencia.serieDocumentoDestino ;
+        referenciaDto.corrDest = referencia.correlativoDocumentoDestino ;
+        referenciaDto.fechaEmisionDestino = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss"); //preguntar
+        referenciaDto.nuTotImpAux = referencia.totalImporteAuxiliarDestino;
+        referenciaDto.totalImpustoDestino = referencia.totalImporteDestino ;
+        referenciaDto.totalPorAuxiliar = referencia.totalPorcentajeAuxiliarDestino ;
+        referenciaDto.tdocoriDesc = referencia.tipoDocumentoOrigenDescripcion ;
+        referenciaDto.vcTdocDesDesc = referencia.tipoDocumentoDestinoDescripcion;
+        referenciaDto.deTipoCambio = referencia.auxiliar1;
+        referenciaDto.vcMonedaDestino = referencia.monedaDestino;
+        referenciaDto.deTotMoneDes = referencia.totalMonedaDestino;
+        referenciaDto.vcPolizaFactura = null;
+        referenciaDto.deAnticipo = constantes.retencion.deAnticipo;
+        referenciaDto.vcAuxiliar1 = referencia.auxiliar1;
+        referenciaDto.vcAuxiliar2 = parseInt(referencia.totalImporteDestino) - parseInt(referencia.totalImporteAuxiliarDestino);
+        referenciaDto.usuarioCreacion = constantes.usuarioOffline;
+        referenciaDto.usuarioModificacion = constantes.usuarioOffline ;
+        referenciaDto.fechaCreacion = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss"); 
+        referenciaDto.fechaModificacion =dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss"); 
+        referenciaDto.estado = constantes.estadoActivo;
+        referenciaDto.fechaSincronizado = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss"); 
+        referenciaDto.estadoSincronizado = constantes.estadoInactivo;
+        await QueryDocRefenci.guardarQuery(referenciaDto);
+    }
+}
+
+async function buscarEntidad(tipoDocumento, documento){
+    let datosEntidad = await entidad.buscar(tipoDocumento, documento);
+    return datosEntidad;
+}
 
 async function buscarCorrelativo(tipoComprobante, serie, tipoSerie , entidad){
     let correlativo = 0;
