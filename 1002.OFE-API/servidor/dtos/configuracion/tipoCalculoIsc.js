@@ -5,7 +5,9 @@ QueryTipoCalcIsc.todos = function(){
     var promise = new Promise(function(resolve,reject){
         conexion.sync()
         .then(function () {
-            QueryTipoCalcIsc.findAll().then(function (tipoAfectacionIgvRedises) {
+            QueryTipoCalcIsc.findAll({
+                attributes: atributos.atributos
+            }).then(function (tipoAfectacionIgvRedises) {
                 tipoAfectacionIgvRedises = tipoAfectacionIgvRedises.map(function(tipoAfectacionIgv){ 
                     return tipoAfectacionIgv.dataValues;
                 });
@@ -36,5 +38,21 @@ QueryTipoCalcIsc.buscarId = function(id){
      
     return promise;
  }
+
+
+ var atributos = {
+    atributos: [
+        ['se_itipo_afec', 'idTipoCalculo'],
+        'idioma',
+        'codigo',
+        'descripcion',
+        'afectaIgv',
+        'catalogo',
+        'usuarioCreacion',
+        'usuarioModificacion',
+        'fechaCreacion',
+        'fechaModificacion',
+    ]
+}
 
 module.exports = QueryTipoCalcIsc;

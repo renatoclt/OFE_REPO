@@ -1,11 +1,12 @@
 TipoPrecVen = require('../../modelos/msoffline/queryTipoPrecVen');
 
 TipoPrecVen.todos = function () {
-
     var promise = new Promise(function (resolve, reject) {
         conexion.sync()
             .then(function () {
-                TipoPrecVen.findAll().then(function (tipoPrecVenRedises) {
+                TipoPrecVen.findAll({
+                    attributes: atributos.atributos
+                }).then(function (tipoPrecVenRedises) {
                     tipoPrecVenRedises = tipoPrecVenRedises.map(function (tipoPrecVen) {
                         return tipoPrecVen.dataValues;
                     });
@@ -16,7 +17,6 @@ TipoPrecVen.todos = function () {
                 resolve({});
             });
     });
-
     return promise;
 }
 
@@ -35,6 +35,22 @@ TipoPrecVen.buscarId = function (id) {
     });
 
     return promise;
+}
+
+
+var atributos = {
+    atributos: [
+        ['se_itipo_prec', 'idTipoPrecioVenta'],
+        'idioma',
+        'codigo',
+        'descripcion',
+        'catalogo',
+        'usuarioCreacion',
+        'usuarioModificacion',
+        'fechaCreacion',
+        'fechaModificacion',
+        'fechaSincronizado',
+    ]
 }
 
 module.exports = TipoPrecVen;

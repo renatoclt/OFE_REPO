@@ -52,10 +52,20 @@ var QueryProducto = conexion.define('QueryProducto', {
       type: sequelize.TEXT,
       field: "ch_afecta_detra"
     },
+    tipoProducto: {
+      type : sequelize.TEXT,
+      field: 'ch_tipo_prod' 
+    },
     usuarioCreacion: {
       type: sequelize.TEXT,
       allowNull: false,
       field: "vc_usu_creacion",
+    },
+    
+    estado: {
+      type: sequelize.TEXT,
+      allowNull: false,
+      field: "in_estado"
     },
     usuarioModificacion: {
       type: sequelize.TEXT,
@@ -83,7 +93,7 @@ var QueryProducto = conexion.define('QueryProducto', {
    
   },
     {
-      tableName: 'fe_configuracion_t_producto',
+      tableName: 'fe_query_t_producto',
       timestamps: false
     });
     QueryProducto.sync();

@@ -5,7 +5,9 @@ TipoAfecIgv.todos = function(){
     var promise = new Promise(function(resolve,reject){
         conexion.sync()
         .then(function () {
-            TipoAfecIgv.findAll().then(function (tipoAfectacionIgvRedises) {
+            TipoAfecIgv.findAll({
+                attributes: atributos.atributos
+            }).then(function (tipoAfectacionIgvRedises) {
                 tipoAfectacionIgvRedises = tipoAfectacionIgvRedises.map(function(tipoAfectacionIgv){ 
                     return tipoAfectacionIgv.dataValues;
                 });
@@ -18,6 +20,24 @@ TipoAfecIgv.todos = function(){
     });
     
     return promise;
+}
+
+var atributos = {
+    atributos: [
+        ['se_itipo_afec', 'idTipoAfectacion'],
+        'idioma',
+        'codigo',
+        'descripcion',
+        'afectaIgv',
+        'catalogo',
+        'usuarioCreacion',
+        'usuarioModificacion',
+        'fechaCreacion',
+        'fechaModificacion',
+        
+
+
+    ]
 }
 
 TipoAfecIgv.buscarId = function(id){

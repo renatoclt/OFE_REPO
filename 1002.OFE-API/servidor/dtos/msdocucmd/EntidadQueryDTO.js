@@ -46,7 +46,6 @@ async function buscarEntidades(idTipoDocumento, denominacion, pagina, regxpag) {
                   });
               }else{
                     buscarEntidadesOffline(idTipoDocumento, denominacion, pagina, regxpag).then(function(data){
-
                         console.log(data);
                         resolve({ 'entidades':data.entidades, 'cantidadReg': data.cantidadReg});
                     });
