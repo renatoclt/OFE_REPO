@@ -21,6 +21,10 @@ var DocParametro = conexion.define('DocParametro',
       field: "se_iparam_doc",
       allowNull:false
     },
+    descripcionParametro:{
+      type: sequelize.TEXT,
+      field: "vc_desc",
+    },
     comprobantePago: {
       type: sequelize.INTEGER(32),
       field: "in_idcomprobantepago",

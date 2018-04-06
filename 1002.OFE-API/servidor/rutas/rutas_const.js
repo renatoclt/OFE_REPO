@@ -36,7 +36,7 @@ var rutas = {
                     "retenciones":{"ruta":"/retenciones", "descripcion": "Implementacion de servicio rest obtener retenciones de la base de datos"},
                     "retencion":{"ruta":"/retencion", "descripcion": "Implementacion de servicio rest de retenciones individuales"},
                     "facturas":{"ruta":"/factura", "descripcion": "Implementacion de servicio rest obtener facturas de la base de datos"},
-                    "boletas":{"ruta":"/boletas", "descripcion": "Implementacion de servicio rest obtener boletas de la base de datos"},
+                    "boletas":{"ruta":"/boleta", "descripcion": "Implementacion de servicio rest obtener boletas de la base de datos"},
                     //"guiasremision":{"ruta":"/guiasremision", "descripcion": "Implementacion de servicio rest obtener guias de remision de la base de datos"}
                     //"percepciones":{"ruta":"/percepciones", "descripcion": "Implementacion de servicio rest obtener percepciones de la base de datos"},
                     "documentoquery": {"ruta":"/documento", "descripcion":"Implementacion de servicio rest para listar tipos de comprobantes"},
@@ -79,6 +79,7 @@ var rutas = {
                     "archivo": {"ruta":"/archivos", "descripcion": "Servicio que descarga archivos"},
                     "sincronizacionRetencion": {"ruta":"/sincronizacionRetencion", "descripcion":"sincronizarRetenciones"},
                     "sincronizacionPercepcion": {"ruta":"/sincronizacionPercepcion", "descripcion":"sincronizacionPercepcion"},
+                    "sincronizacionFacturas": {"ruta":"/sincronizacionFacturas", "descripcion":"sincronizacionFacturas"},
                     "entidad": {"ruta":"/entidad","descripcion":"Se trabajara sobre entidad offline"}
                 }
             },            

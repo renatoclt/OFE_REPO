@@ -155,7 +155,6 @@ var contoladorComprobante =  function (ruta, rutaEsp){
                 //DocumentoEntidad.guardarBien(documentoEntidad);
                 await DocumentoEntidad.guardarEntidad(documentoEntidad);
             }    
-            await 
             res.json(data);
         }
         catch(err){

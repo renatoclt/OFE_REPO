@@ -26,6 +26,10 @@ var DocParametro = conexion.define('DocParametro',
       field: "in_idcomprobantepago",
       allowNull:false
     },
+    descripcionParametro:{
+      type: sequelize.TEXT,
+      field: "vc_desc",
+    },
     json: {
       type: sequelize.TEXT,
       field: "vc_json",
