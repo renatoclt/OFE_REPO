@@ -9,6 +9,7 @@ var DocumentoQuery = require('../../dtos/msoffline/queryComprobantePagoDTO');
 var entidad = require('../../dtos/msoffline/queryEntidadOfflineDTO');
 var Evento = require('../../dtos/msoffline/queryComprobanteEventoDTO');
 var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
+var PdfGenerador = require('./index');
 /**
  * Controlador del
  * 
@@ -364,8 +365,11 @@ async function guardarEvento(inIdcomprobante, usuarioCreacion ){
 }
 
 async function guardarArchivo(id){
+
     data.id  = id;
-    data.archivo = "0500"
+    var archivoSerial = await PdfGenerador.start(data);
+    console.log(archivoSerial);
+    data.archivo = archivoSerial;
     data.usuarioCreacion = constantes.usuarioOffline;
     data.usuarioModificacion = constantes.usuarioOffline;
     data.fechaCreacion =  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");

@@ -25,8 +25,10 @@
     "mocha": "^4.1.0",
     "morgan": "^1.8.1",
     "node-rest-client": "^3.1.0",
+    "nodemon": "^1.17.3",
     "sequelize": "^4.33.4",
     "serve-favicon": "^2.4.2",
+    "sfulasalle-pdf-builder": "^3.1.2",
     "sqlite3": "^3.1.13"
   }
 }

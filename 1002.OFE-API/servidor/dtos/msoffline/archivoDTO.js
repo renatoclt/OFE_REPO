@@ -24,11 +24,18 @@ Archivo.guardar = function guardarComprobantePago(data){
 }
 
 Archivo.mostrar = function mostrarArchivo(data){
-    return Archivo.findAll({ attributes: filtroAtributos.attributes ,
-        where: {
-            id: 1
+    // return Archivo.findAll({ attributes: filtroAtributos.attributes ,
+    //     where: {
+    //         id: data
+    //     }
+    //   });
+    return Archivo.findOne(
+        { 
+            where: {
+                id: data
+            }
         }
-      });
+    );
 }
 var filtroAtributos = {
     attributes: [

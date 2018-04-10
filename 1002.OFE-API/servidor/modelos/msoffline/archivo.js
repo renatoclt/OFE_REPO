@@ -16,7 +16,7 @@ var Archivo = conexion.define(
             allowNull:false             
         },
         archivo: {
-            type: sequelize.BLOB,
+            type: sequelize.STRING.BINARY,
             field: "bl_archivo",
             allowNull:false
         },
