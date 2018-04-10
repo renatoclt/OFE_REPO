@@ -87,7 +87,6 @@ var DocReferencia = conexion.define('DocReferencia',
     polizaFactura: {
       type: sequelize.TEXT,
       field: "vc_poliza_factura",
-      allowNull:false 
     }, 
     anticipo: {
       type: sequelize.REAL(12,2) ,

@@ -79,7 +79,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 1,
+    tipoComprobante: '01',
   }).catch(function (err){
     console.log("El estado ya existe");
   }),
@@ -94,7 +94,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 3,
+    tipoComprobante: '03',
   }).catch(function (err){
     console.log("El estado ya existe");
   }),
@@ -109,7 +109,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 20,
+    tipoComprobante: '20',
   }).catch(function (err){
     console.log("El estado ya existe");
   }),
@@ -124,7 +124,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 40,
+    tipoComprobante: '40',
   }).catch(function (err){
     console.log("El estado ya existe");
   }),
@@ -139,7 +139,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 5,
+    tipoComprobante: '05',
   }).catch(function (err){
     console.log("El estado ya existe");
   }),
@@ -154,7 +154,7 @@ Sincronizacion.sync().then(() => {
     estado:constantes.estadoActivo,
     fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
-    tipoComprobante: 6,
+    tipoComprobante: '06',
   }).catch(function (err){
     console.log("El estado ya existe");
   })

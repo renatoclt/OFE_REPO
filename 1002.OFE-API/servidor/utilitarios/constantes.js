@@ -57,6 +57,28 @@ var constantes = {
         deAnticipo: '0.00'
 
     },
+    factura:{
+        inIdguia: '',
+        chAfectaIgv: '',
+        vcSpotimpuesto: 'N',
+        chNumeroseguimiento: '',
+        chNumeroguia: '',
+        vcPosicionprodxguia: '',
+        vcPosicionprodxoc: 'N',
+        inIdproductoconsignado: '0',
+        inIdmovimiento: '',
+        vcCodigoguiaerp: 'N',
+        vcEjercicioguia: '',
+        vcTipoguia: 'N',
+        tsFechaemisionguia: '',
+        vcTipospot: '',
+        inIproducto:'1',
+        nuPesoBruto: '0.00',
+        nuPesoNeto: '0.00',
+        nuPesoTotal: '0.00',
+        idRegistroUnidad: '',
+        idTablaUnidad: '',
+    },
     percepcion: {
         flagOrigenComprobante: 'p',
         flagOrigenCreacion: '1',

@@ -7,6 +7,9 @@ var DocumentoQuery = require('../../dtos/msoffline/queryComprobantePagoDTO');
 var entidad = require('../../dtos/msoffline/queryEntidadOfflineDTO');
 var Evento = require('../../dtos/msoffline/queryComprobanteEventoDTO');
 var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
+var DocumentoEntidad = require('../../dtos/msdocucmd/documentoEntidadDTO');
+var DocumentoReferencia = require('../../dtos/msdocucmd/documentoReferenciaDTO');
+var DocumentoParametro = require('../../dtos/msdocucmd/documentoParametroDTO')
 
 var contoladorPercepcion =  function (ruta, rutaEsp){ 
 
@@ -83,6 +86,45 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
             data.impuestoGvr = 0;
             data.estadoComprobante = constantes.estadoGuardadoLocal;
             await Documento.guardar(data);  
+            for (let documentoEntidad of req.body.documentoEntidad){
+                documentoEntidad.idComprobante = data.id;
+                documentoEntidad.usuarioCreacion = 'Usuario creacion';
+                documentoEntidad.usuarioModifica = 'Usuario Modificacion';
+                documentoEntidad.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                documentoEntidad.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                documentoEntidad.estado = constantes.estadoActivo;
+                documentoEntidad.estadoSincronizado = constantes.estadoInactivo;
+                documentoEntidad.generado = constantes.estadoInactivo;
+                await DocumentoEntidad.guardarEntidad(documentoEntidad);
+            }
+            for(let documentoReferencia of req.body.documentoReferencia ){
+                documentoReferencia.idDocumentoOrigen = data.id;
+                documentoReferencia.idDocumentoDestino = documentoDestino();
+                documentoReferencia.usuarioCreacion ='Usuario creacion';
+                documentoReferencia.usuarioModifica = 'Usuario Modificacion';
+                documentoReferencia.fechaEmisionDestino =  dateFormat(new Date(), "yyyy-mm-dd");
+                documentoReferencia.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                documentoReferencia.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                documentoReferencia.anticipo = 0;
+                documentoReferencia.estado = constantes.estadoActivo;
+                documentoReferencia.estadoSincronizado = constantes.estadoInactivo;
+                documentoReferencia.generado = constantes.estadoInactivo;
+                
+                await DocumentoReferencia.guardar(documentoReferencia);
+            }
+            for(let documentoParametro of req.body.documentoParametro){
+                documentoParametro.iParamDoc = documentoParametro.idParametro;
+                documentoParametro.idComprobantePago = data.id;
+                documentoParametro.json = documentoParametro.json;
+                documentoParametro.usuarioCreacion = constantes.usuarioOffline;
+                documentoParametro.usuarioModificacion = constantes.usuarioOffline;
+                documentoParametro.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                documentoParametro.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                documentoParametro.estado = constantes.estadoActivo;
+                documentoParametro.fechaSincronizado = data.fechaSincronizado;
+                documentoParametro.estadoSincronizado = constantes.estadoInactivo;
+                await DocumentoParametro.guardar(documentoParametro);
+            }
             await guardarQuery(data);
         }catch(e){
             console.log(e);
@@ -239,6 +281,11 @@ async function guardarQuery(data){
     await DocumentoQuery.guardar(comprobante);
     await guardarEvento(data.id, constantes.usuarioOffline);
     await guardarDocumentoReferencia(comprobante.id, data.documentoReferencia);
+}
+
+function documentoDestino(serie ,correlativo){
+    //buscar documento por serie y correlativo
+    return null;
 }
 
 

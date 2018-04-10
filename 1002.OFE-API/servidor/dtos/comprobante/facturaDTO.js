@@ -6,7 +6,7 @@ Factura.buscarComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findById(id,{
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado']
+                attributes:['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoComprobante']
             }).then(function (comprobante) {
                 resolve(comprobante.dataValues);
             });
@@ -28,7 +28,7 @@ Factura.buscarComprobantes = function (pagina, regxpag) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findAndCountAll({  
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado'],
+                attributes:['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoComprobante'],
                 where: { idTipoComprobante: contantes.idTipocomprobanteFactura}, 
                 offset: (pagina * regxpag), 
                 limit: regxpag 

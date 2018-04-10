@@ -5,6 +5,7 @@
 var ComprobantePago = require('../../modelos/msoffline/comprobantePago');
 var documentoReferencia = require('../../modelos/msoffline/docReferencia');
 var documentoEntidad = require('../../modelos/msoffline/docEntidad');
+var documentoParametro = require('../../modelos/msoffline/docParametro');
 const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
@@ -412,27 +413,7 @@ ComprobantePago.filtro = function comprobantePagoFiltro(){
 
 
 
-ComprobantePago.sincornizar = function comprobanteSincronizar(){
-    return ComprobantePago.findAll({ attributes: atributosSincronizar.attributes ,
-        include:[ 
-            {
-                model: documentoReferencia,
-                as: 'facturasAfectadas', 
-                attributes: atributosDocumentoReferencia.attributes,
-            },
-            {
-                model: documentoEntidad,
-                as: 'DocEntidad', 
-                attributes: atributosDocumentoEntidad.attributes,
-            },
-        ],
-        where: {
-            estadoSincronizado: constantes.estadoInactivo
-        }
-      });
-}
-
-ComprobantePago.sincornizarPercepcion = function comprobanteSincronizarPercepcion(){
+ComprobantePago.sincronizarRetencion = function comprobanteSincronizar(){
     return ComprobantePago.findAll({ attributes: atributosSincronizar.attributes ,
         include:[ 
             {
@@ -448,8 +429,80 @@ ComprobantePago.sincornizarPercepcion = function comprobanteSincronizarPercepcio
         ],
         where: {
             estadoSincronizado: constantes.estadoInactivo,
+            idTipoComprobante: constantes.idTipocomprobanteRetencion
+        }
+      });
+}
+
+ComprobantePago.sincornizarPercepcion = function comprobanteSincronizarPercepcion(){
+    return ComprobantePago.findAll({ attributes: atributosSincronizar.attributes ,
+        include:[ 
+            {
+                model: documentoReferencia,
+                as: 'referencias', 
+                attributes: atributosDocumentoReferencia.attributes,
+            },
+            {
+                model: documentoEntidad,
+                as: 'DocEntidad', 
+                attributes: atributosDocumentoEntidad.attributes,
+            },
+            {
+                model: documentoParametro,
+                as: 'parametros',
+                attributes: atributosParametroPercepcion.attributes,
+            }
+        ],
+        where: {
+            estadoSincronizado: constantes.estadoInactivo,
             idTipoComprobante:  constantes.idTipocomprobantePercepcion
         }
+      }).map( data => {
+          data.dataValues.descuento = parseFloat(data.dataValues.montoDescuento).toFixed(2) ;
+          data.dataValues.montoPagado = parseFloat(data.dataValues.montoPagado).toFixed(2);
+          data.dataValues.montoDescuento = parseFloat(data.dataValues.montoDescuento).toFixed(2);
+          data.dataValues.totalComprobante = parseFloat(data.dataValues.totalComprobante).toFixed(2);
+          data.dataValues.porcentajeImpuesto = parseFloat((data.dataValues.montoDescuento * 100)/ data.dataValues.totalComprobante).toFixed(2);
+          data.dataValues.fechaEmision = new Date(data.dataValues.fechaEmision).getTime();
+          data.dataValues.parametros.map( parametros =>{
+              parametros.json = JSON.parse(parametros.json.replace('/',''));
+              return parametros;
+          });
+          data.dataValues.referencias.map(referencias =>{
+              let referenciasTemp = {}
+              referenciasTemp.numeroComprobante = referencias.dataValues.serie + '-' +referencias.dataValues.correlativo;
+              referenciasTemp.tipoDeCambio = '3.5';
+              referenciasTemp.totalFacturaConPercepcion = referencias.dataValues.totalFacturaConRetencion;
+              referencias.dataValues = referenciasTemp;
+              return referencias;
+          });
+          return data;
+      });
+}
+
+
+
+ComprobantePago.sincronizarFactura = function comprobanteSincronizaFactura(){
+    return ComprobantePago.findAll({ attributes: atributosSincronizarFactura.attributes ,
+        include:[ 
+            {
+                model: documentoReferencia,
+                as: 'facturasAfectadas', 
+                attributes: atributosDocumentoReferencia.attributes,
+            },
+            {
+                model: documentoEntidad,
+                as: 'DocEntidad', 
+                attributes: atributosDocumentoEntidad.attributes,
+            },
+        ],
+        where: {
+            estadoSincronizado: constantes.estadoInactivo,
+            idTipoComprobante: constantes.idTipocomprobanteFactura,
+        }
+      }).map(data =>{
+        data.dataValues.fechaEmision = new Date(data.dataValues.fechaEmision).getTime();
+        return data;
       });
 }
 
@@ -470,6 +523,30 @@ var atributosSincronizar = {
                 'montoDescuento',
                 'totalComprobante',
                 'tipoItem'
+            ],
+}
+
+var atributosSincronizarFactura = {
+    attributes: [
+                ['in_idcomprobantepago', 'idComprobanteOffline'], 
+                'numeroComprobante',
+                'rucComprador',
+                'razonSocialComprador',
+                'moneda',
+                'fechaEmision',
+                'observacionComprobante',
+                'montoPagado',
+                'monedaDescuento',
+                'montoDescuento',
+                'totalComprobante',
+                'tipoItem',
+                'igv',
+                'isc',
+                'otrosTributos',
+                'descuento',
+                'importeReferencial',
+                'subtotalComprobante',
+                'totalComprobante'
             ],
 }
 
@@ -504,6 +581,14 @@ var atributosDocumentoEntidad = {
         'id',
         'tipoEntidad',
         'correo',
+    ]
+}
+
+var atributosParametroPercepcion = {
+    attributes: [
+        ['se_iparam_doc', 'idParametro'],
+        'json',
+        'descripcionParametro'
     ]
 }
 

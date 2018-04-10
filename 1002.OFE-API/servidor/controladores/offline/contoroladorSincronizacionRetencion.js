@@ -13,7 +13,7 @@ var Usuario = require('../../dtos/msoffline/usuarioDTO');
 var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
     router.get(ruta.concat('/'), async function (req, res) {
         try{
-            var data = await comprobantePagoDTO.sincornizar();
+            var data = await comprobantePagoDTO.sincronizarRetencion();
             data.forEach((element) => {
                 element.DocEntidad.forEach(entidad => {
                     if(entidad.tipoEntidad == 1){
