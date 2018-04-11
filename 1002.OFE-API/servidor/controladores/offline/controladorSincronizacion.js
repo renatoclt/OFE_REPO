@@ -263,6 +263,17 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     })
 
+    router.post(ruta.concat('/concepto'), async function(req, res){
+        req.body.forEach(async element =>{
+            element.usuarioCreacion = constantes.usuarioOffline;
+            element.usuarioModificacion = constantes.usuarioOffline;
+            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+            await Concepto.guardar(element);
+        });
+        res.status(200).send('{}');
+    })
+
     router.post(ruta.concat('/entidad'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
@@ -305,12 +316,6 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     }); 
 
-    router.post(ruta.concat('/concepto'), async function(req, res){
-        req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-        req.body.estadoSincronizado =  constantes.estadoActivo;
-        await Concepto.guardar(req.body);
-        res.status(200).send('{}');
-    }); 
     router.post(ruta.concat('/parametroDocumento'), async function(req, res){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;

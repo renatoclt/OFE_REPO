@@ -12,6 +12,7 @@ var controladoresOffline = function (ruta) {
     sincronizacionRetencion = require('../controladores/offline/contoroladorSincronizacionRetencion')(ruta.concat(navC.hijos['sincronizacionRetencion'].ruta),navC.hijos['sincronizacionRetencion'].ruta);
     sincronizacionPercepcion = require('../controladores/offline/controladorSincronizacionPercepcion')(ruta.concat(navC.hijos['sincronizacionPercepcion'].ruta),navC.hijos['sincronizacionPercepcion'].ruta);
     sincronizacionFacturas = require('../controladores/offline/controladorSincronizacionFactura')(ruta.concat(navC.hijos['sincronizacionFacturas'].ruta),navC.hijos['sincronizacionFacturas'].ruta);
+    sincronizacionBoletas = require('../controladores/offline/controladorSincronizacionBoleta')(ruta.concat(navC.hijos['sincronizacionBoletas'].ruta),navC.hijos['sincronizacionBoletas'].ruta);
     entidad = require('../controladores/offline/controladorEntidad')(ruta.concat(navC.hijos['entidad'].ruta),navC.hijos['entidad'].ruta);
 }
 module.exports = controladoresOffline;

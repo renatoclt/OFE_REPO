@@ -331,6 +331,10 @@ var Documento = conexion.define('ComprobantePago',
         type: sequelize.INTEGER,
         field: "in_generado",
     },
+    tipoDocumento:{
+        type: sequelize.TEXT,
+        field: "vc_tipodocumento"
+    },
     estadoSincronizado: {
         type: sequelize.INTEGER(32),
         field: "in_estado_sincronizado",

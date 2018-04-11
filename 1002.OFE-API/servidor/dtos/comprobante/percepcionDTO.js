@@ -6,7 +6,7 @@ Percepcion.buscarComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findById(id,{
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado']
+                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
             }).then(function (comprobante) {
                 resolve(comprobante.dataValues);
             });

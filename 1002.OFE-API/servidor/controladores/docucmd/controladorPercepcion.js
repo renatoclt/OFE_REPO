@@ -111,7 +111,6 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
                 documentoReferencia.estado = constantes.estadoActivo;
                 documentoReferencia.estadoSincronizado = constantes.estadoInactivo;
                 documentoReferencia.generado = constantes.estadoInactivo;
-                
                 await DocumentoReferencia.guardar(documentoReferencia);
             }
             for(let documentoParametro of req.body.documentoParametro){

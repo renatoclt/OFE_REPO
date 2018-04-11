@@ -3,9 +3,12 @@
  * @author renato creado 18-12-2017 
  */
 var ComprobantePago = require('../../modelos/msoffline/comprobantePago');
+var ComprobantePagoXProducto = require('../../modelos/msoffline/productoXComprobantePago');
 var documentoReferencia = require('../../modelos/msoffline/docReferencia');
 var documentoEntidad = require('../../modelos/msoffline/docEntidad');
 var documentoParametro = require('../../modelos/msoffline/docParametro');
+var queryParametroDominioDoc = require('../../modelos/msoffline/queryParametroDominioDoc');
+var documentoConcepto = require('../../modelos/msoffline/docConcepto')
 const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
@@ -451,6 +454,12 @@ ComprobantePago.sincornizarPercepcion = function comprobanteSincronizarPercepcio
                 model: documentoParametro,
                 as: 'parametros',
                 attributes: atributosParametroPercepcion.attributes,
+                include: [{
+                        model: queryParametroDominioDoc,
+                        as: 'ParametroDominio',
+                        attributes: atributosParametroDominio
+                    }
+                ]
             }
         ],
         where: {
@@ -466,14 +475,17 @@ ComprobantePago.sincornizarPercepcion = function comprobanteSincronizarPercepcio
           data.dataValues.fechaEmision = new Date(data.dataValues.fechaEmision).getTime();
           data.dataValues.parametros.map( parametros =>{
               parametros.json = JSON.parse(parametros.json.replace('/',''));
+              parametros.dataValues.idParametro = parametros.dataValues.ParametroDominio.dataValues.parametroDocumento;
+              delete parametros.dataValues.ParametroDominio;
               return parametros;
           });
           data.dataValues.referencias.map(referencias =>{
               let referenciasTemp = {}
               referenciasTemp.numeroComprobante = referencias.dataValues.serie + '-' +referencias.dataValues.correlativo;
-              referenciasTemp.tipoDeCambio = '3.5';
+              referenciasTemp.tipoDeCambio = referencias.dataValues.tipoDeCambio;
               referenciasTemp.totalFacturaConPercepcion = referencias.dataValues.totalFacturaConRetencion;
-              referencias.dataValues = referenciasTemp;
+              referenciasTemp.totalRetenido = referencias.dataValues.totalRetenidoSoles;
+              referencias.dataValues = referenciasTemp;              
               return referencias;
           });
           return data;
@@ -486,15 +498,30 @@ ComprobantePago.sincronizarFactura = function comprobanteSincronizaFactura(){
     return ComprobantePago.findAll({ attributes: atributosSincronizarFactura.attributes ,
         include:[ 
             {
-                model: documentoReferencia,
-                as: 'facturasAfectadas', 
-                attributes: atributosDocumentoReferencia.attributes,
+                model: ComprobantePagoXProducto,
+                as: 'detalle', 
+                attributes: atributosFacturaDetalle.attributes,
             },
             {
                 model: documentoEntidad,
                 as: 'DocEntidad', 
                 attributes: atributosDocumentoEntidad.attributes,
             },
+            {
+                model: documentoConcepto,
+                as: 'conceptos',
+                attributes: atributosConceptoFactura.attributes,
+            },
+            {
+                model: documentoReferencia,
+                as: 'anticipos',
+                attributes: atributosReferenciaFactura.attributes,
+            },
+            {
+                model: documentoParametro,
+                as: 'parametros',
+                attributes: atributosParametroFactura.attributes
+            }
         ],
         where: {
             estadoSincronizado: constantes.estadoInactivo,
@@ -502,6 +529,65 @@ ComprobantePago.sincronizarFactura = function comprobanteSincronizaFactura(){
         }
       }).map(data =>{
         data.dataValues.fechaEmision = new Date(data.dataValues.fechaEmision).getTime();
+        data.dataValues.parametros.map( parametros =>{
+            parametros.json = JSON.parse(parametros.json.replace('/',''));
+            return parametros;
+        });
+        data.dataValues.detalle.map(detalle =>{
+            detalle.dataValues.idProducto = null;
+            return detalle;
+        })
+
+        return data;
+      });
+}
+
+
+
+ComprobantePago.sincronizarBoleta = function comprobanteSincronizaFactura(){
+    return ComprobantePago.findAll({ attributes: atributosSincronizarBoleta.attributes ,
+        include:[ 
+            {
+                model: ComprobantePagoXProducto,
+                as: 'detalle', 
+                attributes: atributosFacturaDetalle.attributes,
+            },
+            {
+                model: documentoEntidad,
+                as: 'DocEntidad', 
+                attributes: atributosDocumentoEntidad.attributes,
+            },
+            {
+                model: documentoConcepto,
+                as: 'conceptos',
+                attributes: atributosConceptoFactura.attributes,
+            },
+            {
+                model: documentoReferencia,
+                as: 'anticipos',
+                attributes: atributosReferenciaFactura.attributes,
+            },
+            {
+                model: documentoParametro,
+                as: 'parametros',
+                attributes: atributosParametroFactura.attributes
+            }
+        ],
+        where: {
+            estadoSincronizado: constantes.estadoInactivo,
+            idTipoComprobante: constantes.idTipocomprobanteBoleta,
+        }
+      }).map(data =>{
+        data.dataValues.fechaEmision = new Date(data.dataValues.fechaEmision).getTime();
+        data.dataValues.parametros.map( parametros =>{
+            parametros.json = JSON.parse(parametros.json.replace('/',''));
+            return parametros;
+        });
+        data.dataValues.detalle.map(detalle =>{
+            detalle.dataValues.idProducto = null;
+            return detalle;
+        })
+
         return data;
       });
 }
@@ -545,11 +631,38 @@ var atributosSincronizarFactura = {
                 'otrosTributos',
                 'descuento',
                 'importeReferencial',
-                'subtotalComprobante',
+                ['de_subtotalcomprobantepago','subTotalComprobante'],
                 'totalComprobante'
             ],
 }
 
+
+
+var atributosSincronizarBoleta = {
+    attributes: [
+                ['in_idcomprobantepago', 'idComprobanteOffline'], 
+                ['vc_tipodocumento','tipoDocumentoComprador'],
+                ['ch_ruccomprador','documentoComprador'],
+                'numeroComprobante',
+                'rucComprador',
+                'razonSocialComprador',
+                'moneda',
+                'fechaEmision',
+                'observacionComprobante',
+                'montoPagado',
+                'monedaDescuento',
+                'montoDescuento',
+                'totalComprobante',
+                'tipoItem',
+                'igv',
+                'isc',
+                'otrosTributos',
+                'descuento',
+                'importeReferencial',
+                ['de_subtotalcomprobantepago','subTotalComprobante'],
+                'totalComprobante'
+            ],
+}
 // "serie": "F002",
 // "correlativo": "0000002",
 // "fechaEmision": 1517892988428,
@@ -591,5 +704,58 @@ var atributosParametroPercepcion = {
         'descripcionParametro'
     ]
 }
+
+
+var atributosParametroDominio = {
+    attributes: [
+        'parametroDocumento',
+        'dominioDocumento'
+    ]
+}
+
+var atributosFacturaDetalle = {
+    attributes: [
+        'descripcionItem',
+        ['vc_unidadmedida','codigoUnidadMedida'],
+        'posicion',
+        ['vc_numeroparteitem','codigoItem'],
+        ['de_preciounitarioitem','precioUnitario'],
+        ['de_preciototalitem','precioTotal'],
+        ['de_cantidaddespachada','cantidad'],
+        'montoImpuesto',
+        'codigoTipoIgv',
+        'codigoTipoIsc',
+        'codigoTipoPrecio',
+        //'idProducto',
+        ['de_preciounitarioitem','precioUnitarioVenta'],
+        ['de_preciototalitem','subTotalVenta'],
+        'subTotalIgv',
+        'subTotalIsc',
+    ]
+}
+
+var atributosConceptoFactura = {
+    attributes: [
+        'idConcepto',
+        ['se_iconcepto', 'codigoConcepto'],
+        ['vc_desc','descripcionConcepto'],
+        ['nu_importe','importe'],
+    ]
+}
+
+var atributosReferenciaFactura = {
+    attributes: [
+        [sequelize.literal("ch_serie_dest ||'-'|| ch_corr_dest  "), 'numeroComprobante'],
+        ['de_anticipo','monto']
+    ]
+}
+
+var atributosParametroFactura = {
+    attributes: [
+        ['se_iparam_doc','idParametro'],
+        'descripcionParametro',
+        'json'
+    ]
+} 
 
 module.exports = ComprobantePago;

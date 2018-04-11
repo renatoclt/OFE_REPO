@@ -1,9 +1,9 @@
 var comprobantePagoDTO = require('../../dtos/msoffline/comprobantePagoDTO');
 
-var controladorSincronizacionFactura = function (ruta, rutaEsp) {
+var controladorSincronizacionBoleta = function (ruta, rutaEsp) {
     router.get(ruta.concat('/'), async function (req, res) {
         try{
-            var data = await comprobantePagoDTO.sincronizarFactura();
+            var data = await comprobantePagoDTO.sincronizarBoleta();
             data.forEach((element) => {
                 console.log((element));
                 element.DocEntidad.forEach(entidad => {
@@ -26,4 +26,4 @@ var controladorSincronizacionFactura = function (ruta, rutaEsp) {
 }
 
 
-module.exports = controladorSincronizacionFactura;
+module.exports = controladorSincronizacionBoleta;

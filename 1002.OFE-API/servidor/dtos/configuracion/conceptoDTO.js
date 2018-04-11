@@ -2,7 +2,7 @@
  * @author miguel angel herrera centeno creado 19/12/2017
  */
 
-var Concepto = require("../../modelos/configuracion/concepto");
+var Concepto = require("../../modelos/msoffline/concepto");
 
 /**
  * Listar tipos de conceptos
