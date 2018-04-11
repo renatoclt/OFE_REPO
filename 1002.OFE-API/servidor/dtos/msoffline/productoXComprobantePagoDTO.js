@@ -10,6 +10,7 @@ var ProductoXComprobantePago = require('../../modelos/msoffline/productoXComprob
  */
 
 ProductoXComprobantePago.guardar = function guardarProductoXComprobantePago(data){
+    
     return ProductoXComprobantePago.create({
         id: data.id,
         idcomprobantepago: data.idcomprobantepago,
@@ -18,8 +19,12 @@ ProductoXComprobantePago.guardar = function guardarProductoXComprobantePago(data
         idProductoXGuia: data.idProductoXGuia ,
         precioUnitario: data.precioUnitario ,
         idProductoXOc: data.idProductoXOc ,
+        unidadMedida: data.unidadMedida,
+        registroMedida : data.registroMedida,
+        tablaUnidad: data.tablaUnidad,
         numeroSeguimiento: data.numeroSeguimiento ,
         numeroGuia: data.numeroGuia ,
+        descripcionItem: data.descripcionItem,
         posicionProdXGuia: data.posicionProdXGuia,
         posicion: data.posicion,
         numeroParteItem: data.numeroParteItem,
@@ -37,6 +42,11 @@ ProductoXComprobantePago.guardar = function guardarProductoXComprobantePago(data
         porcentajeImpuesto: data.porcentajeImpuesto ,
         montoImpuesto: data.montoImpuesto ,
         spotImpuesto: data.spotImpuesto ,
+        codigoTipoIgv: data.codigoTipoIgv,
+        codigoTipoIsc: data.codigoTipoIsc,
+        codigoTipoPrecio: data.codigoTipoPrecio,
+        subTotalIgv: data.subtotalIgv,
+        subTotalIsc: data.subTotalIsc,
         fechaSincronizado: data.fechaSincronizado ,
         estadoSincronizado: data.estadoSincronizado ,
     });

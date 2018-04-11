@@ -9,6 +9,11 @@ var DocumentoQuery = require('../../dtos/msoffline/queryComprobantePagoDTO');
 var Evento = require('../../dtos/msoffline/queryComprobanteEventoDTO');
 var QueryProductoXComprobantePagoDTO = require('../../dtos/msoffline/queryProductoXComprobantePagoDTO');
 var DocumentoEntidad = require('../../dtos/msdocucmd/documentoEntidadDTO');
+var DocConcepto = require('../../dtos/msoffline/docConcepetoDTO');
+var DocumentoParametro = require('../../dtos/msoffline/docParametroDTO');
+var Detalle = require('../../dtos/msoffline/productoXComprobantePagoDTO');
+var DocumentoReferencia = require('../../dtos/msoffline/docReferenciaDTO');
+var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
 
 var controladorFactura = function (ruta, rutaEsp) {
     var nombreHateo = "hComprobante";
@@ -64,7 +69,6 @@ var controladorFactura = function (ruta, rutaEsp) {
             regxpag = req.query.limite;
         }
         FacturaDTO.buscarComprobantes(pagina, regxpag).then(function (resDTO) {
-
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;
@@ -129,7 +133,6 @@ var controladorFactura = function (ruta, rutaEsp) {
  
         FacturaDTO.buscarFacturaEspecifico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
         .then(function (resDTO) {
-
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;
@@ -167,11 +170,11 @@ var controladorFactura = function (ruta, rutaEsp) {
             data.tipoFactura = constantes.percepcion.tipoFactura;
             data.generado = constantes.estadoOffline;
             //consultar 
-            data.igv = 0.0;
-            data.isc = 0.0;
-            data.otrosTributos = 0.0;
-            data.importeReferencial = 0.0;
-            data.subtotalComprobante = 0.0;
+            data.igv = data.sumaIgv;
+            data.isc = data.sumaIsc;
+            data.otrosTributos = data.sumaOtrosTributos;
+            data.importeReferencial = data.importeReferencial;
+            data.subtotalComprobante = data.subTotal;
             data.idindicadorImpuesto = 0
             data.idTablaMoneda = 10001;
             data.idRegistroMoneda = '000001';
@@ -191,6 +194,25 @@ var controladorFactura = function (ruta, rutaEsp) {
                 documentoEntidad.generado = constantes.estadoInactivo;
                 await DocumentoEntidad.guardarEntidad(documentoEntidad);
             }
+            for (let concepto of req.body.documentoConcepto){
+                concepto.concepto = data.codigoConcepto,
+                concepto.descripcion = data.descripcionConcepto,
+                concepto.comprobantePago = data.id,
+                concepto.usuarioCreacion = constantes.usuarioOffline;
+                concepto.usuarioModificacion = constantes.usuarioOffline;
+                concepto.fechaCreacion =dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                concepto.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                concepto.estado = constantes.estadoActivo;
+                concepto.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                concepto.estadoSincronizado = constantes.estadoInactivo;
+                await DocConcepto.guardar(concepto);
+            }
+            for (let parametros of req.body.documentoParametro){
+                guardarParametro(data.id, parametros);
+            }
+            for (let referencia of req.body.documentoReferencia){
+                guardarReferencia(data.id, referencia);
+            }
             await guardarQuery(data);
         }catch(e){
             console.log(e);
@@ -199,7 +221,49 @@ var controladorFactura = function (ruta, rutaEsp) {
         res.json(data);
     })
 };
-
+async function guardarParametro(id, parametros){
+    let param = parametros;
+    param.paramDoc = parametros.idParametro;
+    param.descripcionParametro = parametros.descripcionParametro;
+    param.comprobantePago = id;
+    param.json = parametros.json;
+    param.usuarioCreacion = 'Usuario creacion';
+    param.usuarioModificacion = 'Usuario Modificacion';
+    param.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    param.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    param.estado = constantes.estadoActivo;
+    param.estadoSincronizado = constantes.estadoInactivo;
+    DocumentoParametro.guardar(param);
+}
+async function guardarReferencia(id, referencia){
+    let refer = referencia;
+    refer.idDocumentoOrigen = id;
+    refer.idDocumentoDestino  = refer.idDocumentoDestino;
+    refer.tipoDocumentoOrigen  = refer.tipoDocumentoOrigen;
+    refer.tipoDocumentoDestino  = refer.tipoDocumentoDestino;
+    refer.serieDocumentoDestino  = refer.serieDocumentoDestino;
+    refer.correlativoDocumentoDestino  = refer.correlativoDocumentoDestino;
+    refer.fechaEmisionDestino = refer.fechaEmisionDestino;
+    refer.totalImporteDestino  = refer.totalImporteDestino;
+    refer.totalImporteAuxiliarDestino  = refer.totalImporteAuxiliarDestino;
+    refer.totalPorcentajeAuxiliarDestino  = (refer.auxiliar2 * 100) / refer.totalImporteAuxiliarDestino;
+    refer.tipoDocumentoOrigenDescripcion  = refer.tipoDocumentoOrigenDescripcion;
+    refer.tipoDocumentoDestinoDescripcion  = constantes.factura.referencia.anticipo;
+    refer.monedaDestino = refer.monedaDestino ;
+    refer.totalMonedaDestino = refer.totalImporteDestino ;
+    refer.polizaFactura = constantes.factura.referencia.polizaFactura;
+    refer.anticipo = refer.anticipo;
+    refer.auxiliar1 = refer.auxiliar1 ;
+    refer.auxiliar2 = refer.auxiliar2 ;
+    refer.estadoSincronizado = constantes.estadoInactivo;
+    refer.usuarioCreacion = constantes.usuarioOffline ;
+    refer.usuarioModificacion = constantes.usuarioOffline  ;
+    refer.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"); 
+    refer.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"); 
+    refer.estado =  constantes.estadoActivo ;
+    refer.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");        
+    DocumentoReferencia.guardar(refer);
+}
 async function buscarCorrelativo(tipoComprobante, serie, tipoSerie , entidad){
     let correlativo = 0;
     try{
@@ -252,7 +316,6 @@ async function guardarEvento(inIdcomprobante, usuarioCreacion ){
     eventoData.inEstadoEvento = constantes.estadoActivo;
     eventoData.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     eventoData.usuarioCreacion = usuarioCreacion;
-    console.log(eventoData);
     await Evento.guardar(eventoData);
 }
 
@@ -390,10 +453,31 @@ async function guardarQuery(data){
     await guardarDocumentoReferencia(comprobante.id, data.documentoReferencia);
     await guardarProductoXComprobantePago(comprobante.id, data.detalleEbiz);
 }
+async function guardarProducto(id, idComprobante,  data){
+    let producto = data;
+    producto.id = id;
+    producto.idcomprobantepago = idComprobante;
+    producto.unidadMedida  = data.codigoUnidadMedida;
+    producto.tablaUnidad = data.idTablaUnidad;
+    producto.registroUnidad = data.idRegistroUnidad;
+    producto.numeroParteItem = data.codigoItem;
+    producto.precioUnitarioItem = data.precioUnitario;
+    producto.precioTotalItem = data.precioTotal;
+    producto.cantidadDespachada = data.cantidad;
+    producto.subTotalIsc = data.detalle.subtotalIsc;
+    producto.subtotalIgv = data.detalle.subtotalIgv;
+    producto.codigoTipoPrecio = zfill(data.detalle.codigoTipoPrecio,2);
+    producto.codigoTipoIgv = data.detalle.codigoTipoIgv;
+    producto.codigoTipoIsc = zfill(data.detalle.codigoTipoIsc,2);
+    producto.fechaSincronizado = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");
+    producto.estadoSincronizado = constantes.estadoInactivo;
 
+    await Detalle.guardar(producto);
+}
 async function guardarProductoXComprobantePago(id , data){    
     for(let producto of data){
         producto.id = uuid();
+        await guardarProducto(producto.id, id, producto);
         producto.inIdcomprobantepago = id;
         producto.inItipoPrecioventa = producto.detalle.idTipoPrecio ;
         producto.inCodigoPrecioventa = producto.detalle.codigoTipoPrecio ;
@@ -472,7 +556,7 @@ async function guardarDocumentoReferencia(idOrigen, data){
         referenciaDto.fechaModificacion =dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss"); 
         referenciaDto.estado = constantes.estadoActivo;
         referenciaDto.fechaSincronizado = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss"); 
-        referenciaDto.estadoSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+        referenciaDto.estadoSincronizado = constantes.estadoInactivo;
         await QueryDocRefenci.guardarQuery(referenciaDto);
     }
 }

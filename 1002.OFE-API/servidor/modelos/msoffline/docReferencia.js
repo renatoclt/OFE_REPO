@@ -115,7 +115,6 @@ var DocReferencia = conexion.define('DocReferencia',
     usuarioModificacion: {
       type: sequelize.TEXT,
       field: "vc_usu_modifica",
-      allowNull:false 
     },
     fechaCreacion: {
       type: sequelize.TEXT(6),

@@ -1,6 +1,8 @@
 var DocReferencia = require('./docReferencia');
 var DocEntidad = require('./docEntidad');
-var DocParametro = require('./docParametro')
+var DocParametro = require('./docParametro');
+var ProductoXComprobantePago = require('./productoXComprobantePago');
+var DocumentoConcepto = require('./docConcepto')
 
 /**
  * persistencia de la tabla t_comprobantepago en la variable ComprobantePago
@@ -438,7 +440,11 @@ var ComprobantePago = conexion.define('ComprobantePago',
     guiapublicada:{
       type: sequelize.INTEGER,
       field: "in_deguiapublicada",
-    }
+    },
+    tipoDocumento:{
+      type: sequelize.TEXT,
+      field: "vc_tipodocumento"
+    },
   }, 
   {
     tableName: 'comprobante_t_comprobantepago',
@@ -457,12 +463,26 @@ ComprobantePago.hasMany(DocReferencia,
     { as: 'referencias',foreignKey: 'idDocumentoOrigen', targetKey: 'idDocumentoOrigen'}
     );
 
+ComprobantePago.hasMany(DocReferencia,
+  { as: 'anticipos',foreignKey: 'idDocumentoOrigen', targetKey: 'idDocumentoOrigen'}
+  );
+    
 ComprobantePago.hasMany(DocEntidad,
   { as: 'DocEntidad',foreignKey: 'comprobantepago', targetKey: 'comprobantepago'}
   );
 
 ComprobantePago.hasMany(DocParametro,
   { as: 'parametros', foreignKey: 'comprobantePago', targetKey: 'comprobantePago'}
+)
+
+
+ComprobantePago.hasMany(ProductoXComprobantePago,
+  { as: 'detalle', foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
+)
+
+
+ComprobantePago.hasMany(DocumentoConcepto,
+  { as: 'conceptos', foreignKey: 'comprobantePago', targetKey: 'comprobantePago'}
 )
 
 ComprobantePago.sync();

@@ -42,9 +42,6 @@ QueryDocReferenci.guardarQuery = function guardarQuery(data){
 }
 
 QueryDocReferenci.guardar = function guardar(data){
-    console.log('///////////////////////////////////////////////////////////');
-    console.log(data);
-    console.log('///////////////////////////////////////////////////////////');
     return QueryDocReferenci.create({
         id: data.id,
         docOrigen: data.docOrigen ,

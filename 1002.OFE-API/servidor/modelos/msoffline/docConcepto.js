@@ -15,10 +15,18 @@ var DocConcepto = conexion.define('DocConcepto',
       unique: true,
       primaryKey: true
     },
+    idConcepto:{
+      type: sequelize.TEXT,
+      field: "se_concepto",
+    },
     concepto:{
       type: sequelize.INTEGER,
       field: "se_iconcepto",
       allowNull:false
+    },
+    descripcion:{
+      type: sequelize.TEXT,
+      field: "vc_desc"
     },
     comprobantePago:{
       type: sequelize.INTEGER(32),

@@ -7,7 +7,12 @@ var entidad = require('../../dtos/msoffline/queryEntidadOfflineDTO');
 var DocumentoQuery = require('../../dtos/msoffline/queryComprobantePagoDTO');
 var Evento = require('../../dtos/msoffline/queryComprobanteEventoDTO');
 var QueryProductoXComprobantePagoDTO = require('../../dtos/msoffline/queryProductoXComprobantePagoDTO');
-
+var DocumentoEntidad = require('../../dtos/msdocucmd/documentoEntidadDTO');
+var DocConcepto = require('../../dtos/msoffline/docConcepetoDTO');
+var DocumentoParametro = require('../../dtos/msoffline/docParametroDTO');
+var Detalle = require('../../dtos/msoffline/productoXComprobantePagoDTO');
+var DocumentoReferencia = require('../../dtos/msoffline/docReferenciaDTO');
+var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
 
 var controladorBoletas = function (ruta, rutaEsp) {
     var nombreHateo = "hComprobante";
@@ -153,7 +158,38 @@ var controladorBoletas = function (ruta, rutaEsp) {
             data.idRegistroTipoComprobante = 20;
             data.impuestoGvr = 0;
             data.estadoComprobante = constantes.estadoGuardadoLocal;
+            data.tipoDocumento = data.idTipoComprobante;
             await Documento.guardar(data);  
+            for (let documentoEntidad of req.body.documentoEntidad){
+                documentoEntidad.idComprobante = data.id;
+                documentoEntidad.usuarioCreacion = 'Usuario creacion';
+                documentoEntidad.usuarioModifica = 'Usuario Modificacion';
+                documentoEntidad.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                documentoEntidad.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                documentoEntidad.estado = constantes.estadoActivo;
+                documentoEntidad.estadoSincronizado = constantes.estadoInactivo;
+                documentoEntidad.generado = constantes.estadoInactivo;
+                await DocumentoEntidad.guardarEntidad(documentoEntidad);
+            }
+            for (let concepto of req.body.documentoConcepto){
+                concepto.concepto = data.codigoConcepto,
+                concepto.descripcion = data.descripcionConcepto,
+                concepto.comprobantePago = data.id,
+                concepto.usuarioCreacion = constantes.usuarioOffline;
+                concepto.usuarioModificacion = constantes.usuarioOffline;
+                concepto.fechaCreacion =dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                concepto.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                concepto.estado = constantes.estadoActivo;
+                concepto.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                concepto.estadoSincronizado = constantes.estadoInactivo;
+                await DocConcepto.guardar(concepto);
+            }
+            for (let parametros of req.body.documentoParametro){
+                guardarParametro(data.id, parametros);
+            }
+            for (let referencia of req.body.documentoReferencia){
+                guardarReferencia(data.id, referencia);
+            }
             await guardarQuery(data);
         }catch(e){
             console.log(e);
@@ -163,6 +199,73 @@ var controladorBoletas = function (ruta, rutaEsp) {
     })
 
 };
+
+async function guardarProducto(id, idComprobante,  data){
+    let producto = data;
+    producto.id = id;
+    producto.idcomprobantepago = idComprobante;
+    producto.unidadMedida  = data.codigoUnidadMedida;
+    producto.tablaUnidad = data.idTablaUnidad;
+    producto.registroUnidad = data.idRegistroUnidad;
+    producto.numeroParteItem = data.codigoItem;
+    producto.precioUnitarioItem = data.precioUnitario;
+    producto.precioTotalItem = data.precioTotal;
+    producto.cantidadDespachada = data.cantidad;
+    producto.subTotalIsc = data.detalle.subtotalIsc;
+    producto.subtotalIgv = data.detalle.subtotalIgv;
+    producto.codigoTipoPrecio = zfill(data.detalle.codigoTipoPrecio,2);
+    producto.codigoTipoIgv = data.detalle.codigoTipoIgv;
+    producto.codigoTipoIsc = zfill(data.detalle.codigoTipoIsc,2);
+    producto.fechaSincronizado = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");
+    producto.estadoSincronizado = constantes.estadoInactivo;
+
+    await Detalle.guardar(producto);
+}
+
+
+async function guardarParametro(id, parametros){
+    let param = parametros;
+    param.paramDoc = parametros.idParametro;
+    param.descripcionParametro = parametros.descripcionParametro;
+    param.comprobantePago = id;
+    param.json = parametros.json;
+    param.usuarioCreacion = 'Usuario creacion';
+    param.usuarioModificacion = 'Usuario Modificacion';
+    param.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    param.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    param.estado = constantes.estadoActivo;
+    param.estadoSincronizado = constantes.estadoInactivo;
+    DocumentoParametro.guardar(param);
+}
+async function guardarReferencia(id, referencia){
+    let refer = referencia;
+    refer.idDocumentoOrigen = id;
+    refer.idDocumentoDestino  = refer.idDocumentoDestino;
+    refer.tipoDocumentoOrigen  = refer.tipoDocumentoOrigen;
+    refer.tipoDocumentoDestino  = refer.tipoDocumentoDestino;
+    refer.serieDocumentoDestino  = refer.serieDocumentoDestino;
+    refer.correlativoDocumentoDestino  = refer.correlativoDocumentoDestino;
+    refer.fechaEmisionDestino = refer.fechaEmisionDestino;
+    refer.totalImporteDestino  = refer.totalImporteDestino;
+    refer.totalImporteAuxiliarDestino  = refer.totalImporteAuxiliarDestino;
+    refer.totalPorcentajeAuxiliarDestino  = (refer.auxiliar2 * 100) / refer.totalImporteAuxiliarDestino;
+    refer.tipoDocumentoOrigenDescripcion  = refer.tipoDocumentoOrigenDescripcion;
+    refer.tipoDocumentoDestinoDescripcion  = constantes.factura.referencia.anticipo;
+    refer.monedaDestino = refer.monedaDestino ;
+    refer.totalMonedaDestino = refer.totalImporteDestino ;
+    refer.polizaFactura = constantes.factura.referencia.polizaFactura;
+    refer.anticipo = refer.anticipo;
+    refer.auxiliar1 = refer.auxiliar1 ;
+    refer.auxiliar2 = refer.auxiliar2 ;
+    refer.estadoSincronizado = constantes.estadoInactivo;
+    refer.usuarioCreacion = constantes.usuarioOffline ;
+    refer.usuarioModificacion = constantes.usuarioOffline  ;
+    refer.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"); 
+    refer.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"); 
+    refer.estado =  constantes.estadoActivo ;
+    refer.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");        
+    DocumentoReferencia.guardar(refer);
+}
 
 async function buscarCorrelativo(tipoComprobante, serie, tipoSerie , entidad){
     let correlativo = 0;
@@ -358,6 +461,7 @@ async function guardarQuery(data){
 async function guardarProductoXComprobantePago(id , data){    
     for(let producto of data){
         producto.id = uuid();
+        await guardarProducto(producto.id, id, producto);
         producto.inIdcomprobantepago = id;
         producto.inItipoPrecioventa = producto.detalle.idTipoPrecio ;
         producto.inCodigoPrecioventa = producto.detalle.codigoTipoPrecio ;
@@ -368,39 +472,39 @@ async function guardarProductoXComprobantePago(id , data){
         producto.inItipoAfectacionigv = producto.idTipoIgv ;
         producto.inCodigoAfectacionigv = producto.codigoTipoIgv ;
         producto.vcDescAfectacionigv = producto.descripcionTipoIgv ;
-        producto.chAfectaIgv = constantes.factura.chAfectaIgv;
-        producto.inIdguia = constantes.factura.inIdguia ;
-        producto.vcSpotimpuesto = constantes.factura.vcSpotimpuesto;
-        producto.chNumeroseguimiento = constantes.factura.chNumeroseguimiento;
-        producto.chNumeroguia = constantes.factura.chNumeroguia ;
+        producto.chAfectaIgv = constantes.boleta.chAfectaIgv;
+        producto.inIdguia = constantes.boleta.inIdguia ;
+        producto.vcSpotimpuesto = constantes.boleta.vcSpotimpuesto;
+        producto.chNumeroseguimiento = constantes.boleta.chNumeroseguimiento;
+        producto.chNumeroguia = constantes.boleta.chNumeroguia ;
         producto.vcDescripcionitem = producto.descripcionItem ;
-        producto.vcPosicionprodxguia = constantes.factura.vcPosicionprodxguia ;
+        producto.vcPosicionprodxguia = constantes.boleta.vcPosicionprodxguia ;
         producto.vcNumeroparteitem = producto.codigoItem ;
-        producto.vcPosicionprodxoc = constantes.factura.vcPosicionprodxoc ;
-        producto.inIdproductoconsignado = constantes.factura.inIdproductoconsignado ;
+        producto.vcPosicionprodxoc = constantes.boleta.vcPosicionprodxoc ;
+        producto.inIdproductoconsignado = constantes.boleta.inIdproductoconsignado ;
         producto.dePreciounitarioitem = producto.precioUnitario ;
         producto.deCantidaddespachada = producto.cantidad ;
-        producto.inIdmovimiento = constantes.factura.inIdmovimiento ;
-        producto.vcCodigoguiaerp = constantes.factura.vcCodigoguiaerp ;
-        producto.vcEjercicioguia = constantes.factura.vcEjercicioguia ;
-        producto.vcTipoguia = constantes.factura.vcTipoguia ;
-        producto.tsFechaemisionguia = constantes.factura.tsFechaemisionguia ;
-        producto.vcTipospot = constantes.factura.vcTipospot ;
+        producto.inIdmovimiento = constantes.boleta.inIdmovimiento ;
+        producto.vcCodigoguiaerp = constantes.boleta.vcCodigoguiaerp ;
+        producto.vcEjercicioguia = constantes.boleta.vcEjercicioguia ;
+        producto.vcTipoguia = constantes.boleta.vcTipoguia ;
+        producto.tsFechaemisionguia = constantes.boleta.tsFechaemisionguia ;
+        producto.vcTipospot = constantes.boleta.vcTipospot ;
         producto.dePorcentajeimpuesto = producto.descuento ;
         producto.deMontoimpuesto = producto.montoImpuesto ;
-        producto.inIproducto = constantes.factura.inIproducto ; //CONSULTAR
+        producto.inIproducto = constantes.boleta.inIproducto ; //CONSULTAR
         producto.vcCodigoProducto = producto.codigoItem ;
-        producto.vcPosicion = constantes.factura.vcPosicion ; // consultar
+        producto.vcPosicion = constantes.boleta.vcPosicion ; // consultar
         producto.vcUnidadmedida = producto.unidadMedida ;
         producto.dePreciototalitem = producto.precioTotal ;
         producto.nuSubtotalIgv = producto.subtotalIgv ;
         producto.nuSubtotalIsc = producto.subtotalIsc ;
-        producto.nuPesoBruto = constantes.factura.nuPesoBruto ;
-        producto.nuPesoNeto = constantes.factura.nuPesoNeto ;
-        producto.nuPesoTotal = constantes.factura.nuPesoTotal ;
+        producto.nuPesoBruto = constantes.boleta.nuPesoBruto ;
+        producto.nuPesoNeto = constantes.boleta.nuPesoNeto ;
+        producto.nuPesoTotal = constantes.boleta.nuPesoTotal ;
         producto.nuDescuento = producto.descuento;
-        producto.idRegistroUnidad = constantes.factura.idRegistroUnidad;
-        producto.idTablaUnidad = constantes.factura.idTablaUnidad;
+        producto.idRegistroUnidad = constantes.boleta.idRegistroUnidad;
+        producto.idTablaUnidad = constantes.boleta.idTablaUnidad;
         producto.fechaSincronizado = producto.fechaSincronizado;
         producto.estadoSincronizado = constantes.estadoInactivo;
         await QueryProductoXComprobantePagoDTO.guardar(producto);

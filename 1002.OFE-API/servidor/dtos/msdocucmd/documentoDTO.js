@@ -56,6 +56,7 @@ Documento.guardar = function guardarDocumento(data){
         impuestoGvr: data.impuestoGvr,
         generado: data.generado,
         idProveedor: data.idProveedor,
+        tipoDocumento: data.tipoDocumento,
         idUsuarioCreacion: data.idUsuarioCreacion,
         idUsuarioModificacion: data.idUsuarioModificacion,
         estadoSincronizado: data.estadoSincronizado,

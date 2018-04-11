@@ -80,6 +80,7 @@ var rutas = {
                     "sincronizacionRetencion": {"ruta":"/sincronizacionRetencion", "descripcion":"sincronizarRetenciones"},
                     "sincronizacionPercepcion": {"ruta":"/sincronizacionPercepcion", "descripcion":"sincronizacionPercepcion"},
                     "sincronizacionFacturas": {"ruta":"/sincronizacionFacturas", "descripcion":"sincronizacionFacturas"},
+                    "sincronizacionBoletas": {"ruta":"/sincronizacionBoletas", "descripcion":"sincronizacionFacturas"},
                     "entidad": {"ruta":"/entidad","descripcion":"Se trabajara sobre entidad offline"}
                 }
             },            

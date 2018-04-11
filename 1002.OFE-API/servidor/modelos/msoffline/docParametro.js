@@ -1,3 +1,4 @@
+var queryParametroDominioDoc = require('../../modelos/msoffline/queryParametroDominioDoc');
 /**
  * persistencia de la tabla t_doc_parametro en la variable DocParametro
  * Modificado --- creado --/--/----
@@ -74,6 +75,10 @@ var DocParametro = conexion.define('DocParametro',
     timestamps: false
   }
 );
+
+DocParametro.belongsTo(queryParametroDominioDoc,
+  { as: 'ParametroDominio',foreignKey: 'paramDoc', targetKey: 'id'}
+  );
 
 DocParametro.sync();
 module.exports = DocParametro;

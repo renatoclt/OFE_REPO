@@ -24,7 +24,6 @@ var ProductoXComprobantePago = conexion.define('ProductoXComprobantePago',
     iDoc: {
       type: sequelize.INTEGER,
       field: "in_idoc",
-      allowNull:false  
     },
     idGuia: {
       type: sequelize.INTEGER,
@@ -54,9 +53,17 @@ var ProductoXComprobantePago = conexion.define('ProductoXComprobantePago',
       type: sequelize.TEXT(20),
       field: "vc_posicionprodxguia",
     },
+    registroMedida:{
+      type: sequelize.TEXT(30),
+      field: "vc_registromedida"
+    },
     unidadMedida: {
       type: sequelize.TEXT(30),
       field: "vc_unidadmedida",
+    },
+    tablaUnidad:{
+      type: sequelize.TEXT(30),
+      field: "vc_idtablaunidad",
     },
     posicion: {
       type: sequelize.TEXT(30),
@@ -121,7 +128,28 @@ var ProductoXComprobantePago = conexion.define('ProductoXComprobantePago',
     spotImpuesto: {
       type: sequelize.TEXT,
       field: "vc_spotimpuesto",
-    },       
+    },    
+    codigoTipoIgv:{
+      type: sequelize.TEXT,
+      field: "vc_codigoTipoIgv",
+    } ,  
+    codigoTipoIsc:{
+      type: sequelize.TEXT,
+      field: "vc_codigotipoIsc",
+    } ,  
+    codigoTipoPrecio:{
+      type: sequelize.TEXT,
+      field: "vc_codigoTipoPrecio"
+    },    
+    subTotalIgv:{
+      type: sequelize.TEXT,
+      field: "vc_subTotalIgv"
+    },
+    subTotalIsc:{
+      type: sequelize.TEXT,
+      field: "vc_subTotalIsc"
+    },
+
     fechaSincronizado: {
       type: sequelize.TEXT,
       field: "ts_fec_sincronizado"

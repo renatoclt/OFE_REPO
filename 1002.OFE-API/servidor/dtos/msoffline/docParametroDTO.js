@@ -11,12 +11,10 @@ var DocParametro = require('../../modelos/msoffline/docParametro');
 
 DocParametro.guardar = function guardarDocEntidad(data){    
     return DocParametro.create({
-        id: data.id,
-        evento: data.evento, 
-        entidad: data.entidad, 
+        paramDoc: data.paramDoc, 
+        descripcionParametro: data.descripcionParametro, 
         comprobantePago: data.comprobantePago, 
-        desc: data.desc, 
-        estEvento: data.estEvento,
+        json: data.json, 
         usuarioCreacion: data.usuarioCreacion,
         usuarioModificacion: data.usuarioModificacion,
         fechaCreacion: data.fechaCreacion,
