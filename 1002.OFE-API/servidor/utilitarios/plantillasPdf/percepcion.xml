@@ -34,10 +34,11 @@
 			   font-family="Times-Roman" font-color="#000000" font-style="1" font-size="11">
 			<text>{{prefijoRuc}}:{{rucProveedor}}</text>
 			<text>{{tipoComprobante}}</text>
-			<text>{{serie}} - {{correlativo}}</text>
+			<!-- <text>{{serie}} - {{correlativo}}</text> -->
+            <text>{{numeroComprobante}}</text>
 		</group>
 	
-        <group type="table" row="4" column="0" column-span="5" border="0" number-columns="7">
+		<group type="table" row="4" column="0" column-span="5" border="0" number-columns="7">
 			<cell column-span="2" border="0" 
 				  font-family="Times-Roman" font-color="#000000" font-style="0" font-size="11" alignment="0" background-color="#FFFFFF">
 				<text>Señor(es):</text>
@@ -82,29 +83,29 @@
 				  font-family="Times-Roman" font-color="#000000" font-style="1" font-size="11" alignment="0" background-color="#FFFFFF">
 				<text>{{moneda}}</text>
 			</cell>
-		</group>		
-		
-		<group type="table" row="4" column="6" column-span="5" border="0" number-columns="7">
-			<cell column-span="2" border="0" 
-				  font-family="Times-New-Roman" font-color="#000000" font-style="0" font-size="11" alignment="0" background-color="#FFFFFF">
-				<text>Tipo de Cambio:</text>
-			</cell>
-			<cell column-span="5" border="0" 
-				  font-family="Times-Roman" font-color="#000000" font-style="1" font-size="11" alignment="0" background-color="#FFFFFF">
-				<text>{{tipoCambio}}</text>
-			</cell>
 			
 			<cell column-span="2" border="0" 
 				  font-family="Times-Roman" font-color="#000000" font-style="0" font-size="11" alignment="0" background-color="#FFFFFF">
-				<text>Banco:</text>
+				<text>Porcentaje Percepción:</text>
 			</cell>
 			<cell column-span="5" border="0" 
 				  font-family="Times-Roman" font-color="#000000" font-style="1" font-size="11" alignment="0" background-color="#FFFFFF">
-				<text>{{pagoBanco}}</text>
+				<text>{{porcentajeImpuesto}}</text>
 			</cell>
 		</group>
-	
-		<group type="datatable" row="7" column="0" column-span="11" number-columns="11" data="documentoReferencia" border="15" 
+		<!--
+		<group type="table" row="4" column="6" column-span="5" border="0" number-columns="7">
+			<cell column-span="2" border="0" 
+				  font-family="Times-Roman" font-color="#000000" font-style="0" font-size="11" alignment="0" background-color="#FFFFFF">
+				Tipo de Cambio:
+			</cell>
+			<cell column-span="5" border="0" 
+				  font-family="Times-Roman" font-color="#000000" font-style="1" font-size="11" alignment="0" background-color="#FFFFFF">
+				{{tipoCambio}}
+			</cell>
+		</group>
+		-->
+		<group type="datatable" row="7" column="0" column-span="11" number-columns="9" data="documentoReferencia" border="15" 
 			   font-family="Times-Roman" font-color="#000000" font-style="0" font-size="8" alignment="1" background-color="#EEEEEE">
 			<column header="Tipo Documento" column-span="1" alignment="0"><text>{{tipoDocumentoDestinoDescripcion}}</text></column>
 			<column header="Serie" column-span="1" alignment="1"><text>{{serieDocumentoDestino}}</text></column>
@@ -113,11 +114,10 @@
 			<column header="Moneda Origen" column-span="1" alignment="1"><text>{{monedaDestino}}</text></column>
 			<column header="Monto Origen" name="totalImporte" column-span="1" alignment="2"><text>{{totalMonedaDestino}}</text></column>
 			<column header="Monto" column-span="1" alignment="2"><text>{{totalImporteDestino}}</text></column>
-			<column header="Monto Retenido" name="totalImporteRetencion" column-span="1" alignment="1"><text>{{totalImporteAuxiliarDestino}}</text></column>
-			<column header="% Retenido" column-span="1" alignment="2"><text>{{totalImporteAuxiliarDestino}}/{{totalImporteDestino}}*100</text></column>
-			<column header="Nro. Documento ERP" column-span="2" alignment="1"><text>{{polizaFactura}}</text></column>
+			<column header="% Percibido" column-span="1" alignment="2"><text>{{totalImporteAuxiliarDestino}}/{{totalImporteDestino}}*100</text></column>
+			<column header="Monto Percibido" name="totalImporteRetencion" column-span="1"  alignment="2"><text>{{totalImporteAuxiliarDestino}}</text></column>
 		</group>
-
+		
 		<group type="qrcode" row="10" column="0" column-span="5">
 			<text>{{rucProveedor}}|{{idTipoComprobante}}|{{serie}}|{{correlativo}}|{{igv}}|{{montoDescuento}}|{{fechaEmisionString}}|{{idTipoDocumentoComprador}}|{{rucComprador}}</text>
 		</group>
@@ -128,15 +128,15 @@
 				<text>Total Importe:</text>
 			</cell>
 			<cell column-span="4" border="0" font-family="Times-Roman" font-color="#000000" 
-					font-style="1" font-size="10" alignment="2" background-color="#EEEEEE">
+					font-style="1" font-size="10" alignment="2" background-color="#FFFFFF">
 				<text>{{totalComprobante}}</text>
 			</cell>
 			<cell column-span="2" border="0" font-family="Times-Roman" font-color="#000000" 
 					font-style="0" font-size="10" alignment="0" background-color="#FFFFFF">
-				<text>Total Importe Retención:</text>
+				<text>Total Importe Percepción:</text>
 			</cell>
 			<cell column-span="4" border="0" font-family="Times-Roman" font-color="#000000" 
-					font-style="1" font-size="10" alignment="2" background-color="#EEEEEE">
+					font-style="1" font-size="10" alignment="2" background-color="#FFFFFF">
 				<text>{{montoDescuento}}</text>
 			</cell>
 			<cell column-span="2" border="0" font-family="Times-Roman" font-color="#000000" 
@@ -144,20 +144,20 @@
 				<text>Son:</text>
 			</cell>
 			<cell column-span="4" border="0" font-family="Times-Roman" font-color="#000000" 
-					font-style="1" font-size="10" alignment="0" background-color="#EEEEEE">
+					font-style="1" font-size="10" alignment="0" background-color="#FFFFFF">
 				<text>{{montoComprobante}}</text>
 			</cell>
 		</group>
-	<!-- </body> -->
+	<!-- </body>
 	
-	<!-- <footer> -->
+	<footer> -->
 		<!-- <group type="text" row="0" column="0" column-span="7" border="0"  font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8" alignment="0" background-color="#FFFFFF">
 			<text>{{mensaje}}</text>
-		</group>
-		<group type="text" row="0" column="7" column-span="3" border="0"  font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8" alignment="2" background-color="#FFFFFF">
+		</group> -->
+		<!-- <group type="text" row="0" column="7" column-span="3" border="0"  font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8" alignment="2" background-color="#FFFFFF">
 			<text>Generado por:</text>
-		</group>
-		<group type="image" row="0" column="10" column-span="2" scale="15">
+		</group> -->
+		<!-- <group type="image" row="0" column="10" column-span="2" scale="15">
 			<source>{{logoEbiz}}</source>
 		</group> -->
 	<!-- </footer> -->

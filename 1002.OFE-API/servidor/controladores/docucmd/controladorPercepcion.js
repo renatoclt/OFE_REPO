@@ -10,6 +10,8 @@ var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
 var DocumentoEntidad = require('../../dtos/msdocucmd/documentoEntidadDTO');
 var DocumentoReferencia = require('../../dtos/msdocucmd/documentoReferenciaDTO');
 var DocumentoParametro = require('../../dtos/msdocucmd/documentoParametroDTO')
+var archivo = require('../../dtos/msoffline/archivoDTO');
+var PdfGenerador = require('./index');
 
 var contoladorPercepcion =  function (ruta, rutaEsp){ 
 
@@ -125,6 +127,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
                 documentoParametro.estadoSincronizado = constantes.estadoInactivo;
                 await DocumentoParametro.guardar(documentoParametro);
             }
+            await guardarArchivo(data.id);
             await guardarQuery(data);
         }catch(e){
             console.log(e);
@@ -147,6 +150,21 @@ async function guardarEvento(inIdcomprobante, usuarioCreacion ){
     eventoData.usuarioCreacion = usuarioCreacion;
     console.log(eventoData);
     await Evento.guardar(eventoData);
+}
+async function guardarArchivo(id){
+
+    console.log('SERVICIO PERCEPCION');
+    data.id  = id;
+    var archivoSerial = await PdfGenerador.start(data);
+    data.archivo = archivoSerial;
+    data.usuarioCreacion = constantes.usuarioOffline;
+    data.usuarioModificacion = constantes.usuarioOffline;
+    data.fechaCreacion =  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    data.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    data.estado = parseInt(constantes.estadoActivo) ;
+    data.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    data.estadoSincronizado = parseInt(constantes.estadoInactivo);
+    await archivo.guardar(data);
 }
 
 async function guardarQuery(data){

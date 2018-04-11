@@ -367,7 +367,6 @@ async function guardarArchivo(id){
 
     data.id  = id;
     var archivoSerial = await PdfGenerador.start(data);
-    console.log(archivoSerial);
     data.archivo = archivoSerial;
     data.usuarioCreacion = constantes.usuarioOffline;
     data.usuarioModificacion = constantes.usuarioOffline;
