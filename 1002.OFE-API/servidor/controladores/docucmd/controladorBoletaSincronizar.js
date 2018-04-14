@@ -13,6 +13,8 @@ var DocumentoParametro = require('../../dtos/msoffline/docParametroDTO');
 var Detalle = require('../../dtos/msoffline/productoXComprobantePagoDTO');
 var DocumentoReferencia = require('../../dtos/msoffline/docReferenciaDTO');
 var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
+var PdfGenerador = require('./index');
+var archivo = require('../../dtos/msoffline/archivoDTO');
 
 var controladorBoletas = function (ruta, rutaEsp) {
     var nombreHateo = "hComprobante";
@@ -190,6 +192,8 @@ var controladorBoletas = function (ruta, rutaEsp) {
             for (let referencia of req.body.documentoReferencia){
                 guardarReferencia(data.id, referencia);
             }
+            console.log('BOLETA SERVICIO');
+            await guardarArchivo(data.id);
             await guardarQuery(data);
         }catch(e){
             console.log(e);
@@ -199,7 +203,20 @@ var controladorBoletas = function (ruta, rutaEsp) {
     })
 
 };
+async function guardarArchivo(id){
 
+    data.id  = id;
+    var archivoSerial = await PdfGenerador.start(data);
+    data.archivo = archivoSerial;
+    data.usuarioCreacion = constantes.usuarioOffline;
+    data.usuarioModificacion = constantes.usuarioOffline;
+    data.fechaCreacion =  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    data.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    data.estado = parseInt(constantes.estadoActivo) ;
+    data.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    data.estadoSincronizado = parseInt(constantes.estadoInactivo);
+    await archivo.guardar(data);
+}
 async function guardarProducto(id, idComprobante,  data){
     let producto = data;
     producto.id = id;

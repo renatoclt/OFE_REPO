@@ -2,6 +2,7 @@ var pdfBuilder = require('sfulasalle-pdf-builder');
 var fs = require( 'fs' );
 var x2j = require( 'xml2js' );
 var logoSimple = require('../../utilitarios/plantillasPdf/logoEbiz');
+var logotipoEbiz = require('../../utilitarios/plantillasPdf/logotipoEbiz');
 
 var module = {};
 module = (function () {
@@ -45,33 +46,54 @@ module = (function () {
         setComprobante(comprobanteJson);
         await xml2json(sXMLData);
         console.log("START 1");
+        // console.log(jsonPlantilla);
         await build(comprobante, jsonPlantilla);
         console.log("START 2");
         var pdf = pdfBuilder.getData();
         console.log('START 3');
-        console.log(pdf);
         return pdf
     }
     function setComprobante(comprobanteJson) {
-        console.log('COMPROBANTE JSON');
-        console.log(comprobanteJson);
-
+        var proveedor;
+        var comprador;
+        var subtoTotal;
         comprobante.prefijoRuc = 'RUC N°';
         comprobante.serie = comprobanteJson.vcSerie;
         comprobante.correlativo = comprobanteJson.correlativo;
-        comprobante.razonSocialProveedor = comprobanteJson.documentoEntidad[1].nombreComercial;
-        comprobante.direccionFiscalProveedor = comprobanteJson.documentoEntidad[1].direccionFiscal;
-        comprobante.rucProveedor = comprobanteJson.documentoEntidad[1].documento;
-        comprobante.rucComprador = comprobanteJson.documentoEntidad[0].documento;
-        comprobante.razonSocialComprador = comprobanteJson.documentoEntidad[0].nombreComercial;
-        comprobante.direccionFiscalComprador = comprobanteJson.documentoEntidad[0].direccionFiscal;
         comprobante.moneda = comprobanteJson.moneda;
         comprobante.fechaEmisionString = comprobanteJson.fechaEmision.slice(0,10);
         comprobante.tipoCambio = '-';
         comprobante.pagoBanco = '-';
+        
+        for ( var a = 0 ; a < comprobanteJson.documentoEntidad.length ; a++ ) {
+            if (comprobanteJson.documentoEntidad[a].idTipoEntidad == '1') {
+                proveedor = comprobanteJson.documentoEntidad[a];
+                continue;
+            }
+            if (comprobanteJson.documentoEntidad[a].idTipoEntidad == '2') {
+                comprador = comprobanteJson.documentoEntidad[a];
+                continue;
+            }
+        }
+        comprobante.idTipoDocumentoComprador = comprador.tipoDocumento;
+        // console.log('COMPRADOR');
+        // console.log(comprador);
+        comprobante.razonSocialProveedor = proveedor.denominacion;
+        comprobante.direccionFiscalProveedor = proveedor.direccionFiscal;
+        comprobante.rucProveedor = proveedor.documento;
+        comprobante.rucComprador = comprador.documento;
+        comprobante.razonSocialComprador = comprador.denominacion;
+        comprobante.direccionFiscalComprador = comprador.direccionFiscal;
         if (comprobante.direccionFiscalComprador === null || comprobante.direccionFiscalComprador === undefined) {
             comprobante.direccionFiscalComprador = '';
         }
+        if (comprobante.direccionFiscalProveedor === null || comprobante.direccionFiscalProveedor === undefined) {
+            comprobante.direccionFiscalProveedor = '';
+        }
+
+        // footer
+        comprobante.mensaje = 'Representación impresa de RETENCION ELECTRONICA \nConsulte en www.sunat.gob.pe';
+        comprobante.logoEbiz = logotipoEbiz.logotipoEbiz;
 
         switch(comprobanteJson.idTipoComprobante) {
             case '20':    
@@ -84,6 +106,12 @@ module = (function () {
                 comprobante.montoComprobante = comprobanteJson.montoComprobante;
                 comprobante.idTipoComprobante = comprobanteJson.idTipoComprobante;
                 comprobante.igv = comprobanteJson.igv;
+                // comprobante.documentoReferencia.forEach(item => {
+                //     item['fechaEmisionDestinoString'] = comprobante.fechaEmisionDestino;
+                // });
+                for ( var a = 0 ; a < comprobante.documentoReferencia.length ; a++ ) {
+                    comprobante.documentoReferencia[a]['fechaEmisionDestinoString'] = comprobante.documentoReferencia[a].fechaEmisionDestino;
+                }
                 // comprobante.idTipoDocumentoComprador = comprobanteJson.idTipoDocumentoComprador;
                 console.log('SET PLANTILLA Retencion');
                 break;
@@ -91,7 +119,6 @@ module = (function () {
                 sInputFile = 'servidor/utilitarios/plantillasPdf/percepcion.xml';
                 comprobante.orientacion = 'landscape';
                 comprobante.tipoComprobante = 'PERCEPCIÓN ELECTRONICA';
-                console.log(comprobante.logo);
                 comprobante.porcentajeImpuesto = getPorcentajeOfString((JSON.parse(comprobanteJson.documentoParametro[0].json)).valor);
 
                 comprobante.razonSocialProveedor = comprobanteJson.razonSocialProveedor;
@@ -102,14 +129,129 @@ module = (function () {
                 comprobante.razonSocialComprador = comprobanteJson.razonSocialComprador;
 
                 comprobante.documentoReferencia = comprobanteJson.documentoReferencia;
+                comprobante.documentoReferencia.forEach(item => {
+                    item.totalPorcentajeAuxiliarDestino = comprobante.porcentajeImpuesto;
+                });
+                for ( var a = 0 ; a < comprobante.documentoReferencia.length ; a++ ) {
+                    comprobante.documentoReferencia[a]['fechaEmisionDestinoString'] = comprobante.documentoReferencia[a].fechaEmisionDestino;
+                }
                 comprobante.totalComprobante = comprobanteJson.totalComprobante;
                 comprobante.montoDescuento = comprobanteJson.montoDescuento;
                 comprobante.montoComprobante = comprobanteJson.montoComprobante;
                 comprobante.idTipoComprobante = comprobanteJson.idTipoComprobante;
                 comprobante.igv = comprobanteJson.igv;
-                comprobante.mensaje = 'Representación impresa de PERCEPCION ELECTRONICA Consulte en www.sunat.gob.pe';
                 // comprobante.idTipoDocumentoComprador = comprobanteJson.idTipoDocumentoComprador;
                 console.log('SET PLANTILLA PERCEPCION');
+                break;
+            case '01': 
+                sInputFile = 'servidor/utilitarios/plantillasPdf/factura.xml';
+                comprobante.orientacion = 'portrait';
+                comprobante.tipoComprobante = 'FACTURA ELECTRÓNICA';
+                comprobante.serie = comprobanteJson.vcSerie;
+                comprobante.correlativo = comprobanteJson.correlativo;
+                comprobante.observacionComprobante = comprobanteJson.observacionComprobante;
+                if (comprobanteJson.documentoReferencia.length == 0) {
+                    comprobante.anticipo = 0;
+                } else {
+                    comprobante.anticipo = 1;
+                }
+                comprobante.documentoReferencia = comprobanteJson.documentoReferencia;
+                comprobante.detalleEbiz = comprobanteJson.detalleEbiz;
+
+                for ( var a = 0 ; a < comprobante.detalleEbiz.length ; a++ ) {
+                    comprobante.detalleEbiz[a]['subtotalIgv'] = comprobante.detalleEbiz[a].detalle.subtotalIgv;
+                    comprobante.detalleEbiz[a]['subtotalIsc'] = comprobante.detalleEbiz[a].detalle.subtotalIsc;
+                    comprobante.detalleEbiz[a]['descuento'] = comprobante.detalleEbiz[a].detalle.descuento;
+                    comprobante.detalleEbiz[a]['unidadMedida'] = comprobante.detalleEbiz[a].codigoUnidadMedida;
+                }
+                comprobante.montoComprobante = comprobanteJson.montoComprobante;
+                for ( var a = 0; a < comprobanteJson.documentoConcepto.length ; a++) {
+                    if ( comprobanteJson.documentoConcepto[a].idConcepto == '5' ) {
+                        subtoTotal = comprobanteJson.documentoConcepto[a].importe;
+                    }
+                    switch (comprobanteJson.documentoConcepto[a].idConcepto) {
+                        case '2':
+                            comprobante.totalOpInafectas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '3':
+                            comprobante.totalOpExoneradas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '4':
+                            comprobante.totalOpGravadas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '5':
+                            comprobante.subtotal = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            comprobante.subtotalComprobante = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '8':
+                            comprobante.totalDetraccion = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '10':
+                            comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                    }
+                }
+                comprobante.isc = Number(comprobanteJson.isc).toFixed(2);
+                comprobante.igv = Number(comprobanteJson.igv).toFixed(2);
+                comprobante.totalAnticipo = Number(comprobanteJson.totalAnticipos).toFixed(2);
+                comprobante.otrosTributos = Number(comprobanteJson.otrosTributos).toFixed(2);
+                comprobante.totalOtrosCargos = '0.00'; 
+                comprobante.totalComprobante = Number(comprobanteJson.totalComprobante).toFixed(2);
+                break;
+            case '03': 
+                sInputFile = 'servidor/utilitarios/plantillasPdf/factura.xml';
+                comprobante.orientacion = 'portrait';
+                comprobante.tipoComprobante = 'BOLETA ELECTRÓNICA';
+                comprobante.serie = comprobanteJson.vcSerie;
+                comprobante.correlativo = comprobanteJson.correlativo;
+                comprobante.observacionComprobante = comprobanteJson.observacionComprobante;
+                if (comprobanteJson.documentoReferencia.length == 0) {
+                    comprobante.anticipo = 0;
+                } else {
+                    comprobante.anticipo = 1;
+                }
+                comprobante.documentoReferencia = comprobanteJson.documentoReferencia;
+                comprobante.detalleEbiz = comprobanteJson.detalleEbiz;
+
+                for ( var a = 0 ; a < comprobante.detalleEbiz.length ; a++ ) {
+                    comprobante.detalleEbiz[a]['subtotalIgv'] = comprobante.detalleEbiz[a].detalle.subtotalIgv;
+                    comprobante.detalleEbiz[a]['subtotalIsc'] = comprobante.detalleEbiz[a].detalle.subtotalIsc;
+                    comprobante.detalleEbiz[a]['descuento'] = comprobante.detalleEbiz[a].detalle.descuento;
+                    comprobante.detalleEbiz[a]['unidadMedida'] = comprobante.detalleEbiz[a].codigoUnidadMedida;
+                }
+                comprobante.montoComprobante = comprobanteJson.montoComprobante;
+                for ( var a = 0; a < comprobanteJson.documentoConcepto.length ; a++) {
+                    if ( comprobanteJson.documentoConcepto[a].idConcepto == '5' ) {
+                        subtoTotal = comprobanteJson.documentoConcepto[a].importe;
+                    }
+                    switch (comprobanteJson.documentoConcepto[a].idConcepto) {
+                        case '2':
+                            comprobante.totalOpInafectas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '3':
+                            comprobante.totalOpExoneradas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '4':
+                            comprobante.totalOpGravadas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '5':
+                            comprobante.subtotal = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            comprobante.subtotalComprobante = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '8':
+                            comprobante.totalDetraccion = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '10':
+                            comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                    }
+                }
+                comprobante.isc = Number(comprobanteJson.isc).toFixed(2);
+                comprobante.igv = Number(comprobanteJson.igv).toFixed(2);
+                comprobante.totalAnticipo = Number(comprobanteJson.totalAnticipos).toFixed(2);
+                comprobante.otrosTributos = Number(comprobanteJson.otrosTributos).toFixed(2);
+                comprobante.totalOtrosCargos = '0.00'; 
+                comprobante.totalComprobante = Number(comprobanteJson.totalComprobante).toFixed(2);
                 break;
         }
         p = new x2j.Parser();

@@ -342,8 +342,8 @@ async function guardarDocumentoReferencia(idOrigen, data){
         referenciaDto.estado = constantes.estadoActivo;
         referenciaDto.fechaSincronizado = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss"); 
         referenciaDto.estadoSincronizado = constantes.estadoInactivo
-        console.log('*********************************************');
-        console.log(referenciaDto);
+        // console.log('*********************************************');
+        // console.log(referenciaDto);
         await QueryDocRefenci.guardarQuery(referenciaDto);
     }
 }
@@ -359,7 +359,7 @@ async function guardarEvento(inIdcomprobante, usuarioCreacion ){
     eventoData.inEstadoEvento = constantes.estadoActivo;
     eventoData.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     eventoData.usuarioCreacion = usuarioCreacion;
-    console.log(eventoData);
+    // console.log(eventoData);
     await Evento.guardar(eventoData);
 }
 
