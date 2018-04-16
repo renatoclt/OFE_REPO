@@ -53,6 +53,10 @@ var QueryTipoPrecVen = require('../../dtos/msoffline/queryTipoPrecVenDTO') ;  //
 var Maestra = require('../../dtos/msoffline/maestraDTO');
 var DocumentoAzure = require('../../dtos/msoffline/documentoAzureDTO');
 var QueryEntidadOffline = require('../../dtos/msoffline/queryEntidadOfflineDTO');
+var EmpresaOffline = require('../../dtos/msoffline/empresaLocalDTO');
+var UsuarioOffline = require('../../dtos/msoffline/usuarioDTO');
+var Menu = require('../../dtos/msoffline/menuDTO');
+var UsuarioMenu = require('../../dtos/msoffline/usuarioMenuDTO')
 /**
  * Controlador de la tabla serie 
  * 
@@ -85,7 +89,39 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         })
         res.status(200).send('{}');
     });
-        
+       
+    router.post(ruta.concat('/empresaLocal'), async function(req, res){  
+        console.log(req.body);
+        res.status(200).send(await EmpresaOffline.guardar(req.body));
+    });
+
+    router.post(ruta.concat('/guardarUsuarios'), async function(req, res){  
+        console.log(req.body.usuarios);
+        req.body.usuarios.forEach(async element => {
+            element.id = element.se_iusuario ;
+            element.nombreusuario = element.vc_nom_usuario ;
+            element.password = element.vc_password ;
+            element.nombre = element.vc_nombre ;
+            element.apellido =  element.vc_apellido ;
+            element.docIdentidad = element.vc_docidentidad ;
+            element.numDocIdentidad = element.vc_num_docidentidad ;
+            element.correo = element.vc_correo ;
+            element.identidad = element. se_identidad;
+            element.usuarioCreacion = constantes.usuarioOffline ;
+            await UsuarioOffline.registrarUsuario(element);
+            element.modulos.forEach(async menu =>{
+                menu.usuario = element.se_iusuario ;
+                menu.menu = menu.IdModulo ;
+                await UsuarioMenu.guardar(menu);
+            });
+        });
+        res.status(200).send('{}');
+    });
+
+    router.get(ruta.concat('/mostrarMenu'), async function(req, res){  
+        res.status(200).send(await UsuarioMenu.mostrar(req.query.idUsuario));
+    });
+
     router.post(ruta.concat('/parametroEntidad'), async function(req, res){        
         req.body.forEach(async element => {
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");

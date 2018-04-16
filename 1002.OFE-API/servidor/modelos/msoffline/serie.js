@@ -84,6 +84,6 @@ var Serie = conexion.define('Serie',
   }
 );
 
-Serie.sync();
+// Serie.sync();
 
 module.exports = Serie;

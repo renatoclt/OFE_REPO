@@ -62,7 +62,7 @@
     "wrap-ansi": "^3.0.1"
   },
   "devDependencies": {
-    "electron": "^1.7.9",
+    "electron": "^1.8.4",
     "electron-builder": "^19.45.5",
     "electron-rebuild": "^1.7.3"
   }

@@ -752,9 +752,9 @@ var atributosReferenciaFactura = {
 
 var atributosParametroFactura = {
     attributes: [
-        ['se_iparam_doc','idParametro'],
-        'descripcionParametro',
-        'json'
+        'id',
+        'usuario',
+        'menu'
     ]
 } 
 
