@@ -26,7 +26,7 @@ QueryComprobanteEvento.guardarOffline = function guardarQueryComprobanteConcepto
 QueryComprobanteEvento.guardar = function guardarQueryComprobanteConcepto(data, id){
     return QueryComprobanteEvento.findOne({where: {comprobante: data.inIdcomprobante, evento: data.inIdevento}}).then(function(obj){
         if(obj){
-            console.log(obj);
+            // console.log(obj);
             return QueryComprobanteEvento.update({
                 comprobante: data.inIdcomprobante ,
                 evento: data.inIdevento ,

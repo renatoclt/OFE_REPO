@@ -58,9 +58,9 @@ module = (function () {
         var comprador;
         var subtoTotal;
         comprobante.prefijoRuc = 'RUC N°';
-        comprobante.serie = comprobanteJson.vcSerie;
+        comprobante.serie = comprobanteJson.vcSerie.toUpperCase();
         comprobante.correlativo = comprobanteJson.correlativo;
-        comprobante.moneda = comprobanteJson.moneda;
+        comprobante.moneda = comprobanteJson.moneda.toUpperCase();
         comprobante.fechaEmisionString = comprobanteJson.fechaEmision.slice(0,10);
         comprobante.tipoCambio = '-';
         comprobante.pagoBanco = '-';
@@ -78,12 +78,12 @@ module = (function () {
         comprobante.idTipoDocumentoComprador = comprador.tipoDocumento;
         // console.log('COMPRADOR');
         // console.log(comprador);
-        comprobante.razonSocialProveedor = proveedor.denominacion;
-        comprobante.direccionFiscalProveedor = proveedor.direccionFiscal;
+        comprobante.razonSocialProveedor = proveedor.denominacion.toUpperCase();
+        comprobante.direccionFiscalProveedor = proveedor.direccionFiscal.toUpperCase();
         comprobante.rucProveedor = proveedor.documento;
         comprobante.rucComprador = comprador.documento;
-        comprobante.razonSocialComprador = comprador.denominacion;
-        comprobante.direccionFiscalComprador = comprador.direccionFiscal;
+        comprobante.razonSocialComprador = comprador.denominacion.toUpperCase();
+        comprobante.direccionFiscalComprador = comprador.direccionFiscal.toUpperCase();
         if (comprobante.direccionFiscalComprador === null || comprobante.direccionFiscalComprador === undefined) {
             comprobante.direccionFiscalComprador = '';
         }
