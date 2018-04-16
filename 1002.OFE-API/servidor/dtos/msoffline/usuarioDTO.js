@@ -61,7 +61,6 @@ Usuario.registrarUsuario =function(usuario){
                 estado:                 1,
                 fechaSincronizado:      null,
                 estadoSincronizado:     0
-
             }).then(function(data){
                 resolve(data.dataValues);
             }).catch(function(error){

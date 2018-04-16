@@ -81,7 +81,9 @@ var rutas = {
                     "sincronizacionPercepcion": {"ruta":"/sincronizacionPercepcion", "descripcion":"sincronizacionPercepcion"},
                     "sincronizacionFacturas": {"ruta":"/sincronizacionFacturas", "descripcion":"sincronizacionFacturas"},
                     "sincronizacionBoletas": {"ruta":"/sincronizacionBoletas", "descripcion":"sincronizacionFacturas"},
-                    "entidad": {"ruta":"/entidad","descripcion":"Se trabajara sobre entidad offline"}
+                    "entidad": {"ruta":"/entidad","descripcion":"Se trabajara sobre entidad offline"},
+                    "encriptacion":{"ruta":"/encriptacion","descripcion":"encriptacion con bcript"},
+                    "obtenerEmpresaOffline":{"ruta":"/obtenerEmpresaOffline","descripcion":"obtenerEmpresaOffline"},
                 }
             },            
         }
