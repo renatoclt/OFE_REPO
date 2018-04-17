@@ -42,6 +42,7 @@ var constantes = {
     tipoDocumentoRuc: 'REG. UNICO DE CONTRIBUYENTES',
     idTablaTipoComprobante: '10007',
     vcIdregistromoneda: '000001',
+    menuOffline: '12345678-1234-1234-1234-1234567890ab',
     retencion: {
         inDeguiapublicada: '0',
         vcTipofactura: 'M',

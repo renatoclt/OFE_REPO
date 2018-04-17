@@ -114,6 +114,10 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
                 menu.menu = menu.IdModulo ;
                 await UsuarioMenu.guardar(menu);
             });
+            let menuSincronizacion = {};
+            menuSincronizacion.usuario = element.se_iusuario;
+            menuSincronizacion.menu = constantes.menuOffline;
+            await UsuarioMenu.guardar(menuSincronizacion);
         });
         res.status(200).send('{}');
     });
