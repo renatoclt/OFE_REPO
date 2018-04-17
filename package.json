@@ -59,7 +59,8 @@
     "sequelize": "^4.31.2",
     "sqlite3": "3.1.13",
     "strip": "^3.0.0",
-    "wrap-ansi": "^3.0.1"
+    "wrap-ansi": "^3.0.1",
+    "bcrypt": "^2.0.0"
   },
   "devDependencies": {
     "electron": "^1.8.4",
