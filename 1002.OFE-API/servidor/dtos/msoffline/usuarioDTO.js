@@ -1,5 +1,5 @@
 Usuario = require('../../modelos/msoffline/usuario');
-
+var bcrypt = require('bcrypt');
 Usuario.buscarUsuario = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
@@ -164,7 +164,6 @@ Usuario.buscarProductoEspecifico = function(pagina, regxpag, usuario, password, 
                         estado: 1,
                         [OP.and]:{
                             nombreusuario: usuario,
-                            password: password
                         }
                     }
                     /*,
@@ -172,14 +171,17 @@ Usuario.buscarProductoEspecifico = function(pagina, regxpag, usuario, password, 
                     limit: regxpag*/
                 })
                 .then(function (usuarios) {
-                  /* var usuario_={};
-                   usuarios= usuarios.dataValues;*/
-                   let salida=null;
-                   var cantidadReg = 1;   
-                   if(usuarios!=null){
-                    salida=usuarios.dataValues;
-                   }               
-                    resolve({'usuarios': salida, 'cantidadReg': cantidadReg});
+                    if(bcrypt.compareSync(password, usuarios.dataValues.password)){
+                        let salida=null;
+                        var cantidadReg = 1;   
+                        if(usuarios!=null){
+                            salida=usuarios.dataValues;
+                        }   
+                        resolve({'usuarios': salida, 'cantidadReg': cantidadReg});
+                        }else{
+                            console.log('entre');
+                            resolve({});
+                        }
                 });
         }, function (err) {
             console.log(err);
