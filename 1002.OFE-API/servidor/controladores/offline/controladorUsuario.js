@@ -84,8 +84,6 @@ var controladorUsuario = function (ruta, rutaEsp) {
         }
         if (req.query.password && req.query.password!=""){
             password = req.query.password;
-            var password = bcrypt.hashSync(password, 10);
-            console.log(bcrypt.hashSync(password, 10))
         }
         if (req.query.pagina && req.query.pagina>0){
             pagina = req.query.pagina;
