@@ -66,6 +66,7 @@ EntidadQueryOffline.buscarDocumentoGuardar = async function buscarDocumentoGuard
             },  {where: {tipoDocumento: obj.tipoDocumento , idTipoDocumento: obj.idTipoDocumento}});
         }
         else{
+            console.log('///////////////////////////////////////////////////////////////////////////////////////////////');
             return EntidadQueryOffline.create({
                 id: data.id,
                 documento: data.documento ,

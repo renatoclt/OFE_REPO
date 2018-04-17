@@ -1,4 +1,5 @@
 var UsuarioDTO = require("../../dtos/msoffline/usuarioDTO");
+var bcrypt = require('bcrypt');
 //var EntParametrosDTO = require("../../dtos/comprobantes/entParametrosDTO");
 //var DominioEntDTO = require("../../dtos/organizaciones/dominioEntDTO");
 
@@ -83,6 +84,8 @@ var controladorUsuario = function (ruta, rutaEsp) {
         }
         if (req.query.password && req.query.password!=""){
             password = req.query.password;
+            var password = bcrypt.hashSync(password, 10);
+            console.log(bcrypt.hashSync(password, 10))
         }
         if (req.query.pagina && req.query.pagina>0){
             pagina = req.query.pagina;
