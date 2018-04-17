@@ -197,11 +197,10 @@ $RECYCLE.BIN/
 #############
 
 *.py[cod]
-
+dist/
 # Packages
 *.egg
 *.egg-info
-dist/
 eggs/
 parts/
 var/
