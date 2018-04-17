@@ -18,7 +18,7 @@ var controladorEntidad = async function (ruta, rutaEsp) {
                 entidad.logo = null;
                 entidad.pais = constantes.paisPeru;
                 entidad.ubigeo = null;
-                entidad.tipoDocumento = constantes.tipoDocumentoRuc;
+                entidad.tipoDocumento = data.tipoDocumento == null ? constantes.tipoDocumentoRuc : data.tipoDocumento;
                 entidad.idTipoDocumento = constantes.idTipoDocumentoRuc;
                 entidad.idEbiz = null;
                 entidad.usuarioCreacion = constantes.usuarioOffline;
