@@ -43,6 +43,7 @@ var constantes = {
     idTablaTipoComprobante: '10007',
     vcIdregistromoneda: '000001',
     menuOffline: '12345678-1234-1234-1234-1234567890ab',
+    keySuscripcion: '07a12d074c714f62ab037bb2f88e30d3',
     retencion: {
         inDeguiapublicada: '0',
         vcTipofactura: 'M',
