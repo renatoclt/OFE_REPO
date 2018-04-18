@@ -108,6 +108,11 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.correo = element.vc_correo ;
             element.identidad = element. se_identidad;
             element.usuarioCreacion = constantes.usuarioOffline ;
+            element.organizaciones = [{ id:element.vc_org_id,
+                                        nombre:'Empresa Offline',
+                                        tipo_empresa:"P",
+                                        keySuscripcion:constantes.keySuscripcion,
+                                        ruc:req.body.ruc_emisor}];      
             await UsuarioOffline.registrarUsuario(element);
             element.modulos.forEach(async menu =>{
                 menu.usuario = element.se_iusuario ;
