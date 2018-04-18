@@ -53,6 +53,20 @@ module = (function () {
         console.log('START 3');
         return pdf
     }
+
+    async function buscarPlantilla(tipoComprobante, serie, tipoSerie , entidad){
+        let correlativo = 0;
+        try{
+            let data  = await Serie.buscarSerie(tipoComprobante, serie, tipoSerie , entidad); 
+            correlativo = parseInt(data[0].dataValues.correlativo) + 1;
+            await Serie.acturalizarCorrelativo(data[0].dataValues.idSerie , correlativo);
+        }
+        catch(e){
+            console.log(e);
+            correlativo = 1
+        }
+        return zfill(correlativo,8);
+    }
     function setComprobante(comprobanteJson) {
         console.log('COMPROBANTES JSON DEVUELTO');
         console.log(comprobanteJson);
@@ -123,7 +137,7 @@ module = (function () {
                 comprobante.razonSocialProveedor = comprobanteJson.razonSocialProveedor;
                 // comprobante.direccionFiscalProveedor = '';
 
-                comprobante.serie = '';
+                // comprobante.serie = '';
                 comprobante.numeroComprobante = comprobanteJson.numeroComprobante;
                 // comprobante.razonSocialComprador = comprobanteJson.razonSocialComprador;
 
