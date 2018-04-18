@@ -3,7 +3,8 @@
   "description": "Sistema de facturacion electronica",
   "version": "0.8.0",
   "main": "main.js",
-  "authors": "laSalle",
+  "author": "laSalle <test@gmail.com>",
+  "homepage": "http://gitlab.sreasons.com",
   "license": "MIT",
   "private": true,
   "scripts": {
