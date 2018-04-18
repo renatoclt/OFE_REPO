@@ -5,7 +5,7 @@ var controladorSincronizacionFactura = function (ruta, rutaEsp) {
         try{
             var data = await comprobantePagoDTO.sincronizarFactura();
             data.forEach((element) => {
-                console.log((element));
+                // console.log((element));
                 element.DocEntidad.forEach(entidad => {
                     if(entidad.tipoEntidad == 1){
                         //no guardo entidad

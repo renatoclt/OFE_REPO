@@ -78,7 +78,7 @@
 		
 		<group type="datatable" row="8" column="0" column-span="10" number-columns="5" data="documentoReferencia" border="15" 
 			font-family="Times-Roman" font-color="#000000" font-style="0" font-size="8" background-color="#EEEEEE" alignment="1"
-			visible_if="false">
+			visible_if="{{anticipo}}">
 			<column header="Tipo Documento Relacionado" column-span="2" alignment="0"><text>{{tipoDocumentoDestinoDescripcion}}</text></column>
 			<column header="N° Documento Relacionado" column-span="2" alignment="1"><text>{{serieDocumentoDestino}} - {{correlativoDocumentoDestino}}</text></column>
 			<column header="Monto Anticipo" column-span="1" alignment="2"><text>{{anticipo}}</text></column>

@@ -54,11 +54,15 @@ module = (function () {
         return pdf
     }
     function setComprobante(comprobanteJson) {
+        console.log('COMPROBANTES JSON DEVUELTO');
+        console.log(comprobanteJson);
         var proveedor;
         var comprador;
         var subtoTotal;
         comprobante.prefijoRuc = 'RUC N°';
-        comprobante.serie = comprobanteJson.vcSerie.toUpperCase();
+        if (comprobanteJson.vcSerie) {
+            comprobante.serie = comprobanteJson.vcSerie.toUpperCase();
+        }
         comprobante.correlativo = comprobanteJson.correlativo;
         comprobante.moneda = comprobanteJson.moneda.toUpperCase();
         comprobante.fechaEmisionString = comprobanteJson.fechaEmision.slice(0,10);
@@ -76,8 +80,6 @@ module = (function () {
             }
         }
         comprobante.idTipoDocumentoComprador = comprador.tipoDocumento;
-        // console.log('COMPRADOR');
-        // console.log(comprador);
         comprobante.razonSocialProveedor = proveedor.denominacion.toUpperCase();
         comprobante.direccionFiscalProveedor = proveedor.direccionFiscal.toUpperCase();
         comprobante.rucProveedor = proveedor.documento;
@@ -99,16 +101,13 @@ module = (function () {
             case '20':    
                 sInputFile = 'servidor/utilitarios/plantillasPdf/retencion.xml';
                 comprobante.orientacion = 'landscape';
-                comprobante.tipoComprobante = 'RETENCIÓN ELECTRONICA';
+                comprobante.tipoComprobante = 'RETENCIÓN ELECTRÓNICA';
                 comprobante.documentoReferencia = comprobanteJson.documentoReferencia;
                 comprobante.totalComprobante = comprobanteJson.totalcomprobante;
                 comprobante.montoDescuento = comprobanteJson.montoDescuento;
                 comprobante.montoComprobante = comprobanteJson.montoComprobante;
                 comprobante.idTipoComprobante = comprobanteJson.idTipoComprobante;
                 comprobante.igv = comprobanteJson.igv;
-                // comprobante.documentoReferencia.forEach(item => {
-                //     item['fechaEmisionDestinoString'] = comprobante.fechaEmisionDestino;
-                // });
                 for ( var a = 0 ; a < comprobante.documentoReferencia.length ; a++ ) {
                     comprobante.documentoReferencia[a]['fechaEmisionDestinoString'] = comprobante.documentoReferencia[a].fechaEmisionDestino;
                 }
@@ -118,15 +117,15 @@ module = (function () {
             case '40':    
                 sInputFile = 'servidor/utilitarios/plantillasPdf/percepcion.xml';
                 comprobante.orientacion = 'landscape';
-                comprobante.tipoComprobante = 'PERCEPCIÓN ELECTRONICA';
+                comprobante.tipoComprobante = 'PERCEPCIÓN ELECTRÓNICA';
                 comprobante.porcentajeImpuesto = getPorcentajeOfString((JSON.parse(comprobanteJson.documentoParametro[0].json)).valor);
 
                 comprobante.razonSocialProveedor = comprobanteJson.razonSocialProveedor;
-                comprobante.direccionFiscalProveedor = '';
+                // comprobante.direccionFiscalProveedor = '';
 
                 comprobante.serie = '';
                 comprobante.numeroComprobante = comprobanteJson.numeroComprobante;
-                comprobante.razonSocialComprador = comprobanteJson.razonSocialComprador;
+                // comprobante.razonSocialComprador = comprobanteJson.razonSocialComprador;
 
                 comprobante.documentoReferencia = comprobanteJson.documentoReferencia;
                 comprobante.documentoReferencia.forEach(item => {
