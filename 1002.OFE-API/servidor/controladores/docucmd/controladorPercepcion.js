@@ -59,6 +59,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
         data.id = uuid();
         try{
             data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , 4)
+            data.vcSerie = data.numeroComprobante;
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;       
             data.estadoSincronizado = constantes.estadoInactivo;
             data.flagOrigenComprobante = constantes.percepcion.flagOrigenComprobante;
