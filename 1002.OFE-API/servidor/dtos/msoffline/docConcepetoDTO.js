@@ -10,9 +10,10 @@ var DocConcepto = require('../../modelos/msoffline/docConcepto');
  */
 
 DocConcepto.guardar = function guardar(data){
+    console.log(data);
     return DocConcepto.create({
         idConcepto: data.idConcepto,
-        concepto: data.codigoConcepto,
+        concepto : data.codConcepto,
         comprobantePago: data.comprobantePago,
         descripcion: data.descripcionConcepto,
         importe: data.importe,

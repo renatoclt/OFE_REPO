@@ -6,7 +6,7 @@
  * @argument 2 campos de la tabla
  * @argument 3 tabla sqlite
  */
-var DocConcepto = conexion.define('DocConcepto',
+var DocConcepto = conexion.define('DocumentoConcepto',
   {
     id:{
       type: sequelize.INTEGER,

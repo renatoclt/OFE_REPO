@@ -767,9 +767,9 @@ var atributosReferenciaFactura = {
 
 var atributosParametroFactura = {
     attributes: [
-        'id',
-        'usuario',
-        'menu'
+        ['paramDoc','idParametro'],
+        ['vc_desc','descripcionParametro'],
+        'json'
     ]
 } 
 

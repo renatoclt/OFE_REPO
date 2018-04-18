@@ -196,18 +196,22 @@ var controladorFactura = function (ruta, rutaEsp) {
                 documentoEntidad.generado = constantes.estadoInactivo;
                 await DocumentoEntidad.guardarEntidad(documentoEntidad);
             }
-            for (let concepto of req.body.documentoConcepto){
-                concepto.concepto = data.codigoConcepto,
-                concepto.descripcion = data.descripcionConcepto,
-                concepto.comprobantePago = data.id,
-                concepto.usuarioCreacion = constantes.usuarioOffline;
-                concepto.usuarioModificacion = constantes.usuarioOffline;
-                concepto.fechaCreacion =dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-                concepto.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-                concepto.estado = constantes.estadoActivo;
-                concepto.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-                concepto.estadoSincronizado = constantes.estadoInactivo;
-                await DocConcepto.guardar(concepto);
+            for (let conceptoDC of req.body.documentoConcepto){
+                console.log('//////////////////////////////');
+                console.log(conceptoDC);
+                console.log('//////////////////////////////');
+                conceptoDC.codConcepto = conceptoDC.codigoConcepto,
+                conceptoDC.idConcepto = conceptoDC.idConcepto
+                conceptoDC.descripcion = conceptoDC.descripcionConcepto,
+                conceptoDC.comprobantePago = data.id,
+                conceptoDC.usuarioCreacion = constantes.usuarioOffline;
+                conceptoDC.usuarioModificacion = constantes.usuarioOffline;
+                conceptoDC.fechaCreacion =dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                conceptoDC.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                conceptoDC.estado = constantes.estadoActivo;
+                conceptoDC.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                conceptoDC.estadoSincronizado = constantes.estadoInactivo;
+                await DocConcepto.guardar(conceptoDC);
             }
             for (let parametros of req.body.documentoParametro){
                 guardarParametro(data.id, parametros);
