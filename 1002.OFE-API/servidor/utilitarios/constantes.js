@@ -11,6 +11,8 @@ var constantes = {
     inEstadoEliminadoLocal:  '-99',
     estadoBloqueadoLocal: 'Bloqueado Local',// Estado Bloqueado falta sincronizacion
     inEstadoBloqueadoLocal: '-90',// Estado Bloqueado falta sincronizacion
+    inEstadoPendienteEnvio: '1',
+    estadoPendienteEnvio: 'Pendiente de Envio',
     idiomaEspañol: '1',
     catalogoTipoPrecio: 'tipo_prec_ven',
     catalogoTipoAfecIgv: 'tipo_afec_igv',
@@ -151,6 +153,7 @@ var constantes = {
             notaCredito: '07',
             notaDebito: '08',
             retencion: '20',
+            percepcion: '40',
             comunicacionBajaComprobantes: 'RA',
             comunicacionBajaNotas: 'RR',
         },

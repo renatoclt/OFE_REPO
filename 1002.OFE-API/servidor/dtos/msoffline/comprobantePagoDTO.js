@@ -354,7 +354,12 @@ ComprobantePago.sincronizarDocumentoEstado = function sincronizarDocumentoEstado
 }
 
 ComprobantePago.estadosPendientes = function estadosPendientes(idTipoComprobante){
-    return ComprobantePago.findAll({where: {estado: {[Op.lt]: 1}, idTipoComprobante: idTipoComprobante }});
+    return ComprobantePago.findAll({
+        where: {
+            estado: {[Op.between]: [-91, 3]}, 
+            estadoSincronizado: constantes.estadoActivo , 
+            idTipoComprobante: idTipoComprobante 
+        }});
 }
 
 ComprobantePago.sincronizarDocumentoErroneo = function sincronizarDocumentoErroneo(id){
@@ -375,6 +380,8 @@ ComprobantePago.sincronizarDocumento = function sincronizarDocumento(id){
             id: id,
             fecSincronizado:  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
             estadoSincronizado: constantes.estadoActivo,
+            estado: constantes.inEstadoPendienteEnvio ,
+            estadoComprobantePago: constantes.estadoPendienteEnvio         
         }, {where: {id: id}}) ;
     });
 }
@@ -443,7 +450,7 @@ ComprobantePago.sincornizarPercepcion = function comprobanteSincronizarPercepcio
             {
                 model: documentoReferencia,
                 as: 'referencias', 
-                attributes: atributosDocumentoReferencia.attributes,
+                attributes: atributosDocumentoReferenciaPercepcion.attributes,
             },
             {
                 model: documentoEntidad,
@@ -480,12 +487,7 @@ ComprobantePago.sincornizarPercepcion = function comprobanteSincronizarPercepcio
               return parametros;
           });
           data.dataValues.referencias.map(referencias =>{
-              let referenciasTemp = {}
-              referenciasTemp.numeroComprobante = referencias.dataValues.serie + '-' +referencias.dataValues.correlativo;
-              referenciasTemp.tipoDeCambio = referencias.dataValues.tipoDeCambio;
-              referenciasTemp.totalFacturaConPercepcion = referencias.dataValues.totalFacturaConRetencion;
-              referenciasTemp.totalRetenido = referencias.dataValues.totalRetenidoSoles;
-              referencias.dataValues = referenciasTemp;              
+              referencias.dataValues.fechaEmision = new Date(referencias.dataValues.fechaEmision).getTime();              
               return referencias;
           });
           return data;
@@ -687,6 +689,19 @@ var atributosDocumentoReferencia = {
         ['vc_aux_1','tipoDeCambio'],
         [sequelize.literal('COALESCE(nu_tot_imp_dest, 0) + COALESCE(nu_tot_imp_aux, 0)'),'totalFacturaConRetencion']
     ],
+}
+
+var atributosDocumentoReferenciaPercepcion = {
+    attributes: [
+        [sequelize.literal("ch_serie_dest ||'-'|| ch_corr_dest  "), 'numeroComprobante'],
+        ['vc_aux_1','tipoDeCambio'],
+        ['nu_tot_imp_dest','totalFacturaConPercepcion'],
+        ['nu_tot_por_aux','totalPercibido'],
+        ['da_fec_emi_dest','fechaEmision'],
+        ['vc_aux_2','totalImporteDestino'],
+        ['vc_mone_des','monedaDestino'],
+        ['de_tot_mone_des','totalMonedaDestino']
+    ]
 }
 
 var atributosDocumentoEntidad = {

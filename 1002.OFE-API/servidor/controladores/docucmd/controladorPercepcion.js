@@ -95,6 +95,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
                 documentoEntidad.estado = constantes.estadoActivo;
                 documentoEntidad.estadoSincronizado = constantes.estadoInactivo;
                 documentoEntidad.generado = constantes.estadoInactivo;
+                documentoEntidad.correo = documentoEntidad.correoElectronico;
                 await DocumentoEntidad.guardarEntidad(documentoEntidad);
             }
             for(let documentoReferencia of req.body.documentoReferencia ){
