@@ -28,7 +28,7 @@
     "node-rest-client": "^3.1.0",
     "nodemon": "^1.17.3",
     "qrcode": "^1.2.0",
-    "sequelize": "^4.33.4",
+    "sequelize": "^4.37.6",
     "serve-favicon": "^2.4.2",
     "sfulasalle-pdf-builder": "^3.1.2",
     "sqlite3": "^3.1.13"
