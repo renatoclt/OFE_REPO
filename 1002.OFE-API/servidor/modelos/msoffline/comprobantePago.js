@@ -170,7 +170,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
       field: "vc_tipocomprobante",
     },
     estado: {
-      type: sequelize.TEXT(30),
+      type: sequelize.INTEGER,
       field: "ch_estadocomprobantepagocomp",
     },
     version: {

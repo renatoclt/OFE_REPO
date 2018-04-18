@@ -61,6 +61,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
         data.id = uuid();
         try{
             data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , 4)
+            data.vcSerie = data.numeroComprobante;
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;       
             data.estadoSincronizado = constantes.estadoInactivo;
             data.flagOrigenComprobante = constantes.percepcion.flagOrigenComprobante;
@@ -97,6 +98,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
                 documentoEntidad.estado = constantes.estadoActivo;
                 documentoEntidad.estadoSincronizado = constantes.estadoInactivo;
                 documentoEntidad.generado = constantes.estadoInactivo;
+                documentoEntidad.correo = documentoEntidad.correoElectronico;
                 await DocumentoEntidad.guardarEntidad(documentoEntidad);
             }
             for(let documentoReferencia of req.body.documentoReferencia ){

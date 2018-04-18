@@ -22,6 +22,16 @@ var controladorSincronizacionPercepcion = function (ruta, rutaEsp) {
             res.json({count: 0});
         }
     });
+
+    router.get(ruta.concat('/actualizarEstadoComprobante'), async function(req, res){
+        try{
+            var data = await comprobantePagoDTO.estadosPendientes(constantes.FILECMD.tipos_documento.percepcion);
+            res.json(data);
+        }catch(e){
+            console.log(e);
+            res.json({error: e});
+        }
+    });
 }
 
 
