@@ -56,6 +56,7 @@ Usuario.registrarUsuario =function(usuario){
                 identidad:              usuario.identidad,           
                 usuarioCreacion:        usuario.usuarioCreacion,
                 usuarioModificacion:    null,
+                organizaciones:         JSON.stringify(usuario.organizaciones),
                 org_id:                 usuario.vc_org_id,
                 nombrecompleto:         usuario.vc_nombrecompleto,
                 tipo_empresa:           usuario.vc_tipo_empresa,
@@ -175,17 +176,19 @@ Usuario.buscarProductoEspecifico = function(pagina, regxpag, usuario, password, 
                     limit: regxpag*/
                 })
                 .then(function (usuarios) {
-                    if(bcrypt.compareSync(password, usuarios.dataValues.password)){
-                        let salida=null;
-                        var cantidadReg = 1;   
-                        if(usuarios!=null){
+                    if(usuarios!=null){
+                        if(bcrypt.compareSync(password, usuarios.dataValues.password)){
+                            let salida=null;
+                            var cantidadReg = 1;       
                             salida=usuarios.dataValues;
-                        }   
-                        resolve({'usuarios': salida, 'cantidadReg': cantidadReg});
+                            resolve({'usuarios': salida, 'cantidadReg': cantidadReg});
                         }else{
                             console.log('entre');
                             resolve({});
                         }
+                    }else{
+                        resolve({});
+                    }
                 });
         }, function (err) {
             console.log(err);

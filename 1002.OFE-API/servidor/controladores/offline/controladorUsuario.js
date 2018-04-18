@@ -101,13 +101,11 @@ var controladorUsuario = function (ruta, rutaEsp) {
         res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 */
         UsuarioDTO.buscarProductoEspecifico(pagina,limite,nombreUsuario,password,ordenar).then(function(resDTO){
-            console.log('/////////////////////////////////;');
-            console.log(resDTO);
             if(resDTO.hasOwnProperty('usuarios'))
             {
-                console.log(resDTO.usuarios);
+                console.log('//////////////');
                 var usuarios = resDTO.usuarios;
-                res.json(usuarios);
+                res.json(resDTO.usuarios);
             }     
             else{
                 res.json({});
