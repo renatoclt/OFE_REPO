@@ -3,6 +3,12 @@ var fs = require( 'fs' );
 var x2j = require( 'xml2js' );
 var logoSimple = require('../../utilitarios/plantillasPdf/logoEbiz');
 var logotipoEbiz = require('../../utilitarios/plantillasPdf/logotipoEbiz');
+var EntidadParametro = require('../../dtos/msdocucmd/entidadParametroDTO');
+var documentoAzureDTO = require('../../dtos/msoffline/documentoAzureDTO');
+var constantes = require('../../utilitarios/constantes');
+var comprobantesPermitidos = new Array();
+var plantillaEntidad = new Map();
+var plantillaDefecto = new Map();
 
 var module = {};
 module = (function () {
@@ -30,9 +36,6 @@ module = (function () {
     detalle.push(linea_2);
 
     comprobante.detalle = detalle;
-    // var sInputFile = "./notas.xml";
-    // var p = new x2j.Parser();
-    // var sXMLData = fs.readFileSync( sInputFile, 'utf8' );
     var sInputFile;
     var p;
     var sXMLData;
@@ -43,7 +46,9 @@ module = (function () {
 
     var jsonPlantilla;
     var start = async function start(comprobanteJson) {
-        setComprobante(comprobanteJson);
+        console.log('START -1');
+        await setComprobante(comprobanteJson);
+        console.log('START 0');
         await xml2json(sXMLData);
         console.log("START 1");
         // console.log(jsonPlantilla);
@@ -53,21 +58,77 @@ module = (function () {
         console.log('START 3');
         return pdf
     }
-
-    async function buscarPlantilla(tipoComprobante, serie, tipoSerie , entidad){
-        let correlativo = 0;
-        try{
-            let data  = await Serie.buscarSerie(tipoComprobante, serie, tipoSerie , entidad); 
-            correlativo = parseInt(data[0].dataValues.correlativo) + 1;
-            await Serie.acturalizarCorrelativo(data[0].dataValues.idSerie , correlativo);
-        }
-        catch(e){
-            console.log(e);
-            correlativo = 1
-        }
-        return zfill(correlativo,8);
+    var initPdf = function () {
+        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.factura);
+        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.boleta);
+        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.notaCredito);
+        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.notaDebito);
+        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.retencion);
+        plantillaEntidad.set('00', constantes.FILECMD.parametros_entidad.logo);
+        plantillaEntidad.set(constantes.FILECMD.tipos_documento.factura, constantes.FILECMD.parametros_entidad.plantillaFactura);
+        plantillaEntidad.set(constantes.FILECMD.tipos_documento.boleta, constantes.FILECMD.parametros_entidad.plantillaBoleta);
+        plantillaEntidad.set(constantes.FILECMD.tipos_documento.notaCredito, constantes.FILECMD.parametros_entidad.plantillaNotaCredito);
+        plantillaEntidad.set(constantes.FILECMD.tipos_documento.notaDebito, constantes.FILECMD.parametros_entidad.plantillaNotaDebito);
+        plantillaEntidad.set(constantes.FILECMD.tipos_documento.retencion, constantes.FILECMD.parametros_entidad.plantillaRetencion);
+        plantillaDefecto.set('00', constantes.FILECMD.plantillas.logo);
+        plantillaDefecto.set(constantes.FILECMD.tipos_documento.factura, constantes.FILECMD.plantillas.comprobantes);
+        plantillaDefecto.set(constantes.FILECMD.tipos_documento.boleta, constantes.FILECMD.plantillas.comprobantes);
+        plantillaDefecto.set(constantes.FILECMD.tipos_documento.notaCredito, constantes.FILECMD.plantillas.notas);
+        plantillaDefecto.set(constantes.FILECMD.tipos_documento.notaDebito, constantes.FILECMD.plantillas.notas);
+        plantillaDefecto.set(constantes.FILECMD.tipos_documento.retencion, constantes.FILECMD.plantillas.retencion);
     }
-    function setComprobante(comprobanteJson) {
+
+    // async function buscarPlantilla(tipoComprobante, serie, tipoSerie , entidad){
+    //     let correlativo = 0;
+    //     try{
+    //         let data  = await Serie.buscarSerie(tipoComprobante, serie, tipoSerie , entidad); 
+    //         correlativo = parseInt(data[0].dataValues.correlativo) + 1;
+    //         await Serie.acturalizarCorrelativo(data[0].dataValues.idSerie , correlativo);
+    //     }
+    //     catch(e){
+    //         console.log(e);
+    //         correlativo = 1
+    //     }
+    //     return zfill(correlativo,8);
+    // }
+    // var obtenerPlantilla = async function (idEntidad, tipoComprobante) {
+    //     let arrayData = new Array();
+    
+    //     try {
+    //         let idParametro = plantillaEntidad[tipoComprobante];
+    //         console.log('PARAMETROS');
+    //         console.log(plantillaEntidad);
+    //         console.log(tipoComprobante);
+    //         console.log(idParametro);
+    
+    //         let entidadParametro = await EntidadParametro.findFirstByIdEntidadAndIdParametro(idEntidad, idParametro);
+    
+    //         if (entidadParametro != null) {
+    //             console.log(entidadParametro);
+    //             let JsonEntidadParametro = JSON.parse(entidadParametro);
+    //             arrayData = documentoAzure.obtnerPlantillas(idEntidad);
+    //         }
+    //         else {
+    //             arrayData = plantillaDefecto[tipoComprobante];
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    
+    //     return arrayData;
+    // }
+    async function obtenerPlantilla(idEntidad, idTipoComprobante) {
+        let plantilla = await buscarPlantilla(idEntidad, idTipoComprobante);
+
+        console.log('PLANTILLA BD');
+        console.log(plantilla.dataValues.plantillaPdf);
+    }
+    async function buscarPlantilla(idEntidad, idTipoComprobante){
+        let plantilla = await documentoAzureDTO.buscar(idEntidad, idTipoComprobante);
+        return plantilla;
+    }
+    async function setComprobante(comprobanteJson) {
+        // initPdf();
         console.log('COMPROBANTES JSON DEVUELTO');
         console.log(comprobanteJson);
         var proveedor;
@@ -189,7 +250,7 @@ module = (function () {
                         case '3':
                             comprobante.totalOpExoneradas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '4':
+                        case '1':
                             comprobante.totalOpGravadas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
                         case '5':
@@ -200,6 +261,9 @@ module = (function () {
                             comprobante.totalDetraccion = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
                         case '10':
+                            comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
+                            break;
+                        case '12':
                             comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
                     }
@@ -267,8 +331,20 @@ module = (function () {
                 comprobante.totalComprobante = Number(comprobanteJson.totalComprobante).toFixed(2);
                 break;
         }
+        
+        let plantillaBuffer;
+        plantillaBuffer = await buscarPlantilla(4, comprobanteJson.idTipoComprobante);
+
+        console.log('PANTILA BD');
+        var archivo = plantillaBuffer.dataValues.plantillaPdf;
+        var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
+        var plantillaDecoded = Base64.decode(archivo); // decode the string
+        // console.log(plantillaDecoded);
         p = new x2j.Parser();
         sXMLData = fs.readFileSync(sInputFile, 'utf8');
+        // sXMLData = plantillaDecoded;
+        console.log('SXMLDATA');
+        console.log(sXMLData);
     }
     function getPorcentajeOfString(cadena) {
         var posicionInicial = cadena.indexOf('(') + 1;

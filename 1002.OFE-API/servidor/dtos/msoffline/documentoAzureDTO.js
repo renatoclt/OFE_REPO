@@ -35,6 +35,9 @@ DocumentosAzure.mostarPlantilla = function(entidad, idTipoComprobante){
       });
 
 }
+DocumentosAzure.buscar = function buscarDocumentoAzure(idEntidad, idTipoComprobante){
+    return DocumentosAzure.findOne({ where: {idEntidad: idEntidad, tipoComprobante: idTipoComprobante } });
+}
 
 var filtroAtributos = {
     attributes: [

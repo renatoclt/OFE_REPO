@@ -39,7 +39,8 @@ var DocumentosAzure = conexion.define(
             allowNull: false
         },
         plantillaPdf: {
-            type: sequelize.BLOB,
+            // type: sequelize.BLOB,
+            type: sequelize.STRING.BINARY,
             field: "bb_plantillaPdf",
             allowNull: false
         },
