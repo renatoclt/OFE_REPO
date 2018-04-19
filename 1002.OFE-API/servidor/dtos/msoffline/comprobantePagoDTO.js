@@ -537,6 +537,8 @@ ComprobantePago.sincronizarFactura = function comprobanteSincronizaFactura(){
         });
         data.dataValues.detalle.map(detalle =>{
             detalle.dataValues.idProducto = null;
+            detalle.dataValues.codigoTipoIsc = zfill(detalle.dataValues.codigoTipoIsc , 2);
+            detalle.dataValues.codigoTipoPrecio = zfill(detalle.dataValues.codigoTipoPrecio , 2);
             return detalle;
         })
 
@@ -592,6 +594,26 @@ ComprobantePago.sincronizarBoleta = function comprobanteSincronizaFactura(){
 
         return data;
       });
+}
+
+function zfill(number, width) {
+    var numberOutput = Math.abs(number); /* Valor absoluto del número */
+    var length = number.toString().length; /* Largo del número */ 
+    var zero = "0"; /* String de cero */  
+    
+    if (width <= length) {
+        if (number < 0) {
+             return ("-" + numberOutput.toString()); 
+        } else {
+             return numberOutput.toString(); 
+        }
+    } else {
+        if (number < 0) {
+            return ("-" + (zero.repeat(width - length)) + numberOutput.toString()); 
+        } else {
+            return ((zero.repeat(width - length)) + numberOutput.toString()); 
+        }
+    }
 }
 
 
@@ -767,7 +789,7 @@ var atributosReferenciaFactura = {
 
 var atributosParametroFactura = {
     attributes: [
-        ['paramDoc','idParametro'],
+        ['se_iparam_doc','idParametro'],
         ['vc_desc','descripcionParametro'],
         'json'
     ]
