@@ -546,10 +546,8 @@ ComprobantePago.sincronizarFactura = function comprobanteSincronizaFactura(){
       });
 }
 
-
-
 ComprobantePago.sincronizarBoleta = function comprobanteSincronizaFactura(){
-    return ComprobantePago.findAll({ attributes: atributosSincronizarBoleta.attributes ,
+    return ComprobantePago.findAll({ attributes: atributosSincronizarFactura.attributes ,
         include:[ 
             {
                 model: ComprobantePagoXProducto,
@@ -579,7 +577,7 @@ ComprobantePago.sincronizarBoleta = function comprobanteSincronizaFactura(){
         ],
         where: {
             estadoSincronizado: constantes.estadoInactivo,
-            idTipoComprobante: constantes.idTipocomprobanteBoleta,
+            idTipoComprobante: constantes.idTipocomprobanteFactura,
         }
       }).map(data =>{
         data.dataValues.fechaEmision = new Date(data.dataValues.fechaEmision).getTime();
@@ -589,6 +587,8 @@ ComprobantePago.sincronizarBoleta = function comprobanteSincronizaFactura(){
         });
         data.dataValues.detalle.map(detalle =>{
             detalle.dataValues.idProducto = null;
+            detalle.dataValues.codigoTipoIsc = zfill(detalle.dataValues.codigoTipoIsc , 2);
+            detalle.dataValues.codigoTipoPrecio = zfill(detalle.dataValues.codigoTipoPrecio , 2);
             return detalle;
         })
 
