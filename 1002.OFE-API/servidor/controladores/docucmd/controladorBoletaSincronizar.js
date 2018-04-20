@@ -148,9 +148,9 @@ var controladorBoletas = function (ruta, rutaEsp) {
             data.tipoFactura = constantes.percepcion.tipoFactura;
             data.generado = constantes.estadoOffline;
             //consultar 
-            data.igv = 0.0;
-            data.isc = 0.0;
-            data.otrosTributos = 0.0;
+            data.igv = data.igv;
+            data.isc = data.isc;
+            data.otrosTributos = data.otrosTributos;
             data.importeReferencial = 0.0;
             data.subtotalComprobante = 0.0;
             data.idindicadorImpuesto = 0

@@ -172,9 +172,9 @@ var controladorFactura = function (ruta, rutaEsp) {
             data.tipoFactura = constantes.percepcion.tipoFactura;
             data.generado = constantes.estadoOffline;
             //consultar 
-            data.igv = data.sumaIgv;
-            data.isc = data.sumaIsc;
-            data.otrosTributos = data.sumaOtrosTributos;
+            data.igv = data.igv;
+            data.isc = data.isc;
+            data.otrosTributos = data.otrosTributos;
             data.importeReferencial = data.importeReferencial;
             data.subtotalComprobante = data.subTotal;
             data.idindicadorImpuesto = 0
