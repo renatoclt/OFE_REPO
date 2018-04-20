@@ -29,12 +29,14 @@ var DocumentosAzure = conexion.define(
             allowNull: false,
         },
         logoEntidad: {
-            type: sequelize.BLOB,
+            // type: sequelize.BLOB,
+            type: sequelize.STRING.BINARY,
             field: "bb_logoentidad",
             allowNull: false
         },
         logoEbiz: {
-            type: sequelize.BLOB,
+            // type: sequelize.BLOB,
+            type: sequelize.STRING.BINARY,
             field: "bb_logoebiz",
             allowNull: false
         },

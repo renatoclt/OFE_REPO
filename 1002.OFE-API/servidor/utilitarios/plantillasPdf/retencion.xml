@@ -151,13 +151,13 @@
 	</body>
 	
 	<footer>
-		<group type="text" row="12" column="0" column-span="7" border="0"  font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8" alignment="0" background-color="#FFFFFF">
+		<group type="text" row="0" column="0" column-span="7" border="0"  font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8" alignment="0" background-color="#FFFFFF">
 			<text>{{mensaje}}</text>
 		</group>
-		<group type="text" row="12" column="7" column-span="3" border="0"  font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8" alignment="2" background-color="#FFFFFF">
+		<group type="text" row="0" column="7" column-span="3" border="0"  font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8" alignment="2" background-color="#FFFFFF">
 			<text>Generado por:</text>
 		</group>
-		<group type="image" row="12" column="10" column-span="1" scale="10">
+		<group type="image" row="0" column="10" column-span="1" scale="5">
 			<source>{{logoEbiz}}</source>
 		</group>
 	</footer>

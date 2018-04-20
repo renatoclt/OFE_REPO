@@ -51,86 +51,18 @@ module = (function () {
         console.log('START 0');
         await xml2json(sXMLData);
         console.log("START 1");
-        // console.log(jsonPlantilla);
-        await build(comprobante, jsonPlantilla);
+        var pdf = await build(comprobante, jsonPlantilla);
         console.log("START 2");
-        var pdf = pdfBuilder.getData();
         console.log('START 3');
+        console.log('PDF A CREAR');
         return pdf
     }
-    var initPdf = function () {
-        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.factura);
-        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.boleta);
-        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.notaCredito);
-        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.notaDebito);
-        comprobantesPermitidos.push(constantes.FILECMD.tipos_documento.retencion);
-        plantillaEntidad.set('00', constantes.FILECMD.parametros_entidad.logo);
-        plantillaEntidad.set(constantes.FILECMD.tipos_documento.factura, constantes.FILECMD.parametros_entidad.plantillaFactura);
-        plantillaEntidad.set(constantes.FILECMD.tipos_documento.boleta, constantes.FILECMD.parametros_entidad.plantillaBoleta);
-        plantillaEntidad.set(constantes.FILECMD.tipos_documento.notaCredito, constantes.FILECMD.parametros_entidad.plantillaNotaCredito);
-        plantillaEntidad.set(constantes.FILECMD.tipos_documento.notaDebito, constantes.FILECMD.parametros_entidad.plantillaNotaDebito);
-        plantillaEntidad.set(constantes.FILECMD.tipos_documento.retencion, constantes.FILECMD.parametros_entidad.plantillaRetencion);
-        plantillaDefecto.set('00', constantes.FILECMD.plantillas.logo);
-        plantillaDefecto.set(constantes.FILECMD.tipos_documento.factura, constantes.FILECMD.plantillas.comprobantes);
-        plantillaDefecto.set(constantes.FILECMD.tipos_documento.boleta, constantes.FILECMD.plantillas.comprobantes);
-        plantillaDefecto.set(constantes.FILECMD.tipos_documento.notaCredito, constantes.FILECMD.plantillas.notas);
-        plantillaDefecto.set(constantes.FILECMD.tipos_documento.notaDebito, constantes.FILECMD.plantillas.notas);
-        plantillaDefecto.set(constantes.FILECMD.tipos_documento.retencion, constantes.FILECMD.plantillas.retencion);
-    }
 
-    // async function buscarPlantilla(tipoComprobante, serie, tipoSerie , entidad){
-    //     let correlativo = 0;
-    //     try{
-    //         let data  = await Serie.buscarSerie(tipoComprobante, serie, tipoSerie , entidad); 
-    //         correlativo = parseInt(data[0].dataValues.correlativo) + 1;
-    //         await Serie.acturalizarCorrelativo(data[0].dataValues.idSerie , correlativo);
-    //     }
-    //     catch(e){
-    //         console.log(e);
-    //         correlativo = 1
-    //     }
-    //     return zfill(correlativo,8);
-    // }
-    // var obtenerPlantilla = async function (idEntidad, tipoComprobante) {
-    //     let arrayData = new Array();
-    
-    //     try {
-    //         let idParametro = plantillaEntidad[tipoComprobante];
-    //         console.log('PARAMETROS');
-    //         console.log(plantillaEntidad);
-    //         console.log(tipoComprobante);
-    //         console.log(idParametro);
-    
-    //         let entidadParametro = await EntidadParametro.findFirstByIdEntidadAndIdParametro(idEntidad, idParametro);
-    
-    //         if (entidadParametro != null) {
-    //             console.log(entidadParametro);
-    //             let JsonEntidadParametro = JSON.parse(entidadParametro);
-    //             arrayData = documentoAzure.obtnerPlantillas(idEntidad);
-    //         }
-    //         else {
-    //             arrayData = plantillaDefecto[tipoComprobante];
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    
-    //     return arrayData;
-    // }
-    async function obtenerPlantilla(idEntidad, idTipoComprobante) {
-        let plantilla = await buscarPlantilla(idEntidad, idTipoComprobante);
-
-        console.log('PLANTILLA BD');
-        console.log(plantilla.dataValues.plantillaPdf);
-    }
     async function buscarPlantilla(idEntidad, idTipoComprobante){
         let plantilla = await documentoAzureDTO.buscar(idEntidad, idTipoComprobante);
         return plantilla;
     }
     async function setComprobante(comprobanteJson) {
-        // initPdf();
-        console.log('COMPROBANTES JSON DEVUELTO');
-        console.log(comprobanteJson);
         var proveedor;
         var comprador;
         var subtoTotal;
@@ -186,8 +118,6 @@ module = (function () {
                 for ( var a = 0 ; a < comprobante.documentoReferencia.length ; a++ ) {
                     comprobante.documentoReferencia[a]['fechaEmisionDestinoString'] = comprobante.documentoReferencia[a].fechaEmisionDestino;
                 }
-                // comprobante.idTipoDocumentoComprador = comprobanteJson.idTipoDocumentoComprador;
-                console.log('SET PLANTILLA Retencion');
                 break;
             case '40':    
                 sInputFile = 'servidor/utilitarios/plantillasPdf/percepcion.xml';
@@ -196,11 +126,7 @@ module = (function () {
                 comprobante.porcentajeImpuesto = getPorcentajeOfString((JSON.parse(comprobanteJson.documentoParametro[0].json)).valor);
 
                 comprobante.razonSocialProveedor = comprobanteJson.razonSocialProveedor;
-                // comprobante.direccionFiscalProveedor = '';
-
-                // comprobante.serie = '';
                 comprobante.numeroComprobante = comprobanteJson.numeroComprobante;
-                // comprobante.razonSocialComprador = comprobanteJson.razonSocialComprador;
 
                 comprobante.documentoReferencia = comprobanteJson.documentoReferencia;
                 comprobante.documentoReferencia.forEach(item => {
@@ -214,7 +140,6 @@ module = (function () {
                 comprobante.montoComprobante = comprobanteJson.montoComprobante;
                 comprobante.idTipoComprobante = comprobanteJson.idTipoComprobante;
                 comprobante.igv = comprobanteJson.igv;
-                // comprobante.idTipoDocumentoComprador = comprobanteJson.idTipoDocumentoComprador;
                 console.log('SET PLANTILLA PERCEPCION');
                 break;
             case '01': 
@@ -335,16 +260,16 @@ module = (function () {
         let plantillaBuffer;
         plantillaBuffer = await buscarPlantilla(4, comprobanteJson.idTipoComprobante);
 
-        console.log('PANTILA BD');
-        var archivo = plantillaBuffer.dataValues.plantillaPdf;
         var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
-        var plantillaDecoded = Base64.decode(archivo); // decode the string
-        // console.log(plantillaDecoded);
+        var plantillaDecoded = Base64.decode(plantillaBuffer.dataValues.plantillaPdf); // decode the string
+        var logoEntidad = 'data:image/png;base64,' + plantillaBuffer.dataValues.logoEntidad;
+        var logoEbiz = 'data:image/png;base64,' + plantillaBuffer.dataValues.logoEbiz;
+        comprobante.logo = logoEntidad;
+        comprobante.logoEbiz = logoEbiz;
+        
         p = new x2j.Parser();
-        sXMLData = fs.readFileSync(sInputFile, 'utf8');
-        // sXMLData = plantillaDecoded;
-        console.log('SXMLDATA');
-        console.log(sXMLData);
+        // sXMLData = fs.readFileSync(sInputFile, 'utf8');
+        sXMLData = plantillaDecoded;
     }
     function getPorcentajeOfString(cadena) {
         var posicionInicial = cadena.indexOf('(') + 1;
@@ -373,33 +298,19 @@ module = (function () {
     }
 
     function build(dto, json) {
-        return new Promise((resolve, reject) => {
-            var archivo = pdfBuilder.init(dto, 'A4', comprobante.orientacion, json);
+        return new Promise(async (resolve, reject) => {
+            var archivo = await pdfBuilder.init(dto, 'A4', comprobante.orientacion, json);
+            console.log('BUIL ARCHIVO');
+            console.log(archivo);
             resolve(archivo);
-            // resolve(pdfBuilder.getData());
         });
     }
     var getData = function getData() {
-        // pdfBuilder.getData();
         return new Promise((resolve, reject) => {
             var data = pdfBuilder.getData();
             resolve(data);
         });
     }
-    /*
-    p.parseString( sXMLData, function( err, result ) {
-        var s = JSON.parse(JSON.stringify( result, undefined, 3 ));
-        // console.log(s.XMLToPDF.group[1].$['data']);
-        //console.log(s.XMLToPDF.group[0].text[1]);
-        /*console.log(s);
-        console.log(s.XMLToPDF.group[4].cell[0].$['font-color']);
-        console.log(s.XMLToPDF.$);
-        console.log(s.XMLToPDF.$['data']);
-        pdfBuilder.init(comprobante, 'A4', 'landscape', s);
-        var data = pdfBuilder.getData();
-        console.log(JSON.stringify(data));
-    });
-    */
     return {
         start: start,
         getData: getData
