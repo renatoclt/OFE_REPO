@@ -104,7 +104,8 @@
 		
 		<group type="qrcode" row="13" column="0" column-span="5">
 			<text>{{rucProveedor}}|{{idTipoComprobante}}|{{serie}}|{{correlativo}}|{{igv}}|{{montoDescuento}}|{{fechaEmisionString}}|{{idTipoDocumentoComprador}}|{{rucComprador}}</text>
-			<text font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8">{{mensaje}}</text>
+			<!-- <text font-family="Times-Roman" font-color="#545454" font-style="0" font-size="8">{{mensaje}}</text> -->
+			<text>{{mensaje}}</text>
 		</group>
 		
 		<group type="table" row="13" column="5" column-span="5" border="0" number-columns="5">
@@ -196,7 +197,7 @@
 				<text>Importe Total:</text>
 			</cell>
 			<cell column-span="2" border="0" border-color= "#FFFFFF" font-family="Courier" font-color="#000000" font-style="0" font-size="9" alignment="2" background-color="#EEEEEE">
-				<text>{{totalComprobante}}</text>
+				<text>{{montoPagado}}</text>
 			</cell>
 		</group>
 	</body>
