@@ -9,6 +9,8 @@ var queryEntidad = require('../../dtos/msoffline/queryEntidadDTO');
 var queryEntidadOffline = require('../../dtos/msoffline/queryEntidadOfflineDTO');
 var Client = require('node-rest-client').Client;
 var Usuario = require('../../dtos/msoffline/usuarioDTO');
+var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
+var ComprobanteQuery = require('../../dtos/msoffline/queryComprobantePagoDTO'); 
 
 var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
     router.get(ruta.concat('/'), async function (req, res) {
@@ -71,7 +73,40 @@ var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
         data.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         data.usuarioCreacion = constantes.usuarioOffline; 
         await queryComprobanteEventoDTO.guardarOffline(data);
-        res.send('{}');
+        res.json({});
+    });
+    router.post(ruta.concat('/actualizarFecha'), async function (req, res){
+        try{
+            await Sincronizacion.actualizarFecha(constantes.FILECMD.tipos_documento.retencion, req.body.fecha);
+            res.json({});
+        }
+        catch(e){
+            res.json({ 'error': e})
+        }
+    });
+
+    router.post(ruta.concat('/actualizarErrorBaja'), async function(req, res){  
+        await queryComprobante.actualizarErrorBaja(req.body.id)
+        res.status(200).send('{}');
+    });
+
+
+    router.post(ruta.concat('/actualizarBaja'), async function(req, res){  
+        var parts =  req.body.numeroDocumento.split("/");
+        var serie = parts[0];
+        var numeroComprobante = parts[1]+ '-'+ parts[2] ;
+        await queryComprobante.actualizarBaja(req.body.id,serie, numeroComprobante)
+        res.status(200).send('{}');
+    });
+    
+
+    router.get(ruta.concat('/obtenerComunicacionBaja'),async function (req, res){
+        try{
+            res.json(await ComprobanteQuery.comunicacionBaja());
+        }catch(e){
+            console.log(e);
+            res.json({'error':e})
+        }
     });
     router.post(ruta.concat('/'), async function (req, res) {
         try{
@@ -98,6 +133,7 @@ var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
                 evento.estadoSincronizado = constantes.estadoActivo;
                 await queryComprobanteEventoDTO.guardar(evento, evento.seIdocevento);
             }
+            
             guardarComprobante(comprobanteQ);   
             res.send('{}');
         }catch (e){
@@ -267,7 +303,7 @@ function guardarEntidad(data){
     entidad.estado = data.inEstado;
     entidad.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     entidad.estadoSincronizado = constantes.estadoActivo;
-    entidad.pais = data.vcPais;
+    entidad.pais = data.vcPais == null ? constantes.paisPeru : data.vcPais;
     entidad.ubigeo = data.vcUbigeo;
     entidad.tipoDocumento = data.vcTipoDocumento;
     entidad.idTipoDocumento = data.inTipoDocumento;
@@ -292,5 +328,6 @@ function detalleComprobante(id){
     });
     return promise;
 }
+
 
 module.exports = controladorSincronizacionRetencion;

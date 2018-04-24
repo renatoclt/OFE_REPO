@@ -148,3 +148,5 @@ EntidadQueryOffline.buscar = function buscarEntidad(tipoDocumento, documento){
 }
 
 module.exports = EntidadQueryOffline;
+
+9

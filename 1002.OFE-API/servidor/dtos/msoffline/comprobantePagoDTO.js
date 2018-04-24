@@ -356,7 +356,7 @@ ComprobantePago.sincronizarDocumentoEstado = function sincronizarDocumentoEstado
 ComprobantePago.estadosPendientes = function estadosPendientes(idTipoComprobante){
     return ComprobantePago.findAll({
         where: {
-            estado: {[Op.between]: [-81, 3]}, 
+            estado: {[Op.between]: [-81, 2]}, 
             estadoSincronizado: constantes.estadoActivo , 
             idTipoComprobante: idTipoComprobante 
         }});

@@ -3,6 +3,8 @@
  * @author renato creado 22-01-2018 
  */
 var QueryComprobantePago = require('../../modelos/msoffline/queryComprobantePago');
+var DocReferencia = require('../../modelos/msoffline/docReferencia');
+var DocParametro = require('../../modelos/msoffline/docParametro');
 //const Op = conexion.Op;
  /**
  * Funcion que guarda los comprobantes de pago
@@ -256,6 +258,27 @@ QueryComprobantePago.guardar = function guardarQueryComprobantePago(data, id){
 
 }
 
+QueryComprobantePago.actualizarErrorBaja = function actualizarErrorBaja(_id){
+    QueryComprobantePago.findOne({where:{id:_id}}).then(function(obj){
+        if(obj){
+            return QueryComprobantePago.update({
+                chEstadocomprobantepagocomp: constantes.estadoEliminadoLocal,
+                chEstadocomprobantepago: constantes.inEstadoEliminadoLocal
+            },{where: {id:_id}})
+        }
+    })
+}
+
+QueryComprobantePago.actualizarBaja = function actualizarErrorBaja(_id, _serie, _correlativo){
+    QueryComprobantePago.findOne({where:{id:_id}}).then(function(obj){
+        if(obj){
+            return QueryComprobantePago.update({
+                vcSerie: _serie,
+                vcCorrelativo: _correlativo
+            },{where: {id:_id}})
+        }
+    })
+}
 
 QueryComprobantePago.sincronizarDocumentoEstado = function sincronizarDocumentoEstado(data){
     QueryComprobantePago.findOne({where:{id:data.id}}).then(function(obj){
@@ -277,4 +300,62 @@ QueryComprobantePago.sincronizarDocumentoErroneo = function sincronizarDocumento
     });
 }
 
+
+QueryComprobantePago.comunicacionBaja = function comunicacionBaja(){
+    return QueryComprobantePago.findAll({
+        attributes: atributosComunicacionBaja.attributes,
+        include:[ 
+            {
+                model: DocReferencia,
+                as: 'detalleBaja', 
+                attributes: atributosDetalleBaja.attributes,
+            },
+            {
+                model: DocParametro,
+                as: 'parametro',
+                where: { paramDoc: constantes.motivoBaja}
+            }
+        ]
+    },
+        {
+        where: {
+            chEstadocomprobantepago: constantes.inEstadoBloqueadoLocal,  
+            vcIdregistrotipocomprobante: constantes.FILECMD.tipos_documento.comunicacionBajaRetencionPercepcion,
+        }}).map(data =>{
+            let motivo = ' ';
+            for(parametro of data.dataValues.parametro){
+                parametro.dataValues.json = JSON.parse(parametro.json.replace('/',''));
+                motivo = parametro.dataValues.json.valor;
+            }
+            delete data.dataValues.parametro;
+            console.log(data.dataValues.detalleBaja);
+            for (referencia of data.dataValues.detalleBaja){
+                referencia.dataValues.motivo = motivo;
+            }
+            data.dataValues.tipoSerie = 1;
+            return data;
+        });
+}
+
+var atributosDetalleBaja = {
+    attributes : [
+        ['ch_corr_dest','correlativo'],
+        ['ch_serie_dest','serie'],
+        ['se_idoc_destino','idComprobante'],
+        ['ch_tipo_doc_ori','tipoComprobante'],
+    ]
+}
+
+var atributosComunicacionBaja = {
+    attributes: [
+        ['in_idcomprobantepago','idComprobanteOffline'],
+        ['vc_idregistrotipocomprobante','idTipoComprobante'],
+        ['in_identidademisor','idEntidad'],
+        ['vc_orgproveedora_documento','rucProveedor'],
+        ['ch_idtipocomprobante','tipoDocumento'],
+        ['vc_orgproveedora_documento','razonSocialProveedor'],
+        ['ts_fechaemision','fechaEmisionDocumentoBaja'],
+        ['vc_orgproveedora_correo','correo']
+    ]
+}
 module.exports = QueryComprobantePago;

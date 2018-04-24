@@ -10,6 +10,7 @@ var constantes = {
     estadoEliminadoLocal: 'Eliminado Local',
     inEstadoEliminadoLocal:  '-99',
     estadoBloqueadoLocal: 'Bloqueado Local',// Estado Bloqueado falta sincronizacion
+    comunicacionBaja: 'Comunicacion de Baja',
     inEstadoBloqueadoLocal: '-90',// Estado Bloqueado falta sincronizacion
     inEstadoPendienteEnvio: '1',
     estadoPendienteEnvio: 'Pendiente de Envio',
@@ -156,6 +157,8 @@ var constantes = {
             percepcion: '40',
             comunicacionBajaComprobantes: 'RA',
             comunicacionBajaNotas: 'RR',
+            comunicacionBajaRetencionPercepcion: 'RR',
+            comunicacionBajaFacturaBoleta: 'RA'
         },
         tipos_documentos_descripcion: {
             factura: 'FACTURA',

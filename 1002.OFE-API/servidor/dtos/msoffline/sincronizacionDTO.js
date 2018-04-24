@@ -15,6 +15,20 @@ Sincronizacion.filtro = function sincronizacionFiltro(idioma){
       });
 }
 
+Sincronizacion.actualizarFecha = function actualizarFecha(tipoComprobante, fecha){
+    fecha = new Date(fecha);
+    console.log(fecha);
+    return Sincronizacion.findOne({ where: {
+        tipoComprobante: tipoComprobante 
+    }}).then( data => {
+        return Sincronizacion.update({
+            fechaSincronizacion : dateFormat(fecha, "yyyy-mm-dd HH:MM:ss"),
+        },{
+            where: {id: data.id}
+        });
+    });
+}
+
 //atributos utilizados por function maestraFiltro
 var filtroAtributos = {
     attributes: [

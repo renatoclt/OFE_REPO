@@ -1,3 +1,5 @@
+var DocReferencia = require('../msoffline/docReferencia');
+var DocParametro = require('../msoffline/docParametro');
 var QueryComprobantePago = conexion.define('QueryComprobantePago',
   {
     id:{
@@ -483,6 +485,15 @@ var QueryComprobantePago = conexion.define('QueryComprobantePago',
     timestamps: false,
   }
 );
+
+QueryComprobantePago.hasMany(DocReferencia,
+  { as: 'detalleBaja',foreignKey: 'idDocumentoOrigen', targetKey: 'idDocumentoOrigen'}
+  );
+
+  QueryComprobantePago.hasMany(DocParametro,
+    { as: 'parametro',foreignKey: 'comprobantePago', targetKey: 'comprobantePago'}
+    );
+  
 
 QueryComprobantePago.sync();
 

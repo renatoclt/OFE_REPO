@@ -12,6 +12,7 @@ var DocumentoReferencia = require('../../modelos/msdocucmd/documentoReferencia')
 DocumentoReferencia.guardar = function guardarDocumento(data){    
     return DocumentoReferencia.create({
         idDocumentoOrigen: data.idDocumentoOrigen ,
+        idDocumentoDestino: data.idDocumentoDestino,
         tipoDocumentoOrigen: data.tipoComprobante ,
         serieDocumentoDestino: data.serie ,
         correlativoDocumentoDestino: data.correlativo ,

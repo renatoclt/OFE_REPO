@@ -74,7 +74,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
             data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , 4)
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;
             await Documento.guardar(data);
-            for (let documentoEntidad of req.body.documentoEntidad){
+            for (let documentoEntidad of data.documentoEntidad){
                 documentoEntidad.idComprobante = data.id;
                 documentoEntidad.usuarioCreacion = 'Usuario creacion';
                 documentoEntidad.usuarioModifica = 'Usuario Modificacion';
@@ -100,7 +100,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
                 await DocumentoReferencia.guardar(documentoReferencia);
             }
             //await listarDocumento;
-            await guardarArchivo(data.id);
+            //await guardarArchivo(data.id);
             await guardarQuery(data);
             res.json(data);
         }

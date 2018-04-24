@@ -20,7 +20,6 @@ var DocReferencia = conexion.define('DocReferencia',
     idDocumentoOrigen: {
       type: sequelize.TEXT,
       field: "in_idoc_origen",
-      allowNull:false 
     },
     idDocumentoDestino: {
       type: sequelize.TEXT,
@@ -29,7 +28,6 @@ var DocReferencia = conexion.define('DocReferencia',
     tipoDocumentoOrigen: {
       type: sequelize.TEXT(3),
       field: "ch_tipo_doc_ori",
-      allowNull:false 
     },
     tipoDocumentoDestino: {
       type: sequelize.TEXT(3),
@@ -38,22 +36,18 @@ var DocReferencia = conexion.define('DocReferencia',
     serieDocumentoDestino: {
       type: sequelize.TEXT(4),
       field: "ch_serie_dest",
-      allowNull:false 
     },
     correlativoDocumentoDestino: {
       type: sequelize.TEXT(8),
       field: "ch_corr_dest",
-      allowNull:false 
     },
     fechaEmisionDestino: {
       type: sequelize.TEXT,
       field: "da_fec_emi_dest",
-      allowNull:false 
     },
     totalImporteDestino: {
       type: sequelize.REAL(12,2),
       field: "nu_tot_imp_dest",
-      allowNull:false 
     },
     totalImporteAuxiliarDestino: {
       type: sequelize.REAL(12,2) ,
@@ -62,27 +56,22 @@ var DocReferencia = conexion.define('DocReferencia',
     totalPorcentajeAuxiliarDestino: {
       type: sequelize.REAL(12,2) ,
       field: "nu_tot_por_aux",
-      allowNull:false 
     },
     tipoDocumentoOrigenDescripcion: {
       type: sequelize.TEXT,
       field: "vc_tdocori_desc",
-      allowNull:false 
     }, 
     tipoDocumentoDestinoDescripcion: {
       type: sequelize.TEXT ,
       field: "vc_tdocdes_desc",
-      allowNull:false 
     }, 
     monedaDestino: {
       type: sequelize.TEXT (3) ,
       field: "vc_mone_des",
-      allowNull:false 
     }, 
     totalMonedaDestino: {
       type: sequelize.REAL(12,2) ,
       field: "de_tot_mone_des",
-      allowNull:false 
     }, 
     polizaFactura: {
       type: sequelize.TEXT,
@@ -91,17 +80,14 @@ var DocReferencia = conexion.define('DocReferencia',
     anticipo: {
       type: sequelize.REAL(12,2) ,
       field: "de_anticipo",
-      allowNull:false 
     }, 
     auxiliar1: {
       type: sequelize.TEXT ,
       field: "vc_aux_1",
-      allowNull:false 
     }, 
     auxiliar2: {
       type: sequelize.TEXT ,
       field: "vc_aux_2",
-      allowNull:false 
     }, 
     estadoSincronizado: {
       type: sequelize.INTEGER,
@@ -110,7 +96,6 @@ var DocReferencia = conexion.define('DocReferencia',
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",
-      allowNull:false 
     },
     usuarioModificacion: {
       type: sequelize.TEXT,
@@ -119,7 +104,6 @@ var DocReferencia = conexion.define('DocReferencia',
     fechaCreacion: {
       type: sequelize.TEXT(6),
       field: "ts_fec_creacion",
-      allowNull:false 
     },
     fechaModificacion: {
       type: sequelize.TEXT(6),

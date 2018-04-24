@@ -107,7 +107,7 @@ Sincronizacion.sync().then(() => {
     fechaCreacion:dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
     fechaModificacion:dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
     estado:constantes.estadoActivo,
-    fechaSincronizacion: dateFormat(new Date(), "yyyy-mm-dsd HH:MM:ss"),
+    fechaSincronizacion: dateFormat(new Date('2018-04-16'), "yyyy-mm-dsd HH:MM:ss"),
     estadoSincronizado: constantes.estadoActivo,
     tipoComprobante: '20',
   }).catch(function (err){

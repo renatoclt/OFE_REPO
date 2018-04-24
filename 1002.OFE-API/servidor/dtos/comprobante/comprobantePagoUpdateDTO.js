@@ -16,16 +16,15 @@ const Op = conexion.Op;
  * 
  */
 ComprobantePago.actualizar = function updateCommands(_id){
-    console.log('////////////////////////////////////');
     return ComprobantePago.update({
-        estadoComprobante: constantes.estadoInactivo,
-        version: 0,
-        estado: constantes.bloqueoLocal,
+        estado: constantes.inEstadoBloqueadoLocal,
+        estadoSincronizado: constantes.estadoInactivo,
+        estadoComprobantePago: constantes.estadoBloqueadoLocal,
     },
     {
         where: {id: _id}
     }    
-
 );
 }
+
 module.exports = ComprobantePago;

@@ -27,7 +27,7 @@ Comprobante.BajaRetencion= function guardarDocumento(data){
         porcentajeImpuesto: data.porcentajeImpuesto,
         idTablaMoneda: data.idTablaMoneda,
         idRegistroMoneda: data.idRegistroMoneda,
-        estadoComprobante: '2',
+        estadoComprobante: constantes.inEstadoBloqueadoLocal,
         flagPlazoPago: ' ',
         flagRegistroEliminado: ' ',
         flagOrigenComprobante: 'p',

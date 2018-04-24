@@ -21,7 +21,7 @@ const Op = conexion.Op;
 
 ComprobantePagoQuery.buscarComprobanteById = function (id) {
     var promise = new Promise(function (resolve, reject) {
-        conexion.sync().then(function () {
+        
             ComprobantePagoQuery.findById(id,{
                     include:[
                         {
@@ -84,7 +84,6 @@ ComprobantePagoQuery.buscarComprobanteById = function (id) {
             console.log(err);
             resolve({});
         });
-    });
     return promise;
 };
 

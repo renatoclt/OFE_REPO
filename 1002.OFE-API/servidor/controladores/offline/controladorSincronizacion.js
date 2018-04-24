@@ -74,7 +74,9 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             let series = {};
             series._embedded = await Sincronizacion.filtro(idioma);  
             series._embedded.forEach(element => {
-                element.fechaSincronizacion = '29/12/2017';
+                let fecha =  element.fechaSincronizacion.split(' ')
+                let parts = fecha[0].split('-');
+                element.fechaSincronizacion =  parts[2].substr(0,2)+ '-'+ parts[1] +'-'+ parts[0];
             });            
             res.json(series);
         }
@@ -95,6 +97,8 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send(await EmpresaOffline.guardar(req.body));
     });
 
+
+    
     router.post(ruta.concat('/guardarUsuarios'), async function(req, res){  
         console.log(req.body.usuarios);
         req.body.usuarios.forEach(async element => {
@@ -451,10 +455,10 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             } 
             console.log(macAddress)
         })
-        
         console.log(require('os').networkInterfaces());
         res.status(200).send('{}');
     });
+    
 };
 
 module.exports = contoladorSincronizacion;
