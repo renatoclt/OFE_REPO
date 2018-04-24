@@ -198,6 +198,9 @@ module = (function () {
                 comprobante.otrosTributos = Number(comprobanteJson.otrosTributos).toFixed(2);
                 comprobante.totalOtrosCargos = '0.00'; 
                 comprobante.montoPagado = Number(comprobanteJson.totalComprobante).toFixed(2);
+                comprobante.montoDescuento = comprobante.montoPagado;
+                comprobante.montoPagado = Number(comprobanteJson.totalComprobante).toFixed(2);
+                comprobante.idTipoComprobante = idComprobante;
                 break;
             case '03':
                 // sInputFile = 'servidor/utilitarios/plantillasPdf/factura.xml';
@@ -254,6 +257,7 @@ module = (function () {
                 comprobante.otrosTributos = Number(comprobanteJson.otrosTributos).toFixed(2);
                 comprobante.totalOtrosCargos = '0.00'; 
                 comprobante.montoPagado = Number(comprobanteJson.totalComprobante).toFixed(2);
+                comprobante.idTipoComprobante = idComprobante;
                 break;
         }
 
@@ -270,8 +274,8 @@ module = (function () {
         comprobante.logoEbiz = logoEbiz;
         
         p = new x2j.Parser();
-        sXMLData = fs.readFileSync(sInputFile, 'utf8');
-        // sXMLData = plantillaDecoded;
+        // sXMLData = fs.readFileSync(sInputFile, 'utf8');
+        sXMLData = plantillaDecoded;
     }
     function getPorcentajeOfString(cadena) {
         var posicionInicial = cadena.indexOf('(') + 1;
