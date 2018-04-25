@@ -301,7 +301,7 @@ QueryComprobantePago.sincronizarDocumentoErroneo = function sincronizarDocumento
 }
 
 
-QueryComprobantePago.comunicacionBaja = function comunicacionBaja(){
+QueryComprobantePago.comunicacionBaja = function comunicacionBajaPercepcionRetencion(){
     return QueryComprobantePago.findAll({
         attributes: atributosComunicacionBaja.attributes,
         include:[ 
