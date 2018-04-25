@@ -176,7 +176,7 @@ function centavosNumeracion(num){
 }
 
 var numeroALetras = module.exports.numeroALetras = function NumeroALetras(num) {
-    console.log('////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////');
+    console.log('///////////////////////////////////////////////////');
     console.log(num);
     var data = {
         numero: num,
@@ -195,7 +195,7 @@ var numeroALetras = module.exports.numeroALetras = function NumeroALetras(num) {
             }();
     }else{
         data.letrasCentavos = function (){
-            return '00/100 Soles'
+            return '00/100 SOLES'
             }();
         
     };
