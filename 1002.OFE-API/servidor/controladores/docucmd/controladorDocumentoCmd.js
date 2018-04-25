@@ -141,8 +141,6 @@ var contoladorComprobante =  function (ruta, rutaEsp){
             data.estadoSincronizado = 0;
             data.porcentajeImpuesto = 0;
             data.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l");
-            console.log('///////////////////////////////////////////////////////////////////////////////');
-            console.log( data.montoComprobante);
             await Documento.guardar(data);
             let i = 0;
             for (let documentoEntidad of req.body.documentoEntidad){

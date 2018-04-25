@@ -168,7 +168,8 @@ var controladorFactura = function (ruta, rutaEsp) {
             data.fechaEmision = parseJsonDate(data.fechaEmision);
             data.estado = constantes.inEstadoGuardadoLocal;
             data.version = constantes.versionInicial;
-            data.montoComprobante = NumeroALetras.numeroALetras(data.montoDescuento);
+            console.log('*******************************************************************************************************');
+            data.montoComprobante = NumeroALetras.numeroALetras(data.montoPagado);
             data.tipoFactura = constantes.percepcion.tipoFactura;
             data.generado = constantes.estadoOffline;
             //consultar 

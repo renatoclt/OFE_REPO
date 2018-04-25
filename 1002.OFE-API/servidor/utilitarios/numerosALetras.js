@@ -176,7 +176,7 @@ function centavosNumeracion(num){
 }
 
 var numeroALetras = module.exports.numeroALetras = function NumeroALetras(num) {
-    console.log('///////////////////////////////////////////////////');
+    console.log('****************************************************************************************************');
     console.log(num);
     var data = {
         numero: num,
