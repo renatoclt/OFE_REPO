@@ -176,6 +176,8 @@ function centavosNumeracion(num){
 }
 
 var numeroALetras = module.exports.numeroALetras = function NumeroALetras(num) {
+    console.log('////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////');
+    console.log(num);
     var data = {
         numero: num,
         enteros: Math.floor(num),
@@ -186,17 +188,22 @@ var numeroALetras = module.exports.numeroALetras = function NumeroALetras(num) {
         letrasMonedaCentavoPlural: "SOLES",
         letrasMonedaCentavoSingular: "SOL"
     };
-
+    console.log(data);
     if (data.centavos > 0) {
         data.letrasCentavos = function (){
             return centavosNumeracion(data.centavos) + " " + data.letrasMonedaCentavoPlural;
             }();
     }else{
-        return '00/100 Soles'
+        data.letrasCentavos = function (){
+            return '00/100 Soles'
+            }();
+        
     };
 
     if(data.enteros == 0){
         return "CERO CON " + data.letrasCentavos;
-    }else 
+    }else {
         return Millones(data.enteros) + " CON " + data.letrasCentavos;
+    }
+        
 }//NumeroALetras()

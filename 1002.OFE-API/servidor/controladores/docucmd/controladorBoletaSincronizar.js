@@ -162,6 +162,7 @@ var controladorBoletas = function (ruta, rutaEsp) {
             data.estadoComprobante = constantes.estadoGuardadoLocal;
             data.tipoDocumento = data.idTipoComprobante;
             await Documento.guardar(data);  
+            await guardarQuery(data);
             for (let documentoEntidad of req.body.documentoEntidad){
                 documentoEntidad.idComprobante = data.id;
                 documentoEntidad.usuarioCreacion = 'Usuario creacion';
@@ -194,7 +195,7 @@ var controladorBoletas = function (ruta, rutaEsp) {
             }
             console.log('BOLETA SERVICIO');
             await guardarArchivo(data.id);
-            await guardarQuery(data);
+           
         }catch(e){
             console.log(e);
             console.log('ingrese');

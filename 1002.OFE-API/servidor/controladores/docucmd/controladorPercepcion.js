@@ -89,6 +89,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
             data.impuestoGvr = 0;
             data.estadoComprobante = constantes.estadoGuardadoLocal;
             await Documento.guardar(data);  
+            await guardarQuery(data);
             for (let documentoEntidad of req.body.documentoEntidad){
                 documentoEntidad.idComprobante = data.id;
                 documentoEntidad.usuarioCreacion = 'Usuario creacion';
@@ -129,7 +130,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
                 await DocumentoParametro.guardar(documentoParametro);
             }
             await guardarArchivo(data.id);
-            await guardarQuery(data);
+            
         }catch(e){
             console.log(e);
             console.log('ingrese');
