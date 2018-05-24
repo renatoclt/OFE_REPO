@@ -185,6 +185,9 @@ var controladorFactura = function (ruta, rutaEsp) {
             data.idRegistroTipoComprobante = 20;
             data.impuestoGvr = 0;
             data.estadoComprobante = constantes.estadoGuardadoLocal;
+            console.log('*******************************************************************************************************');
+            console.log(data);
+            //console.log(dataError)
             await Documento.guardar(data);  
             await guardarQuery(data);
             for (let documentoEntidad of req.body.documentoEntidad){
