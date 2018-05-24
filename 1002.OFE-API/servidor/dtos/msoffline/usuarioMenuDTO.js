@@ -11,21 +11,22 @@ var Menu = require('../../dtos/msoffline/menuDTO');
  */
 
 UsuarioMenu.guardar = function guardarUsuario(data){
-    return UsuarioMenu.findOne({
-        where: { usuario: data.usuario, menu: data.menu }
-    }).then( rpta => {
-        if(!rpta){
+    return UsuarioMenu.findOne({where: {usuario: data.usuario, menu: data.menu }}).then(function(obj){
+        if(obj){
+            return UsuarioMenu.update({
+                usuario : data.usuario,
+                menu: data.menu,
+            }, {where: {usuario: data.usuario, menu: data.menu }});
+        }
+        else{
             return UsuarioMenu.create({
                 usuario : data.usuario,
                 menu: data.menu,
-            });
-        }
-        else{
-            return rpta;
-        }
-    });
+        });
+    }
+});
 }
-
+    
 UsuarioMenu.mostrar = function MostrarMenu (idUsuario){
     return UsuarioMenu.findAll({
         include: [{

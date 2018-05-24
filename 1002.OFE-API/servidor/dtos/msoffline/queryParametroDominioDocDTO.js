@@ -9,22 +9,53 @@ var QueryParametroDominioDoc = require('../../modelos/msoffline/queryParametroDo
  * 
  */
 
-QueryParametroDominioDoc.guardar = function guardarQueryParametroDominioDoc(data){
-    return QueryParametroDominioDoc.create({
-        id: data.id_dominio,
-        parametroDocumento: data.idparametro ,
-        descripcionDocumento: data.parametro_descripcion ,
-        dominioDocumento: data.id_dominio ,
-        idioma: data.id_idioma ,
-        codigo: data.codigo_dominio ,
-        descripcion: data.descripcion_dominio ,
-        descripcionCorta: data.descripcion_corta_dominio ,
-        estadoParametro: data.parametro_estado ,
-        estadoDominio: data.dominio_estado ,
-        fechaSincronizado: data.fechaSincronizado ,
-        estadoSincronizado: data.estadoSincronizado 
-    });
+QueryParametroDominioDoc.eliminar = function eliminarIdioma(){
+    return QueryParametroDominioDoc.update(
+        {
+            estado: constantes.estadoInactivo
+        },
+        {where: {}})
 }
+
+QueryParametroDominioDoc.guardar = function guardarQueryParametroDominioDoc(data){
+    return QueryParametroDominioDoc.findOne({where: {id: data.id_dominio}}).then(function(obj){
+        if(obj){
+            return QueryParametroDominioDoc.update({
+                id: data.id_dominio,
+                parametroDocumento: data.idparametro ,
+                descripcionDocumento: data.parametro_descripcion ,
+                dominioDocumento: data.id_dominio ,
+                idioma: data.id_idioma ,
+                codigo: data.codigo_dominio ,
+                descripcion: data.descripcion_dominio ,
+                descripcionCorta: data.descripcion_corta_dominio ,
+                estadoParametro: data.parametro_estado ,
+                estadoDominio: data.dominio_estado ,
+                fechaSincronizado: data.fechaSincronizado ,
+                estadoSincronizado: data.estadoSincronizado ,
+                estado: constantes.estadoActivo
+            }, {where: {id: data.id_dominio}});
+        }
+        else{
+            return QueryParametroDominioDoc.create({
+                id: data.id_dominio,
+                parametroDocumento: data.idparametro ,
+                descripcionDocumento: data.parametro_descripcion ,
+                dominioDocumento: data.id_dominio ,
+                idioma: data.id_idioma ,
+                codigo: data.codigo_dominio ,
+                descripcion: data.descripcion_dominio ,
+                descripcionCorta: data.descripcion_corta_dominio ,
+                estadoParametro: data.parametro_estado ,
+                estadoDominio: data.dominio_estado ,
+                fechaSincronizado: data.fechaSincronizado ,
+                estadoSincronizado: data.estadoSincronizado ,
+                estado: constantes.estadoActivo
+        });
+    }
+});
+}
+    
 
 QueryParametroDominioDoc.filtro = function filtro(parametroDocumento){
     return QueryParametroDominioDoc.findAll({

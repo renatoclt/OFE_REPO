@@ -33,6 +33,10 @@ var QueryTipoPrecVen = conexion.define('QueryTipoPrecVen', {
       allowNull: false,
       field: "vc_catalogo",
     },
+    estado: {
+      type: sequelize.INTEGER(32),
+      field: "in_estado"
+    },
     usuarioCreacion: {
       type: sequelize.TEXT,
       allowNull: false,

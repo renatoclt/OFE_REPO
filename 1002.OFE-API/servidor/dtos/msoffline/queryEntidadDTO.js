@@ -9,29 +9,68 @@ var QueryEntidadDTO = require('../../modelos/msoffline/queryEntidad');
  * 
  */
 
-QueryEntidadDTO.guardar = function guardarQueryEntidadDTO(data){
-    return QueryEntidadDTO.create({
-        id: data.id,
-        documento: data.documento ,
-        denominacion: data.denominacion ,
-        nombreComercial: data.nombreComercial ,
-        direccion: data.direccion ,
-        correo: data.correo ,
-        logo: data.logo ,
-        pais: data.pais ,
-        ubigeo: data.ubigeo ,
-        tipoDocumento: data.tipoDocumento ,
-        idTipoDocumento: data.idTipoDocumento ,
-        idEbiz: data.idEbiz ,
-        usuarioCreacion: data.usuarioCreacion,
-        usuarioModificacion: data.usuarioModificacion,
-        fechaCreacion: data.fechaCreacion ,
-        fechaModificacion: data.fechaModificacion ,
-        estado: data.estado ,
-        fechaSincronizado: data.fechaSincronizado ,
-        estadoSincronizado: data.estadoSincronizado 
-    });
+
+QueryEntidadDTO.eliminar = function eliminarIdioma(){
+    return QueryEntidadDTO.update(
+        {
+            estado: constantes.estadoInactivo
+        },
+        {where: {}})
 }
+
+QueryEntidadDTO.guardar = function guardarQueryEntidadDTO(data){
+    return QueryEntidadDTO.findOne({where: {id: data.id}}).then(function(obj){
+        if(obj){
+            return QueryEntidadDTO.update({
+                id: data.id,
+                documento: data.documento ,
+                denominacion: data.denominacion ,
+                nombreComercial: data.nombreComercial ,
+                direccion: data.direccion ,
+                correo: data.correo ,
+                logo: data.logo ,
+                pais: data.pais ,
+                ubigeo: data.ubigeo ,
+                tipoDocumento: data.tipoDocumento ,
+                idTipoDocumento: data.idTipoDocumento ,
+                idEbiz: data.idEbiz ,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion ,
+                fechaModificacion: data.fechaModificacion ,
+                estado: data.estado ,
+                fechaSincronizado: data.fechaSincronizado ,
+                estadoSincronizado: data.estadoSincronizado 
+            }, {where: {id: data.id}});
+        }
+        else{
+            return QueryEntidadDTO.create({
+                id: data.id,
+                documento: data.documento ,
+                denominacion: data.denominacion ,
+                nombreComercial: data.nombreComercial ,
+                direccion: data.direccion ,
+                correo: data.correo ,
+                logo: data.logo ,
+                pais: data.pais ,
+                ubigeo: data.ubigeo ,
+                tipoDocumento: data.tipoDocumento ,
+                idTipoDocumento: data.idTipoDocumento ,
+                idEbiz: data.idEbiz ,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion ,
+                fechaModificacion: data.fechaModificacion ,
+                estado: data.estado ,
+                fechaSincronizado: data.fechaSincronizado ,
+                estadoSincronizado: data.estadoSincronizado 
+        });
+    }
+});
+}
+
+    
+   
 
 QueryEntidadDTO.buscarDocumentoGuardar = async function buscarDocumentoGuardar(data){
     return QueryEntidadDTO.findOne({where: {documento: data.documento  , idTipoDocumento: data.idTipoDocumento}}).then(function(obj){

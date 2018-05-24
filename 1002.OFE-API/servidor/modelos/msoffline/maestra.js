@@ -10,10 +10,8 @@
 var Maestra = conexion.define('Maestra',
   {
     organizacion:{
-      
       type: sequelize.TEXT(255),
       field: "vc_org",
-      allowNull:false   
     },
     tabla: {
       type: sequelize.TEXT(255),
@@ -97,7 +95,11 @@ var Maestra = conexion.define('Maestra',
     estadoSincronizado: {
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
-    }        
+    },
+    estado: {
+      type: sequelize.INTEGER(32),
+      field: "in_estado"
+    },  
   },
   {
     tableName: 'master_t_maestra',

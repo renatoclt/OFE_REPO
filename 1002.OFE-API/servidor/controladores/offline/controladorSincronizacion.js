@@ -100,7 +100,6 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
 
     
     router.post(ruta.concat('/guardarUsuarios'), async function(req, res){  
-        console.log(req.body.usuarios);
         req.body.usuarios.forEach(async element => {
             element.id = element.se_iusuario ;
             element.nombreusuario = element.vc_nom_usuario ;
@@ -118,10 +117,17 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
                                         keySuscripcion:constantes.keySuscripcion,
                                         ruc:req.body.ruc_emisor}];      
             await UsuarioOffline.registrarUsuario(element);
+            let menus = await Menu.todos();
+            
             element.modulos.forEach(async menu =>{
                 menu.usuario = element.se_iusuario ;
                 menu.menu = menu.IdModulo ;
-                await UsuarioMenu.guardar(menu);
+                menus.forEach(async element => {
+                    if(element.dataValues.id == menu.IdModulo){
+                        await UsuarioMenu.guardar(menu);
+                    }
+                });       
+                
             });
             let menuSincronizacion = {};
             menuSincronizacion.usuario = element.se_iusuario;
@@ -149,6 +155,17 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     });
 
+    
+    router.post(ruta.concat('/paremetroEntidadEliminar'), async function(req, res){
+        await ParametroEntidad.eliminar();
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/eliminarUsuarios'), async function(req, res){
+        await UsuarioOffline.eliminar();
+        res.status(200).send('{}');
+    });
+
     //querySerie
     router.post(ruta.concat('/querySerie'), async function(req, res){
         req.body.forEach(async element => {
@@ -165,6 +182,10 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     });
 
+    router.post(ruta.concat('/eventoEliminar'), async function(req, res){
+        await Evento.eliminar();
+        res.status(200).send('{}');
+    });
 
     //fe_configuracion_t_evento
     router.post(ruta.concat('/evento'), async function(req, res){
@@ -184,7 +205,6 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
 
     //fe_configuracion_t_idioma
     router.post(ruta.concat('/idioma'), async function(req, res){
-        console.log(req.body);
         req.body.forEach(async element => {
             element.usuarioCreacion = constantes.usuarioOffline;
             element.usuarioModificacion = constantes.usuarioOffline;
@@ -195,6 +215,11 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.estadoSincronizado =  constantes.estadoActivo;
             await Idioma.guardar(element);
         }) 
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/idiomaEliminar'), async function(req, res){
+        await Idioma.eliminar();
         res.status(200).send('{}');
     });
 
@@ -214,6 +239,12 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     });
 
+    router.post(ruta.concat('/idiomaEliminarQuery'), async function(req, res){
+        await QueryIdioma.eliminar();
+        res.status(200).send('{}');
+    });
+    
+
     //fe_query_t_idioma
     router.post(ruta.concat('/queryEntidad'), async function(req, res){
         req.body.forEach(async element => {
@@ -232,6 +263,11 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     });
 
+    
+    router.post(ruta.concat('/maestraEliminar'), async function(req, res){
+        await Maestra.eliminar();
+        res.status(200).send('{}');
+    });
 
     router.post(ruta.concat('/maestra'), async function(req, res){
         req.body.forEach(async (element) => {
@@ -262,6 +298,21 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         res.status(200).send('{}');
     });
 
+    router.post(ruta.concat('/eliminartipoEntidad'), async function(req, res){
+        await TipoEntidad.eliminar();
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/eliminarTipoPrecioVenta'), async function(req, res){
+        await QueryTipoPrecVen.eliminar();
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/eliminarTipoCalculoIsc'), async function(req, res){
+        await QueryTipoCalcIsc.eliminar();
+        res.status(200).send('{}');
+    });
+
     router.post(ruta.concat('/tipoprecioventa'), async function(req, res){
         req.body.forEach(async element =>{
             element.catalogo = constantes.catalogoTipoPrecio;
@@ -271,7 +322,6 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.fechaModificacion =  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
             element.estadoSincronizado =  constantes.estadoActivo;
-            console.log(element);
             await QueryTipoPrecVen.guardar(element);
         });
         res.status(200).send('{}');
@@ -298,7 +348,15 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             await QueryTipoAfecIgv.guardar(element);
         });
         res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/eliminarTipoAfectacionIgv'), async function(req, res){
+        await QueryTipoAfecIgv.eliminar();
+        res.status(200).send('{}');
     })
+
+
+    
 
     router.post(ruta.concat('/queryTipoCalcIsc'), async function(req, res){
         req.body.forEach(async element =>{
@@ -333,9 +391,28 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         await QueryEntidadOffline.guardar(req.body);
         await Entidad.guardar(req.body);
         await QueryEntidad.guardar(req.body);
-        
         res.status(200).send('{}');
     });
+    
+    
+
+    router.post(ruta.concat('/entidadEliminar'), async function(req, res){
+        await QueryEntidadOffline.eliminar();
+        await Entidad.eliminar();
+        await QueryEntidad.eliminar();      
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/eliminarParametro'), async function(req, res){
+        await QueryParametroDominioDoc.eliminar();      
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/eliminarConcepto'), async function(req, res){
+        await Concepto.eliminar();      
+        res.status(200).send('{}');
+    });
+    
 
     router.post(ruta.concat('/queryEstado'), async function(req, res){
         req.body.forEach(async element => {
@@ -343,6 +420,12 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
             element.estadoSincronizado =  constantes.estadoActivo;
             await QueryEstComprobante.guardar(element);            
         });
+        res.status(200).send('{}');
+    });
+
+
+    router.post(ruta.concat('/eliminarQueryEstado'), async function(req, res){
+        await QueryEstComprobante.eliminar();
         res.status(200).send('{}');
     });
 
@@ -355,6 +438,17 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         req.body.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
         req.body.estadoSincronizado =  constantes.estadoActivo;
         await DocumentoAzure.guardar(req.body);
+        res.status(200).send('{}');
+    });
+
+    router.post(ruta.concat('/eliminarDocumentosAzure'), async function(req, res){
+        await DocumentoAzure.eliminar();
+        res.status(200).send('{}');
+    });
+
+
+    router.post(ruta.concat('/eliminarSerie'), async function(req, res){
+        await QuerySerie.eliminar();
         res.status(200).send('{}');
     });
 

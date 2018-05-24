@@ -9,20 +9,46 @@ var QueryIdioma = require('../../modelos/msoffline/queryIdioma');
  * 
  */
 
-QueryIdioma.guardar = function guardarQueryIdioma(data){
-    console.log('*************');
-    console.log(data);
-    return QueryIdioma.create({
-        id: data.id,
-        descripcion: data.descripcion ,
-        descripcionCorta: data.descripcionCorta ,
-        usuarioCreacion: data.usuarioCreacion ,
-        usuarioModificacion: data.usuarioModificacion ,
-        fechaCreacion: data.fechaCreacion ,
-        fechaModificacion: data.fechaModificacion ,
-        fechaSincronizado: data.fechaSincronizado ,
-        estadoSincronizado: data.estadoSincronizado ,
-    });
+QueryIdioma.eliminar = function eliminarIdioma(){
+    return QueryIdioma.update(
+        {
+            estado: constantes.estadoInactivo
+        },
+        {where: {}})
 }
+
+
+QueryIdioma.guardar = function guardarQueryIdioma(data){
+    return QueryIdioma.findOne({where: {id: data.id}}).then(function(obj){
+        if(obj){
+            return QueryIdioma.update({
+                id: data.id,
+                descripcion: data.descripcion ,
+                descripcionCorta: data.descripcionCorta ,
+                usuarioCreacion: data.usuarioCreacion ,
+                usuarioModificacion: data.usuarioModificacion ,
+                fechaCreacion: data.fechaCreacion ,
+                fechaModificacion: data.fechaModificacion ,
+                fechaSincronizado: data.fechaSincronizado ,
+                estadoSincronizado: data.estadoSincronizado ,
+                estado: constantes.estadoActivo
+            }, {where: {id: data.id}});
+        }
+        else{
+            return QueryIdioma.create({
+                id: data.id,
+                descripcion: data.descripcion ,
+                descripcionCorta: data.descripcionCorta ,
+                usuarioCreacion: data.usuarioCreacion ,
+                usuarioModificacion: data.usuarioModificacion ,
+                fechaCreacion: data.fechaCreacion ,
+                fechaModificacion: data.fechaModificacion ,
+                fechaSincronizado: data.fechaSincronizado ,
+                estadoSincronizado: data.estadoSincronizado ,
+                estado: constantes.estadoActivo
+        });
+    }});
+}
+
 
 module.exports = QueryIdioma;

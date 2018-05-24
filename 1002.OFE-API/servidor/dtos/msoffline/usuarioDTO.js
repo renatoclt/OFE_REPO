@@ -1,5 +1,19 @@
 Usuario = require('../../modelos/msoffline/usuario');
 var bcrypt = require('bcrypt');
+
+
+
+Usuario.eliminar = function eliminarIdioma(){
+    return Usuario.update(
+        {
+            estado: constantes.estadoInactivo
+        },
+        {where: {}})
+}
+
+
+
+
 Usuario.buscarUsuario = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
@@ -39,34 +53,60 @@ Usuario.buscarUsuarios = function (pagina, regxpag) {
 }
 
 Usuario.registrarUsuario =function(usuario){
-
+    
     var promise= new Promise(function (resolve, reject) {
-     
-        conexion.sync().then(function () {
-            
-            Usuario.create({
-                id:                     usuario.id,
-                nombreusuario:          usuario.nombreusuario,
-                password:               usuario.password,
-                nombre:                 usuario.nombre,
-                apellido:               usuario.apellido,
-                docIdentidad:           usuario.docIdentidad,
-                numDocIdentidad:        usuario.numDocIdentidad,
-                correo:                 usuario.correo,
-                identidad:              usuario.identidad,           
-                usuarioCreacion:        usuario.usuarioCreacion,
-                usuarioModificacion:    null,
-                organizaciones:         JSON.stringify(usuario.organizaciones),
-                org_id:                 usuario.vc_org_id,
-                nombrecompleto:         usuario.vc_nombrecompleto,
-                tipo_empresa:           usuario.vc_tipo_empresa,
-                perfil:                 usuario.vc_perfil,
-                fechaCreacion:          new Date().toLocaleString(),
-                fechaModificacion:      null,
-                estado:                 1,
-                fechaSincronizado:      null,
-                estadoSincronizado:     0
-            }).then(function(data){
+        Usuario.findOne({where: {id: usuario.id}}).then(function(obj){
+            if(obj){
+                return Usuario.update({
+                    id:                     usuario.id,
+                    nombreusuario:          usuario.nombreusuario,
+                    password:               usuario.password,
+                    nombre:                 usuario.nombre,
+                    apellido:               usuario.apellido,
+                    docIdentidad:           usuario.docIdentidad,
+                    numDocIdentidad:        usuario.numDocIdentidad,
+                    correo:                 usuario.correo,
+                    identidad:              usuario.identidad,           
+                    usuarioCreacion:        usuario.usuarioCreacion,
+                    usuarioModificacion:    null,
+                    organizaciones:         JSON.stringify(usuario.organizaciones),
+                    org_id:                 usuario.vc_org_id,
+                    nombrecompleto:         usuario.vc_nombrecompleto,
+                    tipo_empresa:           usuario.vc_tipo_empresa,
+                    perfil:                 usuario.vc_perfil,
+                    fechaCreacion:          new Date().toLocaleString(),
+                    fechaModificacion:      null,
+                    estado:                 1,
+                    fechaSincronizado:      null,
+                    estadoSincronizado:     0
+                }, {where: {id: usuario.id}});
+            }
+            else{
+                return Usuario.create({
+                    id:                     usuario.id,
+                    nombreusuario:          usuario.nombreusuario,
+                    password:               usuario.password,
+                    nombre:                 usuario.nombre,
+                    apellido:               usuario.apellido,
+                    docIdentidad:           usuario.docIdentidad,
+                    numDocIdentidad:        usuario.numDocIdentidad,
+                    correo:                 usuario.correo,
+                    identidad:              usuario.identidad,           
+                    usuarioCreacion:        usuario.usuarioCreacion,
+                    usuarioModificacion:    null,
+                    organizaciones:         JSON.stringify(usuario.organizaciones),
+                    org_id:                 usuario.vc_org_id,
+                    nombrecompleto:         usuario.vc_nombrecompleto,
+                    tipo_empresa:           usuario.vc_tipo_empresa,
+                    perfil:                 usuario.vc_perfil,
+                    fechaCreacion:          new Date().toLocaleString(),
+                    fechaModificacion:      null,
+                    estado:                 1,
+                    fechaSincronizado:      null,
+                    estadoSincronizado:     0
+            });
+        }
+    }).then(function(data){
                 resolve(data.dataValues);
             }).catch(function(error){
                 console.log(error);
@@ -76,10 +116,8 @@ Usuario.registrarUsuario =function(usuario){
         }, function (err) {
             console.log(err);
             resolve({});
-        });
 
-    });
-    
+    });  
     return promise;
 }
 

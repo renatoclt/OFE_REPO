@@ -65,7 +65,12 @@ var QueryTipoAfecIgv = conexion.define('QueryTipoAfecIgv', {
     estadoSincronizado: {
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
-    } 
+    } ,
+    estado: {
+      type: sequelize.INTEGER(32),
+      field: "in_estado"
+    },
+
    
   },
     {

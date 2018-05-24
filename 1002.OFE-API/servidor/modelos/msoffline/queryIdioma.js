@@ -51,7 +51,11 @@ var QueryIdioma = conexion.define('QueryIdioma', {
     estadoSincronizado: {
       type: sequelize.INTEGER,
       field: "in_estado_sincronizado"
-    } 
+    } ,
+    estado: {
+      type: sequelize.INTEGER(32),
+      field: "in_estado"
+    },
   },
     {
       tableName: 'fe_query_t_idioma',

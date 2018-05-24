@@ -32,6 +32,10 @@ var QueryEstComprobante = conexion.define('QueryEstComprobante',
     fechaSincronizado: {
       type: sequelize.TEXT,
       field: "ts_fec_sincronizado"
+    },  
+    estado: {
+      type: sequelize.INTEGER(32),
+      field: "in_estado"
     },
     estadoSincronizado: {
       type: sequelize.INTEGER,

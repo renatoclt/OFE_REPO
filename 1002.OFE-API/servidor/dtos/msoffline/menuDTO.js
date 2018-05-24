@@ -25,6 +25,14 @@ MenuOffline.guardar = function guardarEmpresaLocal(data){
     });
 }
 
+MenuOffline.todos = function todos(){
+    return MenuOffline.findAll({
+        attributes: [
+            'id'
+        ]
+    });
+}
+
 MenuOffline.belongsTo(MenuOffline, {as:'MenuPadre', foreignKey: 'padre'});
 
 module.exports = MenuOffline;
