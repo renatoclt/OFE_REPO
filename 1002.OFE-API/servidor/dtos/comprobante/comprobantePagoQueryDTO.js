@@ -20,8 +20,8 @@ sequelize = require("sequelize");
 const Op = conexion.Op;
 
 ComprobantePagoQuery.buscarComprobanteById = function (id) {
+    console.log('**********************************************************************************************');
     var promise = new Promise(function (resolve, reject) {
-        
             ComprobantePagoQuery.findById(id,{
                     include:[
                         {
