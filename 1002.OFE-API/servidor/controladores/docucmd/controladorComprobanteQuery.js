@@ -12,6 +12,7 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
         });
         
         router.get(ruta.concat('/'), function (req, res, next) {
+            
             ComprobantePagoQueryDTO.buscarComprobanteById(req.query.id).then(function (resDTO) {
                 var date = new Date(resDTO.tsFechaemision );
                 resDTO.tsFechaemision = date.getTime();
@@ -138,7 +139,6 @@ var controladorComprobanteQuery = function (ruta, rutaEsp) {
         });
 
         router.get(ruta.concat('/:id'), function (req, res, next) {
-            
             ComprobantePagoQueryDTO.buscarComprobante(req.params.id).then(function (resDTO) {
                 res.json(resDTO);
             });

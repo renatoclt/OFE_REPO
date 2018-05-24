@@ -96,6 +96,7 @@ var controladorReferenciasQuery = function (ruta, rutaEsp) {
     });
 
     router.get(ruta.concat('/:id'), function (req, res, next) {
+        console.log('//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////');
         referenciasQueryDTO.buscarReferencia(req.params.id).then(function (resDTO) {
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
