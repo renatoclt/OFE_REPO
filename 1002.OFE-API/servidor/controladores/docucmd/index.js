@@ -57,7 +57,6 @@ module = (function () {
         return plantilla;
     }
     async function setComprobante(comprobanteJson) {
-        // console.log(aaa);
         var proveedor;
         var comprador;
         var subtoTotal;
@@ -172,22 +171,19 @@ module = (function () {
                         case '2':
                             comprobante.totalOpInafectas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '3':
+                        case '5':
                             comprobante.totalOpExoneradas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
                         case '1':
                             comprobante.totalOpGravadas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '5':
+                        case '3':
                             comprobante.subtotal = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '8':
+                        case '6':
                             comprobante.totalDetraccion = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '10':
-                            comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
-                            break;
-                        case '12':
+                        case '8':
                             comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
                     }
@@ -201,8 +197,9 @@ module = (function () {
                 comprobante.montoDescuento = comprobante.montoPagado;
                 comprobante.montoPagado = Number(comprobanteJson.totalComprobante).toFixed(2);
                 comprobante.idTipoComprobante = idComprobante;
-                comprobante.subtotal = comprobanteJson.importeReferencial;
+                //comprobante.subtotalComprobante = (Number(comprobanteJson.subtotalComprobante)).toFixed(2);
                 comprobante.subtotalComprobante = (Number(comprobanteJson.subtotalComprobante)).toFixed(2);
+                comprobante.subtotal = (Number(comprobanteJson.importeReferencial)).toFixed(2);
                 break;
             case '03':
                 // sInputFile = 'servidor/utilitarios/plantillasPdf/factura.xml';
@@ -235,19 +232,19 @@ module = (function () {
                         case '2':
                             comprobante.totalOpInafectas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '3':
+                        case '5':
                             comprobante.totalOpExoneradas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '4':
+                        case '1':
                             comprobante.totalOpGravadas = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '5':
+                        case '3':
                             comprobante.subtotal = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '8':
+                        case '6':
                             comprobante.totalDetraccion = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '10':
+                        case '8':
                             comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
                     }
@@ -260,7 +257,7 @@ module = (function () {
                 comprobante.montoPagado = Number(comprobanteJson.totalComprobante).toFixed(2);
                 comprobante.idTipoComprobante = idComprobante;
                 comprobante.subtotalComprobante = (Number(comprobanteJson.subtotalComprobante)).toFixed(2);
-                
+                comprobante.subtotal = (Number(comprobanteJson.importeReferencial)).toFixed(2);
                 break;
         }
         let plantillaBuffer;

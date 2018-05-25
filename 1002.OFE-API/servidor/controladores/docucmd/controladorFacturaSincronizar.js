@@ -177,7 +177,7 @@ var controladorFactura = function (ruta, rutaEsp) {
             data.isc = data.isc;
             data.otrosTributos = data.otrosTributos;
             data.importeReferencial = data.importeReferencial;
-            data.subtotalComprobante = data.subTotal;
+            data.subtotalComprobante = data.subtotalComprobante;
             data.idindicadorImpuesto = 0
             data.idTablaMoneda = 10001;
             data.idRegistroMoneda = '000001';
@@ -185,9 +185,6 @@ var controladorFactura = function (ruta, rutaEsp) {
             data.idRegistroTipoComprobante = 20;
             data.impuestoGvr = 0;
             data.estadoComprobante = constantes.estadoGuardadoLocal;
-            console.log('*******************************************************************************************************');
-            console.log(data);
-            //console.log(dataError)
             await Documento.guardar(data);  
             await guardarQuery(data);
             for (let documentoEntidad of req.body.documentoEntidad){
@@ -202,9 +199,9 @@ var controladorFactura = function (ruta, rutaEsp) {
                 await DocumentoEntidad.guardarEntidad(documentoEntidad);
             }
             for (let conceptoDC of req.body.documentoConcepto){
-                console.log('//////////////////////////////');
+                /*console.log('//////////////////////////////');
                 console.log(conceptoDC);
-                console.log('//////////////////////////////');
+                console.log('//////////////////////////////');*/
                 conceptoDC.codConcepto = conceptoDC.codigoConcepto,
                 conceptoDC.idConcepto = conceptoDC.idConcepto
                 conceptoDC.descripcion = conceptoDC.descripcionConcepto,

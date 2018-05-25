@@ -174,6 +174,7 @@ var controladorBoletas = function (ruta, rutaEsp) {
                 documentoEntidad.generado = constantes.estadoInactivo;
                 await DocumentoEntidad.guardarEntidad(documentoEntidad);
             }
+            
             for (let concepto of req.body.documentoConcepto){
                 concepto.concepto = data.codigoConcepto,
                 concepto.descripcion = data.descripcionConcepto,
@@ -185,8 +186,13 @@ var controladorBoletas = function (ruta, rutaEsp) {
                 concepto.estado = constantes.estadoActivo;
                 concepto.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
                 concepto.estadoSincronizado = constantes.estadoInactivo;
+                console.log('NO POS MORI AQUI');
                 await DocConcepto.guardar(concepto);
+                console.log('NO POS MORI AQUI TMB');
             }
+            console.log('*******************************************************************************************************');
+            console.log(req.body);
+            //console.log(dataError)
             for (let parametros of req.body.documentoParametro){
                 guardarParametro(data.id, parametros);
             }
