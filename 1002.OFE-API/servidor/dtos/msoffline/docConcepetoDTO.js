@@ -13,7 +13,7 @@ DocConcepto.guardar = function guardar(data){
     console.log(data);
     return DocConcepto.create({
         idConcepto: data.idConcepto,
-        concepto : data.codConcepto,
+        concepto : data.codigoConcepto,
         comprobantePago: data.comprobantePago,
         descripcion: data.descripcionConcepto,
         importe: data.importe,
