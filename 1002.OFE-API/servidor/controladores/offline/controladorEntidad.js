@@ -5,7 +5,11 @@ var controladorEntidad = async function (ruta, rutaEsp) {
     router.post(ruta.concat('/guardarEntidad'), async function (req, res) {
         let data = req.body;
         try{
-            let respuesta = await EntidadOffline.buscar(constantes.idTipoDocumentoRuc, data.ruc);
+            let documento = constantes.idTipoDocumentoRuc;
+            if(req.body.idTipoDocumento != null){
+                documento  = req.body.idTipoDocumento;
+            };
+            let respuesta = await EntidadOffline.buscar(documento, data.ruc);
             if (respuesta == null){
                 console.log('ingrese');
                 let entidad = {};
@@ -19,7 +23,7 @@ var controladorEntidad = async function (ruta, rutaEsp) {
                 entidad.pais = constantes.paisPeru;
                 entidad.ubigeo = null;
                 entidad.tipoDocumento = data.tipoDocumento == null ? constantes.tipoDocumentoRuc : data.tipoDocumento;
-                entidad.idTipoDocumento = constantes.idTipoDocumentoRuc;
+                entidad.idTipoDocumento = documento;
                 entidad.idEbiz = null;
                 entidad.usuarioCreacion = constantes.usuarioOffline;
                 entidad.usuarioModificacion = constantes.usuarioOffline;
