@@ -40,7 +40,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
      * usuario modificacion
      */
     router.post(ruta.concat('/guardarRetencion'), async function(req, res){
-        data = req.body
+        data = req.body;
         data.id = uuid();
         try{
             data.fechaEmision = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");
@@ -70,8 +70,15 @@ var contoladorComprobante =  function (ruta, rutaEsp){
             data.estadoSincronizado = 0;
             data.porcentajeImpuesto = 0;
             data.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l");
-            data.vcSerie = data.numeroComprobante
-            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , 4)
+            data.vcSerie = data.numeroComprobante;          
+            let idEntidad = 0; 
+            Array.from(data.documentoEntidad).forEach(function (element) {
+                if (element.idTipoEntidad == 1){
+                    idEntidad = element.idEntidad ;
+                }
+            }); 
+            console.log(idEntidad);
+            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , idEntidad)
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;
             await Documento.guardar(data);
             await guardarQuery(data);
@@ -101,7 +108,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
                 await DocumentoReferencia.guardar(documentoReferencia);
             }
             //await listarDocumento;
-            await guardarArchivo(data.id);
+            await guardarArchivo(data.id, idEntidad );
             
             res.json(data);
         }
@@ -111,7 +118,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
         }
     })
     router.post(ruta.concat('/guardarDocumentoEntidad'), async function(req, res){
-        data = req.body
+        data = req.body;
         data.id = uuid();
         try{
             data.fechaEmision = dateFormat(data.fechaEmision, "yyyy-mm-dd HH:MM:ss");
@@ -364,10 +371,10 @@ async function guardarEvento(inIdcomprobante, usuarioCreacion ){
     await Evento.guardar(eventoData);
 }
 
-async function guardarArchivo(id){
+async function guardarArchivo(id, idEntidadOffline){
 
     data.id  = id;
-    var archivoSerial = await PdfGenerador.start(data);
+    var archivoSerial = await PdfGenerador.start(data, idEntidadOffline);
     data.archivo = archivoSerial;
     data.usuarioCreacion = constantes.usuarioOffline;
     data.usuarioModificacion = constantes.usuarioOffline;

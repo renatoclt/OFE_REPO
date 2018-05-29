@@ -70,6 +70,7 @@ var contoladorSeries =  function (ruta, rutaEsp){
      */
     router.get(ruta.concat('/search/filtros'), async function (req, res) {
         if (req.query.id_entidad && req.query.id_entidad>0 && req.query.id_tipo_comprobante && req.query.id_tipo_comprobante > 0 && req.query.id_tipo_serie){
+            console.log("ingreseee");
             let tabla = req.query.tabla;
             try{
                 var data = await Serie.filtro(req.query.id_entidad, req.query.id_tipo_comprobante,req.query.id_tipo_serie); 

@@ -39,8 +39,8 @@ var constantes = {
     numeroDeComprobante: '15', // Comunicación de Baja - Número de Comprobante
     motivoBaja: '16', //Comunicación de Baja - Motivo de Baja
     fechaBaja: '12', //Comunicacion de baja - Fecha de baja
-    docuquery: 'http://35.196.21.141:8081',
-    pathDocumentoDetalle: '/api/fe/ms-documentos-query/v1/documento?id=',
+    docuquery: 'http://https://dev.b2miningdata.com',
+    pathDocumentoDetalle: '/fe/ms-documentos-query/v1/documento?id=',
     idTipoDocumentoRuc: '6',
     tipoDocumentoRuc: 'REG. UNICO DE CONTRIBUYENTES',
     idTablaTipoComprobante: '10007',

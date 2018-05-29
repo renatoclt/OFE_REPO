@@ -439,6 +439,7 @@ ComprobantePago.sincronizarRetencion = function comprobanteSincronizar(){
         ],
         where: {
             estadoSincronizado: constantes.estadoInactivo,
+            estado: constantes.inEstadoGuardadoLocal,
             idTipoComprobante: constantes.idTipocomprobanteRetencion
         }
       });
