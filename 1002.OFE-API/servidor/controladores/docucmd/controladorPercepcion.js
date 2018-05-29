@@ -60,7 +60,13 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
         data = req.body
         data.id = uuid();
         try{
-            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , 4)
+            let idEntidad = 0; 
+            Array.from(data.documentoEntidad).forEach(function (element) {
+                if (element.idTipoEntidad == 1){
+                    idEntidad = element.idEntidad ;
+                }
+            }); 
+            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , idEntidad)
             data.vcSerie = data.numeroComprobante;
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;       
             data.estadoSincronizado = constantes.estadoInactivo;
@@ -129,7 +135,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
                 documentoParametro.estadoSincronizado = constantes.estadoInactivo;
                 await DocumentoParametro.guardar(documentoParametro);
             }
-            await guardarArchivo(data.id);
+            await guardarArchivo(data.id,idEntidadOffline);
             
         }catch(e){
             console.log(e);
@@ -153,11 +159,11 @@ async function guardarEvento(inIdcomprobante, usuarioCreacion ){
     console.log(eventoData);
     await Evento.guardar(eventoData);
 }
-async function guardarArchivo(id){
+async function guardarArchivo(id,idEntidadOffline){
 
     console.log('SERVICIO PERCEPCION');
     data.id  = id;
-    var archivoSerial = await PdfGenerador.start(data);
+    var archivoSerial = await PdfGenerador.start(data, idEntidadOffline);
     data.archivo = archivoSerial;
     data.usuarioCreacion = constantes.usuarioOffline;
     data.usuarioModificacion = constantes.usuarioOffline;
