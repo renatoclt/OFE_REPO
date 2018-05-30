@@ -60,13 +60,14 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
         data = req.body
         data.id = uuid();
         try{
-            let idEntidad = 0; 
-            Array.from(data.documentoEntidad).forEach(function (element) {
+            let idEntidadOffline = 0; 
+            Array.from(data.documentoEntidad).forEach(async function  (element) {
                 if (element.idTipoEntidad == 1){
-                    idEntidad = element.idEntidad ;
+                    entidadData = await entidad.buscar(element.tipoDocumento ,element.documento);
+                    idEntidadOffline = entidadData.id ;
                 }
             }); 
-            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , idEntidad)
+            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , idEntidadOffline)
             data.vcSerie = data.numeroComprobante;
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;       
             data.estadoSincronizado = constantes.estadoInactivo;

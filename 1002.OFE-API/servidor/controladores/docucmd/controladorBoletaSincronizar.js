@@ -72,7 +72,6 @@ var controladorBoletas = function (ruta, rutaEsp) {
     });
 
     router.get(ruta.concat('/search/buscar'), function (req, res, next) {
-
         var numeroComprobante="",
             generado="",
             estado="",
@@ -82,7 +81,6 @@ var controladorBoletas = function (ruta, rutaEsp) {
             pagina=0,
             limite=0,
             ordenar=0;
-
         if (req.query.numeroComprobante && req.query.numeroComprobante!=""){
             numeroComprobante = req.query.numeroComprobante;
         }
@@ -132,8 +130,14 @@ var controladorBoletas = function (ruta, rutaEsp) {
         data = req.body
         data.id = uuid();
         try{
+            let idEntidad = 0; 
+            Array.from(data.documentoEntidad).forEach(function (element) {
+                if (element.idTipoEntidad == 1){
+                    idEntidad = element.idEntidad ;
+                }
+            }); 
             data.vcSerie = data.numeroComprobante;
-            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , 4);
+            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , idEntidad);
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;       
             data.estadoSincronizado = constantes.estadoInactivo;
             data.flagOrigenComprobante = constantes.percepcion.flagOrigenComprobante;
@@ -160,7 +164,14 @@ var controladorBoletas = function (ruta, rutaEsp) {
             data.idRegistroTipoComprobante = 20;
             data.impuestoGvr = 0;
             data.estadoComprobante = constantes.estadoGuardadoLocal;
-            data.tipoDocumento = data.idTipoComprobante;
+            for (let documentoEntidad of req.body.documentoEntidad){
+                if(documentoEntidad.idTipoEntidad == constantes.receptor){
+                    data.tipoDocumentoComprador = '06'
+                    break;
+                }
+            }
+            //data.tipoDocumento = data.idTipoComprobante;
+            
             await Documento.guardar(data);  
             await guardarQuery(data);
             for (let documentoEntidad of req.body.documentoEntidad){
@@ -198,7 +209,7 @@ var controladorBoletas = function (ruta, rutaEsp) {
                 guardarReferencia(data.id, referencia);
             }
             console.log('BOLETA SERVICIO');
-            await guardarArchivo(data.id);
+            await guardarArchivo(data.id, idEntidad);
            
         }catch(e){
             console.log(e);
@@ -208,10 +219,9 @@ var controladorBoletas = function (ruta, rutaEsp) {
     })
 
 };
-async function guardarArchivo(id){
-
+async function guardarArchivo(id, idEntidad){
     data.id  = id;
-    var archivoSerial = await PdfGenerador.start(data);
+    var archivoSerial = await PdfGenerador.start(data, idEntidad);
     data.archivo = archivoSerial;
     data.usuarioCreacion = constantes.usuarioOffline;
     data.usuarioModificacion = constantes.usuarioOffline;

@@ -10,21 +10,40 @@ var DocConcepto = require('../../modelos/msoffline/docConcepto');
  */
 
 DocConcepto.guardar = function guardar(data){
-    console.log(data);
-    return DocConcepto.create({
-        idConcepto: data.idConcepto,
-        concepto : data.codigoConcepto,
-        comprobantePago: data.comprobantePago,
-        descripcion: data.descripcionConcepto,
-        importe: data.importe,
-        usuarioCreacion: data.usuarioCreacion,
-        usuarioModificacion: data.usuarioModificacion,
-        fechaCreacion: data.fechaCreacion,
-        fechaModificacion: data.fechaModificacion,
-        estado: data.estado,
-        fechaSincronizado: data.fechaSincronizado,
-        estadoSincronizado: data.estadoSincronizado
-    });
+    return DocConcepto.findOne({where: {id: data.idConcepto}}).then(function(obj){
+        if(obj){
+            return DocConcepto.update({
+                idConcepto: data.idConcepto,
+                concepto : data.codigoConcepto,
+                comprobantePago: data.comprobantePago,
+                descripcion: data.descripcionConcepto,
+                importe: data.importe,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion,
+                fechaModificacion: data.fechaModificacion,
+                estado: data.estado,
+                fechaSincronizado: data.fechaSincronizado,
+                estadoSincronizado: data.estadoSincronizado
+            }, {where: {id: data.idConcepto}});
+        }
+        else{
+            return DocConcepto.create({
+                idConcepto: data.idConcepto,
+                concepto : data.codigoConcepto,
+                comprobantePago: data.comprobantePago,
+                descripcion: data.descripcionConcepto,
+                importe: data.importe,
+                usuarioCreacion: data.usuarioCreacion,
+                usuarioModificacion: data.usuarioModificacion,
+                fechaCreacion: data.fechaCreacion,
+                fechaModificacion: data.fechaModificacion,
+                estado: data.estado,
+                fechaSincronizado: data.fechaSincronizado,
+                estadoSincronizado: data.estadoSincronizado
+        });
+    }
+});
 }
 
 module.exports = DocConcepto;

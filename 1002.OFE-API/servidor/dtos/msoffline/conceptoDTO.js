@@ -19,10 +19,10 @@ Concepto.eliminar = function eliminarIdioma(){
 
 
 Concepto.guardar = function guardarConcepto(data){
-    return Concepto.findOne({where: {id: data.id}}).then(function(obj){
+    return Concepto.findOne({where: {id: data.idConcepto}}).then(function(obj){
         if(obj){
             return Concepto.update({
-                id: data.id,
+                id: data.idConcepto,
                 idioma: data.idioma,
                 codigo: data.codigo,
                 descripcion: data.descripcion,
@@ -34,11 +34,11 @@ Concepto.guardar = function guardarConcepto(data){
                 estado: data.estado,
                 fechaSincronizado: data.fechaSincronizado,
                 estadoSincronizado: data.estadoSincronizado
-            }, {where: {id: data.id}});
+            }, {where: {id: data.idConcepto}});
         }
         else{
             return Concepto.create({
-                id: data.id,
+                id: data.idConcepto,
                 idioma: data.idioma,
                 codigo: data.codigo,
                 descripcion: data.descripcion,

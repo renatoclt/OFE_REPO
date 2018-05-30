@@ -1,3 +1,4 @@
+
 /**
  * @author --- Modificado **-**-****
  * @author renato creado 18-12-2017 
@@ -168,18 +169,31 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
 
     //querySerie
     router.post(ruta.concat('/querySerie'), async function(req, res){
-        req.body.forEach(async element => {
-            element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-            element.estadoSincronizado =  constantes.estadoActivo;
-            element.usuarioCreacion = constantes.usuarioOffline;
-            element.usuarioModificacion = constantes.usuarioOffline;
-            element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-            element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
-            element.estado  = constantes.estadoActivo;
-            await QuerySerie.guardar(element);
-            }
-        );
-        res.status(200).send('{}');
+        let direccionMac = ''
+        await require('getmac').getMac( function(err, macAddress){
+            if (err) {
+                console.log(err);
+            } 
+            direccionMac = macAddress;
+            req.body.forEach(async element => {
+                element.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                element.estadoSincronizado =  constantes.estadoActivo;
+                element.usuarioCreacion = constantes.usuarioOffline;
+                element.usuarioModificacion = constantes.usuarioOffline;
+                element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                if(element.mac == direccionMac ){
+                    element.idTipoSerie = 0;
+                }
+                else{
+                    element.idTipoSerie = 1
+                }
+                await QuerySerie.guardar(element);
+                }
+            );
+            res.status(200).send('{direccionMac: ' + direccionMac +'}');
+        })
+        
     });
 
     router.post(ruta.concat('/eventoEliminar'), async function(req, res){

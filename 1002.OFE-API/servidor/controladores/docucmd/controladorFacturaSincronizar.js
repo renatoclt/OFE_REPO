@@ -156,8 +156,14 @@ var controladorFactura = function (ruta, rutaEsp) {
         data = req.body
         data.id = uuid();
         try{
+            let idEntidad = 0; 
+            Array.from(data.documentoEntidad).forEach(function (element) {
+                if (element.idTipoEntidad == 1){
+                    idEntidad = element.idEntidad ;
+                }
+            }); 
             data.vcSerie = data.numeroComprobante;
-            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , 4);
+            data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , idEntidad);
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;       
             data.estadoSincronizado = constantes.estadoInactivo;
             data.flagOrigenComprobante = constantes.percepcion.flagOrigenComprobante;
@@ -222,7 +228,7 @@ var controladorFactura = function (ruta, rutaEsp) {
                 guardarReferencia(data.id, referencia);
             }
             console.log('FACTURA SERVICIO');
-            await guardarArchivo(data.id);
+            await guardarArchivo(data.id,idEntidad);
             
         }catch(e){
             console.log(e);
@@ -231,10 +237,9 @@ var controladorFactura = function (ruta, rutaEsp) {
         res.json(data);
     })
 };
-async function guardarArchivo(id){
-
+async function guardarArchivo(id, idEntidad){
     data.id  = id;
-    var archivoSerial = await PdfGenerador.start(data);
+    var archivoSerial = await PdfGenerador.start(data, idEntidad);
     data.archivo = archivoSerial;
     data.usuarioCreacion = constantes.usuarioOffline;
     data.usuarioModificacion = constantes.usuarioOffline;

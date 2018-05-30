@@ -578,7 +578,7 @@ ComprobantePago.sincronizarBoleta = function comprobanteSincronizaFactura(){
         ],
         where: {
             estadoSincronizado: constantes.estadoInactivo,
-            idTipoComprobante: constantes.idTipocomprobanteFactura,
+            idTipoComprobante: constantes.idTipocomprobanteBoleta,
         }
       }).map(data =>{
         data.dataValues.fechaEmision = new Date(data.dataValues.fechaEmision).getTime();
