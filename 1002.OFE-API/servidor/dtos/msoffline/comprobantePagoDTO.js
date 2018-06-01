@@ -548,7 +548,7 @@ ComprobantePago.sincronizarFactura = function comprobanteSincronizaFactura(){
 }
 
 ComprobantePago.sincronizarBoleta = function comprobanteSincronizaFactura(){
-    return ComprobantePago.findAll({ attributes: atributosSincronizarFactura.attributes ,
+    return ComprobantePago.findAll({ attributes: atributosSincronizarBoleta.attributes ,
         include:[ 
             {
                 model: ComprobantePagoXProducto,

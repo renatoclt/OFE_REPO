@@ -441,10 +441,10 @@ var ComprobantePago = conexion.define('ComprobantePago',
       type: sequelize.INTEGER,
       field: "in_deguiapublicada",
     },
-    tipoDocumentoComprador:{
+    tipoDocumento:{
       type: sequelize.TEXT,
-      field: "vc_tipodocumentocomprador"
-    }
+      field: "vc_tipodocumento"
+  },
   }, 
   {
     tableName: 'comprobante_t_comprobantepago',

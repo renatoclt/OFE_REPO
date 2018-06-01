@@ -166,7 +166,8 @@ var controladorBoletas = function (ruta, rutaEsp) {
             data.estadoComprobante = constantes.estadoGuardadoLocal;
             for (let documentoEntidad of req.body.documentoEntidad){
                 if(documentoEntidad.idTipoEntidad == constantes.receptor){
-                    data.tipoDocumentoComprador = '06'
+                    data.tipoDocumento = "0".concat(documentoEntidad.tipoDocumento) ;
+                    console.log('///////////////////////////////**************************************************************/////////////');
                     break;
                 }
             }

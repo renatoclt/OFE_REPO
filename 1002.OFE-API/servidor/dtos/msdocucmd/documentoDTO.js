@@ -61,7 +61,6 @@ Documento.guardar = function guardarDocumento(data){
         idUsuarioModificacion: data.idUsuarioModificacion,
         estadoSincronizado: data.estadoSincronizado,
         fechaSincronizado: data.fechaSincronizado,
-        tipoDocumentoComprador: data.tipoDocumentoComprador
     });
 }
 
