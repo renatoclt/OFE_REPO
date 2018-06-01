@@ -191,7 +191,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
                 await QuerySerie.guardar(element);
                 }
             );
-            res.status(200).send('{direccionMac: ' + direccionMac +'}');
+            res.json('{direccionMac :' + direccionMac +'}');
         })
         
     });
