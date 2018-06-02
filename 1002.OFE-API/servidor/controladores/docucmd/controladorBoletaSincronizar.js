@@ -129,6 +129,9 @@ var controladorBoletas = function (ruta, rutaEsp) {
     router.post(ruta.concat('/'), async function (req, res, next) {
         data = req.body
         data.id = uuid();
+        console.log('JSON COMPROBANTE');
+        console.log(data);
+        // console.log(errorForzado);
         try{
             let idEntidad = 0; 
             Array.from(data.documentoEntidad).forEach(function (element) {
@@ -155,8 +158,10 @@ var controladorBoletas = function (ruta, rutaEsp) {
             data.igv = data.igv;
             data.isc = data.isc;
             data.otrosTributos = data.otrosTributos;
-            data.importeReferencial = 0.0;
-            data.subtotalComprobante = 0.0;
+            data.importeReferencial = data.importeReferencial;
+            data.subtotalComprobante = data.subtotalComprobante;
+            // data.importeReferencial = 0.0;
+            // data.subtotalComprobante = 0.0;
             data.idindicadorImpuesto = 0
             data.idTablaMoneda = 10001;
             data.idRegistroMoneda = '000001';

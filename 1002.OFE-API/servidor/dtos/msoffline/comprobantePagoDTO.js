@@ -536,12 +536,13 @@ ComprobantePago.sincronizarFactura = function comprobanteSincronizaFactura(){
             parametros.json = JSON.parse(parametros.json.replace('/',''));
             return parametros;
         });
-        data.dataValues.detalle.map(detalle =>{
-            detalle.dataValues.idProducto = null;
-            detalle.dataValues.codigoTipoIsc = zfill(detalle.dataValues.codigoTipoIsc , 2);
-            detalle.dataValues.codigoTipoPrecio = zfill(detalle.dataValues.codigoTipoPrecio , 2);
-            return detalle;
-        })
+        // data.dataValues.detalle.map(detalle =>{
+        //     console.log(detalle);
+        //     detalle.dataValues.idProducto = null;
+        //     detalle.codigoTipoIsc = zfill(detalle.dataValues.codigoTipoIsc , 2);
+        //     detalle.codigoTipoPrecio = zfill(detalle.dataValues.codigoTipoPrecio , 2);
+        //     return detalle;
+        // })
 
         return data;
       });

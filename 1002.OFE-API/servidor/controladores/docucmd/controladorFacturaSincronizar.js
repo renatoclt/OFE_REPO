@@ -180,7 +180,7 @@ var controladorFactura = function (ruta, rutaEsp) {
             data.generado = constantes.estadoOffline;
             //consultar 
             data.igv = data.igv;
-            data.isc = data.isc;
+            data.isc = "0" + data.isc;
             data.otrosTributos = data.otrosTributos;
             data.importeReferencial = data.importeReferencial;
             data.subtotalComprobante = data.subtotalComprobante;
@@ -509,10 +509,10 @@ async function guardarProductoXComprobantePago(id , data){
         await guardarProducto(producto.id, id, producto);
         producto.inIdcomprobantepago = id;
         producto.inItipoPrecioventa = producto.detalle.idTipoPrecio ;
-        producto.inCodigoPrecioventa = producto.detalle.codigoTipoPrecio ;
+        producto.inCodigoPrecioventa  = "0" + producto.detalle.codigoTipoPrecio ;
         producto.vcDescPrecioventa = producto.detalle.descripcionTipoPrecio ;
         producto.inItipoCalculoisc = producto.detalle.idTipoIsc ;
-        producto.inCodigoCalculoisc = producto.detalle.codigoTipoIsc ;
+        producto.inCodigoCalculoisc = "0" + producto.detalle.codigoTipoIsc ;
         producto.vcDescCalculoisc = producto.detalle.descripcionTipoIsc ;
         producto.inItipoAfectacionigv = producto.idTipoIgv ;
         producto.inCodigoAfectacionigv = producto.codigoTipoIgv ;

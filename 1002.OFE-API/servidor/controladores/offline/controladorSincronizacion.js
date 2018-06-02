@@ -566,6 +566,16 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         console.log(require('os').networkInterfaces());
         res.status(200).send('{}');
     });
+
+    router.get(ruta.concat('/consultarMac'), async function (req, res){
+        await require('getmac').getMac( function(err, macAddress){
+            if (err) {
+                console.log(err);
+            } 
+            return res.status(200).json({mac: macAddress});
+        })
+    });
+
     
 };
 

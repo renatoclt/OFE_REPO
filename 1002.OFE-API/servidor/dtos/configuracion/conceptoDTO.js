@@ -8,8 +8,10 @@ var Concepto = require("../../modelos/msoffline/concepto");
  * Listar tipos de conceptos
  */
 Concepto.listar = function conceptoListar () {
+
     return Concepto.findAll({
-        attributes: atributos.atributos
+        attributes: atributos.atributos,
+        where: {estado : constantes.estadoActivo}
     });
 }
 var atributos = {

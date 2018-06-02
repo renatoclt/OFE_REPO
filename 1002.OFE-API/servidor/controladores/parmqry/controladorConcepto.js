@@ -40,7 +40,6 @@ var controladorConcepto = function (ruta, rutaEsp) {
         }
 
         var data = await ConceptoDTO.listar();
-
         var hateoasObj_concepto = Object.assign({}, hateoasObj);
         hateoasObj_concepto.type = nombreHateo;
         hateoasObj_concepto.data = data.map(function(controlador){

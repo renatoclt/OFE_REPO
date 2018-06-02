@@ -57,6 +57,9 @@ module = (function () {
         return plantilla;
     }
     async function setComprobante(comprobanteJson, idEntidadOffline) {
+        console.log('JSON COMPROBANTE');
+        console.log(comprobanteJson);
+        // console.log(errorGenerado);
         var proveedor;
         var comprador;
         var subtoTotal;
@@ -180,10 +183,10 @@ module = (function () {
                         case '3':
                             comprobante.subtotal = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '6':
+                        case '8':
                             comprobante.totalDetraccion = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '8':
+                        case '10':
                             comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
                     }
@@ -241,10 +244,10 @@ module = (function () {
                         case '3':
                             comprobante.subtotal = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '6':
+                        case '8':
                             comprobante.totalDetraccion = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
-                        case '8':
+                        case '10':
                             comprobante.descuento = Number(comprobanteJson.documentoConcepto[a].importe).toFixed(2);
                             break;
                     }
