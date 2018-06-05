@@ -261,6 +261,7 @@ QueryComprobantePago.guardar = function guardarQueryComprobantePago(data, id){
 QueryComprobantePago.actualizarErrorBaja = function actualizarErrorBaja(_id){
     QueryComprobantePago.findOne({where:{id:_id}}).then(function(obj){
         if(obj){
+            console.log('/////////////////////////////////////////////////////************************************************************************');
             return QueryComprobantePago.update({
                 chEstadocomprobantepagocomp: constantes.estadoEliminadoLocal,
                 chEstadocomprobantepago: constantes.inEstadoEliminadoLocal
@@ -301,9 +302,10 @@ QueryComprobantePago.sincronizarDocumentoErroneo = function sincronizarDocumento
 }
 
 
-QueryComprobantePago.comunicacionBaja = function comunicacionBajaPercepcionRetencion(){
+QueryComprobantePago.comunicacionBaja = function comunicacionBajaPercepcionRetencion(idBaja){
     return QueryComprobantePago.findAll({
         attributes: atributosComunicacionBaja.attributes,
+        
         include:[ 
             {
                 model: DocReferencia,
@@ -315,13 +317,14 @@ QueryComprobantePago.comunicacionBaja = function comunicacionBajaPercepcionReten
                 as: 'parametro',
                 where: { paramDoc: constantes.motivoBaja}
             }
-        ]
-    },
-        {
+        ],
         where: {
             chEstadocomprobantepago: constantes.inEstadoBloqueadoLocal,  
-            vcIdregistrotipocomprobante: constantes.FILECMD.tipos_documento.comunicacionBajaRetencionPercepcion,
-        }}).map(data =>{
+            vcIdregistrotipocomprobante: idBaja,
+        }
+        
+    },
+        ).map(data =>{
             let motivo = ' ';
             for(parametro of data.dataValues.parametro){
                 parametro.dataValues.json = JSON.parse(parametro.json.replace('/',''));

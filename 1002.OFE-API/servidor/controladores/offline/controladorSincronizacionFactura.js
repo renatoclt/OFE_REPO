@@ -87,6 +87,7 @@ var controladorSincronizacionFactura = function (ruta, rutaEsp) {
 
     router.post(ruta.concat('/actualizarErrorBaja'), async function(req, res){  
         await queryComprobante.actualizarErrorBaja(req.body.id)
+        await comprobantePagoDTO.sincronizarDocumentoBajaErroneo(req.body.id);
         res.status(200).send('{}');
     });
 
@@ -95,14 +96,14 @@ var controladorSincronizacionFactura = function (ruta, rutaEsp) {
         var parts =  req.body.numeroDocumento.split("/");
         var serie = parts[0];
         var numeroComprobante = parts[1]+ '-'+ parts[2] ;
-        await queryComprobante.actualizarBaja(req.body.id,serie, numeroComprobante)
+        await queryComprobante.actualizarBaja(req.body.id, serie,numeroComprobante)
         res.status(200).send('{}');
     });
     
 
     router.get(ruta.concat('/obtenerComunicacionBaja'),async function (req, res){
         try{
-            res.json(await ComprobanteQuery.comunicacionBaja());
+            res.json(await ComprobanteQuery.comunicacionBaja(constantes.FILECMD.tipos_documento.comunicacionBajaFacturaBoleta));
         }catch(e){
             console.log(e);
             res.json({'error':e})

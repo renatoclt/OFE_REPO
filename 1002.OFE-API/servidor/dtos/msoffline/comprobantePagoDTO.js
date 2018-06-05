@@ -374,6 +374,18 @@ ComprobantePago.sincronizarDocumentoErroneo = function sincronizarDocumentoErron
     });
 }
 
+ComprobantePago.sincronizarDocumentoBajaErroneo = function sincronizarDocumentoErroneo(id){
+    ComprobantePago.findOne({where:{id:id}}).then(function(obj){
+        return ComprobantePago.update({
+            id: id,
+            fecSincronizado:  dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
+            estadoSincronizado: constantes.estadoActivo,
+            estado: constantes.inEstadoBloqueadoLocal,
+            estadoComprobantePago: constantes.estadoBloqueadoLocal,
+        }, {where: {id: id}}) ;
+    });
+}
+
 ComprobantePago.sincronizarDocumento = function sincronizarDocumento(id){
     ComprobantePago.findOne({where:{id:id}}).then(function(obj){
         return ComprobantePago.update({

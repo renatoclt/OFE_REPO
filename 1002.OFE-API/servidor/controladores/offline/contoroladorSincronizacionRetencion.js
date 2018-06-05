@@ -36,7 +36,7 @@ var controladorSincronizacionRetencion = function (ruta, rutaEsp) {
 
     router.get(ruta.concat('/actualizarEstadoComprobante'), async function(req, res){
         try{
-            var data = await comprobantePagoDTO.estadosPendientes(constantes.FILECMD.tipos_documento.retencion);
+            var data = await comprobantePagoDTO.estadosPendientes(constantes.FILECMD.tipos_documento.comunicacionBajaRetencionPercepcion);
             res.json(data);
         }catch(e){
             console.log(e);

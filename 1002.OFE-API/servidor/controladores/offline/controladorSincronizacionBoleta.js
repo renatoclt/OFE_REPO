@@ -102,7 +102,7 @@ var controladorSincronizacionBoleta = function (ruta, rutaEsp) {
 
     router.get(ruta.concat('/obtenerComunicacionBaja'),async function (req, res){
         try{
-            res.json(await ComprobanteQuery.comunicacionBaja());
+            res.json(await ComprobanteQuery.comunicacionBaja(constantes.FILECMD.tipos_documento.comunicacionBajaFacturaBoleta));
         }catch(e){
             console.log(e);
             res.json({'error':e})
