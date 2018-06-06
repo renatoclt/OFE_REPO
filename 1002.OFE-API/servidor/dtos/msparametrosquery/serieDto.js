@@ -14,7 +14,8 @@ Serie.filtro = function serieFiltro(id_entidad,id_tipo_comprobante,id_tipo_serie
         where: {
             idEntidad: id_entidad,
             idTipoComprobante:id_tipo_comprobante,
-            idTipoSerie:id_tipo_serie
+            idTipoSerie:id_tipo_serie,
+            estado: constantes.estadoActivo,
         }
       });
     return  data;
@@ -24,7 +25,8 @@ Serie.filtroSecundario = function serieFiltroSecundario(id_entidad,id_tipo_compr
     var data = Serie.findAll({ attributes: filtroAtributosSerie.attributes ,
         where: {
             idEntidad: id_entidad,
-            idTipoComprobante:id_tipo_comprobante            
+            idTipoComprobante:id_tipo_comprobante,
+            estado: constantes.estadoActivo,     
         }
       });
     return  data;
@@ -55,14 +57,16 @@ Serie.buscarSerie = function buscarSerie(tipoComprobante, serie, tipoSerie , ent
             idEntidad: entidad,
             idTipoSerie: tipoSerie,
             idTipoComprobante: tipoComprobante,
-            serie: serie,            
+            serie: serie,           
+            estado: constantes.estadoActivo, 
         }
       });
     return  data;
 }
 Serie.acturalizarCorrelativo = function(id, correlativo){
     var data = Serie.update({
-        correlativo: correlativo
+        correlativo: correlativo,
+        estado: constantes.estadoActivo,
     },
     { where: { idSerie: id } }
 );

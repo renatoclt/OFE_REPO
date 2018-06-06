@@ -33,6 +33,14 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+  if (req.headers.origin) {
+    res.set({
+        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers': 'Authorization, If-None-Match, If-Match, Accept, If-Modified-Since, Accept-Encoding, Accept-Language, Content-Type, If-Unmodified-Since',
+        'Access-Control-Allow-Origin': req.headers.origin,
+        'Access-Control-Expose-Headers': 'ETag,Content-Encoding,Vary,Last-Modified,Content-Language,Link,Content-Type'
+    });
+}
   next();
 });
 

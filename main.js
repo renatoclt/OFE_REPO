@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, session } = require("electron");
 var wwww  = require('./1002.OFE-API/configuracion/www');
 
 app.on("ready", () => {
@@ -10,6 +10,13 @@ app.on("ready", () => {
     mainWindow.maximize();
     mainWindow.show() }); 
   mainWindow.setMenu(null);
+  
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    console.log('--:',details.requestHeaders['Origin']);
+    details.requestHeaders['Origin'] = 'http://localhost:4200';
+    console.log('--:',details.requestHeaders['Origin']);
+    callback({ cancel: false, requestHeaders: details.requestHeaders });
+  });
 });
 
 app.on("window-all-closed", () => { app.quit() })
