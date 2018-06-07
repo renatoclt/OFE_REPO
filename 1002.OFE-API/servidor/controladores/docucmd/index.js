@@ -91,7 +91,7 @@ module = (function () {
         comprobante.direccionFiscalProveedor = proveedor.direccionFiscal.toUpperCase();
         comprobante.rucProveedor = proveedor.documento;
         comprobante.rucComprador = comprador.documento;
-        comprobante.razonSocialComprador = comprador.denominacion.toUpperCase();
+        comprobante.razonSocialComprador = comprador.denominacion.toString().toUpperCase();
         comprobante.direccionFiscalComprador = comprador.direccionFiscal.toUpperCase();
         if (comprobante.direccionFiscalComprador === null || comprobante.direccionFiscalComprador === undefined) {
             comprobante.direccionFiscalComprador = '';

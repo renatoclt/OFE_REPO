@@ -182,6 +182,7 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
                 element.usuarioModificacion = constantes.usuarioOffline;
                 element.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
                 element.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+                element.correlativo = element.correlativo - 1;
                 if(element.mac == direccionMac ){
                     element.idTipoSerie = 0;
                 }

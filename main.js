@@ -10,11 +10,13 @@ app.on("ready", () => {
     mainWindow.maximize();
     mainWindow.show() }); 
   mainWindow.setMenu(null);
-  
-  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+  const filter = {
+    urls: ["http://*/*", "https://*/*"]
+}
+  session.defaultSession.webRequest.onBeforeSendHeaders(filter,(details, callback) => {
     console.log('--:',details.requestHeaders['Origin']);
     details.requestHeaders['Origin'] = 'http://localhost:4200';
-    console.log('--:',details.requestHeaders['Origin']);
+    console.log('--:',details.requestHeaders);
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 });

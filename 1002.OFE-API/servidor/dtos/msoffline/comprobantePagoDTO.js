@@ -736,7 +736,8 @@ var atributosDocumentoReferenciaPercepcion = {
         ['da_fec_emi_dest','fechaEmision'],
         ['vc_aux_2','totalImporteDestino'],
         ['vc_mone_des','monedaDestino'],
-        ['de_tot_mone_des','totalMonedaDestino']
+        ['de_tot_mone_des','totalMonedaDestino'],
+        ['ch_tipo_doc_des','tipoDocumentoDestino']
     ]
 }
 
