@@ -17,8 +17,12 @@ Factura.buscarComprobante = function (id) {
                 ],
             }).then(function (comprobante) {
                 comprobante = comprobante.rows.map(function (data) {
-                    data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
-                return data.dataValues;
+                    if(data.dataValues.Usuario == null)
+                        data.dataValues.idUsuarioCreacion = "No existe localmente";
+                    else{
+                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                    }  
+                    return data.dataValues;
             });
                 resolve(comprobante.dataValues);
             });
@@ -54,7 +58,11 @@ Factura.buscarComprobantes = function (pagina, regxpag) {
                 }).then(function (comprobantes) {
                     var cantidadReg = comprobantes.count;
                     comprobantes = comprobantes.rows.map(function (data) {
-                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                        if(data.dataValues.Usuario == null)
+                            data.dataValues.idUsuarioCreacion = "No existe localmente";
+                        else{
+                            data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                        }  
                     return data.dataValues;
                 });
                 resolve({ 'comprobantes': comprobantes, 'cantidadReg': cantidadReg });
@@ -129,7 +137,11 @@ Factura.buscarFacturaEspecifico=function(pagina, regxpag, numeroComprobante_,gen
                     var cantidadReg = comprobantes.count;
 
                     comprobantes = comprobantes.rows.map(function(comprobante){ 
-                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                        if(comprobante.dataValues.Usuario == null)
+                            comprobante.dataValues.idUsuarioCreacion = "No existe localmente";
+                        else{
+                            comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+                        }  
                         return comprobante.dataValues;
                     });
                 
@@ -161,6 +173,7 @@ Factura.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobante_
         if(estadoSincronizado_ !== null && estadoSincronizado_ !== ''){
             whereDinamico.estadoSincronizado = estadoSincronizado_;
         }
+        whereDinamico.idRegistroTipoComprobante = constantes.FILECMD.tipos_documento.factura;
         if(fechaInicio_ !== null && fechaInicio_ !== '' && fechaFin_ !== null && fechaFin_ !== ''){
             whereDinamico.fecSincronizado = { 
                 [Op.between]: [dateFormat(new Date(fechaInicio_), "yyyy-mm-dd"),dateFormat(new Date(fechaFin_), "yyyy-mm-dd")+' 23:59:59.999999999'] 
@@ -183,7 +196,11 @@ Factura.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobante_
     } ).then(function (comprobantes) {
         var cantidadReg = comprobantes.count;
         comprobantes = comprobantes.rows.map(function(comprobante){ 
-            comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+            if(comprobante.dataValues.Usuario == null)
+                comprobante.dataValues.idUsuarioCreacion = "No existe localmente";
+            else{
+                comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+            }  
             return comprobante.dataValues;
         });
         return({'comprobantes': comprobantes, 'cantidadReg': cantidadReg});

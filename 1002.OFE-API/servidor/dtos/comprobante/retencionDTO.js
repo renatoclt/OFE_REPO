@@ -16,7 +16,11 @@ Retencion.buscarComprobante = function (id) {
                 ],
             }).then(function (comprobante) {
                 comprobante = comprobante.rows.map(function (data) {
-                    data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                    if(data.dataValues.Usuario == null)
+                        data.dataValues.idUsuarioCreacion = "No existe localmente";
+                    else{
+                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                    }  
                     return data.dataValues;
                 })
                 resolve(comprobante.dataValues);
@@ -80,7 +84,11 @@ Retencion.buscarComprobantes = function (pagina, regxpag) {
                 }).then(function (comprobantes) {
                     var cantidadReg = comprobantes.count;
                     comprobantes = comprobantes.rows.map(function (data) {
-                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                        if(data.dataValues.Usuario == null)
+                            data.dataValues.idUsuarioCreacion = "No existe localmente";
+                        else{
+                            data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                        }
                     return data.dataValues;
                 });
                 resolve({ 'comprobantes': comprobantes, 'cantidadReg': cantidadReg });
@@ -131,7 +139,11 @@ Retencion.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobant
     } ).then(function (comprobantes) {
         var cantidadReg = comprobantes.count;
         comprobantes = comprobantes.rows.map(function(comprobante){ 
-            comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+            if(comprobante.dataValues.Usuario == null)
+                comprobante.dataValues.idUsuarioCreacion = "No existe localmente";
+            else{
+                comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+            }
             return comprobante.dataValues;
         });
         return({'comprobantes': comprobantes, 'cantidadReg': cantidadReg});
@@ -200,7 +212,11 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
                     var cantidadReg = comprobantes.count;
 
                     comprobantes = comprobantes.rows.map(function(comprobante){ 
-                        comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+                        if(comprobante.dataValues.Usuario == null)
+                            comprobante.dataValues.idUsuarioCreacion = "No existe localmente";
+                        else{
+                            comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+                        }
                         return comprobante.dataValues;
                     });
                 

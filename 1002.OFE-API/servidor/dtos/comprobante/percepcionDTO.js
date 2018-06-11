@@ -17,7 +17,11 @@ Percepcion.buscarComprobante = function (id) {
             }).then(function (comprobante) {
                 var cantidadReg = comprobante.count;
                 comprobante = comprobante.rows.map(function (data) {
+                    if(data.dataValues.Usuario == null)
+                        data.dataValues.idUsuarioCreacion = "No existe localmente";
+                    else{
                         data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                    }  
                     return data.dataValues;
                 })
                 resolve(comprobante.dataValues);
@@ -54,7 +58,11 @@ Percepcion.buscarComprobantes = function (pagina, regxpag) {
                 }).then(function (comprobantes) {
                     var cantidadReg = comprobantes.count;
                     comprobantes = comprobantes.rows.map(function (data) {
-                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                        if(data.dataValues.Usuario == null)
+                            data.dataValues.idUsuarioCreacion = "No existe localmente";
+                        else{
+                            data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                        }
                     return data.dataValues;
                 });
                 resolve({ 'comprobantes': comprobantes, 'cantidadReg': cantidadReg });
@@ -118,7 +126,7 @@ Percepcion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante
                             estadoSincronizado:estadoSincronizado_,     // 0: no sincronizado, 1: sincronizado
                             idTipoComprobante: contantes.idTipocomprobantePercepcion,
                             fecSincronizado: { 
-                                [Op.between]: [fechaInicio,fechaFin+'23:59:59.999999999'] 
+                                [Op.between]: [dateFormat(new Date(fechaInicio), "yyyy-mm-dd"),dateFormat(new Date(fechaFin), "yyyy-mm-dd")+' 23:59:59.999999999'] 
                                // [Op.between]: ['2018-01-02','2018-01-04'+'23:59:59.999999999'] 
                             }    
                         },                       
@@ -130,7 +138,11 @@ Percepcion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante
                     var cantidadReg = comprobantes.count;
 
                     comprobantes = comprobantes.rows.map(function(comprobante){ 
-                        comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+                        if(comprobante.dataValues.Usuario == null)
+                        comprobante.dataValues.idUsuarioCreacion = "No existe localmente";
+                        else{
+                            comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+                        }
                         return comprobante.dataValues;
                     });
                     resolve({'comprobantes': comprobantes, 'cantidadReg': cantidadReg});
@@ -142,4 +154,56 @@ Percepcion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante
     });
     return promise;
 };
+
+
+Percepcion.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio_,fechaFin_,estadoSincronizado_){
+    let whereDinamico = {};
+    const Op = sequelize.Op;
+    console.log(estadoSincronizado_);
+    if(numeroComprobante_ !== null && numeroComprobante_ !== '')
+        whereDinamico.numeroComprobante = numeroComprobante_;
+    else{
+        if(generado_ !== null && generado_ !== ''){
+            whereDinamico.generado = generado_;
+        }
+        if(estado_ !== null && estado_ !== ''){
+            whereDinamico.estado = estado_;
+        }
+        if(estadoSincronizado_ !== null && estadoSincronizado_ !== ''){
+            whereDinamico.estadoSincronizado = estadoSincronizado_;
+        }
+        whereDinamico.idRegistroTipoComprobante = constantes.FILECMD.tipos_documento.percepcion;
+        if(fechaInicio_ !== null && fechaInicio_ !== '' && fechaFin_ !== null && fechaFin_ !== ''){
+            whereDinamico.fecSincronizado = { 
+                [Op.between]: [dateFormat(new Date(fechaInicio_), "yyyy-mm-dd"),dateFormat(new Date(fechaFin_), "yyyy-mm-dd")+' 23:59:59.999999999'] 
+                // [Op.between]: [fechaInicio_,fechaFin_+'23:59:59.999999999'] 
+                //[Op.between]: ['2018-01-02','2018-01-04'+'23:59:59.999999999'] 
+            }  
+        }
+    }
+    console.log(whereDinamico);
+    return Comprobante.findAndCountAll({
+        attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+        include: [ 
+            {
+                model: Usuario,
+                as: "Usuario" 
+                
+            }
+        ],
+        where: whereDinamico 
+    } ).then(function (comprobantes) {
+        var cantidadReg = comprobantes.count;
+        comprobantes = comprobantes.rows.map(function(comprobante){ 
+            if(comprobante.dataValues.Usuario == null)
+                comprobante.dataValues.idUsuarioCreacion = "No existe localmente";
+            else{
+                comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
+            }
+            
+            return comprobante.dataValues;
+        });
+        return({'comprobantes': comprobantes, 'cantidadReg': cantidadReg});
+    });
+}
 module.exports = Percepcion;

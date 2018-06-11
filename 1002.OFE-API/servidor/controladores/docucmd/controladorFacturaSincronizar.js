@@ -143,10 +143,11 @@ var controladorFactura = function (ruta, rutaEsp) {
             
             await FacturaDTO.buscarComprobanteDinamico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
             .then(function (resDTO) {
+                console.log(resDTO);
                 var hateoasObj_comprobante = Object.assign({}, hateoasObj);
                 hateoasObj_comprobante.type = nombreHateo;
                 hateoasObj_comprobante.data = resDTO.comprobantes;
-                hateoasObj_comprobante.nombreColeccion = "retenciones";
+                hateoasObj_comprobante.nombreColeccion = "Facturas";
                 hateoasObj_comprobante.ruta = rutaEsp;
                 hateoasObj_comprobante.paginacion.activo = true;
                 hateoasObj_comprobante.paginacion.totalreg = resDTO.cantidadReg;

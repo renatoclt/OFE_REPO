@@ -56,18 +56,17 @@ var controladorPercepciones = function (ruta, rutaEsp) {
         });
     });
 
-    router.get(ruta.concat('/search/buscar'), function (req, res, next) {
-
+    router.get(ruta.concat('/search/buscar'), async function (req, res, next) {
         var numeroComprobante="",
             generado="",
             estado="",
             fechaInicio=new Date(),
             fechaFin=new Date(),
-            estadoSincronizado=0,
+            estadoSincronizado="",
             pagina=0,
             limite=0,
             ordenar=0;
-
+            console.log('/////////////////***********************************//////////////////////////////////');
         if (req.query.numeroComprobante && req.query.numeroComprobante!=""){
             numeroComprobante = req.query.numeroComprobante;
         }
@@ -92,15 +91,15 @@ var controladorPercepciones = function (ruta, rutaEsp) {
         if (req.query.limite && req.query.limite>0){
             limite = req.query.limite;
         }
- 
-        //function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
-        PercepcionDTO.buscarRetencionEspecifico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
+        
+        await PercepcionDTO.buscarComprobanteDinamico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
         .then(function (resDTO) {
-
+            console.log('/////////////////***********************************//////////////////////////////////');
+            console.log(resDTO);
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;
-            hateoasObj_comprobante.nombreColeccion = "percepciones";
+            hateoasObj_comprobante.nombreColeccion = "retenciones";
             hateoasObj_comprobante.ruta = rutaEsp;
             hateoasObj_comprobante.paginacion.activo = true;
             hateoasObj_comprobante.paginacion.totalreg = resDTO.cantidadReg;

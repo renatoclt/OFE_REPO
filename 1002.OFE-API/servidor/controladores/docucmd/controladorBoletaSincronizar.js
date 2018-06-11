@@ -71,16 +71,17 @@ var controladorBoletas = function (ruta, rutaEsp) {
         });
     });
 
-    router.get(ruta.concat('/search/buscar'), function (req, res, next) {
+    router.get(ruta.concat('/search/buscar'), async function (req, res, next) {
         var numeroComprobante="",
             generado="",
             estado="",
             fechaInicio=new Date(),
             fechaFin=new Date(),
-            estadoSincronizado=0,
+            estadoSincronizado="",
             pagina=0,
             limite=0,
             ordenar=0;
+            console.log('/////////////////***********************************//////////////////////////////////');
         if (req.query.numeroComprobante && req.query.numeroComprobante!=""){
             numeroComprobante = req.query.numeroComprobante;
         }
@@ -105,11 +106,11 @@ var controladorBoletas = function (ruta, rutaEsp) {
         if (req.query.limite && req.query.limite>0){
             limite = req.query.limite;
         }
- 
-        //function(pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
-        BoletaDTO.buscarComprobanteEspecifico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
+        
+        await BoletaDTO.buscarComprobanteDinamico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
         .then(function (resDTO) {
-
+            console.log('/////////////////***********************************//////////////////////////////////');
+            console.log(resDTO);
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;
@@ -125,7 +126,6 @@ var controladorBoletas = function (ruta, rutaEsp) {
             res.json(hateoas.link(hateoasObj_comprobante));
         });
     });
-
     router.post(ruta.concat('/'), async function (req, res, next) {
         data = req.body
         data.id = uuid();
