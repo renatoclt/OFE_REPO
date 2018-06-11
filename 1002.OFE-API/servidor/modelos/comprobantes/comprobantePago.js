@@ -1,4 +1,5 @@
 var DocEntidad = require('./docEntidad');
+var Usuario = require('../msoffline/usuario');
 /**
  * persistencia de la tabla t_comprobantepago en la variable ComprobantePago
  * Modificado --- creado --/--/----
@@ -443,4 +444,7 @@ var ComprobantePago = conexion.define('ComprobantePago',
 // ComprobantePago.hasMany(DocEntidad,
 //     { as: 'documentoEntidad',foreignKey: 'idcomprobantepago', targetKey: 'idcomprobantepago'}
 //     );
+
+ComprobantePago.belongsTo(Usuario, {as:'Usuario', foreignKey: 'idUsuarioCreacion'});
+
 module.exports = ComprobantePago;

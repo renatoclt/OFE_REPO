@@ -6,8 +6,19 @@ Retencion.buscarComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findById(id,{
-                attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado']
+                attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado'],
+                include: [ 
+                    {
+                        model: Usuario,
+                        as: "Usuario" 
+                        
+                    }
+                ],
             }).then(function (comprobante) {
+                comprobante = comprobante.rows.map(function (data) {
+                    data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                    return data.dataValues;
+                })
                 resolve(comprobante.dataValues);
             });
         }, function (err) {
@@ -22,6 +33,12 @@ Retencion.buscarComprobanteNumeroComprobante = function (id) {
         conexion.sync().then(function () {
             Comprobante.findAll({
                 attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado'],
+                include: [ 
+                    {
+                        model: Usuario,
+                        as: "Usuario" 
+                    }
+                ],
                 where: {
                     numeroComprobante : id
                 }
@@ -50,12 +67,20 @@ Retencion.buscarComprobantes = function (pagina, regxpag) {
         conexion.sync().then(function () {
             Comprobante.findAndCountAll({  
                 attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+                include: [ 
+                    {
+                        model: Usuario,
+                        as: "Usuario" 
+                        
+                    }
+                ],
                 where: { idTipoComprobante: contantes.idTipocomprobanteRetencion}, 
                 offset: (pagina * regxpag), 
                 limit: regxpag 
                 }).then(function (comprobantes) {
                     var cantidadReg = comprobantes.count;
                     comprobantes = comprobantes.rows.map(function (data) {
+                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
                     return data.dataValues;
                 });
                 resolve({ 'comprobantes': comprobantes, 'cantidadReg': cantidadReg });
@@ -85,8 +110,9 @@ Retencion.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobant
             whereDinamico.estadoSincronizado = estadoSincronizado_;
         }
         if(fechaInicio_ !== null && fechaInicio_ !== '' && fechaFin_ !== null && fechaFin_ !== ''){
-            whereDinamico.fechaCreacion = { 
-                [Op.between]: [fechaInicio_,fechaFin_+'23:59:59.999999999'] 
+            whereDinamico.fecSincronizado = { 
+                [Op.between]: [dateFormat(new Date(fechaInicio_), "yyyy-mm-dd"),dateFormat(new Date(fechaFin_), "yyyy-mm-dd")+' 23:59:59.999999999'] 
+                // [Op.between]: [fechaInicio_,fechaFin_+'23:59:59.999999999'] 
                 //[Op.between]: ['2018-01-02','2018-01-04'+'23:59:59.999999999'] 
             }  
         }
@@ -94,10 +120,18 @@ Retencion.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobant
     console.log(whereDinamico);
     return Comprobante.findAndCountAll({
         attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+        include: [ 
+            {
+                model: Usuario,
+                as: "Usuario" 
+                
+            }
+        ],
         where: whereDinamico 
     } ).then(function (comprobantes) {
         var cantidadReg = comprobantes.count;
         comprobantes = comprobantes.rows.map(function(comprobante){ 
+            comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
             return comprobante.dataValues;
         });
         return({'comprobantes': comprobantes, 'cantidadReg': cantidadReg});
@@ -137,6 +171,13 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
                 { 
                     //pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
                     attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+                    include: [ 
+                        {
+                            model: Usuario,
+                            as: "Usuario" 
+                            
+                        }
+                    ],
                     where: { 
                             numeroComprobante:numeroComprobante_ ,
                             generado:generado_,                         // 0: offline , 1: online
@@ -159,6 +200,7 @@ Retencion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante_
                     var cantidadReg = comprobantes.count;
 
                     comprobantes = comprobantes.rows.map(function(comprobante){ 
+                        comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
                         return comprobante.dataValues;
                     });
                 

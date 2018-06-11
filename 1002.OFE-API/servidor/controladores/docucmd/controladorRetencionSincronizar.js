@@ -55,16 +55,16 @@ var controladorRetenciones = function (ruta, rutaEsp) {
     });
 
     router.get(ruta.concat('/search/buscar'), async function (req, res, next) {
-        // if(req.query.numeroComprobante && req.query.numeroComprobante !== ''){
-        //     RetencionDTO.buscarComprobanteNumeroComprobante(req.query.numeroComprobante).then(function (resDTO) {
-        //         var hateoasObj_comprobante = Object.assign({}, hateoasObj);
-        //         hateoasObj_comprobante.type = nombreHateo;
-        //         hateoasObj_comprobante.data = resDTO ;
-        //         hateoasObj_comprobante.paginacion.activo = false;
-        //         hateoasObj_comprobante.busqueda.activo = false;
-        //         res.json(hateoas.link(hateoasObj_comprobante));
-        //     });
-        // }else {
+        if(req.query.numeroComprobante && req.query.numeroComprobante !== ''){
+            RetencionDTO.buscarComprobanteNumeroComprobante(req.query.numeroComprobante).then(function (resDTO) {
+                var hateoasObj_comprobante = Object.assign({}, hateoasObj);
+                hateoasObj_comprobante.type = nombreHateo;
+                hateoasObj_comprobante.data = resDTO ;
+                hateoasObj_comprobante.paginacion.activo = false;
+                hateoasObj_comprobante.busqueda.activo = false;
+                res.json(hateoas.link(hateoasObj_comprobante));
+            });
+        }else {
             var numeroComprobante="",
                 generado="",
                 estado="",
@@ -115,7 +115,7 @@ var controladorRetenciones = function (ruta, rutaEsp) {
                 hateoasObj_comprobante.busqueda.ruta = "/search/buscar";        
                 res.json(hateoas.link(hateoasObj_comprobante));
             });
-        // }
+        }
     });
 
 };

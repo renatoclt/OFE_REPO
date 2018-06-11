@@ -87,13 +87,19 @@ Boleta.buscarComprobanteEspecifico=function(pagina, regxpag, numeroComprobante_,
 //pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
                     
                     attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado'],
+                    include: [ 
+                        {
+                            model: Usuario,
+                            as: "Usuario"   
+                        }
+                    ],
                     where: { 
                             numeroComprobante:numeroComprobante_ ,
                             generado:generado_,                         // 0: offline , 1: online
                             estado:estado_,                             // Bloqueado, Inactivo,..
                             estadoSincronizado:estadoSincronizado_,     // 0: no sincronizado, 1: sincronizado
                             idTipoComprobante: contantes.idTipocomprobanteBoleta,
-                            fechaCreacion: { 
+                            fecSincronizado: { 
                                 [Op.between]: [fechaInicio,fechaFin+'23:59:59.999999999'] 
                             }    
 
@@ -106,6 +112,7 @@ Boleta.buscarComprobanteEspecifico=function(pagina, regxpag, numeroComprobante_,
                     var cantidadReg = comprobantes.count;
 
                     comprobantes = comprobantes.rows.map(function(comprobante){ 
+                        comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
                         return comprobante.dataValues;
                     });
                 

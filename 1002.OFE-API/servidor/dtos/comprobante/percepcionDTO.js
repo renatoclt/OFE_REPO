@@ -7,7 +7,19 @@ Percepcion.buscarComprobante = function (id) {
         conexion.sync().then(function () {
             Comprobante.findById(id,{
                 attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+                include: [ 
+                    {
+                        model: Usuario,
+                        as: "Usuario" 
+                        
+                    }
+                ],
             }).then(function (comprobante) {
+                var cantidadReg = comprobante.count;
+                comprobante = comprobante.rows.map(function (data) {
+                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
+                    return data.dataValues;
+                })
                 resolve(comprobante.dataValues);
             });
         }, function (err) {
@@ -29,13 +41,20 @@ Percepcion.buscarComprobantes = function (pagina, regxpag) {
         conexion.sync().then(function () {
             Comprobante.findAndCountAll({  
                 attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+                include: [ 
+                    {
+                        model: Usuario,
+                        as: "Usuario" 
+                        
+                    }
+                ],
                 where: { idTipoComprobante: contantes.idTipocomprobantePercepcion}, 
                 offset: (pagina * regxpag), 
                 limit: regxpag 
                 }).then(function (comprobantes) {
-
                     var cantidadReg = comprobantes.count;
                     comprobantes = comprobantes.rows.map(function (data) {
+                        data.dataValues.idUsuarioCreacion = data.dataValues.Usuario.dataValues.nombre + " " + data.dataValues.Usuario.dataValues.apellido ;
                     return data.dataValues;
                 });
                 resolve({ 'comprobantes': comprobantes, 'cantidadReg': cantidadReg });
@@ -85,18 +104,24 @@ Percepcion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante
 //pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
                     
                     attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado'],
+                    include: [ 
+                        {
+                            model: Usuario,
+                            as: "Usuario" 
+                            
+                        }
+                    ],
                     where: { 
                             numeroComprobante:numeroComprobante_ ,
                             generado:generado_,                         // 0: offline , 1: online
                             estado:estado_,                             // Bloqueado, Inactivo,..
                             estadoSincronizado:estadoSincronizado_,     // 0: no sincronizado, 1: sincronizado
                             idTipoComprobante: contantes.idTipocomprobantePercepcion,
-                            fechaCreacion: { 
+                            fecSincronizado: { 
                                 [Op.between]: [fechaInicio,fechaFin+'23:59:59.999999999'] 
                                // [Op.between]: ['2018-01-02','2018-01-04'+'23:59:59.999999999'] 
                             }    
-
-                            },                       
+                        },                       
                     
                     offset: (pagina*regxpag), 
                     limit: regxpag
@@ -105,9 +130,9 @@ Percepcion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante
                     var cantidadReg = comprobantes.count;
 
                     comprobantes = comprobantes.rows.map(function(comprobante){ 
+                        comprobante.dataValues.idUsuarioCreacion = comprobante.dataValues.Usuario.dataValues.nombre + " " + comprobante.dataValues.Usuario.dataValues.apellido ;
                         return comprobante.dataValues;
                     });
-                
                     resolve({'comprobantes': comprobantes, 'cantidadReg': cantidadReg});
                 });
         }, function (err) {
@@ -115,10 +140,6 @@ Percepcion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante
             resolve({});
         });
     });
-    
     return promise;
-
-
-
 };
 module.exports = Percepcion;
