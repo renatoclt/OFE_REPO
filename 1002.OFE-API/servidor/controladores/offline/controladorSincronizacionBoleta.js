@@ -11,6 +11,7 @@ var Client = require('node-rest-client').Client;
 var Usuario = require('../../dtos/msoffline/usuarioDTO');
 var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
 var ComprobanteQuery = require('../../dtos/msoffline/queryComprobantePagoDTO'); 
+var QueryProductoXComprobantePagoDTO = require('../../dtos/msoffline/queryProductoXComprobantePagoDTO')
 
 var controladorSincronizacionBoleta = function (ruta, rutaEsp) {
     router.get(ruta.concat('/'), async function (req, res) {
@@ -77,7 +78,7 @@ var controladorSincronizacionBoleta = function (ruta, rutaEsp) {
     });
     router.post(ruta.concat('/actualizarFecha'), async function (req, res){
         try{
-            await Sincronizacion.actualizarFecha(constantes.FILECMD.tipos_documento.factura, req.body.fecha);
+            await Sincronizacion.actualizarFecha(constantes.FILECMD.tipos_documento.boleta, req.body.fecha);
             res.json({});
         }
         catch(e){
@@ -133,7 +134,6 @@ var controladorSincronizacionBoleta = function (ruta, rutaEsp) {
                 evento.estadoSincronizado = constantes.estadoActivo;
                 await queryComprobanteEventoDTO.guardar(evento, evento.seIdocevento);
             }
-            
             guardarComprobante(comprobanteQ);   
             res.send('{}');
         }catch (e){
@@ -278,7 +278,8 @@ async function guardarComprobante(data){
     documentoEntidadComprador.idTipoEntidad = constantes.receptor;
     await documentoEntidadDTO.guardarEntidad(documentoEntidadProveedor);
     await documentoEntidadDTO.guardarEntidad(documentoEntidadComprador);
-    //await detalleComprobante(comprobante.id);
+    await guardarProductoXComprobantePago(comprobante.id, data.detalle);
+    // await detalleComprobante(comprobante.id);
     
 }
 
@@ -327,6 +328,14 @@ function detalleComprobante(id){
         });
     });
     return promise;
+}
+
+async function guardarProductoXComprobantePago(id , data){    
+    for(let producto of data){
+        producto.id = producto.inIdcomprobantepagodetalle;
+        await QueryProductoXComprobantePagoDTO.guardar(producto);
+    }
+    
 }
 
 

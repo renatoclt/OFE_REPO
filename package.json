@@ -66,6 +66,7 @@
     "mem": "^3.0.0",
     "morgan": "^1.8.1",
     "node-rest-client": "^3.1.0",
+    "remote": "^0.2.6",
     "request": "^2.81.0",
     "sequelize": "^4.31.2",
     "sfulasalle-pdf-builder": "^3.1.9",

@@ -6,7 +6,7 @@ Percepcion.buscarComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findById(id,{
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+                attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
             }).then(function (comprobante) {
                 resolve(comprobante.dataValues);
             });
@@ -28,7 +28,7 @@ Percepcion.buscarComprobantes = function (pagina, regxpag) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findAndCountAll({  
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+                attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
                 where: { idTipoComprobante: contantes.idTipocomprobantePercepcion}, 
                 offset: (pagina * regxpag), 
                 limit: regxpag 
@@ -84,7 +84,7 @@ Percepcion.buscarRetencionEspecifico=function(pagina, regxpag, numeroComprobante
                 { 
 //pagina, regxpag, numeroComprobante_,generado_,estado_,fechaInicio,fechaFin,estadoSincronizado_, ordenar){
                     
-                    attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado'],
+                    attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado'],
                     where: { 
                             numeroComprobante:numeroComprobante_ ,
                             generado:generado_,                         // 0: offline , 1: online

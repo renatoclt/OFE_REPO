@@ -6,7 +6,7 @@ Retencion.buscarComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findById(id,{
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado']
+                attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado']
             }).then(function (comprobante) {
                 resolve(comprobante.dataValues);
             });
@@ -21,7 +21,7 @@ Retencion.buscarComprobanteNumeroComprobante = function (id) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findAll({
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado'],
+                attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado'],
                 where: {
                     numeroComprobante : id
                 }
@@ -49,7 +49,7 @@ Retencion.buscarComprobantes = function (pagina, regxpag) {
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             Comprobante.findAndCountAll({  
-                attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+                attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
                 where: { idTipoComprobante: contantes.idTipocomprobanteRetencion}, 
                 offset: (pagina * regxpag), 
                 limit: regxpag 
@@ -93,7 +93,7 @@ Retencion.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobant
     }
     console.log(whereDinamico);
     return Comprobante.findAndCountAll({
-        attributes: ['id','idUsuarioCreacion','fechaCreacion','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
+        attributes: ['id','idUsuarioCreacion','fecSincronizado','numeroComprobante','generado','estado','estadoSincronizado','estadoComprobante'],
         where: whereDinamico 
     } ).then(function (comprobantes) {
         var cantidadReg = comprobantes.count;

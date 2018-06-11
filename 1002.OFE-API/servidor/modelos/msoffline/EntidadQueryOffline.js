@@ -10,12 +10,10 @@ var EntidadQueryOffline = conexion.define('EntidadQueryOffline',
       documento: {
       type: sequelize.TEXT,
       field: "vc_documento",
-      allowNull:false
     },
     denominacion: {
       type: sequelize.TEXT,
       field: "vc_denominacion",
-      allowNull:false
     },
     nombreComercial: {
       type: sequelize.TEXT,
@@ -56,27 +54,22 @@ var EntidadQueryOffline = conexion.define('EntidadQueryOffline',
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",
-      allowNull:false
     },
     usuarioModificacion: {
       type: sequelize.TEXT,
       field: "vc_usu_modifica",
-      allowNull:false
     },
     fechaCreacion: {
       type: sequelize.TEXT,
       field: "ts_fec_creacion",
-      allowNull:false
     },
     fechaModificacion: {
       type: sequelize.TEXT,
       field: "ts_fec_modifica",
-      allowNull:false
     },
     estado: {
       type: sequelize.INTEGER,
       field: "in_estado",
-      allowNull:false
       }   
   },
   {

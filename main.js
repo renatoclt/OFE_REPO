@@ -1,4 +1,5 @@
-const { app, BrowserWindow, session } = require("electron");
+const { app, BrowserWindow, session, globalShortcut } = require("electron");
+
 var wwww  = require('./1002.OFE-API/configuracion/www');
 
 app.on("ready", () => {
@@ -19,6 +20,10 @@ app.on("ready", () => {
     console.log('--:',details.requestHeaders);
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
+  globalShortcut.register('CommandOrControl+R', function() {
+		console.log('CommandOrControl+R is pressed');
+		mainWindow.loadURL(`file://${__dirname}/1002.OFE-PROD/PROD_ANGULAR/dist/index.html`);
+	})
 });
 
 app.on("window-all-closed", () => { app.quit() })

@@ -17,7 +17,6 @@ var Entidad = conexion.define('Entidad',
         documento: {
             type: sequelize.TEXT,
             field: "vc_documento",
-            allowNull:false
         },
         denominacion : {
             type: sequelize.TEXT,

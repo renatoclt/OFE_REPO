@@ -20,7 +20,6 @@ var QueryEntidad = conexion.define('QueryEntidad',
     documento: {
       type: sequelize.INTEGER(32),
       field: "vc_documento",
-      allowNull:false
     },
     denominacion: {
       type: sequelize.INTEGER(32),
@@ -29,17 +28,14 @@ var QueryEntidad = conexion.define('QueryEntidad',
     nombreComercial: {
       type: sequelize.TEXT,
       field: "vc_nom_comercia",
-      allowNull:false
     },
     direccion: {
       type: sequelize.TEXT(4),
       field: "vc_dir_fiscal",
-      allowNull:false
     },
     correo: {
       type: sequelize.INTEGER(32),
       field: "vc_correo",
-      allowNull:false
     },
     logo: {
       type: sequelize.TEXT,
@@ -48,7 +44,6 @@ var QueryEntidad = conexion.define('QueryEntidad',
     pais: {
         type: sequelize.TEXT,
         field: "vc_pais",
-        allowNull:false
     },
     ubigeo: {
       type: sequelize.TEXT,
@@ -69,27 +64,22 @@ var QueryEntidad = conexion.define('QueryEntidad',
     usuarioCreacion: {
       type: sequelize.TEXT,
       field: "vc_usu_creacion",
-      allowNull:false
     },
     usuarioModificacion: {
       type: sequelize.TEXT,
       field: "vc_usu_modifica",
-      allowNull:false
     },
     fechaCreacion: {
       type: sequelize.TEXT(6),
       field: "ts_fec_creacion",
-      allowNull:false
     },
     fechaModificacion: {
       type: sequelize.TEXT(6),
       field: "ts_fec_modifica",
-      allowNull:false
     },
     estado: {
       type: sequelize.INTEGER(32),
       field: "in_estado",
-      allowNull:false
     },
     fechaSincronizado: {
       type: sequelize.TEXT,

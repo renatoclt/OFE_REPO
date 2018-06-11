@@ -103,10 +103,10 @@ MenuOffline.sync().then(() => {
         logoFront: '',
         icon: '',
         title: '',
-        mini: 'CC',
+        mini: 'CP',
         padre: '1',
         moduloUri: '//comprobantes/factura/crear',
-        moduloDesc: 'Crear',
+        moduloDesc: 'Comp. de Pago - Crear',
         default: 'false',
         orden:'1'
     }).catch(function (err){
@@ -118,10 +118,10 @@ MenuOffline.sync().then(() => {
         logoFront: '',
         icon: '',
         title: '',
-        mini: 'CS',
+        mini: 'CL',
         padre: '1',
         moduloUri: '//comprobantes/consultar',
-        moduloDesc: 'Consultar',
+        moduloDesc: 'Comp. de Pago - Consult',
         default: 'false',
         orden:'2'
     }).catch(function (err){
@@ -148,10 +148,10 @@ MenuOffline.sync().then(() => {
         logoFront: '',
         icon: '',
         title: '',
-        mini: 'CC',
+        mini: 'RE',
         padre: '2',
         moduloUri: '//percepcion-retencion/retencion/crear/individual',
-        moduloDesc: 'Crear',
+        moduloDesc: 'Percepción/Ret. - Crear',
         default: 'true',
         orden:'1'
     }).catch(function (err){
@@ -163,10 +163,10 @@ MenuOffline.sync().then(() => {
         logoFront: '',
         icon: '',
         title: '',
-        mini: 'CC',
+        mini: 'RL',
         padre: '2',
         moduloUri: '//percepcion-retencion/consultar',
-        moduloDesc: 'Consultar',
+        moduloDesc: 'Percepción/Ret. - Consult',
         default: 'false',
         orden:'2'
     }).catch(function (err){
@@ -193,10 +193,10 @@ MenuOffline.sync().then(() => {
         logoFront: '',
         icon: '',
         title: '',
-        mini: 'CC',
+        mini: 'BE',
         padre: '3',
         moduloUri: '//resumen-bajas/crear',
-        moduloDesc: 'Crear',
+        moduloDesc: 'Resumen Bajas - Crear',
         default: 'false',
         orden:'4'
     }).catch(function (err){
@@ -208,10 +208,10 @@ MenuOffline.sync().then(() => {
         logoFront: '',
         icon: '',
         title: '',
-        mini: 'CS',
+        mini: 'BL',
         padre: '3',
         moduloUri: '//resumen-bajas/consultar',
-        moduloDesc: 'Consultar',
+        moduloDesc: 'Resumen Bajas - Consult',
         default: 'false',
         orden:'2'
     }).catch(function (err){

@@ -21,6 +21,7 @@ ReferenciasQuery.buscarReferencia = function (id) {
 };
 
 ReferenciasQuery.buscarReferenciasByComprobante = function (pagina,limite,comprobanteID,ordenar) {
+    console.log('////////////////////////*****************************************//////////////////////////////');
     var promise = new Promise(function (resolve, reject) {
         conexion.sync().then(function () {
             DocReferenciQuery.findAndCountAll(

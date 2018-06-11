@@ -577,6 +577,16 @@ var contoladorSincronizacion =  function (ruta, rutaEsp){
         })
     });
 
+    router.post(ruta.concat('/actualizarFecha'), async function (req, res){
+        try{
+            await Sincronizacion.actualizarFecha(constantes.FILECMD.tipos_documento.parametros, req.body.fecha);
+            res.json({});
+        }
+        catch(e){
+            res.json({ 'error': e})
+        }
+    });
+
     
 };
 

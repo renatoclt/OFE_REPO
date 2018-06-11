@@ -12,6 +12,7 @@ var Usuario = require('../../dtos/msoffline/usuarioDTO');
 var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
 var ComprobanteQuery = require('../../dtos/msoffline/queryComprobantePagoDTO'); 
 
+
 var controladorSincronizacionPercepcion = function (ruta, rutaEsp) {
     router.get(ruta.concat('/'), async function (req, res) {
         try{
@@ -269,6 +270,7 @@ async function guardarComprobante(data){
     documentoEntidadComprador.idTipoEntidad = constantes.receptor;
     await documentoEntidadDTO.guardarEntidad(documentoEntidadProveedor);
     await documentoEntidadDTO.guardarEntidad(documentoEntidadComprador);
+    await guardarProductoXComprobantePago(comprobante.id, data.detalle);
     //await detalleComprobante(comprobante.id);
     
 }
@@ -318,6 +320,14 @@ function detalleComprobante(id){
         });
     });
     return promise;
+}
+
+async function guardarProductoXComprobantePago(id , data){    
+    for(let producto of data){
+        producto.id = producto.inIdcomprobantepagodetalle;
+        await QueryProductoXComprobantePagoDTO.guardar(producto);
+    }
+    
 }
 
 module.exports = controladorSincronizacionPercepcion;
