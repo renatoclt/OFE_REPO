@@ -13,6 +13,26 @@ Usuario.eliminar = function eliminarIdioma(){
 
 
 
+Usuario.buscarUsuarioNombre = function (nombre) {
+    if (nombre == null){
+        nombre='PLASALLE';
+    }
+    var promise = new Promise(function (resolve, reject) {
+        conexion.sync().then(function () {
+            Usuario.findAll({
+                where: { nombreusuario: nombre}
+            }).then(function (usuario) {
+                console.log(usuario[0].dataValues.id);
+                resolve(usuario[0].dataValues.id);
+            });
+        }, function (err) {
+            console.log('////////////////////*************');
+            console.log(err);
+            resolve('1111');
+        });
+    });
+    return promise;
+}
 
 Usuario.buscarUsuario = function (id) {
     var promise = new Promise(function (resolve, reject) {

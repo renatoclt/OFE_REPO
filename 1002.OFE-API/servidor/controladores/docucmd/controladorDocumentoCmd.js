@@ -10,6 +10,7 @@ var entidad = require('../../dtos/msoffline/queryEntidadOfflineDTO');
 var Evento = require('../../dtos/msoffline/queryComprobanteEventoDTO');
 var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
 var PdfGenerador = require('./index');
+var usuario = require('../../dtos/msoffline/usuarioDTO')
 /**
  * Controlador del
  * 
@@ -68,6 +69,7 @@ var contoladorComprobante =  function (ruta, rutaEsp){
             data.impuestoGvr = 0;
             data.generado = 0;
             data.estadoSincronizado = 0;
+            data.idUsuarioCreacion = await buscarUsuario(data.usuarioCreacion);
             data.porcentajeImpuesto = 0;
             data.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss.l");
             data.vcSerie = data.numeroComprobante;          
@@ -185,6 +187,11 @@ async function buscarCorrelativo(tipoComprobante, serie, tipoSerie , entidad){
         correlativo = 1
     }
     return zfill(correlativo,8);
+}
+
+async function buscarUsuario(nombre){
+    usuario = await usuario.buscarUsuarioNombre(nombre);
+    return usuario;
 }
 
 async function guardarQuery(data){

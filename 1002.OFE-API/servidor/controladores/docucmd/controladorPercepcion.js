@@ -12,6 +12,7 @@ var DocumentoReferencia = require('../../dtos/msdocucmd/documentoReferenciaDTO')
 var DocumentoParametro = require('../../dtos/msdocucmd/documentoParametroDTO')
 var archivo = require('../../dtos/msoffline/archivoDTO');
 var PdfGenerador = require('./index');
+var usuario = require('../../dtos/msoffline/usuarioDTO');
 
 var contoladorPercepcion =  function (ruta, rutaEsp){ 
 
@@ -137,6 +138,7 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
             data.montoComprobante = NumeroALetras.numeroALetras(data.montoDescuento);
             data.tipoFactura = constantes.percepcion.tipoFactura;
             data.generado = constantes.estadoOffline;
+            data.idUsuarioCreacion = await buscarUsuario(data.usuarioCreacion);
             //consultar 
             data.igv = 0.0;
             data.isc = 0.0;
@@ -200,6 +202,11 @@ var contoladorPercepcion =  function (ruta, rutaEsp){
         res.json(data);
     })   
 };
+
+async function buscarUsuario(nombre){
+    usuario = await usuario.buscarUsuarioNombre(nombre);
+    return usuario;
+}
 
 async function guardarEvento(inIdcomprobante, usuarioCreacion ){
     let eventoData = {};

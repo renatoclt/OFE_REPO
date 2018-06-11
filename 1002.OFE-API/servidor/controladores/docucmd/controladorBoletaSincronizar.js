@@ -15,6 +15,7 @@ var DocumentoReferencia = require('../../dtos/msoffline/docReferenciaDTO');
 var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
 var PdfGenerador = require('./index');
 var archivo = require('../../dtos/msoffline/archivoDTO');
+var usuario = require('../../dtos/msoffline/usuarioDTO');
 
 var controladorBoletas = function (ruta, rutaEsp) {
     var nombreHateo = "hComprobante";
@@ -154,6 +155,7 @@ var controladorBoletas = function (ruta, rutaEsp) {
             data.montoComprobante = NumeroALetras.numeroALetras(data.montoPagado);
             data.tipoFactura = constantes.percepcion.tipoFactura;
             data.generado = constantes.estadoOffline;
+            data.idUsuarioCreacion = await buscarUsuario(data.usuarioCreacion);
             //consultar 
             data.igv = data.igv;
             data.isc = data.isc;
@@ -494,6 +496,11 @@ async function guardarQuery(data){
     await guardarEvento(data.id, constantes.usuarioOffline);
     await guardarDocumentoReferencia(comprobante.id, data.documentoReferencia);
     await guardarProductoXComprobantePago(comprobante.id, data.detalleEbiz);
+}
+
+async function buscarUsuario(nombre){
+    usuario = await usuario.buscarUsuarioNombre(nombre);
+    return usuario;
 }
 
 async function guardarProductoXComprobantePago(id , data){    

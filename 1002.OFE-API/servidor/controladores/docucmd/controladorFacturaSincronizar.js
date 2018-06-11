@@ -16,6 +16,7 @@ var DocumentoReferencia = require('../../dtos/msoffline/docReferenciaDTO');
 var QueryDocRefenci = require('../../dtos/msoffline/queryDocRefenciDTO');
 var PdfGenerador = require('./index');
 var archivo = require('../../dtos/msoffline/archivoDTO');
+var usuario = require('../../dtos/msoffline/usuarioDTO')
 
 var controladorFactura = function (ruta, rutaEsp) {
     var nombreHateo = "hComprobante";
@@ -174,6 +175,7 @@ var controladorFactura = function (ruta, rutaEsp) {
             }); 
             data.vcSerie = data.numeroComprobante;
             data.correlativo = await buscarCorrelativo(data.idTipoComprobante, data.numeroComprobante, constantes.estadoOffline , idEntidad);
+            data.idUsuarioCreacion = await buscarUsuario(data.usuarioCreacion);
             data.numeroComprobante = data.numeroComprobante + '-' + data.correlativo;       
             data.estadoSincronizado = constantes.estadoInactivo;
             data.flagOrigenComprobante = constantes.percepcion.flagOrigenComprobante;
@@ -259,6 +261,10 @@ async function guardarArchivo(id, idEntidad){
     data.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
     data.estadoSincronizado = parseInt(constantes.estadoInactivo);
     await archivo.guardar(data);
+}
+async function buscarUsuario(nombre){
+    usuario = await usuario.buscarUsuarioNombre(nombre);
+    return usuario;
 }
 async function guardarParametro(id, parametros){
     let param = parametros;
