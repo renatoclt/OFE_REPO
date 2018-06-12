@@ -117,6 +117,7 @@ Retencion.buscarComprobanteDinamico = function(pagina, regxpag, numeroComprobant
         if(estadoSincronizado_ !== null && estadoSincronizado_ !== ''){
             whereDinamico.estadoSincronizado = estadoSincronizado_;
         }
+        whereDinamico.idTipoComprobante = constantes.FILECMD.tipos_documento.retencion;
         if(fechaInicio_ !== null && fechaInicio_ !== '' && fechaFin_ !== null && fechaFin_ !== ''){
             whereDinamico.fecSincronizado = { 
                 [Op.between]: [dateFormat(new Date(fechaInicio_), "yyyy-mm-dd"),dateFormat(new Date(fechaFin_), "yyyy-mm-dd")+' 23:59:59.999999999'] 

@@ -63,7 +63,7 @@ var controladorPercepciones = function (ruta, rutaEsp) {
             fechaInicio=new Date(),
             fechaFin=new Date(),
             estadoSincronizado="",
-            pagina=0,
+            pagina=10,
             limite=0,
             ordenar=0;
             console.log('/////////////////***********************************//////////////////////////////////');
@@ -88,14 +88,12 @@ var controladorPercepciones = function (ruta, rutaEsp) {
         if (req.query.pagina && req.query.pagina>0){
             pagina = req.query.pagina;
         }
-        if (req.query.limite && req.query.limite>0){
-            limite = req.query.limite;
+        if (req.query.size && req.query.size>0){
+            limite = req.query.size;
         }
         
         await PercepcionDTO.buscarComprobanteDinamico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
         .then(function (resDTO) {
-            console.log('/////////////////***********************************//////////////////////////////////');
-            console.log(resDTO);
             var hateoasObj_comprobante = Object.assign({}, hateoasObj);
             hateoasObj_comprobante.type = nombreHateo;
             hateoasObj_comprobante.data = resDTO.comprobantes;

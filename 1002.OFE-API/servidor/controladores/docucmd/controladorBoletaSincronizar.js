@@ -80,7 +80,7 @@ var controladorBoletas = function (ruta, rutaEsp) {
             fechaFin=new Date(),
             estadoSincronizado="",
             pagina=0,
-            limite=0,
+            limite=10,
             ordenar=0;
             console.log('/////////////////***********************************//////////////////////////////////');
         if (req.query.numeroComprobante && req.query.numeroComprobante!=""){
@@ -104,8 +104,8 @@ var controladorBoletas = function (ruta, rutaEsp) {
         if (req.query.pagina && req.query.pagina>0){
             pagina = req.query.pagina;
         }
-        if (req.query.limite && req.query.limite>0){
-            limite = req.query.limite;
+        if (req.query.size && req.query.size>0){
+            limite = req.query.size;
         }
         
         await BoletaDTO.buscarComprobanteDinamico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)

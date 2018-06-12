@@ -11,6 +11,7 @@ var Client = require('node-rest-client').Client;
 var Usuario = require('../../dtos/msoffline/usuarioDTO');
 var Sincronizacion = require('../../dtos/msoffline/sincronizacionDTO');
 var ComprobanteQuery = require('../../dtos/msoffline/queryComprobantePagoDTO'); 
+var QueryReferencia = require('../../dtos/msoffline/queryDocRefenciDTO');
 
 
 var controladorSincronizacionPercepcion = function (ruta, rutaEsp) {
@@ -270,6 +271,7 @@ async function guardarComprobante(data){
     documentoEntidadComprador.idTipoEntidad = constantes.receptor;
     await documentoEntidadDTO.guardarEntidad(documentoEntidadProveedor);
     await documentoEntidadDTO.guardarEntidad(documentoEntidadComprador);
+    await guardarQueryReferencia(comprobante.id, data.referencias);
     await guardarProductoXComprobantePago(comprobante.id, data.detalle);
     //await detalleComprobante(comprobante.id);
     
@@ -328,6 +330,42 @@ async function guardarProductoXComprobantePago(id , data){
         await QueryProductoXComprobantePagoDTO.guardar(producto);
     }
     
+}
+
+
+async function guardarQueryReferencia(id, data){
+    for (let referencia of data)
+    {
+
+        referencia.docOrigen = referencia.inIdocOrigen ;
+        referencia.documentoDestino = referencia.seIdocDestino;
+        referencia.tipoDocumentoOrigen = referencia.chTipoDocOri;
+        referencia.chTipoDocDes = referencia.chTipoDocDes;
+        referencia.serieDestino = referencia.chSerieDest;
+        referencia.corrDest = referencia.chCorrDest;
+        referencia.fechaEmisionDestino = referencia.daFecEmiDest;
+        referencia.nuTotImpAux = referencia.nuTotImpDest;
+        referencia.totalImpustoDestino = referencia.nuTotImpAux;
+        referencia.totalPorAuxiliar = referencia.nuTotPorAux;
+        referencia.tdocoriDesc = referencia.vcTdocOriDesc;
+        referencia.vcTdocDesDesc = referencia.vcTdocDesDesc;
+        referencia.deTipoCambio = referencia.deTipoCambio;
+        referencia.vcMonedaDestino = referencia.vcMonedaDestino;
+        referencia.deTotMoneDes = referencia.deTotMoneDes;
+        referencia.vcPolizaFactura = referencia.vcPolizaFactura;
+        referencia.deAnticipo = referencia.deAnticipo;
+        referencia.vcAuxiliar1 = referencia.vcAuxiliar1;
+        referencia.vcAuxiliar2 = referencia.vcAuxiliar2;
+        referencia.usuarioCreacion = referencia.vcUsuCreacion ;
+        referencia.usuarioModificacion = referencia.vcUsuModifica;
+        referencia.fechaCreacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");;
+        referencia.fechaModificacion = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"); ;
+        referencia.estado = constantes.estadoActivo;
+        referencia.fechaSincronizado = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"); ;
+        referencia.estadoSincronizado = constantes.estadoActivo; 
+        await QueryReferencia.guardarQuery(referencia);
+    }    
+
 }
 
 module.exports = controladorSincronizacionPercepcion;

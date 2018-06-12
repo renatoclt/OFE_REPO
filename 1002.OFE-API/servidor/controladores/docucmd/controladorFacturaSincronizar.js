@@ -115,7 +115,7 @@ var controladorFactura = function (ruta, rutaEsp) {
                 fechaFin=new Date(),
                 estadoSincronizado="",
                 pagina=0,
-                limite=0,
+                limite=10,
                 ordenar=0;
             if (req.query.numeroComprobante && req.query.numeroComprobante!=""){
                 numeroComprobante = req.query.numeroComprobante;
@@ -138,8 +138,8 @@ var controladorFactura = function (ruta, rutaEsp) {
             if (req.query.pagina && req.query.pagina>0){
                 pagina = req.query.pagina;
             }
-            if (req.query.limite && req.query.limite>0){
-                limite = req.query.limite;
+            if (req.query.size && req.query.size>0){
+                limite = req.query.size;
             }
             
             await FacturaDTO.buscarComprobanteDinamico(pagina, limite, numeroComprobante,generado,estado,fechaInicio,fechaFin,estadoSincronizado)
@@ -148,7 +148,7 @@ var controladorFactura = function (ruta, rutaEsp) {
                 var hateoasObj_comprobante = Object.assign({}, hateoasObj);
                 hateoasObj_comprobante.type = nombreHateo;
                 hateoasObj_comprobante.data = resDTO.comprobantes;
-                hateoasObj_comprobante.nombreColeccion = "Facturas";
+                hateoasObj_comprobante.nombreColeccion = "facturas";
                 hateoasObj_comprobante.ruta = rutaEsp;
                 hateoasObj_comprobante.paginacion.activo = true;
                 hateoasObj_comprobante.paginacion.totalreg = resDTO.cantidadReg;
