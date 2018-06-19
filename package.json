@@ -1,7 +1,7 @@
 {
   "name": "Sistema_de_Facturacion_Electronica_Offline",
   "description": "Factura - Bol",
-  "version": "1.8.4",
+  "version": "20.6.5",
   "main": "main.js",
   "author": "laSalle <test@gmail.com>",
   "homepage": "http://gitlab.sreasons.com",
