@@ -13,13 +13,14 @@ app.on("ready", () => {
   mainWindow.loadURL(`file://${__dirname}/1002.OFE-PROD/PROD_ANGULAR/dist/index.html`);
   //comentar la siguiente linea para no mostar herramientas de desarrollo
   mainWindow.webContents.openDevTools();
-  
+    
   mainWindow.once("ready-to-show", () => { 
     mainWindow.maximize();
-    mainWindow.show() });
+    mainWindow.show() 
+  });
 
   mainWindow.setMenu(null);
-  
+    
   const filter = {
     urls: ["http://*/*", "https://*/*"]
   }
